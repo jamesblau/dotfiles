@@ -40,6 +40,7 @@ Bundle 'Tabmerge'
 Bundle 'Shougo/unite.vim'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'Transparent'
+Bundle 'oblitum/rainbow'
 
 if !exists('g:spf13_bundle_groups')
 let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
@@ -73,7 +74,7 @@ if count(g:spf13_bundle_groups, 'general')
     if !exists('g:spf13_no_views')
         Bundle 'vim-scripts/restore_view.vim'
     endif
-    Bundle 'mhinz/vim-signify'
+    "Bundle 'mhinz/vim-signify'
     Bundle 'tpope/vim-abolish.git'
     Bundle 'osyo-manga/vim-over'
     Bundle 'justinmk/vim-sneak'

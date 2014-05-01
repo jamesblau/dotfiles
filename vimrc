@@ -27,6 +27,8 @@ let g:pymode_options = 0
 let g:autoclose_on = 0
 let s:autoclose_mapped = 0
 let b:match_ignorecase = 1
+let g:rainbow_active = 1
+let g:rainbow_ctermfgs = ['LightBlue', 'DarkGreen', 'Yellow', 'DarkRed']
 "let g:solarized_termtrans = 1
 "let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tabline#enabled = 1
@@ -125,23 +127,23 @@ endif
 endif
 
 " Code folding options
-nmap <leader>f0 :set foldlevel=0<CR>
-nmap <leader>f1 :set foldlevel=1<CR>
-nmap <leader>f2 :set foldlevel=2<CR>
-nmap <leader>f3 :set foldlevel=3<CR>
-nmap <leader>f4 :set foldlevel=4<CR>
-nmap <leader>f5 :set foldlevel=5<CR>
-nmap <leader>f6 :set foldlevel=6<CR>
-nmap <leader>f7 :set foldlevel=7<CR>
-nmap <leader>f8 :set foldlevel=8<CR>
-nmap <leader>f9 :set foldlevel=9<CR>
+nmap <Leader>f0 :set foldlevel=0<CR>
+nmap <Leader>f1 :set foldlevel=1<CR>
+nmap <Leader>f2 :set foldlevel=2<CR>
+nmap <Leader>f3 :set foldlevel=3<CR>
+nmap <Leader>f4 :set foldlevel=4<CR>
+nmap <Leader>f5 :set foldlevel=5<CR>
+nmap <Leader>f6 :set foldlevel=6<CR>
+nmap <Leader>f7 :set foldlevel=7<CR>
+nmap <Leader>f8 :set foldlevel=8<CR>
+nmap <Leader>f9 :set foldlevel=9<CR>
 
 """""""""""""START UNTESTED
 "Toggle search highlighting
-nnoremap <silent> <leader>/ :set invhlsearch<CR>
+nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 
 " Find merge conflict markers
-map <leader>fc /\v^[<\|=>]( .*\|$)<CR>
+map <Leader>fc /\v^[<\|=>]( .*\|$)<CR>
 
 " Shortcuts
 " Change Working Directory to that of the current file
@@ -159,17 +161,17 @@ vnoremap . :normal .<CR>
 " Fix home and end keybindings for screen, particularly on mac
 " - for some reason this fixes the arrow keys too. huh.
 map [F $
-imap [F $
+imap [F <C-O>$
 map [H g0
-imap [H g0
+imap [H <C-O>g0
 
 " Some helpers to edit mode
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
+map <Leader>ew :e %%
+map <Leader>es :sp %%
+map <Leader>ev :vsp %%
+map <Leader>et :tabe %%
 
 " Adjust viewports to the same size
 map <Leader>= <C-w>=
@@ -222,8 +224,8 @@ endif
 
 " NerdTree
 map <C-q> :NERDTreeToggle<CR>
-map <leader>e :NERDTreeFind<CR>
-nmap <leader>nt :NERDTreeFind<CR>
+map <Leader>e :NERDTreeFind<CR>
+nmap <Leader>nt :NERDTreeFind<CR>
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -249,11 +251,11 @@ vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
 " Session List
 set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
-nmap <leader>sl :SessionList<CR>
-nmap <leader>ss :SessionSave<CR>
+nmap <Leader>sl :SessionList<CR>
+nmap <Leader>ss :SessionSave<CR>
 
 " JSON
-nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+nmap <Leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
 
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
@@ -264,7 +266,7 @@ let g:ctrlp_custom_ignore = {
         \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
 " TagBar
-nnoremap <silent> <leader>tt :TagbarToggle<CR>
+nnoremap <silent> <Leader>tt :TagbarToggle<CR>
 " If using go please install the gotags program using the following
 " go install github.com/jstemmer/gotags
 " And make sure gotags is in your path
@@ -287,16 +289,17 @@ let g:pymode = 1
 endif
 
 " Fugitive
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gl :Glog<CR>
-nnoremap <silent> <leader>gp :Git push<CR>
-nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
-nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
-nnoremap <silent> <leader>ge :Gedit<CR>
-nnoremap <silent> <leader>gg :GitGutterToggle<CR>
+nnoremap <silent> <Leader>gs :Gstatus<CR>
+nnoremap <silent> <Leader>gd :Gdiff<CR>
+nnoremap <silent> <Leader>gm :Gdiff master<CR>
+nnoremap <silent> <Leader>gc :Gcommit<CR>
+nnoremap <silent> <Leader>gb :Gblame<CR>
+nnoremap <silent> <Leader>gl :Glog<CR>
+nnoremap <silent> <Leader>gp :Git push<CR>
+nnoremap <silent> <Leader>gr :Gread<CR>:GitGutter<CR>
+nnoremap <silent> <Leader>gw :Gwrite<CR>:GitGutter<CR>
+nnoremap <silent> <Leader>ge :Gedit<CR>
+nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
 
 " neocomplete
 if count(g:spf13_bundle_groups, 'neocomplete')
@@ -576,19 +579,19 @@ endfunction
 
 " Shell command
 function! s:RunShellCommand(cmdline)
-botright new
-"setlocal buftype=nofile
-setlocal bufhidden=delete
-setlocal nobuflisted
-setlocal noswapfile
-setlocal nowrap
-setlocal filetype=shell
-setlocal syntax=shell
-"call setline(1, a:cmdline)
-call setline(2, substitute(a:cmdline, '.', '=', 'g'))
-execute 'silent $read !' . escape(a:cmdline, '%#')
-setlocal nomodifiable
-1
+    botright new
+    "setlocal buftype=nofile
+    setlocal bufhidden=delete
+    setlocal nobuflisted
+    setlocal noswapfile
+    setlocal nowrap
+    setlocal filetype=shell
+    setlocal syntax=shell
+    "call setline(1, a:cmdline)
+    call setline(2, substitute(a:cmdline, '.', '=', 'g'))
+    execute 'silent $read !' . escape(a:cmdline, '%#')
+    setlocal nomodifiable
+    1
 endfunction
 "command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
@@ -622,10 +625,10 @@ au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 function! ResCur()
-if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-endif
+    if line("'\"") <= line("$")
+        normal! g`"
+        return 1
+    endif
 endfunction
 augroup resCur
 autocmd!
@@ -674,25 +677,25 @@ nnoremap <Leader>pP mm(O<C-R>"<CR><Esc>`m
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
 function! s:check_back_space()
-let col = col('.') - 1
-return !col || getline('.')[col - 1] =~ '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
 function! NumberToggle()
-if(&rnu == 1 && &nu == 1)
-set nonumber norelativenumber
-else
-set number relativenumber
-endif
+    if(&rnu == 1 && &nu == 1)
+        set nonumber norelativenumber
+    else
+        set number relativenumber
+    endif
 endfunc
 set number relativenumber
 
 function! NfAlphaToggle()
-if(&nrformats == "")
-set nrformats=alpha
-else
-set nrformats=
-endif
+    if(&nrformats == "")
+        set nrformats=alpha
+    else
+        set nrformats=
+    endif
 endfunc
 
 "Sets and toggles!
@@ -748,6 +751,8 @@ nnoremap <C-L> :tabmove +1<CR>
 nnoremap <Leader>b <Nop>
 nnoremap <Leader>bl :buffers<CR>
 nnoremap <Leader>bt :tab ball<CR>
+nnoremap <Leader>bn :enew<CR>
+nnoremap <Leader>bd :bd<CR>
 nnoremap <Leader>bv :vert sb<Space>
 
 "Window movement mapped to alt.
@@ -798,7 +803,7 @@ nnoremap <Leader>xb
                     \ join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ")
                 \ )<CR>
 "Export buffers
-nnoremap <Silent> <Leader>Eb
+nnoremap <silent> <Leader>Eb
                     \ :call writefile(
                         \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
                         \ system("echo ~/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
@@ -848,9 +853,6 @@ nnoremap <Leader>hu ^4x$x3Xkdd
 
 "Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
-map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
-
-nnoremap <Leader>gm :Gdiff master<CR>
 
 "autocmd BufNewFile,BufRead fugitive://* set bufhidden=delete
 
@@ -900,9 +902,11 @@ vnoremap <Leader>ss y:%s/<C-r>"/<C-r>"/g
 "Accept autocomplete selection
 cnoremap  <space><delete>
 
-"No accidental Ex-mode
+"No accidental Ex-mode or keyword-lookup
 nnoremap Q <Nop>
 nnoremap <Leader>Q Q
+nnoremap K <Nop>
+nnoremap <Leader>K K
 
 "nnoremap <Leader>yf A<Backspace>" +\2F"j999I k2F"jdwi"
 "function! s:indent_to_here(row)
@@ -949,8 +953,13 @@ hi TabLineSel     ctermfg=White         ctermbg=DarkRed
 hi TabLineFill    ctermfg=None
 hi Search         ctermfg=White         ctermbg=Black       term=bold
 hi Visual         ctermfg=DarkRed       ctermbg=White
-hi vimLineComment ctermfg=Blue
+hi vimLineComment ctermfg=LightBlue
 hi NonText        ctermfg=DarkRed
 hi DiffAdd        ctermfg=Yellow        ctermbg=None
 hi DiffChange     ctermfg=Yellow        ctermbg=None
 hi DiffDelete     ctermfg=Yellow        ctermbg=None
+hi Braces         ctermfg=None          ctermbg=Green
+
+"Check coloring
+map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> trans<' . synIDattr(synID(line("."),col(".")+1,0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"fg#")<CR>
