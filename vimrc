@@ -99,6 +99,7 @@ set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 au BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
+au BufNewFile,BufRead *.txt syntax off
 
 " Remove trailing whitespaces and ^M chars
 autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
@@ -943,22 +944,29 @@ nnoremap <Leader>er : <C-R>"<CR>
 colorscheme transparent
 "nnoremap <Leader>lr :hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
 "nnoremap <Leader>li :hi CursorLine   cterm=reverse,bold
-hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
-hi SignColumn     ctermfg=Yellow        ctermbg=None
-hi LineNr         ctermfg=Yellow
-hi CursorLineNr   ctermfg=Yellow
-hi Normal         ctermfg=White
-hi TabLine        ctermfg=Black         ctermbg=Yellow
-hi TabLineSel     ctermfg=White         ctermbg=DarkRed
-hi TabLineFill    ctermfg=None
-hi Search         ctermfg=White         ctermbg=Black       term=bold
-hi Visual         ctermfg=DarkRed       ctermbg=White
-hi vimLineComment ctermfg=LightBlue
-hi NonText        ctermfg=DarkRed
-hi DiffAdd        ctermfg=Yellow        ctermbg=None
-hi DiffChange     ctermfg=Yellow        ctermbg=None
-hi DiffDelete     ctermfg=Yellow        ctermbg=None
-hi Braces         ctermfg=None          ctermbg=Green
+hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
+hi SignColumn         ctermfg=Yellow        ctermbg=None
+hi LineNr             ctermfg=Yellow
+hi CursorLineNr       ctermfg=Yellow
+hi Normal             ctermfg=White
+hi TabLine            ctermfg=Black         ctermbg=Yellow
+hi TabLineSel         ctermfg=White         ctermbg=DarkRed
+hi TabLineFill        ctermfg=None
+hi Search             ctermfg=White         ctermbg=Black       cterm=bold
+hi Visual             ctermfg=DarkRed       ctermbg=White
+hi vimLineComment     ctermfg=LightBlue
+hi NonText            ctermfg=DarkRed
+hi DiffAdd            ctermfg=Yellow        ctermbg=None
+hi DiffChange         ctermfg=Yellow        ctermbg=None
+hi DiffDelete         ctermfg=Yellow        ctermbg=None
+"hi MatchParen         term=inverse
+"hi Braces             ctermfg=None          ctermbg=None
+"hi vimHiCtermColor     ctermfg=Black
+"hi Highlight           ctermfg=Black
+"hi vimHiCtermFgBg     ctermfg=None          ctermbg=None
+"hi vimHiCTerm         ctermfg=None          ctermbg=None
+"hi preProc            ctermfg=None          ctermbg=None
+"hi Type               ctermfg=None          ctermbg=None
 
 "Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
