@@ -63,7 +63,7 @@ if count(g:spf13_bundle_groups, 'general')
     else
         Bundle 'bling/vim-airline'
     endif
-    "Bundle 'bling/vim-bufferline'
+    Bundle 'bling/vim-bufferline'
     Bundle 'Lokaltog/vim-easymotion'
     "Bundle 'godlygeek/csapprox'
     Bundle 'jistr/vim-nerdtree-tabs'

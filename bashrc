@@ -182,7 +182,7 @@ function loop () { while true; do clear; $1; read; done; }
 function myip () { if [ $# -eq 0 ]; then set -- "tun0"; fi; ifconfig "$1" | grep inet | head -n 1 | cut -d ":" -f 2 | cut -d " " -f 1; }
 function xip () { myip $1 | tee /dev/tty | xclip; }
 
-alias vi='vi -p'
+alias vi='vim'
 alias nv='nvim -p'
 alias nvi='nvim -p'
 export PYTHONSTARTUP=~/.pythonrc
