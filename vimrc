@@ -105,12 +105,6 @@ autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2 "best in a plugin...
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
-"""""""""""""START UNTESTED
-" Workaround vim-commentary for Haskell
-autocmd FileType haskell setlocal commentstring=--\ %s
-" Workaround broken colour highlighting in Haskell
-autocmd FileType haskell setlocal nospell
-
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap j gj
 noremap k gk
@@ -142,9 +136,9 @@ nmap <leader>f7 :set foldlevel=7<CR>
 nmap <leader>f8 :set foldlevel=8<CR>
 nmap <leader>f9 :set foldlevel=9<CR>
 
+"""""""""""""START UNTESTED
 "Toggle search highlighting
 nnoremap <silent> <leader>/ :set invhlsearch<CR>
-
 
 " Find merge conflict markers
 map <leader>fc /\v^[<\|=>]( .*\|$)<CR>
@@ -211,7 +205,6 @@ inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 " Automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menu,preview,longest
-"
 
 " Ctags
 set tags=./tags;/,~/.vimtags
@@ -221,13 +214,11 @@ let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 
 if gitroot != ''
     let &tags = &tags . ',' . gitroot . '/.git/tags'
 endif
-"
 
 " AutoCloseTag
 " Make it so AutoCloseTag works for xml and xhtml files as well
 "au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 "nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-"
 
 " NerdTree
 map <C-q> :NERDTreeToggle<CR>
@@ -255,13 +246,11 @@ nmap <Leader>a, :Tabularize /,<CR>
 vmap <Leader>a, :Tabularize /,<CR>
 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-"
 
 " Session List
 set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
 nmap <leader>sl :SessionList<CR>
 nmap <leader>ss :SessionSave<CR>
-"
 
 " JSON
 nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
@@ -296,7 +285,7 @@ nnoremap <silent> <leader>tt :TagbarToggle<CR>
 if !has('python')
     let g:pymode = 1
 endif
-"
+
 " Fugitive
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -391,7 +380,7 @@ if count(g:spf13_bundle_groups, 'neocomplete')
     " especially when splits are used.
     set completeopt-=preview
 endif
-"
+
 " neocomplcache
 if count(g:spf13_bundle_groups, 'neocomplcache')
     let g:acp_enableAtStartup = 0
@@ -476,12 +465,12 @@ if count(g:spf13_bundle_groups, 'neocomplcache')
     " especially when splits are used.
     set completeopt-=preview
 endif
-"
+
 " UndoTree
 nnoremap <Leader>u :UndotreeToggle<CR>
 " If undotree is opened, it is likely one wants to interact with it.
 let g:undotree_SetFocusWhenToggle=1
-"
+
 " indent_guides
 if !exists('g:spf13_no_indent_guides_autocolor')
     let g:indent_guides_auto_colors = 1
@@ -490,7 +479,7 @@ else
     autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#212121 ctermbg=3
     autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
 endif
-"
+
 " vim-airline
 " Set configuration options for the statusline plugin vim-airline.
 " Use the powerline theme and optionally enable powerline symbols.
@@ -505,7 +494,7 @@ if !exists('g:airline_powerline_fonts')
     let g:airline_left_sep='›'  " Slightly fancier than '>'
     let g:airline_right_sep='‹' " Slightly fancier than '<'
 endif
-"
+
 " Functions
 " UnBundle
 function! UnBundle(arg, ...)
@@ -514,7 +503,7 @@ function! UnBundle(arg, ...)
 endfunction
 "com! -nargs=+         UnBundle
             \ call UnBundle(<args>)
-"
+
 " Initialize directories
 function! InitializeDirectories()
     let parent = $HOME
@@ -553,7 +542,7 @@ function! InitializeDirectories()
     endfor
 endfunction
 call InitializeDirectories()
-"
+
 " Initialize NERDTree as needed
 function! NERDTreeInitAsNeeded()
     redir => bufoutput
@@ -566,7 +555,7 @@ function! NERDTreeInitAsNeeded()
         wincmd l
     endif
 endfunction
-"
+
 " Strip whitespace
 function! StripTrailingWhitespace()
     " To disable the stripping of whitespace, add the following to your
@@ -584,7 +573,7 @@ function! StripTrailingWhitespace()
         call cursor(l, c)
     endif
 endfunction
-"
+
 " Shell command
 function! s:RunShellCommand(cmdline)
     botright new
@@ -956,7 +945,7 @@ colorscheme transparent
 "nnoremap <Leader>lr :hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
 "nnoremap <Leader>li :hi CursorLine   cterm=reverse,bold
 hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
-hi clear SignColumn
+hi SignColumn     ctermfg=Yellow        ctermbg=None
 hi LineNr         ctermfg=Yellow
 hi CursorLineNr   ctermfg=Yellow
 hi Normal         ctermfg=White
@@ -967,3 +956,6 @@ hi Search         ctermfg=White         ctermbg=Black       term=bold
 hi Visual         ctermfg=DarkRed       ctermbg=White
 hi vimLineComment ctermfg=Blue
 hi NonText        ctermfg=DarkRed
+hi DiffAdd        ctermfg=Yellow        ctermbg=None
+hi DiffChange     ctermfg=Yellow        ctermbg=None
+hi DiffDelete     ctermfg=Yellow        ctermbg=None
