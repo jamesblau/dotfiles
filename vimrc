@@ -96,6 +96,7 @@ set matchpairs+=<:>             " Match, to be used with %
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+au BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
 
 " Remove trailing whitespaces and ^M chars
 autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
