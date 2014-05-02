@@ -41,6 +41,7 @@ Bundle 'Shougo/unite.vim'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'Transparent'
 Bundle 'oblitum/rainbow'
+Bundle 't9md/vim-chef'
 
 if !exists('g:spf13_bundle_groups')
 let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
@@ -49,7 +50,7 @@ endif
  "General
 if count(g:spf13_bundle_groups, 'general')
     Bundle 'scrooloose/nerdtree'
-    Bundle 'altercation/vim-colors-solarized'
+    "Bundle 'altercation/vim-colors-solarized'
     Bundle 'spf13/vim-colors'
     Bundle 'tpope/vim-surround'
     Bundle 'spf13/vim-autoclose'

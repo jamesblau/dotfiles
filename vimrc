@@ -40,18 +40,17 @@ let g:rainbow_ctermfgs = ['LightBlue', 'DarkGreen', 'Yellow', 'DarkRed']
 "let g:spf13_no_neosnippet_expand = 1
 "let g:spf13_keep_trailing_whitespace = 1
 "let g:airline_powerline_fonts = 1
-"let g:spf13_consolidated_directory = <full path to desired directory>
 "\/ \/ https://github.com/airblade/vim-gitgutter/issues/106 \/ \/
 "let g:gitgutter_realtime = 1
 
 "Bundle
 filetype on
 filetype off
-set rtp+=~/.vim/bundle/vundle
+set rtp+=/home/james/.vim/bundle/vundle
 call vundle#rc()
 
 "Use local bundles if available
-source ~/.vimrc.bundles
+source /home/james/.vimrc.bundles
 source /home/james/.vim/plugin/ctrlr.vim/plugin/ctrlr.vim
 
 "General
@@ -98,15 +97,17 @@ set matchpairs+=<:>             " Match, to be used with %
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-au BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
-au BufNewFile,BufRead *.txt syntax off
+au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
+au! BufNewFile,BufRead *.txt syntax off
+"au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
+"au! BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 
 " Remove trailing whitespaces and ^M chars
-autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
-autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2 "best in a plugin...
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+au! FileType c,cpp,java,go,php,javascript,python,twig,xml,yml au! BufWritePre <buffer> call StripTrailingWhitespace()
+au! FileType go au! BufWritePre <buffer> Fmt
+au! BufNewFile,BufRead *.html.twig set filetype=html.twig
+au! FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2 "best in a plugin...
+au! BufNewFile,BufRead *.coffee set filetype=coffee
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap j gj
@@ -161,10 +162,10 @@ vnoremap . :normal .<CR>
 
 " Fix home and end keybindings for screen, particularly on mac
 " - for some reason this fixes the arrow keys too. huh.
-map [F $
-imap [F <C-O>$
-map [H g0
-imap [H <C-O>g0
+"map [F $
+"imap [F <C-O>$
+"map [H g0
+"imap [H <C-O>g0
 
 " Some helpers to edit mode
 " http://vimcasts.org/e/14
@@ -187,7 +188,7 @@ map zh zH
 
 " OmniComplete
 if has("autocmd") && exists("+omnifunc")
-autocmd Filetype *
+au! Filetype *
             \if &omnifunc == "" |
             \setlocal omnifunc=syntaxcomplete#Complete |
             \endif
@@ -206,11 +207,11 @@ inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
 inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " Automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+au! CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menu,preview,longest
 
 " Ctags
-set tags=./tags;/,~/.vimtags
+set tags=./tags;/,/home/james/.vimtags
 
 " Make tags placed in .git/tags file available in all levels of a repository
 let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
@@ -220,11 +221,11 @@ endif
 
 " AutoCloseTag
 " Make it so AutoCloseTag works for xml and xhtml files as well
-"au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+"au! FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 "nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 
 " NerdTree
-map <C-q> :NERDTreeToggle<CR>
+map <C-Q> :NERDTreeToggle<CR>
 map <Leader>e :NERDTreeFind<CR>
 nmap <Leader>nt :NERDTreeFind<CR>
 
@@ -349,18 +350,18 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y> neocomplete#close_popup()
 "
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
+au! FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au! FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+au! FileType python setlocal omnifunc=pythoncomplete#Complete
+au! FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au! FileType ruby setlocal omnifunc=rubycomplete#Complete
+au! FileType haskell setlocal omnifunc=necoghc#omnifunc
 " Haskell post write lint and check with ghcmod
 " $ `cabal install ghcmod` if missing and ensure
 " ~/.cabal/bin is in your $PATH.
 if !executable("ghcmod")
-    autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+    au! BufWritePost *.hs GhcModCheckAndLintAsync
 endif
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -372,7 +373,7 @@ let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 " Use honza's snippets.
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+let g:neosnippet#snippets_directory='/home/james/.vim/bundle/vim-snippets/snippets'
 " Enable neosnippet snipmate compatibility mode
 let g:neosnippet#enable_snipmate_compatibility = 1
 " For snippet_complete marker.
@@ -434,18 +435,18 @@ inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y> neocomplcache#close_popup()
 "
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
+au! FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au! FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+au! FileType python setlocal omnifunc=pythoncomplete#Complete
+au! FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au! FileType ruby setlocal omnifunc=rubycomplete#Complete
+au! FileType haskell setlocal omnifunc=necoghc#omnifunc
 " Haskell post write lint and check with ghcmod
 " $ `cabal install ghcmod` if missing and ensure
 " ~/.cabal/bin is in your $PATH.
 if !executable("ghcmod")
-    autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+    au! BufWritePost *.hs GhcModCheckAndLintAsync
 endif
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
@@ -457,7 +458,7 @@ let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 " Use honza's snippets.
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+let g:neosnippet#snippets_directory='/home/james/.vim/bundle/vim-snippets/snippets'
 " Enable neosnippet snipmate compatibility mode
 let g:neosnippet#enable_snipmate_compatibility = 1
 " For snippet_complete marker.
@@ -480,8 +481,8 @@ if !exists('g:spf13_no_indent_guides_autocolor')
 let g:indent_guides_auto_colors = 1
 else
 " For some colorschemes, autocolor will not work (eg: 'desert', 'ir_black')
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#212121 ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
+au! VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#212121 ctermbg=3
+au! VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
 endif
 
 " vim-airline
@@ -617,12 +618,14 @@ endif
 
 "Timeout stuff!
 set notimeout
-imap <silent> <esc> <esc>:redraw<CR>
-vmap <silent> <esc> <esc>:redraw<CR>
+
+"<C-Space> leaves insert, visual without moving cursor
+inoremap <C-Space> <Esc>`^
+imap <C-@> <C-Space>
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+au! FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 function! ResCur()
@@ -632,8 +635,8 @@ function! ResCur()
     endif
 endfunction
 augroup resCur
-autocmd!
-autocmd BufWinEnter * call ResCur()
+au!
+au! BufWinEnter * call ResCur()
 augroup END
 
 " Setting up the directories
@@ -747,8 +750,10 @@ nnoremap <C-J> :bp<CR>
 inoremap <C-J> :bp<CR>
 nnoremap <C-K> :bn<CR>
 inoremap <C-K> :bn<CR>
-nnoremap <C-H> :tabmove -1<CR>
-nnoremap <C-L> :tabmove +1<CR>
+nnoremap <C-H> :tp<CR>
+nnoremap <C-L> :tn<CR>
+nnoremap <C-H><C-H> :tabmove -1<CR>
+nnoremap <C-H><C-L> :tabmove +1<CR>
 nnoremap <Leader>b <Nop>
 nnoremap <Leader>bl :buffers<CR>
 nnoremap <Leader>bt :tab ball<CR>
@@ -807,7 +812,7 @@ nnoremap <Leader>xb
 nnoremap <silent> <Leader>Eb
                     \ :call writefile(
                         \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
-                        \ system("echo ~/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
+                        \ system("echo /home/james/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
                     \ )<CR>
 "Register from All
 nnoremap <Leader>ra mmggVGy`m
@@ -855,7 +860,7 @@ nnoremap <Leader>hu ^4x$x3Xkdd
 "Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
 
-"autocmd BufNewFile,BufRead fugitive://* set bufhidden=delete
+"au! BufNewFile,BufRead fugitive://* set bufhidden=delete
 
 map <Leader>wps <Plug>SaveWinPosn
 map <Leader>wpr <Plug>RestoreWinPosn
@@ -946,8 +951,8 @@ colorscheme transparent
 "nnoremap <Leader>li :hi CursorLine   cterm=reverse,bold
 hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
 hi SignColumn         ctermfg=Yellow        ctermbg=None
-hi LineNr             ctermfg=Yellow
-hi CursorLineNr       ctermfg=Yellow
+hi LineNr             ctermfg=Yellow        ctermbg=None
+hi CursorLineNr       ctermfg=Yellow        ctermbg=None
 hi Normal             ctermfg=White
 hi TabLine            ctermfg=Black         ctermbg=Yellow
 hi TabLineSel         ctermfg=White         ctermbg=DarkRed
@@ -959,6 +964,19 @@ hi NonText            ctermfg=DarkRed
 hi DiffAdd            ctermfg=Yellow        ctermbg=None
 hi DiffChange         ctermfg=Yellow        ctermbg=None
 hi DiffDelete         ctermfg=Yellow        ctermbg=None
+hi GitGutterAdd                             ctermbg=None
+hi GitGutterChange                          ctermbg=None
+hi GitGutterChangeDeleteDefault             ctermbg=None
+hi GitGutterChangeLineDefault               ctermbg=None
+hi GitGutterDeleteLine ctermbg=None
+hi GitGutterAddDefault ctermbg=None
+hi GitGutterChangeDefault ctermbg=None
+hi GitGutterChangeDeleteLine ctermbg=None
+hi GitGutterDelete ctermbg=None
+hi GitGutterAddLine ctermbg=None
+hi GitGutterChangeDelete ctermbg=None
+hi GitGutterChangeLine ctermbg=None
+hi GitGutterDeleteDefault ctermbg=None
 "hi MatchParen         term=inverse
 "hi Braces             ctermfg=None          ctermbg=None
 "hi vimHiCtermColor     ctermfg=Black
@@ -971,3 +989,7 @@ hi DiffDelete         ctermfg=Yellow        ctermbg=None
 "Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> trans<' . synIDattr(synID(line("."),col(".")+1,0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"fg#")<CR>
+
+"Resource and re-Filetype temp. hack...
+nnoremap <Leader>R <Nop>
+nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
