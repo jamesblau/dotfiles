@@ -160,18 +160,10 @@ vnoremap . :normal .<CR>
 
 " Fix home and end keybindings for screen, particularly on mac
 " - for some reason this fixes the arrow keys too. huh.
-"map [F $
-"imap [F <C-O>$
-"map [H g0
-"imap [H <C-O>g0
-
-" Some helpers to edit mode
-" http://vimcasts.org/e/14
-cnoremap %% <C-R>=expand('%:h').'/'<CR>
-map <Leader>ew :e %%
-map <Leader>es :sp %%
-map <Leader>ev :vsp %%
-map <Leader>et :tabe %%
+"map <Esc>[F $
+"imap <Esc>[F <C-O>$
+"map <Esc>[H g0
+"imap <Esc>[H <C-O>g0
 
 " Adjust viewports to the same size
 map <Leader>= <C-w>=
@@ -224,8 +216,8 @@ endif
 
 " NerdTree
 map <C-Q> :NERDTreeToggle<CR>
-map <Leader>e :NERDTreeFind<CR>
-nmap <Leader>nt :NERDTreeFind<CR>
+"map <Leader>e :NERDTreeFind<CR>
+"nmap <Leader>nt :NERDTreeFind<CR>
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -658,8 +650,8 @@ set laststatus=2
 endif
 
 "Break lines
-nmap <Leader>m i<F5>
-nmap <Leader>M a<F5>
+nmap <Leader>m i<CR><Esc><F5>
+nmap <Leader>M a<CR><Esc><F5>
 
 "Yank and Pasting stuff
 cnoremap <C-T> <C-R>
@@ -717,9 +709,9 @@ nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 
-nnoremap <Leader>1<space> :bp<CR>
-nnoremap <Leader>2<space> :bn<CR>
-nnoremap <Leader>; ,
+
+"Replace comma with backslash for find backwards last.
+nnoremap \ ,
 
 function! AddSubtract(char, back)
 let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
@@ -728,42 +720,74 @@ execute 'normal! ' . v:count1 . a:char
 silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
 nnoremap <silent> <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
-nnoremap <silent> a   :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
+nnoremap <silent> <Esc>a   :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
 nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
-nnoremap <silent> x   :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
+nnoremap <silent> <Esc>x   :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
+
+"Edit multiple
+command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
+command! -complete=file -nargs=+ Ewindows call s:ETW('enew', <f-args>)
+command! -complete=file -nargs=+ Eswindows call s:ETW('new', <f-args>)
+command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
+
+function! s:ETW(what, ...)
+  for f1 in a:000
+    let files = glob(f1)
+    if files == ''
+      execute a:what . ' ' . escape(f1, '\ "')
+    else
+      for f2 in split(files, "\n")
+        execute a:what . ' ' . escape(f2, '\ "')
+      endfor
+    endif
+  endfor
+endfunction
 
 "Tab stuff!
-nnoremap th :tabfirst<CR>
-nnoremap tj :tabprev<CR>
-nnoremap tk :tabnext<CR>
-nnoremap tl :tablast<CR>
-nnoremap tt :Etabs<Space>
-nnoremap tt<CR> :tabnew<CR>
-nnoremap tn :tabnew<Space>
-nnoremap tm :tabm<Space>
-nnoremap td :tabclose<CR>
+nnoremap <Leader>th :tabfirst<CR>
+nnoremap <Leader>tl :tablast<CR>
+nnoremap <Leader>tn :tabnew<CR>
+nnoremap <Leader>tm :tabm<Space>
+nnoremap <Leader>td :tabclose<CR>
 
-"Buffer stuff!
-nnoremap <silent> <C-J> :bp<CR>
-inoremap <silent> <C-J> :bp<CR>
-nnoremap <silent> <C-K> :bn<CR>
-inoremap <silent> <C-K> :bn<CR>
-nnoremap <silent> <C-H> :tabp<CR>
-nnoremap <silent> <C-L> :tabn<CR>
-nnoremap <silent> <C-W><C-H> :tabmove -1<CR>
-nnoremap <silent> <C-W><C-L> :tabmove +1<CR>
-nnoremap <Leader>b <Nop>
+"Some helpers to edit mode
+cnoremap %% <C-R>=expand('%:h').'/'<CR>
+nnoremap <Leader>ew :Ewindows<Space>
+nnoremap <Leader>en :enew<CR>
+nnoremap <Leader>es :Eswindows<Space>
+nnoremap <Leader>ev :Evwindows<Space>
+nnoremap <Leader>et :Etabs<Space>
+nnoremap <Leader>eW :Ewindows %%
+nnoremap <Leader>eS :Eswindows %%
+nnoremap <Leader>eV :Evwindows %%
+nnoremap <Leader>eT :Etabs %%
+nnoremap <Leader>Es :sb<Space>
+nnoremap <Leader>Ev :vert sb<Space>
+
+"Tab, window, and buffer movement stuff!
+"Tab movement
+nnoremap <silent> <Esc>l        :tabp<CR>
+nnoremap <silent> <Esc>h        :tabn<CR>
+inoremap <silent> <Leader><Esc>l        <C-O>:tabp<CR>
+inoremap <silent> <Leader><Esc>h        <C-O>:tabn<CR>
+nnoremap <silent> <Esc>u     :tabmove -1<CR>
+nnoremap <silent> <Esc>i     :tabmove +1<CR>
+"Buffer movement
+nnoremap          <Esc>j        :bp<CR>
+nnoremap          <Esc>k        :bn<CR>
+inoremap          <Leader><Esc>j        <C-O>:bp<CR>
+inoremap          <Leader><Esc>k        <C-O>:bn<CR>
+"Window movement
+nnoremap          <C-J>      <C-W>j
+nnoremap          <C-K>      <C-W>k
+nnoremap          <C-H>      <C-W>h
+nnoremap          <C-L>      <C-W>l
+"Other buffer stuff
+nnoremap <Leader>b  <Nop>
 nnoremap <Leader>bl :buffers<CR>
 nnoremap <Leader>bt :tab ball<CR>
-nnoremap <Leader>bn :enew<CR>
 nnoremap <Leader>bd :bd<CR>
-nnoremap <Leader>bv :vert sb<Space>
-
-"Window movement mapped to alt.
-nmap j <C-W>j
-nmap k  <C-W>k
-nmap l <C-W>l
-nmap h <C-W>h
+nnoremap <Leader>bD :bd!<CR>
 
 "Register stuff!
 nnoremap <Leader>c <Nop>
@@ -807,7 +831,7 @@ nnoremap <Leader>xb
                     \ join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ")
                 \ )<CR>
 "Export buffers
-nnoremap <silent> <Leader>Eb
+nnoremap <silent> <Leader>be
                     \ :call writefile(
                         \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
                         \ system("echo /home/james/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
@@ -912,32 +936,11 @@ nnoremap <Leader>Q Q
 nnoremap K <Nop>
 nnoremap <Leader>K K
 
-"nnoremap <Leader>yf A<Backspace>" +\2F"j999I k2F"jdwi"
+"nnoremap <Leader>yf A<Backspace>" +\<Esc>2F"j999I <Esc>k2F"jdwi"<Esc>
 "function! s:indent_to_here(row)
   "let col = col('.')
   "return !col || getline('.')[col - 1] =~ '\s'
 "endfunction
-
-"Replace comma with backslash for find backwards last.
-nnoremap \ ,
-
-"Edit multiple
-command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
-command! -complete=file -nargs=+ Ewindows call s:ETW('new', <f-args>)
-command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
-
-function! s:ETW(what, ...)
-  for f1 in a:000
-    let files = glob(f1)
-    if files == ''
-      execute a:what . ' ' . escape(f1, '\ "')
-    else
-      for f2 in split(files, "\n")
-        execute a:what . ' ' . escape(f2, '\ "')
-      endfor
-    endif
-  endfor
-endfunction
 
 "Execute viml
 nnoremap <Leader>e. :execute getline(".")<CR>
@@ -966,15 +969,15 @@ hi GitGutterAdd                             ctermbg=None
 hi GitGutterChange                          ctermbg=None
 hi GitGutterChangeDeleteDefault             ctermbg=None
 hi GitGutterChangeLineDefault               ctermbg=None
-hi GitGutterDeleteLine ctermbg=None
-hi GitGutterAddDefault ctermbg=None
-hi GitGutterChangeDefault ctermbg=None
-hi GitGutterChangeDeleteLine ctermbg=None
-hi GitGutterDelete ctermbg=None
-hi GitGutterAddLine ctermbg=None
-hi GitGutterChangeDelete ctermbg=None
-hi GitGutterChangeLine ctermbg=None
-hi GitGutterDeleteDefault ctermbg=None
+hi GitGutterDeleteLine                      ctermbg=None
+hi GitGutterAddDefault                      ctermbg=None
+hi GitGutterChangeDefault                   ctermbg=None
+hi GitGutterChangeDeleteLine                ctermbg=None
+hi GitGutterDelete                          ctermbg=None
+hi GitGutterAddLine                         ctermbg=None
+hi GitGutterChangeDelete                    ctermbg=None
+hi GitGutterChangeLine                      ctermbg=None
+hi GitGutterDeleteDefault                   ctermbg=None
 "hi MatchParen         term=inverse
 "hi Braces             ctermfg=None          ctermbg=None
 "hi vimHiCtermColor     ctermfg=Black
