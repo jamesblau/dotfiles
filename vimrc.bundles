@@ -42,6 +42,7 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'Transparent'
 Bundle 'oblitum/rainbow'
 Bundle 't9md/vim-chef'
+"Bundle 'TabBar'
 
 if !exists('g:spf13_bundle_groups')
 let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
@@ -65,7 +66,7 @@ if count(g:spf13_bundle_groups, 'general')
     else
         Bundle 'bling/vim-airline'
     endif
-    Bundle 'bling/vim-bufferline'
+    "Bundle 'bling/vim-bufferline'
     Bundle 'Lokaltog/vim-easymotion'
     "Bundle 'godlygeek/csapprox'
     Bundle 'jistr/vim-nerdtree-tabs'

@@ -31,10 +31,10 @@ let g:rainbow_active = 1
 let g:rainbow_ctermfgs = ['LightBlue', 'DarkGreen', 'Yellow', 'DarkRed']
 "let g:solarized_termtrans = 1
 "let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-"let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:gitgutter_initialised = 1
 "let g:gitgutter_realtime = 0
 "let g:spf13_no_neosnippet_expand = 1
@@ -140,17 +140,15 @@ nmap <Leader>f7 :set foldlevel=7<CR>
 nmap <Leader>f8 :set foldlevel=8<CR>
 nmap <Leader>f9 :set foldlevel=9<CR>
 
+" Change Working Directory to that of the current file
+nnoremap <silent> <Leader>wd :lcd %:p:h<CR>
+
 """""""""""""START UNTESTED
 "Toggle search highlighting
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 
 " Find merge conflict markers
 map <Leader>fc /\v^[<\|=>]( .*\|$)<CR>
-
-" Shortcuts
-" Change Working Directory to that of the current file
-cmap cwd lcd %:p:h
-cmap cd. lcd %:p:h
 
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -746,14 +744,14 @@ nnoremap tm :tabm<Space>
 nnoremap td :tabclose<CR>
 
 "Buffer stuff!
-nnoremap <C-J> :bp<CR>
-inoremap <C-J> :bp<CR>
-nnoremap <C-K> :bn<CR>
-inoremap <C-K> :bn<CR>
-nnoremap <C-H> :tp<CR>
-nnoremap <C-L> :tn<CR>
-nnoremap <C-H><C-H> :tabmove -1<CR>
-nnoremap <C-H><C-L> :tabmove +1<CR>
+nnoremap <silent> <C-J> :bp<CR>
+inoremap <silent> <C-J> :bp<CR>
+nnoremap <silent> <C-K> :bn<CR>
+inoremap <silent> <C-K> :bn<CR>
+nnoremap <silent> <C-H> :tabp<CR>
+nnoremap <silent> <C-L> :tabn<CR>
+nnoremap <silent> <C-W><C-H> :tabmove -1<CR>
+nnoremap <silent> <C-W><C-L> :tabmove +1<CR>
 nnoremap <Leader>b <Nop>
 nnoremap <Leader>bl :buffers<CR>
 nnoremap <Leader>bt :tab ball<CR>
@@ -954,9 +952,9 @@ hi SignColumn         ctermfg=Yellow        ctermbg=None
 hi LineNr             ctermfg=Yellow        ctermbg=None
 hi CursorLineNr       ctermfg=Yellow        ctermbg=None
 hi Normal             ctermfg=White
-hi TabLine            ctermfg=Black         ctermbg=Yellow
-hi TabLineSel         ctermfg=White         ctermbg=DarkRed
-hi TabLineFill        ctermfg=None
+"hi TabLine            ctermfg=Black         ctermbg=Yellow
+"hi TabLineSel         ctermfg=White         ctermbg=DarkRed
+"hi TabLineFill        ctermfg=None
 hi Search             ctermfg=White         ctermbg=Black       cterm=bold
 hi Visual             ctermfg=DarkRed       ctermbg=White
 hi vimLineComment     ctermfg=LightBlue
