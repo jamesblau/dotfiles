@@ -98,7 +98,7 @@ set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
-au! BufNewFile,BufRead *.txt syntax off
+"au! BufNewFile,BufRead *.txt syntax off
 "au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
 "au! BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 
@@ -709,9 +709,10 @@ nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 
-
 "Replace comma with backslash for find backwards last.
 nnoremap \ ,
+"Not sure about this one, but easier capitalized leader mappings
+nmap < ,
 
 function! AddSubtract(char, back)
 let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
@@ -726,7 +727,7 @@ nnoremap <silent> <Esc>x   :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
 
 "Edit multiple
 command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
-command! -complete=file -nargs=+ Ewindows call s:ETW('enew', <f-args>)
+command! -complete=file -nargs=+ Ewindows call s:ETW('edit', <f-args>)
 command! -complete=file -nargs=+ Eswindows call s:ETW('new', <f-args>)
 command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
 
@@ -746,14 +747,12 @@ endfunction
 "Tab stuff!
 nnoremap <Leader>th :tabfirst<CR>
 nnoremap <Leader>tl :tablast<CR>
-nnoremap <Leader>tn :tabnew<CR>
 nnoremap <Leader>tm :tabm<Space>
 nnoremap <Leader>td :tabclose<CR>
 
 "Some helpers to edit mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 nnoremap <Leader>ew :Ewindows<Space>
-nnoremap <Leader>en :enew<CR>
 nnoremap <Leader>es :Eswindows<Space>
 nnoremap <Leader>ev :Evwindows<Space>
 nnoremap <Leader>et :Etabs<Space>
@@ -761,22 +760,26 @@ nnoremap <Leader>eW :Ewindows %%
 nnoremap <Leader>eS :Eswindows %%
 nnoremap <Leader>eV :Evwindows %%
 nnoremap <Leader>eT :Etabs %%
+nnoremap <Leader>EW :enew<CR>
+nnoremap <Leader>ES :new<CR>
+nnoremap <Leader>EV :vnew<CR>
+nnoremap <Leader>ET :tabnew<CR>
 nnoremap <Leader>Es :sb<Space>
 nnoremap <Leader>Ev :vert sb<Space>
 
 "Tab, window, and buffer movement stuff!
 "Tab movement
-nnoremap <silent> <Esc>l        :tabp<CR>
-nnoremap <silent> <Esc>h        :tabn<CR>
-inoremap <silent> <Leader><Esc>l        <C-O>:tabp<CR>
-inoremap <silent> <Leader><Esc>h        <C-O>:tabn<CR>
+nnoremap <silent> <Esc>h        :tabp<CR>
+nnoremap <silent> <Esc>l        :tabn<CR>
+"inoremap <silent> <Leader><Esc>h        <C-O>:tabp<CR>
+"inoremap <silent> <Leader><Esc>l        <C-O>:tabn<CR>
 nnoremap <silent> <Esc>u     :tabmove -1<CR>
 nnoremap <silent> <Esc>i     :tabmove +1<CR>
 "Buffer movement
 nnoremap          <Esc>j        :bp<CR>
 nnoremap          <Esc>k        :bn<CR>
-inoremap          <Leader><Esc>j        <C-O>:bp<CR>
-inoremap          <Leader><Esc>k        <C-O>:bn<CR>
+"inoremap          <Leader><Esc>j        <C-O>:bp<CR>
+"inoremap          <Leader><Esc>k        <C-O>:bn<CR>
 "Window movement
 nnoremap          <C-J>      <C-W>j
 nnoremap          <C-K>      <C-W>k
