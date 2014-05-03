@@ -51,7 +51,6 @@ call vundle#rc()
 
 "Use local bundles if available
 source /home/james/.vimrc.bundles
-source /home/james/.vim/plugin/ctrlr.vim/plugin/ctrlr.vim
 
 "General
 let mapleader=','
