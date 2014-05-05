@@ -96,6 +96,7 @@ set matchpairs+=<:>             " Match, to be used with %
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+set mat=2
 au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
 "au! BufNewFile,BufRead *.txt syntax off
 "au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
@@ -817,9 +818,9 @@ nnoremap <Leader>rf :call setreg("\"", expand("%"))<CR>
 "Xclip from filename
 nnoremap <Leader>xf :call system("xclip -i -selection clipboard", expand("%"))<CR>
 "Register from dir
-nnoremap <Leader>rd :call setreg("\"", expand("%:p:h"))<CR>
+nnoremap <Leader>rd :call setreg("\"", expand("%:p:h")."/")<CR>
 "xclip from dir
-nnoremap <Leader>xd :call system("xclip -i -selection clipboard", expand("%:p:h"))<CR>
+nnoremap <Leader>xd :call system("xclip -i -selection clipboard", expand("%:p:h")."/")<CR>
 "Register from Git repo
 nnoremap <Leader>rg :call setreg("\"", system("git rev-parse --show-toplevel"))<CR>
 "xclip from Git repo
@@ -980,7 +981,6 @@ hi GitGutterAddLine                         ctermbg=None
 hi GitGutterChangeDelete                    ctermbg=None
 hi GitGutterChangeLine                      ctermbg=None
 hi GitGutterDeleteDefault                   ctermbg=None
-"hi MatchParen         term=inverse
 "hi Braces             ctermfg=None          ctermbg=None
 "hi vimHiCtermColor     ctermfg=Black
 "hi Highlight           ctermfg=Black
@@ -988,6 +988,9 @@ hi GitGutterDeleteDefault                   ctermbg=None
 "hi vimHiCTerm         ctermfg=None          ctermbg=None
 "hi preProc            ctermfg=None          ctermbg=None
 "hi Type               ctermfg=None          ctermbg=None
+hi MatchParen          cterm=undercurl,bold
+"hi clear MatchParen
+"hi Cursor
 
 "Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>

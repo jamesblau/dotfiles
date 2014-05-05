@@ -183,8 +183,7 @@ function myip () { if [ $# -eq 0 ]; then set -- "tun0"; fi; ifconfig "$1" | grep
 function xip () { myip $1 | tee /dev/tty | xclip; }
 
 alias vi='vim'
-alias nv='nvim -p'
-alias nvi='nvim -p'
+alias nv='nvim'
 export PYTHONSTARTUP=~/.pythonrc
 
 function xit () { echo -n $1 | xclip; }
