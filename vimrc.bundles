@@ -35,7 +35,7 @@ endif
 "
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'Parameter-Text-Objects'
-Bundle 'PreciseJump'
+"Bundle 'PreciseJump'
 Bundle 'Tabmerge'
 Bundle 'Shougo/unite.vim'
 Bundle 'airblade/vim-gitgutter'
@@ -46,6 +46,7 @@ Bundle 't9md/vim-chef'
 Bundle 'goldfeld/ctrlr.vim'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
+Bundle 'christoomey/vim-tmux-navigator'
 
 if !exists('g:spf13_bundle_groups')
 let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]

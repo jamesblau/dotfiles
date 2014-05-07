@@ -29,12 +29,15 @@ let s:autoclose_mapped = 0
 let b:match_ignorecase = 1
 let g:rainbow_active = 1
 let g:rainbow_ctermfgs = ['LightBlue', 'DarkGreen', 'Yellow', 'DarkRed']
-"let g:solarized_termtrans = 1
-"let g:airline_powerline_fonts = 1
+let g:session_autoload = 'no'
+let g:session_autosave = 'no'
+let g:EasyMotion_keys = '0123456789abcdefghijklmnopqrstuvwxyz'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
+"let g:airline_powerline_fonts = 1
+"let g:solarized_termtrans = 1
 "let g:gitgutter_initialised = 1
 "let g:gitgutter_realtime = 0
 "let g:spf13_no_neosnippet_expand = 1
@@ -43,7 +46,11 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 "\/ \/ https://github.com/airblade/vim-gitgutter/issues/106 \/ \/
 "let g:gitgutter_realtime = 1
 
-"Bundle
+"Silver Searcher Stuff
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
 filetype on
 filetype off
 set rtp+=/home/james/.vim/bundle/vundle
@@ -251,11 +258,11 @@ nmap <Leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
 
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
-nnoremap <silent> <D-t> :CtrlP<CR>
-nnoremap <silent> <D-r> :CtrlPMRU<CR>
-let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+"nnoremap <silent> <D-t> :CtrlP<CR>
+"nnoremap <silent> <D-r> :CtrlPMRU<CR>
+"let g:ctrlp_custom_ignore = {
+        "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
+        "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
 " TagBar
 nnoremap <silent> <Leader>tt :TagbarToggle<CR>
@@ -713,6 +720,7 @@ nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 nnoremap \ ,
 "Not sure about this one, but easier capitalized leader mappings
 nmap < ,
+nnoremap <Space> <Nop>
 
 function! AddSubtract(char, back)
 let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
@@ -766,6 +774,7 @@ nnoremap <Leader>EV :vnew<CR>
 nnoremap <Leader>ET :tabnew<CR>
 nnoremap <Leader>Es :sb<Space>
 nnoremap <Leader>Ev :vert sb<Space>
+nnoremap <Leader>Et :tab sb<Space>
 
 "Tab, window, and buffer movement stuff!
 "Tab movement
@@ -773,8 +782,8 @@ nnoremap <silent> <Esc>h        :tabp<CR>
 nnoremap <silent> <Esc>l        :tabn<CR>
 "inoremap <silent> <Leader><Esc>h        <C-O>:tabp<CR>
 "inoremap <silent> <Leader><Esc>l        <C-O>:tabn<CR>
-nnoremap <silent> <Esc>u     :tabmove -1<CR>
-nnoremap <silent> <Esc>i     :tabmove +1<CR>
+nnoremap <silent> <Esc>i     :tabmove -1<CR>
+nnoremap <silent> <Esc>o     :tabmove +1<CR>
 "Buffer movement
 nnoremap          <Esc>j        :bp<CR>
 nnoremap          <Esc>k        :bn<CR>
@@ -791,6 +800,20 @@ nnoremap <Leader>bl :buffers<CR>
 nnoremap <Leader>bt :tab ball<CR>
 nnoremap <Leader>bd :bd<CR>
 nnoremap <Leader>bD :bd!<CR>
+nnoremap <Leader>Bd :call DeleteHiddenBuffers()<CR>
+
+function DeleteHiddenBuffers()
+    let tpbl=[]
+    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+        silent execute 'bwipeout' buf
+    endfor
+endfunction
+
+"Easymotion stuff!
+map <C-\> <Plug>(easymotion-prefix)
+map <C-\><C-\> <Plug>(easymotion-jumptoanywhere)
+map <Leader><Leader> <Leader><Leader>
 
 "Register stuff!
 nnoremap <Leader>c <Nop>
@@ -887,10 +910,6 @@ nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR
 
 "au! BufNewFile,BufRead fugitive://* set bufhidden=delete
 
-map <Leader>wps <Plug>SaveWinPosn
-map <Leader>wpr <Plug>RestoreWinPosn
-
-
 inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 cnoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 
@@ -926,9 +945,20 @@ inoremap <C-D> <delete>
 cnoremap <C-D> <delete>
 
 "Substitution stuff!
-nnoremap <Leader>S :%s/\<<C-r><C-w>\>/
 vnoremap <Leader>s<Space> y:%s/"/
 vnoremap <Leader>ss y:%s/<C-r>"/<C-r>"/g
+nnoremap <Leader>sc :%s/\<<C-r><C-w>\>/
+
+"Session stuff!
+nnoremap <Leader>S <Nop>
+nnoremap <Leader>So SessionOpen
+nnoremap <Leader>Sv SessionView
+nnoremap <Leader>Ss SessionSave
+nnoremap <Leader>Sc SessionClose
+nnoremap <Leader>Sto SessionTabOpen
+nnoremap <Leader>Sts SessionTabSave
+nnoremap <Leader>Sta SessionTabAppend
+nnoremap <Leader>Stc SessionTabClose
 
 "Accept autocomplete selection
 cnoremap  <space><delete>
