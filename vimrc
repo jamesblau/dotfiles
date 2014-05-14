@@ -51,6 +51,9 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+"ZoomWin remap
+nnoremap <unique> <silent> <C-W>w <Plug>ZoomWin
+
 filetype on
 filetype off
 set rtp+=/home/james/.vim/bundle/vundle
@@ -173,7 +176,7 @@ vnoremap . :normal .<CR>
 "imap <Esc>[H <C-O>g0
 
 " Adjust viewports to the same size
-map <Leader>= <C-w>=
+map <Leader>= <C-W>=
 
 " Map <Leader>ff to display all lines with keyword under cursor
 " and ask which one to jump to
@@ -196,12 +199,12 @@ hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=ligh
 hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 
 " Some convenient mappings
-inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
-inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
+inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
+inoremap <expr> <C-D>      pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<C-D>"
+inoremap <expr> <C-U>      pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<C-U>"
 
 " Automatically open and close the popup menu / preview window
 au! CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
@@ -311,7 +314,7 @@ let g:neocomplete#force_overwrite_completefunc = 1
 " SuperTab like snippets behavior.
 "imap <silent><expr><TAB> neosnippet#expandable() ?
             "\ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-            "\ "\<C-e>" : "\<TAB>")
+            "\ "\<C-E>" : "\<TAB>")
 "smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -329,22 +332,22 @@ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 " .vimrc.before.local file:
 "   let g:spf13_no_neosnippet_expand = 1
 if !exists('g:spf13_no_neosnippet_expand')
-    imap <C-k> <Plug>(neosnippet_expand_or_jump)
-    smap <C-k> <Plug>(neosnippet_expand_or_jump)
+    imap <C-K> <Plug>(neosnippet_expand_or_jump)
+    smap <C-K> <Plug>(neosnippet_expand_or_jump)
 endif
-"inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
+"inoremap <expr><C-G> neocomplete#undo_completion()
+inoremap <expr><C-L> neocomplete#complete_common_string()
 inoremap <expr><CR> neocomplete#complete_common_string()
 " <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-N>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-P>" : "\<TAB>"
 " <CR>: close popup
 " <s-CR>: close popup and save indent.
 inoremap <expr><s-CR> pumvisible() ? neocomplete#close_popup()"\<CR>" : "\<CR>"
 inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y> neocomplete#close_popup()
+" <C-H>, <BS>: close popup and delete backword char.
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-H>"
+inoremap <expr><C-Y> neocomplete#close_popup()
 "
 " Enable omni completion.
 au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -396,7 +399,7 @@ let g:neocomplcache_force_overwrite_completefunc = 1
 " SuperTab like snippets behavior.
 imap <silent><expr><TAB> neosnippet#expandable() ?
             \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-            \ "\<C-e>" : "\<TAB>")
+            \ "\<C-E>" : "\<TAB>")
 smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
@@ -414,22 +417,22 @@ let g:neocomplcache_keyword_patterns._ = '\h\w*'
 " .vimrc.before.local file:
 "   let g:spf13_no_neosnippet_expand = 1
 if !exists('g:spf13_no_neosnippet_expand')
-    imap <C-k> <Plug>(neosnippet_expand_or_jump)
-    smap <C-k> <Plug>(neosnippet_expand_or_jump)
+    imap <C-K> <Plug>(neosnippet_expand_or_jump)
+    smap <C-K> <Plug>(neosnippet_expand_or_jump)
 endif
-"inoremap <expr><C-g> neocomplcache#undo_completion()
-inoremap <expr><C-l> neocomplcache#complete_common_string()
+"inoremap <expr><C-G> neocomplcache#undo_completion()
+inoremap <expr><C-L> neocomplcache#complete_common_string()
 inoremap <expr><CR> neocomplcache#complete_common_string()
 " <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-N>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-P>" : "\<TAB>"
 " <CR>: close popup
 " <s-CR>: close popup and save indent.
 inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
 inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y> neocomplcache#close_popup()
+" <C-H>, <BS>: close popup and delete backword char.
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-H>"
+inoremap <expr><C-Y> neocomplcache#close_popup()
 "
 " Enable omni completion.
 au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -619,6 +622,8 @@ set notimeout
 "<C-Space> leaves insert, visual without moving cursor
 inoremap <C-Space> <Esc>`^
 imap <C-@> <C-Space>
+vnoremap <C-Space> <Esc>`^
+vmap <C-@> <C-Space>
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
@@ -676,7 +681,7 @@ nnoremap <Leader>pK mm3O<Esc>kp`m
 nnoremap <Leader>pp mm)O<CR><C-R>"<Esc>`m
 nnoremap <Leader>pP mm(O<C-R>"<CR><Esc>`m
 
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
+inoremap <expr><TAB> pumvisible() ? "\<C-N>" : <SID>check_back_space() ? "\<TAB>" : "\<C-X>\<C-U>"
 function! s:check_back_space()
     let col = col('.') - 1
     return !col || getline('.')[col - 1] =~ '\s'
@@ -726,12 +731,12 @@ function! AddSubtract(char, back)
 let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
 call search(pattern, 'cw' . a:back)
 execute 'normal! ' . v:count1 . a:char
-silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+silent! call repeat#set(":\<C-U>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
-nnoremap <silent> <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
-nnoremap <silent> <Esc>a   :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
-nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
-nnoremap <silent> <Esc>x   :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
+nnoremap <silent> <C-A> :<C-U>call AddSubtract("\<C-A>", '')<CR>
+nnoremap <silent> <Esc>a   :<C-U>call AddSubtract("\<C-A>", 'b')<CR>
+nnoremap <silent> <C-X> :<C-U>call AddSubtract("\<C-X>", '')<CR>
+nnoremap <silent> <Esc>x   :<C-U>call AddSubtract("\<C-X>", 'b')<CR>
 
 "Edit multiple
 command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
@@ -945,20 +950,21 @@ inoremap <C-D> <delete>
 cnoremap <C-D> <delete>
 
 "Substitution stuff!
-vnoremap <Leader>s<Space> y:%s/"/
-vnoremap <Leader>ss y:%s/<C-r>"/<C-r>"/g
-nnoremap <Leader>sc :%s/\<<C-r><C-w>\>/
+vnoremap <Leader>s<Space> y:%s/<C-R>"/
+vnoremap <Leader>ss y:%s/<C-R>"/<C-R>"/g
+nnoremap <Leader>sc :%s/\<<C-R><C-W>\>/
 
 "Session stuff!
 nnoremap <Leader>S <Nop>
-nnoremap <Leader>So SessionOpen
-nnoremap <Leader>Sv SessionView
-nnoremap <Leader>Ss SessionSave
-nnoremap <Leader>Sc SessionClose
-nnoremap <Leader>Sto SessionTabOpen
-nnoremap <Leader>Sts SessionTabSave
-nnoremap <Leader>Sta SessionTabAppend
-nnoremap <Leader>Stc SessionTabClose
+nnoremap <Leader>SL :SessionList<CR>
+nnoremap <Leader>SO :OpenSession
+nnoremap <Leader>SV :ViewSession<CR>
+nnoremap <Leader>SS :SaveSession<CR>
+nnoremap <Leader>SC :CloseSession<CR>
+nnoremap <Leader>STO :OpenTabSession<CR>
+nnoremap <Leader>STS :SaveTabSession<CR>
+nnoremap <Leader>STA :AppendTabSession<CR>
+nnoremap <Leader>STC :CloseTabSession<CR>
 
 "Accept autocomplete selection
 cnoremap  <space><delete>

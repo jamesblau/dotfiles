@@ -47,6 +47,7 @@ Bundle 'goldfeld/ctrlr.vim'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'christoomey/vim-tmux-navigator'
+Bundle 'ZoomWin'
 
 if !exists('g:spf13_bundle_groups')
 let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
