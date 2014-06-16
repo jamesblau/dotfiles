@@ -32,7 +32,8 @@ elseif executable('ack-grep')
 elseif executable('ack')
     Bundle 'mileszs/ack.vim'
 endif
-"
+
+"Personal
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'Parameter-Text-Objects'
 "Bundle 'PreciseJump'
@@ -47,10 +48,11 @@ Bundle 'goldfeld/ctrlr.vim'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'ZoomWin'
+Bundle 'regedarek/ZoomWin'
+Bundle 'bufkill.vim'
 
 if !exists('g:spf13_bundle_groups')
-let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
+    let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
 endif
 
  "General
@@ -78,9 +80,9 @@ if count(g:spf13_bundle_groups, 'general')
     Bundle 'flazz/vim-colorschemes'
     Bundle 'mbbill/undotree'
     Bundle 'nathanaelkane/vim-indent-guides'
-    if !exists('g:spf13_no_views')
-        Bundle 'vim-scripts/restore_view.vim'
-    endif
+    "if !exists('g:spf13_no_views')
+        "Bundle 'vim-scripts/restore_view.vim'
+    "endif
     "Bundle 'mhinz/vim-signify'
     Bundle 'tpope/vim-abolish.git'
     Bundle 'osyo-manga/vim-over'

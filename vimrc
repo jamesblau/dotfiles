@@ -6,7 +6,7 @@ set shell=/bin/sh
 endif
 
 "Globals
-let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'ruby', 'python', 'misc', 'scala']
+let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'misc', 'scala']
 let g:neocomplcache_disable_auto_complete = 1
 let g:evervim_devtoken='S=s200:U=15f5845:E=1490b215f4f:C=141b3703353:P=1cd:A=en-devtoken:V=2:H=db1cc3d81bd4554cb82ba09928779b86'
 let g:multi_cursor_exit_from_insert_mode=0
@@ -36,6 +36,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:tmux_navigator_no_mappings = 1
 "let g:airline_powerline_fonts = 1
 "let g:solarized_termtrans = 1
 "let g:gitgutter_initialised = 1
@@ -51,8 +52,16 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+"Tmux navigator stuff
+"nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<CR>
+"nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<CR>
+"nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<CR>
+"nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<CR>
+"nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
+
 "ZoomWin remap
-nnoremap <unique> <silent> <C-W>w <Plug>ZoomWin
+nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
+nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
 
 filetype on
 filetype off
@@ -622,7 +631,7 @@ set notimeout
 "<C-Space> leaves insert, visual without moving cursor
 inoremap <C-Space> <Esc>`^
 imap <C-@> <C-Space>
-vnoremap <C-Space> <Esc>`^
+vnoremap <C-Space> <Esc>
 vmap <C-@> <C-Space>
 
 " Instead of reverting the cursor to the last position in the buffer, we
@@ -704,12 +713,21 @@ function! NfAlphaToggle()
     endif
 endfunc
 
+function! HeightToggle()
+    if(&winheight == 999)
+        set winheight=1
+    else
+        set winheight=999
+    endif
+endfunc
+
 "Sets and toggles!
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
 nnoremap <Leader>si :IndentGuidesToggle<CR>
 nnoremap <Leader>sn :call NumberToggle()<CR>
 nnoremap <Leader>sf :call NfAlphaToggle()<CR>
+nnoremap <Leader>sh :call HeightToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
@@ -769,14 +787,15 @@ nnoremap <Leader>ew :Ewindows<Space>
 nnoremap <Leader>es :Eswindows<Space>
 nnoremap <Leader>ev :Evwindows<Space>
 nnoremap <Leader>et :Etabs<Space>
-nnoremap <Leader>eW :Ewindows %%
-nnoremap <Leader>eS :Eswindows %%
-nnoremap <Leader>eV :Evwindows %%
-nnoremap <Leader>eT :Etabs %%
+nmap <Leader>eW :Ewindows %%
+nmap <Leader>eS :Eswindows %%
+nmap <Leader>eV :Evwindows %%
+nmap <Leader>eT :Etabs %%
 nnoremap <Leader>EW :enew<CR>
 nnoremap <Leader>ES :new<CR>
 nnoremap <Leader>EV :vnew<CR>
 nnoremap <Leader>ET :tabnew<CR>
+nnoremap <Leader>Ew :b<Space>
 nnoremap <Leader>Es :sb<Space>
 nnoremap <Leader>Ev :vert sb<Space>
 nnoremap <Leader>Et :tab sb<Space>
@@ -842,9 +861,9 @@ nnoremap <Leader>rp :call setreg("\"", expand("%:p"))<CR>
 "Xclip from full path
 nnoremap <Leader>xp :call system("xclip -i -selection clipboard", expand("%:p"))<CR>
 "Register from filename
-nnoremap <Leader>rf :call setreg("\"", expand("%"))<CR>
+nnoremap <Leader>rf :call setreg("\"", expand("%:t"))<CR>
 "Xclip from filename
-nnoremap <Leader>xf :call system("xclip -i -selection clipboard", expand("%"))<CR>
+nnoremap <Leader>xf :call system("xclip -i -selection clipboard", expand("%:t"))<CR>
 "Register from dir
 nnoremap <Leader>rd :call setreg("\"", expand("%:p:h")."/")<CR>
 "xclip from dir
@@ -957,9 +976,9 @@ nnoremap <Leader>sc :%s/\<<C-R><C-W>\>/
 "Session stuff!
 nnoremap <Leader>S <Nop>
 nnoremap <Leader>SL :SessionList<CR>
-nnoremap <Leader>SO :OpenSession
+nnoremap <Leader>SO :OpenSession<Space>
 nnoremap <Leader>SV :ViewSession<CR>
-nnoremap <Leader>SS :SaveSession<CR>
+nnoremap <Leader>SS :SaveSession<Space>
 nnoremap <Leader>SC :CloseSession<CR>
 nnoremap <Leader>STO :OpenTabSession<CR>
 nnoremap <Leader>STS :SaveTabSession<CR>
@@ -1017,6 +1036,7 @@ hi GitGutterAddLine                         ctermbg=None
 hi GitGutterChangeDelete                    ctermbg=None
 hi GitGutterChangeLine                      ctermbg=None
 hi GitGutterDeleteDefault                   ctermbg=None
+hi shDoubleQuote                            ctermbg=None
 "hi Braces             ctermfg=None          ctermbg=None
 "hi vimHiCtermColor     ctermfg=Black
 "hi Highlight           ctermfg=Black
