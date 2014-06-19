@@ -37,7 +37,7 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:tmux_navigator_no_mappings = 1
-let g:windowswap_map_keys = 0
+"let g:windowswap_map_keys = 0
 "let g:airline_powerline_fonts = 1
 "let g:solarized_termtrans = 1
 "let g:gitgutter_initialised = 1
@@ -61,9 +61,9 @@ endif
 "nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
 
 "WindowSwap stuff
-nnoremap <silent> <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
-nnoremap <silent> <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
-nnoremap <silent> <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
+"nmap <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
+"nmap <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
+"nmap <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
 
 "ZoomWin remap
 nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
