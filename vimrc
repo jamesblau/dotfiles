@@ -734,6 +734,7 @@ nnoremap <Leader>si :IndentGuidesToggle<CR>
 nnoremap <Leader>sn :call NumberToggle()<CR>
 nnoremap <Leader>sf :call NfAlphaToggle()<CR>
 nnoremap <Leader>sh :call HeightToggle()<CR>
+nnoremap <Leader>sy :SyntasticToggleMode<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
