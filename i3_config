@@ -144,3 +144,4 @@ bindsym $mod+m move workspace to output left
 #Startup things...
 exec_always setxkbmap -option ctrl:nocaps
 exec parcellite
+exec volti

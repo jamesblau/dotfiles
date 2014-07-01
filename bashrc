@@ -197,7 +197,7 @@ alias passwords="while true; do clear; password; read; done"
 function x! () {
   if [ $# -eq 0 ]; then set -- "1"; fi;
   a=`expr $1 + 1`
-  b=`history $a | head -n 1 | sed -r 's/\s+/ /g' | cut -d ' ' -f 2-`;
+  b=`history $a | head -n 1 | sed -r 's/\s+/ /g' | cut -d ' ' -f 3-`;
   echo -n $b | xclip;
   echo $b;
 }
@@ -225,3 +225,5 @@ function swpbackvi () {
 #[Execute] Random File
 function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | head -n 1`; else find "${@}" -type f | shuf | head -n 1; fi; }
 
+#Use keychain
+alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'
