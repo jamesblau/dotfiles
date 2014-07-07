@@ -122,6 +122,7 @@ set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 set mat=2
+set noswapfile                  " Not sure about this one
 au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
 "au! BufNewFile,BufRead *.txt syntax off
 "au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
@@ -807,22 +808,39 @@ nnoremap <Leader>Es :sb<Space>
 nnoremap <Leader>Ev :vert sb<Space>
 nnoremap <Leader>Et :tab sb<Space>
 
+function NextTorB()
+    if (tabpagenr("$") == 1)
+        bn
+    else
+        tabn
+    endif
+endfunction
+function PrevTorB()
+    if (tabpagenr("$") == 1)
+        bp
+    else
+        tabp
+    endif
+endfunction
+
 "Tab, window, and buffer movement stuff!
 "Tab movement
-nnoremap <silent> <Esc>h        :tabp<CR>
-nnoremap <silent> <Esc>l        :tabn<CR>
+nnoremap <silent> <Esc>i        :bp<CR>
+nnoremap <silent> <Esc>o        :bn<CR>
 "inoremap <silent> <Leader><Esc>h        <C-O>:tabp<CR>
 "inoremap <silent> <Leader><Esc>l        <C-O>:tabn<CR>
-nnoremap <silent> <Esc>i     :tabmove -1<CR>
-nnoremap <silent> <Esc>o     :tabmove +1<CR>
+nnoremap <silent> <Esc>h     :tabmove -1<CR>
+nnoremap <silent> <Esc>l     :tabmove +1<CR>
 "Buffer movement
-nnoremap          <Esc>j        :bp<CR>
-nnoremap          <Esc>k        :bn<CR>
+nnoremap          <Esc>j        :call PrevTorB()<CR>
+nnoremap          <Esc>k        :call NextTorB()<CR>
 "inoremap          <Leader><Esc>j        <C-O>:bp<CR>
 "inoremap          <Leader><Esc>k        <C-O>:bn<CR>
 "Window movement
 nnoremap          <C-J>      <C-W>j
+nnoremap          <Esc><C-J> <C-W>j<C-W>_
 nnoremap          <C-K>      <C-W>k
+nnoremap          <Esc><C-K> <C-W>k<C-W>_
 nnoremap          <C-H>      <C-W>h
 nnoremap          <C-L>      <C-W>l
 "Other buffer stuff

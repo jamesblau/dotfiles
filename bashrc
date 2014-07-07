@@ -223,7 +223,7 @@ function swpbackvi () {
 }
 
 #[Execute] Random File
-function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | head -n 1`; else find "${@}" -type f | shuf | head -n 1; fi; }
+function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | head -n 1`; else find "${@}" -type f | shuf | head -n 1 | tee >(xclip); fi; }
 
 #Use keychain
 alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'
