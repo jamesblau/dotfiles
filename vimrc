@@ -751,6 +751,8 @@ nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 nnoremap \ ,
 "Not sure about this one, but easier capitalized leader mappings
 nmap < ,
+"But don't mess up unindenting
+nnoremap << <<
 nnoremap <Space> <Nop>
 
 function! AddSubtract(char, back)

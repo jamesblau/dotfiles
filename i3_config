@@ -114,22 +114,27 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
 mode "resize" {
-# These bindings trigger as soon as you enter the resize mode
+  bindsym h resize grow left 10 px or 10 ppt
+  bindsym j resize grow down 10 px or 10 ppt
+  bindsym k resize grow up 10 px or 10 ppt
+  bindsym l resize grow right 10 px or 10 ppt
+  bindsym Shift+h resize shrink right 10 px or 10 ppt
+  bindsym Shift+j resize shrink up 10 px or 10 ppt
+  bindsym Shift+k resize shrink down 10 px or 10 ppt
+  bindsym Shift+l resize shrink left 10 px or 10 ppt
 
-# Pressing left will shrink the window’s width.
-# Pressing right will grow the window’s width.
-# Pressing up will shrink the window’s height.
-# Pressing down will grow the window’s height.
-  bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
+  bindsym Control+h resize grow left 1 px or 1 ppt
+  bindsym Control+j resize grow down 1 px or 1 ppt
+  bindsym Control+k resize grow up 1 px or 1 ppt
+  bindsym Control+l resize grow right 1 px or 1 ppt
+  bindsym Control+Shift+h resize shrink right 1 px or 1 ppt
+  bindsym Control+Shift+j resize shrink up 1 px or 1 ppt
+  bindsym Control+Shift+k resize shrink down 1 px or 1 ppt
+  bindsym Control+Shift+l resize shrink left 1 px or 1 ppt
 
-# back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -152,3 +157,5 @@ exec_always xkbset exp =m
 exec_always xmodmap -e 'keycode 108 = Pointer_Button1'
 exec_always xmodmap -e 'keycode 107 = Pointer_Button2'
 exec_always xmodmap -e 'keycode 105 = Pointer_Button3'
+
+# vim:filetype=i3
