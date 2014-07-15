@@ -51,6 +51,7 @@ Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'regedarek/ZoomWin'
 Bundle 'bufkill.vim'
 Bundle 'wesQ3/vim-windowswap'
+"Bundle 'PotatoesMaster/i3-vim-syntax'
 
 if !exists('g:spf13_bundle_groups')
     let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]

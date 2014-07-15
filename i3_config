@@ -115,14 +115,14 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 mode "resize" {
-  bindsym h resize grow left 10 px or 10 ppt
-  bindsym j resize grow down 10 px or 10 ppt
-  bindsym k resize grow up 10 px or 10 ppt
-  bindsym l resize grow right 10 px or 10 ppt
-  bindsym Shift+h resize shrink right 10 px or 10 ppt
-  bindsym Shift+j resize shrink up 10 px or 10 ppt
-  bindsym Shift+k resize shrink down 10 px or 10 ppt
-  bindsym Shift+l resize shrink left 10 px or 10 ppt
+  bindsym h resize grow left 5 px or 5 ppt
+  bindsym j resize grow down 5 px or 5 ppt
+  bindsym k resize grow up 5 px or 5 ppt
+  bindsym l resize grow right 5 px or 5 ppt
+  bindsym Shift+h resize shrink right 5 px or 5 ppt
+  bindsym Shift+j resize shrink up 5 px or 5 ppt
+  bindsym Shift+k resize shrink down 5 px or 5 ppt
+  bindsym Shift+l resize shrink left 5 px or 5 ppt
 
   bindsym Control+h resize grow left 1 px or 1 ppt
   bindsym Control+j resize grow down 1 px or 1 ppt
@@ -148,14 +148,14 @@ bar {
 bindsym $mod+m move workspace to output left
 
 #Startup things...
-exec_always setxkbmap -option ctrl:nocaps
+exec setxkbmap -option ctrl:nocaps
 exec parcellite
 exec volti
 exec udisks-glue
-exec_always xkbset m
-exec_always xkbset exp =m
-exec_always xmodmap -e 'keycode 108 = Pointer_Button1'
-exec_always xmodmap -e 'keycode 107 = Pointer_Button2'
-exec_always xmodmap -e 'keycode 105 = Pointer_Button3'
+exec xkbset m
+exec xkbset exp =m
+exec xmodmap -e 'keycode 108 = Pointer_Button1'
+exec xmodmap -e 'keycode 107 = Pointer_Button2'
+exec xmodmap -e 'keycode 105 = Pointer_Button3'
 
 # vim:filetype=i3
