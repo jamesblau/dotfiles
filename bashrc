@@ -222,7 +222,7 @@ function swpbackvi () {
   vi -p ${b[@]};
 }
 
-#[Execute] Random File
+#[Execute] random file, copying file name to xclip
 function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | head -n 1`; else find "${@}" -type f | shuf | head -n 1 | tee >(xclip); fi; }
 
 #Use keychain
