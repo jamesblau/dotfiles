@@ -703,14 +703,16 @@ function! s:check_back_space()
     return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
-function! NumberToggle()
-    if(&rnu == 1 && &nu == 1)
-        set nonumber norelativenumber
-    else
-        set number relativenumber
-    endif
-endfunc
+if v:version > 702
+    function! NumberToggle()
+        if(&rnu == 1 && &nu == 1)
+            set nonumber norelativenumber
+        else
+            set number relativenumber
+        endif
+    endfunc
 set number relativenumber
+endif
 
 function! NfAlphaToggle()
     if(&nrformats == "")
