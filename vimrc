@@ -1119,5 +1119,5 @@ nnoremap <Leader>R <Nop>
 nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
 
 if v:version < 703
-    noremap  <BS>
+    inoremap  <BS>
 endif
