@@ -1117,3 +1117,7 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> tran
 "Resource and re-Filetype temp. hack...
 nnoremap <Leader>R <Nop>
 nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
+
+if v:version < 703
+    noremap  <BS>
+endif
