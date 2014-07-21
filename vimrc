@@ -810,14 +810,14 @@ nnoremap <Leader>Es :sb<Space>
 nnoremap <Leader>Ev :vert sb<Space>
 nnoremap <Leader>Et :tab sb<Space>
 
-function NextTorB()
+function! NextTorB()
     if (tabpagenr("$") == 1)
         bn
     else
         tabn
     endif
 endfunction
-function PrevTorB()
+function! PrevTorB()
     if (tabpagenr("$") == 1)
         bp
     else
@@ -840,9 +840,11 @@ nnoremap          <Esc>k        :call NextTorB()<CR>
 "inoremap          <Leader><Esc>k        <C-O>:bn<CR>
 "Window movement
 nnoremap          <C-J>      <C-W>j
-nnoremap          <Esc><C-J> <C-W>j<C-W>_
+"nnoremap          <Esc><C-J> <C-W>j<C-W>_
+nnoremap          <Esc><C-J> :call SmoothDown()<CR>
 nnoremap          <C-K>      <C-W>k
-nnoremap          <Esc><C-K> <C-W>k<C-W>_
+"nnoremap          <Esc><C-K> <C-W>k<C-W>_
+nnoremap          <Esc><C-K> :call SmoothUp()<CR>
 nnoremap          <C-H>      <C-W>h
 nnoremap          <C-L>      <C-W>l
 "Other buffer stuff
@@ -853,7 +855,37 @@ nnoremap <Leader>bd :bd<CR>
 nnoremap <Leader>bD :bd!<CR>
 nnoremap <Leader>Bd :call DeleteHiddenBuffers()<CR>
 
-function DeleteHiddenBuffers()
+"function! SmoothMove(hjkl)
+    "if(&winheight == 999)
+        "wincmd ??
+    "else
+        "set winheight=999
+        "wincmd ??
+        "set winheight=1
+    "endif
+"endfunc
+
+function! SmoothDown()
+    if(&winheight == 999)
+        wincmd j
+    else
+        set winheight=999
+        wincmd j
+        set winheight=1
+    endif
+endfunc
+
+function! SmoothUp()
+    if(&winheight == 999)
+        wincmd k
+    else
+        set winheight=999
+        wincmd k
+        set winheight=1
+    endif
+endfunc
+
+function! DeleteHiddenBuffers()
     let tpbl=[]
     call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
     for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
@@ -867,6 +899,7 @@ map <C-\><C-\> <Plug>(easymotion-jumptoanywhere)
 map <Leader><Leader> <Leader><Leader>
 
 "Register stuff!
+"TODO: name register for all below
 nnoremap <Leader>c <Nop>
 nnoremap <Leader>x <Nop>
 nnoremap <Leader>r <Nop>

@@ -38,7 +38,10 @@ Bundle 'bkad/CamelCaseMotion'
 Bundle 'Parameter-Text-Objects'
 "Bundle 'PreciseJump'
 Bundle 'Tabmerge'
-Bundle 'Shougo/unite.vim'
+if v:version > 702
+    Bundle 'Shougo/unite.vim'
+    Bundle 'regedarek/ZoomWin'
+endif
 Bundle 'airblade/vim-gitgutter'
 Bundle 'Transparent'
 Bundle 'oblitum/rainbow'
@@ -48,7 +51,6 @@ Bundle 'goldfeld/ctrlr.vim'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'regedarek/ZoomWin'
 Bundle 'bufkill.vim'
 Bundle 'wesQ3/vim-windowswap'
 "Bundle 'PotatoesMaster/i3-vim-syntax'
@@ -59,7 +61,9 @@ endif
 
  "General
 if count(g:spf13_bundle_groups, 'general')
-    Bundle 'scrooloose/nerdtree'
+    if v:version > 702
+        Bundle 'scrooloose/nerdtree'
+    endif
     "Bundle 'altercation/vim-colors-solarized'
     Bundle 'spf13/vim-colors'
     Bundle 'tpope/vim-surround'
@@ -115,30 +119,32 @@ if count(g:spf13_bundle_groups, 'programming')
     endif
 endif
 
-" Snippets & AutoComplete
-if count(g:spf13_bundle_groups, 'snipmate')
-    Bundle 'garbas/vim-snipmate'
-    Bundle 'honza/vim-snippets'
-    " Source support_function.vim to support vim-snippets.
-    if filereadable(expand("~/.vim/bundle/vim-snippets/snippets/support_functions.vim"))
-        source ~/.vim/bundle/vim-snippets/snippets/support_functions.vim
+if v:version > 702
+    " Snippets & AutoComplete
+    if count(g:spf13_bundle_groups, 'snipmate')
+        Bundle 'garbas/vim-snipmate'
+        Bundle 'honza/vim-snippets'
+        " Source support_function.vim to support vim-snippets.
+        if filereadable(expand("~/.vim/bundle/vim-snippets/snippets/support_functions.vim"))
+            source ~/.vim/bundle/vim-snippets/snippets/support_functions.vim
+        endif
+    elseif count(g:spf13_bundle_groups, 'youcompleteme')
+        Bundle 'Valloric/YouCompleteMe'
+        Bundle 'SirVer/ultisnips'
+        Bundle 'honza/vim-snippets'
+    elseif count(g:spf13_bundle_groups, 'neocomplcache')
+        Bundle 'Shougo/neocomplcache'
+        Bundle 'Shougo/neosnippet'
+        "Bundle 'Shougo/neosnippet-snippets'
+        Bundle 'honza/vim-snippets'
+    elseif count(g:spf13_bundle_groups, 'neocomplete')
+        Bundle 'Shougo/neocomplete.vim.git'
+        Bundle 'Shougo/neosnippet'
+        Bundle 'Shougo/neosnippet-snippets'
+        Bundle 'honza/vim-snippets'
     endif
-elseif count(g:spf13_bundle_groups, 'youcompleteme')
-    Bundle 'Valloric/YouCompleteMe'
-    Bundle 'SirVer/ultisnips'
-    Bundle 'honza/vim-snippets'
-elseif count(g:spf13_bundle_groups, 'neocomplcache')
-    Bundle 'Shougo/neocomplcache'
-    Bundle 'Shougo/neosnippet'
-    "Bundle 'Shougo/neosnippet-snippets'
-    Bundle 'honza/vim-snippets'
-elseif count(g:spf13_bundle_groups, 'neocomplete')
-    Bundle 'Shougo/neocomplete.vim.git'
-    Bundle 'Shougo/neosnippet'
-    Bundle 'Shougo/neosnippet-snippets'
-    Bundle 'honza/vim-snippets'
+    "
 endif
-"
 
 " PHP
 if count(g:spf13_bundle_groups, 'php')
