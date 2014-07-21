@@ -63,6 +63,7 @@ endif
 if count(g:spf13_bundle_groups, 'general')
     if v:version > 702
         Bundle 'scrooloose/nerdtree'
+        Bundle 'Lokaltog/vim-easymotion'
     endif
     "Bundle 'altercation/vim-colors-solarized'
     Bundle 'spf13/vim-colors'
@@ -80,7 +81,6 @@ if count(g:spf13_bundle_groups, 'general')
         Bundle 'bling/vim-airline'
     endif
     "Bundle 'bling/vim-bufferline'
-    Bundle 'Lokaltog/vim-easymotion'
     "Bundle 'godlygeek/csapprox'
     Bundle 'jistr/vim-nerdtree-tabs'
     Bundle 'flazz/vim-colorschemes'

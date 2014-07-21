@@ -1118,6 +1118,7 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> tran
 nnoremap <Leader>R <Nop>
 nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
 
+"Backspace whatever. hack...
 if v:version < 703
     inoremap  <BS>
 endif
