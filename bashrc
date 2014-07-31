@@ -227,3 +227,9 @@ function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | hea
 
 #Use keychain
 alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'
+
+#Ethernet
+alias ethernet='sudo kill `ps aux | grep "dhclient eth0" | grep -v "grep" | ssc 2` 2>/dev/null; sudo ifconfig eth0 up; sudo dhclient eth0'
+
+#!!
+set -o vi
