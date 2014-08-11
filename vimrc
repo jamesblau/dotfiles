@@ -1122,3 +1122,38 @@ nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
 if v:version < 703
     inoremap  <BS>
 endif
+
+fu! Sum(vals) "{{{
+    let acc = 0
+    for val in a:vals
+        let acc += val
+    endfor
+    return acc
+endfu "}}}
+fu! LogicalLineCounts() "{{{
+    if &wrap
+        let width = winwidth(0)
+        let line_counts = map(range(1, line('$')), "foldclosed(v:val)==v:val?1:(virtcol([v:val, '$'])/width)+1")
+    else
+        let line_counts = [line('$')]
+    endif
+    return line_counts
+endfu "}}}
+fu! LinesHiddenByFoldsCount() "{{{
+    let lines = range(1, line('$'))
+    call filter(lines, "foldclosed(v:val) > 0 && foldclosed(v:val) != v:val")
+    return len(lines)
+endfu "}}}
+fu! AutoResizeWindow(vert) "{{{
+    if a:vert
+        let longest = max(map(range(1, line('$')), "virtcol([v:val, '$'])"))
+        exec "vertical resize " . (longest+4)
+    else
+        let line_counts  = LogicalLineCounts()
+        let folded_lines = LinesHiddenByFoldsCount()
+        let lines        = Sum(line_counts) - folded_lines
+        exec 'resize ' . lines
+        1
+    endif
+endfu "}}}
+nnoremap <Leader>wf :call AutoResizeWindow(0)<CR>

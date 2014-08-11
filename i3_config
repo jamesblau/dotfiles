@@ -145,7 +145,7 @@ bar {
   status_command i3status
   font pango:DejaVu Sans Mono 11
 }
-bindsym $mod+m move workspace to output left
+bindsym $mod+m move workspace to output left; move workspace to output up
 
 #Startup things...
 exec setxkbmap -option ctrl:nocaps
@@ -164,5 +164,6 @@ exec_always synclient TapButton1=0
 exec_always synclient TapButton2=0
 exec_always synclient TapButton3=0
 exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
+exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio3/sensitivity #!?!?!
 
 # vim:filetype=conf
