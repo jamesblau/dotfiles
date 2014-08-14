@@ -169,20 +169,22 @@ nmap <Leader>f9 :set foldlevel=9<CR>
 " Change Working Directory to that of the current file
 nnoremap <silent> <Leader>wd :lcd %:p:h<CR>
 
+" Visual stuff!
+"     Visual shifting does not exit Visual mode
+vnoremap < <gv
+vnoremap > >gv
+"     Allow using the repeat operator with a visual selection: http://stackoverflow.com/a/8064607/127816
+vnoremap . :normal .<CR>
+nnoremap vv 0v$h
+vnoremap V <Esc>v$h
+
+
 """""""""""""START UNTESTED
 "Toggle search highlighting
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 
 " Find merge conflict markers
 map <Leader>fc /\v^[<\|=>]( .*\|$)<CR>
-
-" Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-
-" Allow using the repeat operator with a visual selection (!)
-" http://stackoverflow.com/a/8064607/127816
-vnoremap . :normal .<CR>
 
 " Fix home and end keybindings for screen, particularly on mac
 " - for some reason this fixes the arrow keys too. huh.
@@ -613,7 +615,7 @@ function! s:RunShellCommand(cmdline)
 endfunction
 "command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-"""""""""""""START UNTESTED
+"""""""""""""END UNTESTED
 
 "No octal, etc wierdness
 set nrformats=
@@ -635,7 +637,7 @@ endif
 "Timeout stuff!
 set notimeout
 
-"<C-Space> leaves insert, visual without moving cursor
+"<C-Space> leaves insert, visual without moving cursor. Not sure about this one...
 inoremap <C-Space> <Esc>`^
 imap <C-@> <C-Space>
 vnoremap <C-Space> <Esc>
@@ -856,6 +858,7 @@ nnoremap <Leader>bt :tab ball<CR>
 nnoremap <Leader>bd :bd<CR>
 nnoremap <Leader>bD :bd!<CR>
 nnoremap <Leader>Bd :call DeleteHiddenBuffers()<CR>
+nnoremap <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
 
 "function! SmoothMove(hjkl)
     "if(&winheight == 999)
@@ -892,6 +895,14 @@ function! DeleteHiddenBuffers()
     call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
     for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
         silent execute 'bwipeout' buf
+    endfor
+endfunction
+
+function! ReallyDeleteHiddenBuffers()
+    let tpbl=[]
+    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+        silent execute 'bwipeout!' buf
     endfor
 endfunction
 
