@@ -178,11 +178,10 @@ vnoremap . :normal .<CR>
 nnoremap vv 0v$h
 vnoremap V <Esc>v$h
 
-
-"""""""""""""START UNTESTED
 "Toggle search highlighting
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 
+"""""""""""""START UNTESTED
 " Find merge conflict markers
 map <Leader>fc /\v^[<\|=>]( .*\|$)<CR>
 
