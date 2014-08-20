@@ -1,9 +1,9 @@
 "vim: set sw=4 ts=4 sts=4 et ft=vim
 "Basics
 set nocompatible        " Must be first line
-if !(has('win16') || has('win32') || has('win64'))
-set shell=/bin/sh
-endif
+"if !(has('win16') || has('win32') || has('win64'))
+set shell=/bin/bash
+"endif
 
 "Globals
 let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'misc', 'scala']
@@ -287,21 +287,7 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " TagBar
 nnoremap <silent> <Leader>tt :TagbarToggle<CR>
-" If using go please install the gotags program using the following
-" go install github.com/jstemmer/gotags
-" And make sure gotags is in your path
-"let g:tagbar_type_go = {
-        "\ 'ctagstype' : 'go',
-        "\ 'kinds'     : [  'p:package', 'i:imports:1', 'c:constants', 'v:variables',
-            "\ 't:types',  'n:interfaces', 'w:fields', 'e:embedded', 'm:methods',
-            "\ 'r:constructor', 'f:functions' ],
-        "\ 'sro' : '.',
-        "\ 'kind2scope' :  't' : 'ctype', 'n' : 'ntype' ,
-        "\ 'scope2kind' :  'ctype' : 't', 'ntype' : 'n' ,
-        "\ 'ctagsbin'  : 'gotags',
-        "\ 'ctagsargs' : '-sort -silent'
-        "\ }
-
+"
 " PythonMode
 " Disable if python support not present
 if !has('python')
@@ -718,7 +704,15 @@ if v:version > 702
             set number relativenumber
         endif
     endfunc
-set number relativenumber
+    set number relativenumber
+else
+    function! NumberToggle()
+        if(&rnu == 1 && &nu == 1)
+            set nonumber
+        else
+            set number
+        endif
+    endfunc
 endif
 
 function! NfAlphaToggle()
@@ -737,6 +731,14 @@ function! HeightToggle()
     endif
 endfunc
 
+function! ShcfToggle()
+    if(&shcf == "-c")
+        set shcf=-ci
+    else
+        set shcf=-c
+    endif
+endfunc
+
 "Sets and toggles!
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
@@ -744,6 +746,7 @@ nnoremap <Leader>si :IndentGuidesToggle<CR>
 nnoremap <Leader>sn :call NumberToggle()<CR>
 nnoremap <Leader>sf :call NfAlphaToggle()<CR>
 nnoremap <Leader>sh :call HeightToggle()<CR>
+nnoremap <Leader>sS :call ShcfToggle()<CR>
 nnoremap <Leader>sy :SyntasticToggleMode<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>

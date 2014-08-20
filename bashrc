@@ -247,3 +247,6 @@ bind -m vi-insert "\C-d.":vi-delete
 bind -m vi-insert "\C-k.":
 bind -m vi-insert "\C-o.":
 #bind -m vi-insert "kj":vi-movement-mode forward-char
+
+#This stuff available in vim, etc
+#BASH_ENV="~/.bash_ni"

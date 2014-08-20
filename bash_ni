@@ -1,0 +1,29 @@
+# ~/.bash_ni: get bash to load aliases & functions for non-interactive
+#              shells - e.g. when issuing `:!cmd' commands from Vim
+#set -x
+
+# functions
+
+if [ -d /etc/bash_functions ]; then
+        cd /etc/bash_functions
+        for i in $(ls);        do
+                . $i
+        done
+        cd -
+fi
+
+if [ -d /home/gavron/.bash_functions ]; then
+        cd /home/gavron/.bash_functions
+        for i in $(ls);        do
+                . $i
+        done
+        cd -
+fi
+
+# source aliases
+
+shopt -s expand_aliases
+
+if [ -f ~/.bash_aliases ]; then
+        . ~/.bash_aliases
+fi
