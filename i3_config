@@ -35,6 +35,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start a terminal here TODO: fix
+bindsym $mod+Shift+Return exec gnome-terminal --working-directory="`~/src/opensource/xcwd/xcwd`"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -165,5 +168,8 @@ exec_always synclient TapButton2=0
 exec_always synclient TapButton3=0
 exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
 exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio3/sensitivity #!?!?!
+
+#Not sure about this one
+focus_follows_mouse no
 
 # vim:filetype=conf

@@ -228,12 +228,22 @@ alias killInternet='sudo kill `ps aux | grep "eth0" | grep -v "grep" | ssc 2` 2>
 set -o vi
 bind '"[5~": beginning-of-history'
 bind '"[6~": end-of-history'
+bind -m vi-move "g":beginning-of-history
+bind -m vi-move "G":end-of-history
 bind -m vi-command "o":insert-last-argument
 bind -m vi-insert "\C-l.":clear-screen
 bind -m vi-insert "\C-a.":beginning-of-line
+bind -m vi-move "\C-a.":beginning-of-line
 bind -m vi-insert "\C-e.":end-of-line
+bind -m vi-move "\C-e.":end-of-line
 bind -m vi-insert "\C-w.":backward-kill-word
 bind -m vi-insert "\C-n.":next-history
 bind -m vi-insert "\C-p.":previous-history
 bind -m vi-insert "\C-f.":forward-char
 bind -m vi-insert "\C-b.":backward-char
+bind -m vi-move "\C-d.":vi-delete
+bind -m vi-insert "\C-d.":vi-delete
+bind -m vi-insert "\C-d.":vi-delete
+bind -m vi-insert "\C-k.":
+bind -m vi-insert "\C-o.":
+#bind -m vi-insert "kj":vi-movement-mode forward-char

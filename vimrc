@@ -176,7 +176,8 @@ vnoremap > >gv
 "     Allow using the repeat operator with a visual selection: http://stackoverflow.com/a/8064607/127816
 vnoremap . :normal .<CR>
 nnoremap vv 0v$h
-vnoremap V <Esc>v$h
+nnoremap vV v$h
+nnoremap <Esc>v v$h
 
 "Toggle search highlighting
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
@@ -641,6 +642,11 @@ inoremap <C-Space> <Esc>`^
 imap <C-@> <C-Space>
 vnoremap <C-Space> <Esc>
 vmap <C-@> <C-Space>
+
+"kj with fast timeout for same as above
+set timeout timeoutlen=1000 ttimeoutlen=100
+set <F13>=kj
+imap <F13> <C-Space>
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
