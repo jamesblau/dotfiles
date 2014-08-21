@@ -88,7 +88,6 @@ set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
 set virtualedit=onemore             " Allow for cursor beyond last character
 set history=1000                    " Store a ton of history (default is 20)
-set nospell                           " Spell checking on
 set hidden                          " Allow buffer switching without saving
 set tw=0
 set tabpagemax=20               " Only show 20 tabs
@@ -109,12 +108,8 @@ set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-set nowrap
-set nocursorline
-set nohlsearch
 set autoindent                  " Indent at the same level of the previous line
 set expandtab                   " Tabs are spaces, not tabs
-set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
 set matchpairs+=<:>             " Match, to be used with %
@@ -122,7 +117,14 @@ set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 set mat=2
+set nospell
+set notimeout
+set nowrap
+set nocursorline
+set nohlsearch
+set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set noswapfile                  " Not sure about this one
+set nobackup                    " Not sure about this one
 au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
 "au! BufNewFile,BufRead *.txt syntax off
 "au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
@@ -619,9 +621,6 @@ set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 set showcmd                 " Show partial commands in status line and
 " Selected characters/lines in visual mode
 endif
-
-"Timeout stuff!
-set notimeout
 
 "<C-Space> leaves insert, visual without moving cursor. Not sure about this one...
 inoremap <C-Space> <Esc>`^
@@ -1142,6 +1141,7 @@ if v:version < 703
     inoremap  <BS>
 endif
 
+"Should be elsewhere? Resize windows.
 fu! Sum(vals) "{{{
     let acc = 0
     for val in a:vals

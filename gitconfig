@@ -1,0 +1,11 @@
+[user]
+	name = James Blau
+	email = james@tresata.com
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[alias]
+	d = difftool
+[push]
+	default = current
