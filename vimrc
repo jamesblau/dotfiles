@@ -81,8 +81,8 @@ source /home/james/.vimrc.bundles
 let mapleader=','
 filetype plugin indent on   " Automatically detect file types.
 syntax on                   " Syntax highlighting
-set mousehide               " Hide the mouse cursor while typing
 scriptencoding utf-8
+set mousehide               " Hide the mouse cursor while typing
 set bg=dark
 set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
@@ -180,9 +180,6 @@ vnoremap . :normal .<CR>
 nnoremap vv 0v$h
 nnoremap vV v$h
 nnoremap <Esc>v v$h
-
-"Toggle search highlighting
-nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 
 """""""""""""START UNTESTED
 " Find merge conflict markers
@@ -605,7 +602,9 @@ endfunction
 " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
 """""""""""""END UNTESTED
 
-"No octal, etc wierdness
+"Incremement character under cursor only
+nnoremap <Leader>ic a <Esc>h<C-A>lxh
+"No octal, etc wierdness in increment
 set nrformats=
 
 "Other empty sets!
@@ -757,6 +756,8 @@ nnoremap <Leader>s4 :set sw=4 ts=4 sts=4<CR>
 nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
+nnoremap <silent> <Leader>/ :set invhlsearch<CR>
+
 
 "Replace comma with backslash for find backwards last.
 nnoremap \ ,

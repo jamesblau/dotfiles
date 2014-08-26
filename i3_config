@@ -80,7 +80,7 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focur the parent container
+# focus the parent container
 bindsym $mod+p focus parent
 
 # focus the child container
@@ -147,6 +147,7 @@ bindsym $mod+r mode "resize"
 bar {
   status_command i3status
   font pango:DejaVu Sans Mono 11
+  tray_output eDP1
 }
 bindsym $mod+m move workspace to output left; move workspace to output up
 

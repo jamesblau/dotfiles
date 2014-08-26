@@ -221,8 +221,12 @@ function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | hea
 alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'
 
 #Ethernet
-alias ethernet='sudo kill `ps aux | grep "dhclient eth0" | grep -v "grep" | ssc 2` 2>/dev/null; sudo kill `ps aux | grep "wlan0" | grep -v "grep" | ssc 2` 2>/dev/null; sudo ifconfig eth0 up; sudo dhclient eth0'
-alias killInternet='sudo kill `ps aux | grep "eth0" | grep -v "grep" | ssc 2` 2>/dev/null; sudo kill `ps aux | grep "wlan0" | grep -v "grep" | ssc 2` 2>/dev/null; sudo kill `ps aux | grep "dhclient" | grep -v "grep" | ssc 2` 2>/dev/null'
+alias ethernet='killInternet; \
+        sudo ifconfig eth0 up; \
+        sudo dhclient eth0'
+alias killInternet='sudo kill `ps aux | grep "eth0" | grep -v "grep" | ssc 2` 2>/dev/null; \
+        sudo kill `ps aux | grep "wlan0" | grep -v "grep" | ssc 2` 2>/dev/null; \
+        sudo kill `ps aux | grep "dhclient" | grep -v "grep" | ssc 2` 2>/dev/null'
 
 # Vi mode + emacs in insert
 set -o vi
