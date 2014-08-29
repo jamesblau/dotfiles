@@ -1,11 +1,11 @@
 "vim: set sw=4 ts=4 sts=4 et ft=vim
-"Basics
+" Basics
 set nocompatible        " Must be first line
 "if !(has('win16') || has('win32') || has('win64'))
 set shell=/bin/bash
 "endif
 
-"Globals
+" Globals
 let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'misc', 'scala']
 let g:neocomplcache_disable_auto_complete = 1
 let g:evervim_devtoken='S=s200:U=15f5845:E=1490b215f4f:C=141b3703353:P=1cd:A=en-devtoken:V=2:H=db1cc3d81bd4554cb82ba09928779b86'
@@ -48,24 +48,24 @@ let g:tmux_navigator_no_mappings = 1
 "\/ \/ https://github.com/airblade/vim-gitgutter/issues/106 \/ \/
 "let g:gitgutter_realtime = 1
 
-"Silver Searcher Stuff
+" Silver Searcher stuff
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-"Tmux navigator stuff
+" Tmux navigator stuff
 "nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<CR>
 "nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<CR>
 "nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<CR>
 "nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<CR>
 "nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
 
-"WindowSwap stuff
+" WindowSwap stuff
 "nmap <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
 "nmap <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
 "nmap <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
 
-"ZoomWin remap
+" ZoomWin remap
 nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
 nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
 
@@ -74,10 +74,10 @@ filetype off
 set rtp+=/home/james/.vim/bundle/vundle
 call vundle#rc()
 
-"Use local bundles if available
+" Use local bundles if available
 source /home/james/.vimrc.bundles
 
-"General
+" General
 let mapleader=','
 filetype plugin indent on   " Automatically detect file types.
 syntax on                   " Syntax highlighting
@@ -506,23 +506,23 @@ endif
 " Functions
 " UnBundle
 function! UnBundle(arg, ...)
-let bundle = vundle#config#init_bundle(a:arg, a:000)
-call filter(g:bundles, 'v:val["name_spec"] != "' . a:arg . '"')
+  let bundle = vundle#config#init_bundle(a:arg, a:000)
+  call filter(g:bundles, 'v:val["name_spec"] != "' . a:arg . '"')
 endfunction
 "com! -nargs=+         UnBundle
         \ call UnBundle(<args>)
 
 " Initialize directories
 function! InitializeDirectories()
-let parent = $HOME
-let prefix = 'vim'
-let dir_list = {
-            \ 'backup': 'backupdir',
-            \ 'views': 'viewdir',
-            \ 'swap': 'directory' }
-if has('persistent_undo')
+  let parent = $HOME
+  let prefix = 'vim'
+  let dir_list = {
+              \ 'backup': 'backupdir',
+              \ 'views': 'viewdir',
+              \ 'swap': 'directory' }
+  if has('persistent_undo')
     let dir_list['undo'] = 'undodir'
-endif
+  endif
 " To specify a different directory in which to place the vimbackup,
 " vimviews, vimundo, and vimswap files/directories, add the following to
 " your .vimrc.before.local file:
@@ -602,12 +602,12 @@ endfunction
 " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
 """""""""""""END UNTESTED
 
-"Incremement character under cursor only
+" Incremement character under cursor only
 nnoremap <Leader>ic a <Esc>h<C-A>lxh
-"No octal, etc wierdness in increment
+" No octal, etc wierdness in increment
 set nrformats=
 
-"Other empty sets!
+" Other empty sets!
 set mouse=
 set spellcapcheck=
 
@@ -621,14 +621,14 @@ set showcmd                 " Show partial commands in status line and
 " Selected characters/lines in visual mode
 endif
 
-"<C-Space> leaves insert, visual without moving cursor. Not sure about this one...
+" <C-Space> leaves insert, visual without moving cursor. Not sure about this one...
 inoremap <C-Space> <Esc>`^
 imap <C-@> <C-Space>
 vnoremap <C-Space> <Esc>
 vmap <C-@> <C-Space>
 
-"kj with fast timeout for same as above
-set timeout timeoutlen=1000 ttimeoutlen=100
+" kj with fast timeout for same as above
+set ttimeoutlen=100
 set <F13>=kj
 imap <F13> <C-Space>
 
@@ -668,11 +668,11 @@ set laststatus=2
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
-"Break lines
+" Break lines
 nmap <Leader>m i<CR><Esc><F5>
 nmap <Leader>M a<CR><Esc><F5>
 
-"Yank and Pasting stuff
+" Yank and Pasting stuff
 cnoremap <C-T> <C-R>
 nnoremap Y y$
 nnoremap <Leader>p <Nop>
@@ -690,54 +690,88 @@ nnoremap <Leader>pP mm(O<C-R>"<CR><Esc>`m
 
 inoremap <expr><TAB> pumvisible() ? "\<C-N>" : <SID>check_back_space() ? "\<TAB>" : "\<C-X>\<C-U>"
 function! s:check_back_space()
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1] =~ '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
 if v:version > 702
-    function! NumberToggle()
-        if(&rnu == 1 && &nu == 1)
-            set nonumber norelativenumber
-        else
-            set number relativenumber
-        endif
-    endfunc
-    set number relativenumber
+  function! NumberToggle()
+    if(&rnu == 1 && &nu == 1)
+      set nonumber norelativenumber
+    else
+      set number relativenumber
+    endif
+  endfunction
+  set number relativenumber
 else
-    function! NumberToggle()
-        if(&rnu == 1 && &nu == 1)
-            set nonumber
-        else
-            set number
-        endif
-    endfunc
+  function! NumberToggle()
+    if(&rnu == 1 && &nu == 1)
+      set nonumber
+    else
+      set number
+    endif
+  endfunction
 endif
 
 function! NfAlphaToggle()
-    if(&nrformats == "")
-        set nrformats=alpha
-    else
-        set nrformats=
-    endif
-endfunc
+  if(&nrformats == "")
+    set nrformats=alpha
+  else
+    set nrformats=
+  endif
+endfunction
 
 function! HeightToggle()
-    if(&winheight == 999)
-        set winheight=1
-    else
-        set winheight=999
-    endif
-endfunc
+  if(&winheight == 999)
+    set winheight=1
+  else
+    set winheight=999
+  endif
+endfunction
 
 function! ShcfToggle()
-    if(&shcf == "-c")
-        set shcf=-ci
-    else
-        set shcf=-c
-    endif
-endfunc
+  if(&shcf == "-c")
+    set shcf=-ci
+  else
+    set shcf=-c
+  endif
+endfunction
 
-"Sets and toggles!
+function! DiffW()
+  let opt = ""
+  if &diffopt =~ "icase"
+    let opt = opt . "-i "
+  endif
+  if &diffopt =~ "iwhite"
+    let opt = opt . "-w " " vim uses -b by default
+  endif
+  "if a:1 != ""
+    "let opt = opt . "-G " . a:1
+  "endif
+  silent execute "!diff -a --binary " . opt .
+        \ v:fname_in . " " . v:fname_new .  " > " . v:fname_out
+endfunction
+
+function! DiffWToggle()
+  if &diffopt =~ "iwhite"
+    set diffopt-=iwhite
+    set diffexpr=
+  else
+    set diffopt+=iwhite
+    set diffexpr=DiffW()
+  endif
+  call SacrificialTabRedraw()
+  echom &diffopt &diffexpr
+endfunction
+
+function! DiffWToggleRegex()
+  set diffopt+=iwhite
+  set diffexpr=DiffW()
+  call SacrificialTabRedraw()
+  echom &diffopt &diffexpr
+endfunction
+
+" Sets and toggles!
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
 nnoremap <Leader>si :IndentGuidesToggle<CR>
@@ -745,6 +779,8 @@ nnoremap <Leader>sn :call NumberToggle()<CR>
 nnoremap <Leader>sf :call NfAlphaToggle()<CR>
 nnoremap <Leader>sh :call HeightToggle()<CR>
 nnoremap <Leader>sS :call ShcfToggle()<CR>
+nnoremap <Leader>sd :call DiffWToggle()<CR>
+nmap     <Leader>sD :call DiffWToggleRegex("")<C-B><C-B>
 nnoremap <Leader>sy :SyntasticToggleMode<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
@@ -768,17 +804,17 @@ nnoremap << <<
 nnoremap <Space> <Nop>
 
 function! AddSubtract(char, back)
-let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
-call search(pattern, 'cw' . a:back)
-execute 'normal! ' . v:count1 . a:char
-silent! call repeat#set(":\<C-U>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
+  call search(pattern, 'cw' . a:back)
+  execute 'normal! ' . v:count1 . a:char
+  silent! call repeat#set(":\<C-U>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
 nnoremap <silent> <C-A> :<C-U>call AddSubtract("\<C-A>", '')<CR>
 nnoremap <silent> <Esc>a   :<C-U>call AddSubtract("\<C-A>", 'b')<CR>
 nnoremap <silent> <C-X> :<C-U>call AddSubtract("\<C-X>", '')<CR>
 nnoremap <silent> <Esc>x   :<C-U>call AddSubtract("\<C-X>", 'b')<CR>
 
-"Edit multiple
+" Edit multiple
 command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
 command! -complete=file -nargs=+ Ewindows call s:ETW('edit', <f-args>)
 command! -complete=file -nargs=+ Eswindows call s:ETW('new', <f-args>)
@@ -797,13 +833,13 @@ function! s:ETW(what, ...)
   endfor
 endfunction
 
-"Tab stuff!
+" Tab stuff!
 nnoremap <Leader>th :tabfirst<CR>
 nnoremap <Leader>tl :tablast<CR>
 nnoremap <Leader>tm :tabm<Space>
 nnoremap <Leader>td :tabclose<CR>
 
-"Some helpers to edit mode
+" Some helpers to edit mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 nnoremap <Leader>ew :Ewindows<Space>
 nnoremap <Leader>es :Eswindows<Space>
@@ -837,7 +873,7 @@ function! PrevTorB()
     endif
 endfunction
 
-"Tab, window, and buffer movement stuff!
+" Tab, window, and buffer movement stuff!
 "Tab movement
 nnoremap <silent> <Esc>i        :bp<CR>
 nnoremap <silent> <Esc>o        :bn<CR>
@@ -876,7 +912,7 @@ nnoremap <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
         "wincmd ??
         "set winheight=1
     "endif
-"endfunc
+"endfunction
 
 function! SmoothDown()
     if(&winheight == 999)
@@ -886,7 +922,7 @@ function! SmoothDown()
         wincmd j
         set winheight=1
     endif
-endfunc
+endfunction
 
 function! SmoothUp()
     if(&winheight == 999)
@@ -896,7 +932,7 @@ function! SmoothUp()
         wincmd k
         set winheight=1
     endif
-endfunc
+endfunction
 
 function! DeleteHiddenBuffers()
     let tpbl=[]
@@ -914,12 +950,12 @@ function! ReallyDeleteHiddenBuffers()
     endfor
 endfunction
 
-"Easymotion stuff!
+" Easymotion stuff!
 map <C-\> <Plug>(easymotion-prefix)
 map <C-\><C-\> <Plug>(easymotion-jumptoanywhere)
 map <Leader><Leader> <Leader><Leader>
 
-"Register stuff!
+" Register stuff!
 "TODO: name register for all below
 nnoremap <Leader>c <Nop>
 nnoremap <Leader>x <Nop>
@@ -972,26 +1008,20 @@ nnoremap <Leader>ra mmggVGy`m
 "xclip from All
 nnoremap <Leader>xa mmggVGy:call system("xclip -i -selection clipboard", getreg("\""))<CR>`m
 
-"Emacsy command line stuff!
-cnoremap <C-A> <Home>
-cnoremap <C-F> <Right>
-cnoremap <C-B> <Left>
-cnoremap <Esc>b <S-Left>
-cnoremap <Esc>f <S-Right>
-set cedit=
-
-"Center on search term
+" Center on search term, diff
 nmap n nzz
 nmap N Nzz
+nmap ]c ]czz
+nmap [c [czz
 
-"Saving stuff
+" Saving stuff
 cmap w!! w !sudo tee % >/dev/null
 nmap ,ww! :w<CR>:bw<CR>
 cmap ww!<CR> w<CR>:bw<CR>
 nmap ,w!w!w! :w!!<CR>ll:bw<CR>
 cmap w!w!w! :w!!<CR>ll:bw<CR>
 
-"Header stuff
+" Header stuff
 "Header make
 nnoremap <Leader>Hm ^i\|\|<Space><Esc>A<Space>\|\|<Esc>"qyy"qP"qD999a=<Esc>jhlk"qD"qyyj"qpqqqk^
 "Header fix
@@ -1005,12 +1035,12 @@ nnoremap <Leader>hf "yyykV"yp^r<Space>$xBhv^Elr<Space>
 "Minor header unmake
 nnoremap <Leader>hu ^4x$x3Xkdd
 
-"???
+" ???
 "nnoremap <Leader>HM ,c ^i\|\| <esc>A \|\|<esc>"qyy"qP"qD999a=<esc>jhlk"qD"qyyj"qpVkk,c j^
 "nnoremap <Leader>HF jVkk,c 999A=<esc>jhlkDyyjpjddkVkk,c j^
 "nnoremap <Leader>HU kVjj,c \"qdd"qx"qx"qx$"qX"qX"qxj"qddqqqk^,c<Space>
 
-"Remove whitespace
+" Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
 
 "au! BufNewFile,BufRead fugitive://* set bufhidden=delete
@@ -1025,10 +1055,10 @@ function! ShowBreakToggle()
   else
     let &showbreak=repeat('>', 2)
   endif
-endfunc
+endfunction
 nnoremap <Leader>sb :call ShowBreakToggle()<CR>
 
-"Camel stuff!
+" Camel stuff!
 map -w <Plug>CamelCaseMotion_w
 map -b <Plug>CamelCaseMotion_b
 map -e <Plug>CamelCaseMotion_e
@@ -1039,22 +1069,27 @@ xmap i-b <Plug>CamelCaseMotion_ib
 omap i-e <Plug>CamelCaseMotion_ie
 xmap i-e <Plug>CamelCaseMotion_ie
 
-"Emacs stuff!
+" Emacs stuff!
 inoremap <C-F> <right>
+cnoremap <C-F> <Right>
 inoremap <C-B> <left>
-inoremap <C-L> <up>
-inoremap <C-N> <down>
+cnoremap <C-B> <Left>
 inoremap <C-A> <esc>I
+cnoremap <C-A> <Home>
 inoremap <C-E> <esc>A
 inoremap <C-D> <delete>
 cnoremap <C-D> <delete>
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
+set cedit=
 
-"Substitution stuff!
+
+" Substitution stuff!
 vnoremap <Leader>s<Space> y:%s/<C-R>"/
 vnoremap <Leader>ss y:%s/<C-R>"/<C-R>"/g
 nnoremap <Leader>sc :%s/\<<C-R><C-W>\>/
 
-"Session stuff!
+" Session stuff!
 nnoremap <Leader>S <Nop>
 nnoremap <Leader>SL :SessionList<CR>
 nnoremap <Leader>SO :OpenSession<Space>
@@ -1066,10 +1101,10 @@ nnoremap <Leader>STS :SaveTabSession<CR>
 nnoremap <Leader>STA :AppendTabSession<CR>
 nnoremap <Leader>STC :CloseTabSession<CR>
 
-"Accept autocomplete selection
+" Accept autocomplete selection
 cnoremap  <space><delete>
 
-"No accidental Ex-mode or keyword-lookup
+" No accidental Ex-mode or keyword-lookup
 nnoremap Q <Nop>
 nnoremap <Leader>Q Q
 nnoremap K <Nop>
@@ -1081,11 +1116,11 @@ nnoremap <Leader>K K
   "return !col || getline('.')[col - 1] =~ '\s'
 "endfunction
 
-"Execute viml
+" Execute viml
 nnoremap <Leader>e. :execute getline(".")<CR>
 nnoremap <Leader>er : <C-R>"<CR>
 
-"Color stuff!
+" Color stuff!
 colorscheme transparent
 "nnoremap <Leader>lr :hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
 "nnoremap <Leader>li :hi CursorLine   cterm=reverse,bold
@@ -1129,28 +1164,28 @@ hi MatchParen          cterm=undercurl,bold
 "hi clear MatchParen
 "hi Cursor
 
-"Check coloring
+" Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> trans<' . synIDattr(synID(line("."),col(".")+1,0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"fg#")<CR>
 
-"Resource and re-Filetype temp. hack...
+" Resource and re-Filetype temp. hack...
 nnoremap <Leader>R <Nop>
 nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
 
-"Backspace whatever. hack...
+" Backspace whatever. hack...
 if v:version < 703
     inoremap  <BS>
 endif
 
-"Should be elsewhere? Resize windows.
-fu! Sum(vals) "{{{
+" Should be elsewhere? Resize windows.
+function! Sum(vals) "{{{
     let acc = 0
     for val in a:vals
         let acc += val
     endfor
     return acc
-endfu "}}}
-fu! LogicalLineCounts() "{{{
+endfunction "}}}
+function! LogicalLineCounts() "{{{
     if &wrap
         let width = winwidth(0)
         let line_counts = map(range(1, line('$')), "foldclosed(v:val)==v:val?1:(virtcol([v:val, '$'])/width)+1")
@@ -1158,13 +1193,13 @@ fu! LogicalLineCounts() "{{{
         let line_counts = [line('$')]
     endif
     return line_counts
-endfu "}}}
-fu! LinesHiddenByFoldsCount() "{{{
+endfunction "}}}
+function! LinesHiddenByFoldsCount() "{{{
     let lines = range(1, line('$'))
     call filter(lines, "foldclosed(v:val) > 0 && foldclosed(v:val) != v:val")
     return len(lines)
-endfu "}}}
-fu! AutoResizeWindow(vert) "{{{
+endfunction "}}}
+function! AutoResizeWindow(vert) "{{{
     if a:vert
         let longest = max(map(range(1, line('$')), "virtcol([v:val, '$'])"))
         exec "vertical resize " . (longest+4)
@@ -1175,5 +1210,25 @@ fu! AutoResizeWindow(vert) "{{{
         exec 'resize ' . lines
         1
     endif
-endfu "}}}
+endfunction "}}}
 nnoremap <Leader>wf :call AutoResizeWindow(0)<CR>
+
+" Bsc/Csv stuff
+au! BufNewFile,BufRead *.bsv set filetype=csv
+nnoremap <Leader>qw :WhatColumn<CR>
+nnoremap <Leader>qW :WhatColumn!<CR>
+nnoremap <Leader>qc :NrColumns<CR>
+nnoremap <Leader>qs :SearchInColumn<Space>
+nnoremap <Leader>qh :HiColumn<CR>
+nnoremap <Leader>qH :HiColumn!<CR>
+
+" Regbuf stuff
+nnoremap <Leader>sr :RegbufOpen<CR>
+
+" Disgusting hack...
+function! SacrificialTabRedraw()
+  exec ':tabnew'
+  exec ':redraw'
+  exec ':bw'
+endfunction
+nnoremap <Leader>TR :call SacrificialTabRedraw()<CR>
