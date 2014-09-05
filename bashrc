@@ -215,7 +215,18 @@ function swpbackvi () {
 }
 
 #[Execute] random file, copying file name to xclip
-function rf () { if [ ! -d "$1" ]; then "$1" `find "${@:2}" -type f | shuf | head -n 1`; else find "${@}" -type f | shuf | head -n 1 | tee >(xclip); fi; }
+function rf () {
+        if [[ -n "$1" && ! -d "$1" ]]; then
+                a=`find "${@:2}" -type f | shuf | head -n 1`
+                echo $a | perl -ne "chomp and print" | xclip
+                "$1" "$a"
+                echo "$a"
+        else
+                a=`find "${@:1}" -type f | shuf | head -n 1`
+                echo $a | perl -ne "chomp and print" | xclip
+                echo "$a"
+        fi
+}
 
 #Use keychain
 alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'

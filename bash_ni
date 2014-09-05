@@ -1,5 +1,7 @@
 # ~/.bash_ni: get bash to load aliases & functions for non-interactive
 #              shells - e.g. when issuing `:!cmd' commands from Vim
+#              TODO: extract what vim should always load?
+#              TODO: or maybe findout how to force only Vim to load a certain bashrc?
 #set -x
 
 # functions

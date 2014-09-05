@@ -2,5 +2,5 @@
 # mode.
 $if mode=vi
     set keymap vi-insert
-    "kj": vi-movement-mode
+    #"kj": vi-movement-mode
 $endif

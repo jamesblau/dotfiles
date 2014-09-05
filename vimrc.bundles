@@ -56,6 +56,11 @@ Bundle 'wesQ3/vim-windowswap'
 "Bundle 'PotatoesMaster/i3-vim-syntax'
 Bundle 'chrisbra/csv.vim'
 Bundle 'tyru/regbuf.vim'
+Bundle 'tpope/vim-repeat'
+
+" Useless
+"Bundle 'AndrewRadev/sideways.vim'
+"Bundle 'swap-parameters'
 
 if !exists('g:spf13_bundle_groups')
     let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]

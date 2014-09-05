@@ -137,9 +137,11 @@ au! BufNewFile,BufRead *.html.twig set filetype=html.twig
 au! FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2 "best in a plugin...
 au! BufNewFile,BufRead *.coffee set filetype=coffee
 
-" Wrapped lines goes down/up to next row, rather than next line in file.
+" swap j/gj, k/gk
 noremap j gj
+noremap gj j
 noremap k gk
+noremap gk k
 
 " Stupid shift key fixes
 if !exists('g:spf13_no_keyfixes')
@@ -628,9 +630,9 @@ vnoremap <C-Space> <Esc>
 vmap <C-@> <C-Space>
 
 " kj with fast timeout for same as above
-set ttimeoutlen=100
-set <F13>=kj
-imap <F13> <C-Space>
+"set ttimeoutlen=100
+"set <F13>=kj
+"imap <F13> <C-Space>
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
@@ -1232,3 +1234,13 @@ function! SacrificialTabRedraw()
   exec ':bw'
 endfunction
 nnoremap <Leader>TR :call SacrificialTabRedraw()<CR>
+
+
+" Swap parameters (,-seperated, in parens)
+nmap <F14> /[,)]hv?[ (]l
+nmap <Plug>MoveParamRight <F14>"yy<F14>dll<F14>pF,P0/y
+  \:call repeat#set("\<Plug>MoveParamLeft")<CR>
+nmap <Plug>MoveParamLeft <F14>"yy<F14>dhhh<F14>pllp0/y
+  \:call repeat#set("\<Plug>MoveParamRight")<CR>
+nmap <Leader>< <Plug>MoveParamLeft
+nmap <Leader>> <Plug>MoveParamRight
