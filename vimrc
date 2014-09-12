@@ -37,6 +37,7 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:tmux_navigator_no_mappings = 1
+let g:surround_no_mappings = 1
 "let g:windowswap_map_keys = 0
 "let g:airline_powerline_fonts = 1
 "let g:solarized_termtrans = 1
@@ -1235,12 +1236,32 @@ function! SacrificialTabRedraw()
 endfunction
 nnoremap <Leader>TR :call SacrificialTabRedraw()<CR>
 
-
 " Swap parameters (,-seperated, in parens)
-nmap <F14> /[,)]hv?[ (]l
-nmap <Plug>MoveParamRight <F14>"yy<F14>dll<F14>pF,P0/y
+nnoremap <F14> /[,)]<C-I>hv?[ (]<C-I>l
+nmap <Plug>MoveParamRight <F14>"yy<F14>dll<F14>pF,P0/<C-T>y<C-I>
   \:call repeat#set("\<Plug>MoveParamLeft")<CR>
-nmap <Plug>MoveParamLeft <F14>"yy<F14>dhhh<F14>pllp0/y
+nmap <Plug>MoveParamLeft <F14>"yy<F14>dhhh<F14>pllp0/<C-T>y<C-I>
   \:call repeat#set("\<Plug>MoveParamRight")<CR>
 nmap <Leader>< <Plug>MoveParamLeft
 nmap <Leader>> <Plug>MoveParamRight
+
+" Undo and redo (useful for 'undo paste numbered register and paste next number register')
+" Note that <C-_> is actually accessed with <C-7>!
+map <C-_> u.
+
+" Give S back to sneak and ,S to surround
+xmap S <Plug>Sneak_S
+xmap <Leader>S <Plug>VSurround
+" Defaults below
+nnoremap ds  <Plug>Dsurround
+nnoremap cs  <Plug>Csurround
+nnoremap ys  <Plug>Ysurround
+nnoremap yS  <Plug>YSurround
+nnoremap yss <Plug>Yssurround
+nnoremap ySs <Plug>YSsurround
+nnoremap ySS <Plug>YSsurround
+"xnoremap S   <Plug>VSurround
+xnoremap gS  <Plug>VgSurround
+inoremap <C-S> <Plug>Isurround
+inoremap <C-G>s <Plug>Isurround
+inoremap <C-G>S <Plug>ISurround
