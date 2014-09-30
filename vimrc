@@ -276,9 +276,6 @@ set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
 nmap <Leader>sl :SessionList<CR>
 nmap <Leader>ss :SessionSave<CR>
 
-" JSON
-nmap <Leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
 "nnoremap <silent> <D-t> :CtrlP<CR>
@@ -293,7 +290,7 @@ nnoremap <silent> <Leader>tt :TagbarToggle<CR>
 " PythonMode
 " Disable if python support not present
 if !has('python')
-let g:pymode = 1
+  let g:pymode = 1
 endif
 
 " Fugitive
@@ -697,7 +694,12 @@ function! s:check_back_space()
   return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
+" Versioned stuff...
 if v:version > 702
+" JSON
+  nmap <Leader>jp <Esc>:%!underscore print<CR><Esc>:set filetype=json<CR><F5>
+  nmap <Leader>jt <Esc>:%!python -mjson.tool<CR><Esc>:set filetype=json<CR><F5>
+" NumberToggle
   function! NumberToggle()
     if(&rnu == 1 && &nu == 1)
       set nonumber norelativenumber
@@ -707,6 +709,11 @@ if v:version > 702
   endfunction
   set number relativenumber
 else
+" JSON
+  nmap <Leader>jt <Esc>:%!python2.6 -mjson.tool<CR><Esc>:set filetype=json<CR><F5>
+" Backspace whatever. hack...
+  inoremap  <BS>
+" NumberToggle
   function! NumberToggle()
     if(&rnu == 1 && &nu == 1)
       set nonumber
@@ -1175,11 +1182,6 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> tran
 nnoremap <Leader>R <Nop>
 nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
 
-" Backspace whatever. hack...
-if v:version < 703
-    inoremap  <BS>
-endif
-
 " Should be elsewhere? Resize windows.
 function! Sum(vals) "{{{
     let acc = 0
@@ -1253,15 +1255,15 @@ map <C-_> u.
 xmap S <Plug>Sneak_S
 xmap <Leader>S <Plug>VSurround
 " Defaults below
-nnoremap ds  <Plug>Dsurround
-nnoremap cs  <Plug>Csurround
-nnoremap ys  <Plug>Ysurround
-nnoremap yS  <Plug>YSurround
-nnoremap yss <Plug>Yssurround
-nnoremap ySs <Plug>YSsurround
-nnoremap ySS <Plug>YSsurround
-"xnoremap S   <Plug>VSurround
-xnoremap gS  <Plug>VgSurround
-inoremap <C-S> <Plug>Isurround
-inoremap <C-G>s <Plug>Isurround
-inoremap <C-G>S <Plug>ISurround
+nmap ds  <Plug>Dsurround
+nmap cs  <Plug>Csurround
+nmap ys  <Plug>Ysurround
+nmap yS  <Plug>YSurround
+nmap yss <Plug>Yssurround
+nmap ySs <Plug>YSsurround
+nmap ySS <Plug>YSsurround
+"xmap S   <Plug>VSurround
+xmap gS  <Plug>VgSurround
+imap <C-S> <Plug>Isurround
+imap <C-G>s <Plug>Isurround
+imap <C-G>S <Plug>ISurround

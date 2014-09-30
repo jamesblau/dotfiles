@@ -13,8 +13,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=20000
+HISTSIZE=100000
+HISTFILESIZE=200000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -263,5 +263,11 @@ bind -m vi-insert "\C-k.":
 bind -m vi-insert "\C-o.":
 #bind -m vi-insert "kj":vi-movement-mode forward-char
 
+# Add command to history
+bind '"\C-q": "\C-a history -s \C-j"'
+
 #This stuff available in vim, etc
 #BASH_ENV="~/.bash_ni"
+
+#Get rid of Gnome desktop bullshit
+alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'

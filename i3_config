@@ -34,9 +34,12 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Escape exec "amixer -D pulse set Master unmute; killall -USR1 i3status"
+bindsym $mod+F1 exec "amixer -D pulse set Master mute; killall -USR1 i3status"
+bindsym $mod+F2 exec "pactl set-sink-volume 0 -- -5%; killall -USR1 i3status"
+bindsym $mod+F3 exec "pactl set-sink-volume 0 -- +5%; killall -USR1 i3status"
 
-# start a terminal here TODO: fix
-bindsym $mod+Shift+Return exec gnome-terminal --working-directory="`~/src/opensource/xcwd/xcwd`"
+# start a terminal here: just use <C-S-N>
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -148,13 +151,23 @@ bar {
   status_command i3status
   font pango:DejaVu Sans Mono 11
   tray_output eDP1
+  colors {
+    #background #000000
+    #statusline #00A5FF #that neon blue
+    #separator #666666
+
+    #focused_workspace  #4c7899 #285577 #ffffff
+    #active_workspace   #333333 #5f676a #ffffff
+    #inactive_workspace #333333 #222222 #888888
+    #urgent_workspace   #2f343a #900000 #ffffff
+  }
 }
 bindsym $mod+m move workspace to output left; move workspace to output up
 
 #Startup things...
 exec setxkbmap -option ctrl:nocaps
 exec parcellite
-exec volti
+#exec volti
 exec udisks-glue
 exec xkbset m
 exec xkbset exp =m

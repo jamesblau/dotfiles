@@ -57,6 +57,7 @@ Bundle 'wesQ3/vim-windowswap'
 Bundle 'chrisbra/csv.vim'
 Bundle 'tyru/regbuf.vim'
 Bundle 'tpope/vim-repeat'
+Bundle 'elzr/vim-json'
 
 " Useless
 "Bundle 'AndrewRadev/sideways.vim'
@@ -170,7 +171,6 @@ endif
 
 " Javascript
 if count(g:spf13_bundle_groups, 'javascript')
-    Bundle 'elzr/vim-json'
     Bundle 'groenewege/vim-less'
     Bundle 'pangloss/vim-javascript'
     Bundle 'briancollins/vim-jst'
