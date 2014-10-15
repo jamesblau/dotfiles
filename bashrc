@@ -176,7 +176,7 @@ function xip () { myip $1 | tee /dev/tty | xclip; }
 
 alias vi='vim'
 alias nv='nvim'
-export PYTHONSTARTUP=~/.pythonrc
+export PYTHONSTARTUP=~/.pythonrc.py
 
 function xit () { echo -n $1 | xclip; }
 

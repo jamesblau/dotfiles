@@ -1,2 +1,15 @@
 /target/
 */target/
+*.log
+*.class
+.cache/
+.history/
+.lib/
+dist/*
+lib_managed/
+src_managed/
+target/
+project/target/
+project/project/target/
+project/boot/
+project/plugins/project/

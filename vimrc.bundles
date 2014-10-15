@@ -163,7 +163,7 @@ endif
 
 " Python
 if count(g:spf13_bundle_groups, 'python')
-    Bundle 'python.vim'
+    "Bundle 'python.vim'
     Bundle 'python_match.vim'
     Bundle 'pythoncomplete'
 endif
@@ -182,6 +182,7 @@ endif
 if count(g:spf13_bundle_groups, 'scala')
     Bundle 'derekwyatt/vim-scala'
     Bundle 'derekwyatt/vim-sbt'
+    Bundle 'rompetroll/vim-scalariform'
 endif
 "
 
@@ -212,7 +213,7 @@ endif
 " Ruby
 if count(g:spf13_bundle_groups, 'ruby')
     Bundle 'tpope/vim-rails'
-    let g:rubycomplete_buffer_loading = 1
+    "let g:rubycomplete_buffer_loading = 1
     "let g:rubycomplete_classes_in_global = 1
     "let g:rubycomplete_rails = 1
 endif

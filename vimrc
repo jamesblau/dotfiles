@@ -6,7 +6,7 @@ set shell=/bin/bash
 "endif
 
 " Globals
-let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'misc', 'scala']
+let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'misc', 'scala', 'python']
 let g:neocomplcache_disable_auto_complete = 1
 let g:evervim_devtoken='S=s200:U=15f5845:E=1490b215f4f:C=141b3703353:P=1cd:A=en-devtoken:V=2:H=db1cc3d81bd4554cb82ba09928779b86'
 let g:multi_cursor_exit_from_insert_mode=0
@@ -442,6 +442,9 @@ au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
 au! FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 au! FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 au! FileType python setlocal omnifunc=pythoncomplete#Complete
+au! FileType python setlocal equalprg=autopep8\ --aggressive\ --experimental\ /dev/stdin
+"au! FileType scala setlocal omnifunc=
+au! FileType scala setlocal equalprg=
 au! FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 au! FileType ruby setlocal omnifunc=rubycomplete#Complete
 au! FileType haskell setlocal omnifunc=necoghc#omnifunc
@@ -1044,6 +1047,18 @@ nnoremap <Leader>hm I\|__<Space><Esc>A<Space>__\|<Esc>yyPElv$Bhr<Space>^r<Space>
 nnoremap <Leader>hf "yyykV"yp^r<Space>$xBhv^Elr<Space>
 "Minor header unmake
 nnoremap <Leader>hu ^4x$x3Xkdd
+"Markdown header make
+nnoremap <Leader>MHm yypVr=k0
+"Markdown header fix
+nnoremap <Leader>MHf yyjVpVr=k0
+"Markdown header unmake
+nnoremap <Leader>MHu j"_ddk0
+"Markdown minor header make
+nnoremap <Leader>Mhm yypVr-k0
+"Markdown minor header fix
+nnoremap <Leader>Mhf yyjVpVr-k0
+"Markdown minor header unmake
+nnoremap <Leader>Mhu j"_ddk0
 
 " ???
 "nnoremap <Leader>HM ,c ^i\|\| <esc>A \|\|<esc>"qyy"qP"qD999a=<esc>jhlk"qD"qyyj"qpVkk,c j^
