@@ -1,7 +1,10 @@
-/target/
-*/target/
 *.log
 *.class
+*.css
+*.fjson
+*.js
+*.xml
+*.avro
 .cache/
 .history/
 .lib/
@@ -9,6 +12,8 @@ dist/*
 lib_managed/
 src_managed/
 target/
+/target/
+*/target/
 project/target/
 project/project/target/
 project/boot/

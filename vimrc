@@ -1108,7 +1108,6 @@ cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 set cedit=
 
-
 " Substitution stuff!
 vnoremap <Leader>s<Space> y:%s/<C-R>"/
 vnoremap <Leader>ss y:%s/<C-R>"/<C-R>"/g
@@ -1282,3 +1281,35 @@ xmap gS  <Plug>VgSurround
 imap <C-S> <Plug>Isurround
 imap <C-G>s <Plug>Isurround
 imap <C-G>S <Plug>ISurround
+
+" Delete only braces [and their lines] (and indent)
+"Set marks and highlight between
+nnoremap <F15> mm%mpkVj%moj
+nmap <Leader>%v <F15>
+"Set marks and go back
+nmap <F16> <F15><Esc>`m
+"Indent between and go back
+nmap <F17> <F15><<Esc>`m
+nmap <Leader>%<< <F17>
+"Delete brackets [and more] [and indent between]
+nmap <Leader>%d <F16>`pdd`ox`m<F5>
+nmap <Leader>%<d <F17>`pdd`ox`m<F5>
+nmap <Leader>%x <F16>`px`ox`m<F5>
+nmap <Leader>%<x <F17>`px`ox`m<F5>
+nmap <Leader>%D <F17>`pdd`odd
+nmap <Leader>%hd <F15>`pdd`old0
+nnoremap <Leader>%fd diw%x``x
+
+" Modify selected text using combining diacritics
+command! -range -nargs=0 Overline        call s:CombineSelection(<line1>, <line2>, '0305')
+command! -range -nargs=0 Underline       call s:CombineSelection(<line1>, <line2>, '0332')
+command! -range -nargs=0 DoubleUnderline call s:CombineSelection(<line1>, <line2>, '0333')
+command! -range -nargs=0 Strikethrough   call s:CombineSelection(<line1>, <line2>, '0336')
+
+function! s:CombineSelection(line1, line2, cp)
+  execute 'let char = "\u'.a:cp.'"'
+  execute a:line1.','.a:line2.'s/\%V[^[:cntrl:]]/&'.char.'/ge'
+endfunction
+
+"vnoremap <Leader>z :Overline<CR>
+"vnoremap <C-K> <C-K>

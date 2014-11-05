@@ -271,3 +271,13 @@ bind '"\C-q": "\C-a history -s \C-j"'
 
 #Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+#Sbt console readline survives Ctrl-Z
+alias sbt-console='rlwrap sbt console -Xnojline'
+alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
+
+#Color ag
+alias cag='ag --color'
