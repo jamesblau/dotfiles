@@ -229,7 +229,7 @@ function rf () {
 }
 
 #Use keychain
-alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'
+alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa)'
 
 #Ethernet
 alias ethernet='killInternet; \

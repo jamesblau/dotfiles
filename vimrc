@@ -699,6 +699,9 @@ endfunction
 
 " Versioned stuff...
 if v:version > 702
+" Keep window position
+  au! BufLeave * let b:winview = winsaveview()
+  au! BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
 " JSON
   nmap <Leader>jp <Esc>:%!underscore print<CR><Esc>:set filetype=json<CR><F5>
   nmap <Leader>jt <Esc>:%!python -mjson.tool<CR><Esc>:set filetype=json<CR><F5>
@@ -806,6 +809,7 @@ nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
+nnoremap <Leader>sz :set foldmethod=manual<CR>
 
 
 "Replace comma with backslash for find backwards last.
@@ -1240,6 +1244,7 @@ nnoremap <Leader>qc :NrColumns<CR>
 nnoremap <Leader>qs :SearchInColumn<Space>
 nnoremap <Leader>qh :HiColumn<CR>
 nnoremap <Leader>qH :HiColumn!<CR>
+nmap <Leader>qd :let g:csv_delim=''<C-B>
 
 " Regbuf stuff
 nnoremap <Leader>sr :RegbufOpen<CR>

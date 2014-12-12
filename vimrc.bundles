@@ -58,6 +58,9 @@ Bundle 'chrisbra/csv.vim'
 Bundle 'tyru/regbuf.vim'
 Bundle 'tpope/vim-repeat'
 Bundle 'elzr/vim-json'
+Bundle 'vsearch.vim'
+Bundle 'CycleColor'
+"Bundle 'Figlet.vim'
 
 " Useless
 "Bundle 'AndrewRadev/sideways.vim'
