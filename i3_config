@@ -121,6 +121,15 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 mode "resize" {
+  bindsym u resize grow left 50 px or 50 ppt
+  bindsym i resize grow down 50 px or 50 ppt
+  bindsym o resize grow up 50 px or 50 ppt
+  bindsym p resize grow right 50 px or 50 ppt
+  bindsym Shift+u resize shrink right 50 px or 50 ppt
+  bindsym Shift+i resize shrink up 50 px or 50 ppt
+  bindsym Shift+o resize shrink down 50 px or 50 ppt
+  bindsym Shift+p resize shrink left 50 px or 50 ppt
+
   bindsym h resize grow left 5 px or 5 ppt
   bindsym j resize grow down 5 px or 5 ppt
   bindsym k resize grow up 5 px or 5 ppt
@@ -165,6 +174,7 @@ bar {
 bindsym $mod+m move workspace to output left; move workspace to output up
 
 #Startup things...
+exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio*/serio*/sensitivity # Why must glob!? Why u increment? Why not always even work?
 exec setxkbmap -option ctrl:nocaps
 exec parcellite
 #exec volti
@@ -180,7 +190,6 @@ exec_always synclient HorizTwoFingerScroll=1
 exec_always synclient TapButton1=0
 exec_always synclient TapButton2=0
 exec_always synclient TapButton3=0
-exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio*/serio*/sensitivity # Why must glob!? Why u increment?
 
 #Not sure about this one
 focus_follows_mouse no

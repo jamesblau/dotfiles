@@ -38,6 +38,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:tmux_navigator_no_mappings = 1
 let g:surround_no_mappings = 1
+let g:syntastic_mode_map = {'mode': 'passive'}
 "let g:windowswap_map_keys = 0
 "let g:airline_powerline_fonts = 1
 "let g:solarized_termtrans = 1
@@ -811,6 +812,8 @@ nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 nnoremap <Leader>sz :set foldmethod=manual<CR>
 
+" Syntastic stuff
+nnoremap <Leader>ys :SyntasticCheck<CR>
 
 "Replace comma with backslash for find backwards last.
 nnoremap \ ,
@@ -1318,3 +1321,21 @@ endfunction
 
 "vnoremap <Leader>z :Overline<CR>
 "vnoremap <C-K> <C-K>
+
+" Search for merge conflics
+nmap <Leader>? /[<=>]\{7\}<CR>
+
+" YankRing stuff
+nnoremap <silent> <Leader><C-R>s :YRShow<CR>
+nnoremap <silent> <Leader><C-R>p :YRPop<CR>
+function! YRRunAfterMaps()
+  " Make Y yank to end of line.
+  nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+
+  " Fix L and H in operator-pending mode, so yH and such works.
+  omap <expr> L YRMapsExpression("", "$")
+  omap <expr> H YRMapsExpression("", "^")
+
+  " Don't clobber the yank register when pasting over text in visual mode.
+  "vnoremap p :<c-u>YRPaste 'p', 'v'<cr>gv:YRYankRange 'v'<cr>
+endfunction
