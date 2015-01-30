@@ -174,7 +174,7 @@ bar {
 bindsym $mod+m move workspace to output left; move workspace to output up
 
 #Startup things...
-exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio*/serio*/sensitivity # Why must glob!? Why u increment? Why not always even work?
+exec_always echo 250 | sudo tee /sys/devices/platform/i8042/serio*/serio*/sensitivity
 exec setxkbmap -option ctrl:nocaps
 exec parcellite
 #exec volti

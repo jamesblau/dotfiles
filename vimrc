@@ -39,6 +39,8 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:tmux_navigator_no_mappings = 1
 let g:surround_no_mappings = 1
 let g:syntastic_mode_map = {'mode': 'passive'}
+let g:yankring_replace_n_pkey = '<Esc>p'
+let g:yankring_replace_n_nkey = '<Esc>n'
 "let g:windowswap_map_keys = 0
 "let g:airline_powerline_fonts = 1
 "let g:solarized_termtrans = 1
@@ -1326,8 +1328,8 @@ endfunction
 nmap <Leader>? /[<=>]\{7\}<CR>
 
 " YankRing stuff
-nnoremap <silent> <Leader><C-R>s :YRShow<CR>
-nnoremap <silent> <Leader><C-R>p :YRPop<CR>
+nnoremap <silent> <Leader><C-R> :YRShow<CR>
+nnoremap <silent> <Leader><Leader><C-R> :YRPop<CR>
 function! YRRunAfterMaps()
   " Make Y yank to end of line.
   nnoremap Y :<C-U>YRYankCount 'y$'<CR>
@@ -1339,3 +1341,6 @@ function! YRRunAfterMaps()
   " Don't clobber the yank register when pasting over text in visual mode.
   "vnoremap p :<c-u>YRPaste 'p', 'v'<cr>gv:YRYankRange 'v'<cr>
 endfunction
+
+" Scalding stuff
+nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
