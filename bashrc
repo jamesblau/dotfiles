@@ -73,9 +73,6 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
 fi
 
@@ -98,9 +95,6 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-
-# reset intratubes
-alias fixint='sudo modprobe -r iwlwifi; sudo modprobe iwlwifi 11n_disable=0'
 
 # reset and kill n
 alias intnon='sudo modprobe -r iwlwifi; sudo modprobe iwlwifi 11n_disable=1'
@@ -128,14 +122,6 @@ alias ..........="cd ../../../../../../../../.."
 alias ...........="cd ../../../../../../../../../.."
 
 function mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
-function cs() { cd "$1" && ls; }
-
-#Hadoop alias
-alias hl="hadoop fs -ls"
-alias hp="hadoop fs -put"
-
-#Lock keyboard 4 babby!?!
-alias lk="perl ~/.lk4b.pl"
 
 #Open correct Ruby repl, irb1.9.1
 alias ir="irb1.9.1"
@@ -145,21 +131,6 @@ alias x2c="/home/james/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
 
 #Python check delimeters in table
 alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
-
-alias scr="screen -d -R"
-
-#bsv stuff
-alias ig="egrep -i --color"
-alias pig="grep -P --color"
-alias wg="egrep -iw --color"
-alias bsc="cut -d '|' -f"
-alias ssc="sed -r 's/\s+/ /g' | cut -d ' ' -f"
-alias kw="sed 's/^\s*//'"
-function header0 () { head -n 1 $1 | sed 's/||/|@#@#@#@#|/g' | sed 's/^/|/' | sed 's/|/\n/g' | nl -nrz -v 0 -w2 -s ":" | grep -v "@#@#@#@#" | column; }
-function header1 () { head -n 1 $1 | sed 's/||/|@#@#@#@#|/g' | sed 's/^/|/' | sed 's/|/\n/g' | nl -nrz -v 1 -w2 -s ":" | grep -v "@#@#@#@#" | column; }
-alias ds="sed 's/$/\n/'"
-alias coc="sort | uniq -c | sed 's/^\s*//' | sed -r 's/\s+/ /' | cut -d ' ' -f 1 | sort | uniq -c | sed 's/^\s*//'"
-alias bawk="awk -F'|'"
 
 export GIT_EDITOR=vim
 export VISUAL=vim
@@ -178,55 +149,8 @@ alias vi='vim'
 alias nv='nvim'
 export PYTHONSTARTUP=~/.pythonrc.py
 
-function xit () { echo -n $1 | xclip; }
-
-alias uwc='sort | uniq | wc'
-
 alias password="shuf /usr/share/dict/words | grep -v '[^a-z]' | grep '....' | grep -v '.....' | grep -v sS | sed -e 's/^./\U&/g' | head -n 3 | awk 'ORS=\" \"' | sed 's/\s//g; s/$/\n/'"
 alias passwords="while true; do clear; password; read; done"
-
-#Last command to xclip
-function x! () {
-  if [ $# -eq 0 ]; then set -- "1"; fi;
-  a=`expr $1 + 1`
-  b=`history $a | head -n 1 | sed -r 's/\s+/ /g' | cut -d ' ' -f 3-`;
-  echo -n $b | xclip;
-  echo $b;
-}
-
-function wcm () { echo -n $1 | wc -m; }
-
-#Find .swp file[s] generated from target file[s]
-function swpfind () { for i in *; do find /home/james/.vimswap -type f ! -iname ".*" | grep "$i""\.swp"; done; }
-#Find and xclip .swp file[s] generated from target file[s]
-#function swpfindx () { a=; for i in *; do a+=`find /home/james/.vimswap -type f ! -iname ".*" | grep "$i""\.swp"`; echo -n "$a" | xclip; echo "$a"; done; }
-#Find and open .swp file[s] generated from target file[s]
-function swpfindvi () { vi `for i in *; do find /home/james/.vimswap -type f ! -iname ".*" | grep "$i""\.swp"; done`; }
-#Find file[s] that generated target .swp file[s]
-function swpback () { for i in ~/.vimswap/*; do sed -n 1p "$i" | cut -d 0 -f 3 | sed -r 's/\s.*//; s/utf-8$//'; done; }
-#Find and xclip file[s] that generated target .swp file[s]
-#function swpbackx () { for i in ~/.vimswap/*; do a=`sed -n 1p "$i" | cut -d 0 -f 3 | sed -r 's/\s.*//; s/utf-8$//'`; echo -n "$a" | xclip; echo "$a"; done; }
-#Find and open file[s] that generated target .swp file[s]
-function swpbackvi () {
-  a=( `find ~/.vimswap -type f` )
-  b=( `for i in "${a[@]}"; do sed -n 1p "$i" | cut -d 0 -f 3 | sed -r 's/\s.*//; s/utf-8$//'; done | tr "\\n" " " | sed 's/~\(.*\)/\/home\/james$1/'; echo` )
-  echo ${b[@]}
-  vi -p ${b[@]};
-}
-
-#[Execute] random file, copying file name to xclip
-function rf () {
-        if [[ -n "$1" && ! -d "$1" ]]; then
-                a=`find "${@:2}" -type f | shuf | head -n 1`
-                echo $a | perl -ne "chomp and print" | xclip
-                "$1" "$a"
-                echo "$a"
-        else
-                a=`find "${@:1}" -type f | shuf | head -n 1`
-                echo $a | perl -ne "chomp and print" | xclip
-                echo "$a"
-        fi
-}
 
 #Use keychain
 alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa)'
@@ -264,7 +188,8 @@ bind -m vi-insert "\C-o.":
 #bind -m vi-insert "kj":vi-movement-mode forward-char
 
 # Add command to history
-bind '"\C-q": "\C-a history -s \C-j"'
+bind -m vi-insert '"\C-q": "\C-a history -s '\''\C-e'\''\C-j\C-p'\'' | xclip\C-a echo -n '\''\C-j"'
+bind -m vi-command '"\C-q": "I history -s '\''\C-e'\''\C-j\C-p'\'' | xclip\C-a echo -n '\''\C-j"'
 
 #This stuff available in vim, etc
 #BASH_ENV="~/.bash_ni"
@@ -280,3 +205,13 @@ alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
 
 #Color ag
 alias cag='ag --color'
+
+#Easy nohup
+function quiet () { (nohup "$@" > /dev/null &); }
+function quieter () { (nohup "$@" > /dev/null &); exit; }
+
+export PERL_MB_OPT="--install_base \"~/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=~/perl5"
+export PERL5LIB=~/perl5/lib/perl5/local/
+#export PERL5LIB=~/.cpan/build/JSON-2.90-SdtLVG/lib/
+#export PERL5LIB=~/.cpan/build/Math-Round-0.07-vJd8__/blib/lib/

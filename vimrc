@@ -93,6 +93,7 @@ set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatib
 set virtualedit=onemore             " Allow for cursor beyond last character
 set history=1000                    " Store a ton of history (default is 20)
 set hidden                          " Allow buffer switching without saving
+set switchbuf=useopen
 set tw=0
 set tabpagemax=20               " Only show 20 tabs
 set showmode                    " Display the current mode
@@ -129,7 +130,8 @@ set nohlsearch
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set noswapfile                  " Not sure about this one
 set nobackup                    " Not sure about this one
-au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
+"au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
+au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
 "au! BufNewFile,BufRead *.txt syntax off
 "au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
 "au! BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
@@ -184,13 +186,11 @@ vnoremap > >gv
 "     Allow using the repeat operator with a visual selection: http://stackoverflow.com/a/8064607/127816
 vnoremap . :normal .<CR>
 nnoremap vv 0v$h
+nnoremap VV _v$h
 nnoremap vV v$h
-nnoremap <Esc>v v$h
+nnoremap Vv v_
 
 """""""""""""START UNTESTED
-" Find merge conflict markers
-map <Leader>fc /\v^[<\|=>]( .*\|$)<CR>
-
 " Fix home and end keybindings for screen, particularly on mac
 " - for some reason this fixes the arrow keys too. huh.
 "map <Esc>[F $
@@ -204,10 +204,6 @@ map <Leader>= <C-W>=
 " Map <Leader>ff to display all lines with keyword under cursor
 " and ask which one to jump to
 nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
-" Easier horizontal scrolling
-map zl zL
-map zh zH
 
 " OmniComplete
 if has("autocmd") && exists("+omnifunc")
@@ -1108,9 +1104,7 @@ inoremap <C-F> <right>
 cnoremap <C-F> <Right>
 inoremap <C-B> <left>
 cnoremap <C-B> <Left>
-inoremap <C-A> <esc>I
 cnoremap <C-A> <Home>
-inoremap <C-E> <esc>A
 inoremap <C-D> <delete>
 cnoremap <C-D> <delete>
 cnoremap <Esc>b <S-Left>
@@ -1118,9 +1112,9 @@ cnoremap <Esc>f <S-Right>
 set cedit=
 
 " Substitution stuff!
-vnoremap <Leader>s<Space> y:%s/<C-R>"/
-vnoremap <Leader>ss y:%s/<C-R>"/<C-R>"/g
-nnoremap <Leader>sc :%s/\<<C-R><C-W>\>/
+vnoremap <Leader>s<Space> y:%S/<C-R>"/
+vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g
+nnoremap <Leader>sc :%S/\<<C-R><C-W>\>/
 
 " Session stuff!
 nnoremap <Leader>S <Nop>
@@ -1172,6 +1166,7 @@ hi NonText            ctermfg=DarkRed
 hi DiffAdd            ctermfg=Yellow        ctermbg=None
 hi DiffChange         ctermfg=Yellow        ctermbg=None
 hi DiffDelete         ctermfg=Yellow        ctermbg=None
+hi DiffText           ctermfg=None          ctermbg=DarkGray
 hi GitGutterAdd                             ctermbg=None
 hi GitGutterChange                          ctermbg=None
 hi GitGutterChangeDeleteDefault             ctermbg=None
@@ -1250,6 +1245,19 @@ nnoremap <Leader>qs :SearchInColumn<Space>
 nnoremap <Leader>qh :HiColumn<CR>
 nnoremap <Leader>qH :HiColumn!<CR>
 nmap <Leader>qd :let g:csv_delim=''<C-B>
+nnoremap <silent> <Leader>qS :above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor<CR>:CSVTabularize<CR>ggVjjd<C-W>kVp<C-W>j
+" Fast horizontal navigation
+nnoremap <Esc>H zH
+nnoremap <Esc>L zL
+nnoremap <Esc>J 25zh
+nnoremap <Esc>K 25zl
+" Or maybe:
+"nnoremap <C-B> zH
+"nnoremap <C-F> zL
+"nnoremap <Esc>J 15jzz
+"nnoremap <Esc>K 15kzz
+"nnoremap <Esc>H 25zh
+"nnoremap <Esc>L 25zl
 
 " Regbuf stuff
 nnoremap <Leader>sr :RegbufOpen<CR>
@@ -1325,7 +1333,9 @@ endfunction
 "vnoremap <C-K> <C-K>
 
 " Search for merge conflics
-nmap <Leader>? /[<=>]\{7\}<CR>
+"nmap <Leader>? /^[<=>]\{7\}[^<=>]*$<CR>
+nmap <Leader>? /\v^[<\|=>]( .*\|$)<CR>
+
 
 " YankRing stuff
 nnoremap <silent> <Leader><C-R> :YRShow<CR>
@@ -1344,3 +1354,9 @@ endfunction
 
 " Scalding stuff
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
+
+" Last buffer more easily
+nmap  <C-^>
+
+" Search stuff!
+vnoremap <Leader>/ y/\V<C-R>"<CR>
