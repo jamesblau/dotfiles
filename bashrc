@@ -60,23 +60,14 @@ function __ps1_newline_login {
 if [ "$color_prompt" = yes ]; then
   #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
   PROMPT_COMMAND='__ps1_newline_login'
-  RED="\033[38;5;1m"
-  YEL="\033[33m"
-  GRN="\033[38;5;2m"
-  CYN="\033[36m"
+  RED="\[\033[38;5;1m\]"
+  YEL="\[\033[33m\]"
+  GRN="\[\033[38;5;15m\033[38;5;2m\]"
+  CYN="\[\033[36m\]"
   TON="\[$(tput bold)\]"
   TOFF="\[$(tput sgr0)\]"
-  export PS1="${TON}\
-${RED}[\$?]\
- \
-${YEL}\t\
- \
-${GRN}\u@\h:\
-${CYN}\w\n\
-${GRN}\$\
- \
-${TOFF}"
-  export PS2="${TON}${GRN}> ${TOFF}"
+  export PS1="${TON}${RED}[\$?] ${YEL}\t ${GRN}\u@\h:${CYN}\w\n\$ ${TOFF}"
+  export PS2="${TON}${CYN}\[> \]${TOFF}"
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
