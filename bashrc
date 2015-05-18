@@ -64,14 +64,19 @@ if [ "$color_prompt" = yes ]; then
   YEL="\033[33m"
   GRN="\033[38;5;2m"
   CYN="\033[36m"
-  export PS1="\[$(tput bold)\]\
+  TON="\[$(tput bold)\]"
+  TOFF="\[$(tput sgr0)\]"
+  export PS1="${TON}\
 ${RED}[\$?]\
  \
 ${YEL}\t\
  \
 ${GRN}\u@\h:\
 ${CYN}\w\n\
-\[$(tput sgr0)\]"
+${GRN}\$\
+ \
+${TOFF}"
+  export PS2="${TON}${GRN}> ${TOFF}"
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
