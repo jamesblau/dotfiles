@@ -1,0 +1,4 @@
+#!/bin/bash
+sudo ip route add 192.168.1.1 dev eth0
+sudo ip route add 192.168.1.1 dev wlan0
+

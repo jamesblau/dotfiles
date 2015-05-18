@@ -14,8 +14,8 @@
         #cd -
 #fi
 
-#if [ -d /home/gavron/.bash_functions ]; then
-        #cd /home/gavron/.bash_functions
+#if [ -d /home/james/.bash_functions ]; then
+        #cd /home/james/.bash_functions
         #for i in $(ls);        do
                 #. $i
         #done

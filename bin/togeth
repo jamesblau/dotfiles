@@ -1,0 +1,6 @@
+#!/bin/bash
+#toggle ethernet off and then on again
+sudo ifconfig eth0 down
+sleep 3
+sudo ifconfig eth0 up
+

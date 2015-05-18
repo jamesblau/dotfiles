@@ -1,0 +1,11 @@
+#!/bin/bash
+#[Execute] random file, copying file name to xclip
+function f () { find "${@}" -type f | shuf | head -n 1; }
+if [[ -n "$1" && ! -d "$1" ]]; then
+  a=`f "${@:2}"`
+  "$1" "$a"
+else
+  a=`f "${@:1}"`
+fi
+echo $a | perl -ne "chomp and print" | xclip
+echo "$a"

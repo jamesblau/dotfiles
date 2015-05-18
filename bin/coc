@@ -1,0 +1,2 @@
+#!/bin/bash
+sort "$@" | uniq -c | sed 's/^\s*//' | sed -r 's/\s+/ /' | cut -d ' ' -f 1 | sort | uniq -c | sed 's/^\s*//'

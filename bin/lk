@@ -1,0 +1,4 @@
+#!/bin/bash
+#lock keyboard four baby!
+
+perl ~/.lk4b.pl
