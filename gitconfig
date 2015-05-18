@@ -5,7 +5,13 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[merge]
+	tool = vimdiff
+[mergetool]
+	prompt = false
+	keepBackup = false
 [alias]
 	d = difftool
+	m = mergetool
 [push]
 	default = current

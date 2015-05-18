@@ -802,8 +802,8 @@ nnoremap <Leader>sN :set nu!<CR>
 nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>ss :set spell!<CR>
 nnoremap <Leader>sl :set cursorline!<CR>
-nnoremap <Leader>s2 :set sw=2 ts=2 sts=2<CR>
-nnoremap <Leader>s4 :set sw=4 ts=4 sts=4<CR>
+nnoremap <Leader>s2 :set expandtab sw=2 ts=2 sts=2<CR>
+nnoremap <Leader>s4 :set expandtab sw=4 ts=4 sts=4<CR>
 nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
@@ -1332,10 +1332,14 @@ endfunction
 "vnoremap <Leader>z :Overline<CR>
 "vnoremap <C-K> <C-K>
 
+" Merge stuff!
 " Search for merge conflics
-"nmap <Leader>? /^[<=>]\{7\}[^<=>]*$<CR>
-nmap <Leader>? /\v^[<\|=>]( .*\|$)<CR>
-
+nnoremap <Leader>? /^[<=>]\{7\}[^<=>]*$<CR>
+" Obtain merge diffs
+nnoremap dOR :diffg REMOTE<CR>
+nnoremap dOB :diffg BASE<CR>
+nnoremap dOL :diffg LOCAL<CR>
+nnoremap dU :diffupdate<CR>
 
 " YankRing stuff
 nnoremap <silent> <Leader><C-R> :YRShow<CR>
@@ -1359,4 +1363,4 @@ nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F
 nmap  <C-^>
 
 " Search stuff!
-vnoremap <Leader>/ y/\V<C-R>"<CR>
+vnoremap <Leader>/ yq/VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<CR>
