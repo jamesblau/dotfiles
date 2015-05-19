@@ -58,7 +58,6 @@ function __ps1_newline_login {
 }
 
 if [ "$color_prompt" = yes ]; then
-  #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
   PROMPT_COMMAND='__ps1_newline_login'
   RED="\[\033[38;5;1m\]"
   YEL="\[\033[33m\]"
@@ -231,3 +230,5 @@ export PERL_MM_OPT="INSTALL_BASE=~/perl5"
 export PERL5LIB=~/perl5/lib/perl5/local/
 #export PERL5LIB=~/.cpan/build/JSON-2.90-SdtLVG/lib/
 #export PERL5LIB=~/.cpan/build/Math-Round-0.07-vJd8__/blib/lib/
+# Run twolfson/sexy-bash-prompt
+. ~/.bash_prompt
