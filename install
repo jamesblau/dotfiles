@@ -1,18 +1,15 @@
 #!/bin/bash -x
 
 cd ~
-for i in `ls ~/dotfiles | grep -v "install\|bin\|bets\|i3_config\|bash_ni"`; do
-  ln -s ~/dotfiles/"$i" ."$i"
+LIST=( agignore bashrc gitconfig i3 i3status.conf inputrc pythonrc.py tmux.conf vimrc vimrc.bundles )
+for x in "${LIST[@]}"; do
+  ln -s ~/dotfiles/"$x" ."$x"
 done
 ln -s .vimrc .nvimrc
 ln -s .vimrc.bundles .nvimrc.bundles
 
-mkdir -p ~/.i3
-cd ~/.i3
-ln -s ~/dotfiles/i3_config config
-
 mkdir -p ~/bin
 cd ~/bin
-for i in `ls ~/dotfiles/bin`; do
-  ln -s ~/dotfiles/bin/"$i" "$i"
+for x in `ls ~/dotfiles/bin`; do
+  ln -s ~/dotfiles/bin/"$x" "$x"
 done
