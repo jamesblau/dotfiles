@@ -1,0 +1,54 @@
+set nosmoothscroll
+set nolinkanimations
+set nohud
+set noautofocus
+set cncpcompletion
+
+let cncpcompletion = "true"
+let scrollstep = 200
+let scrollduration = 1
+let vimcommand = "nvim"
+
+let completionengines = ["google", "wikipedia"]
+let searchalias g = "google"
+let searchalias w = "wikipedia"
+
+"let hintcharacters = "hklyuionmwertxcvbasdgjf"
+let mapleader = ","
+
+imap <C-o> editWithVim
+imap <C-q> selectAll
+
+imap <C-p> backwardLine
+imap <C-n> forwardLine
+imap <C-a> beginningOfLine
+imap <C-e> endOfLine
+imap <A-b> backwardWord
+imap <A-f> forwardWord
+imap <C-f> forwardChar
+imap <C-b> backwardChar
+
+imap <C-u> deleteToBeginning
+imap <C-k> deleteToEnd
+imap <C-w> deleteWord
+imap <A-w> deleteForwardWord
+imap <C-h> deleteChar
+imap <C-d> deleteForwardChar
+
+map W :tabdetach<CR>
+map gb :buffer<Space>
+map gr rootFrame
+
+map sh :set hud!<CR>
+map sn :set numerichints!<CR>
+map sb createBookmark
+
+map <C-f> scrollFullPageDown
+map <C-b> scrollFullPageUp
+map <C-d> scrollPageDown
+map <C-u> scrollPageUp
+
+map <C-j> nextCompletionResult
+imap <C-j> nextCompletionResult
+map <C-k> previousCompletionResult
+imap <C-k> previousCompletionResult

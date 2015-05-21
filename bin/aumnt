@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+[[ $# != 1 ]] && echo one arg && exit
+
+point="${1%/}"
+mount=`mount | grep "${point}" | sed 's/^\([^ ]*\).*/\1/'`
+
+[[ -z "${mount}" ]] && echo mount point not found && exit
+
+sudo umount "${point}"
+sudo rmdir "${point}"

@@ -49,6 +49,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Newline before subsequent PS1s
 function __ps1_newline_login {
   if [[ -z "${PS1_NEWLINE_LOGIN}" ]]; then
     PS1_NEWLINE_LOGIN=true
@@ -56,21 +57,32 @@ function __ps1_newline_login {
     printf '\n'
   fi
 }
+PROMPT_COMMAND='__ps1_newline_login'
+TON='$(tput bold)'
+TOFF='$(tput sgr0)'
+function TP () { echo "${TON}$(tput setaf $@)"; }
+RED="\033[38;5;1m"
+YEL="\033[33m"
+GRN="\033[38;5;15m\033[38;5;2m"
+CYN="\033[1;36m"
 
-if [ "$color_prompt" = yes ]; then
-  PROMPT_COMMAND='__ps1_newline_login'
-  RED="\[\033[38;5;1m\]"
-  YEL="\[\033[33m\]"
-  GRN="\[\033[38;5;15m\033[38;5;2m\]"
-  CYN="\[\033[1;36m\]"
-  TON="\[$(tput bold)\]"
-  TOFF="\[$(tput sgr0)\]"
-  export PS1="${TON}${RED}[\$?] ${YEL}\t ${GRN}\u@\h:${CYN}\w\n${CYN}\$ ${TOFF}"
-  export PS2="${TON}${CYN}> ${TOFF}"
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+#PROMPT_USER_COLOR=`TP 1` # BOLD RED
+#PROMPT_PREPOSITION_COLOR=`TP 7` # BOLD WHITE
+#PROMPT_DEVICE_COLOR=`TP 3` # BOLD YELLOW
+#PROMPT_DIR_COLOR=`TP 2` # BOLD GREEN
+#PROMPT_GIT_STATUS_COLOR=`TP 6` # BOLD CYAN
+#PROMPT_GIT_PROGRESS_COLOR=`TP 7` # BOLD VIOLET
+#PROMPT_SYMBOL_COLOR=`TP 1` # BOLD RED
+
+PROMPT_USER_COLOR="$(tput bold)${RED}"
+PROMPT_PREPOSITION_COLOR="$(tput bold)${YEL}"
+PROMPT_DEVICE_COLOR="$(tput bold)${GRN}"
+PROMPT_DIR_COLOR="$(tput bold)${CYN}"
+PROMPT_GIT_STATUS_COLOR=`TP 5`
+PROMPT_GIT_PROGRESS_COLOR="$(tput bold)${YEL}"
+PROMPT_SYMBOL_COLOR=`TP 5`
+export PS2="${TON}$(TP 5)> ${TOFF}"
+#export PS2="> "
 
 # If this is an xterm set the title to user@host:dir
 #case "$TERM" in
@@ -147,6 +159,7 @@ alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
 export GIT_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
+export VIMRUNTIME=/usr/share/vim/vim74
 
 #Avoid typing . for bin scripts that change directory
 alias cdg=". /home/james/bin/cdg"
@@ -155,7 +168,7 @@ stty -ixon
 
 alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s|.*\.||'"'"' | sort -u'
 
-function loop () { while true; do clear; $1; read; done; }
+function loop () { while true; do clear; $@; read; done; }
 
 function myip () { if [ $# -eq 0 ]; then set -- "tun0"; fi; ifconfig "$1" | grep inet | head -n 1 | cut -d ":" -f 2 | cut -d " " -f 1; }
 function xip () { myip $1 | tee /dev/tty | xclip; }
@@ -230,5 +243,6 @@ export PERL_MM_OPT="INSTALL_BASE=~/perl5"
 export PERL5LIB=~/perl5/lib/perl5/local/
 #export PERL5LIB=~/.cpan/build/JSON-2.90-SdtLVG/lib/
 #export PERL5LIB=~/.cpan/build/Math-Round-0.07-vJd8__/blib/lib/
+
 # Run twolfson/sexy-bash-prompt
 . ~/.bash_prompt

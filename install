@@ -1,12 +1,10 @@
 #!/bin/bash -x
 
 cd ~
-LIST=( agignore bashrc gitconfig i3 i3status.conf inputrc pythonrc.py tmux.conf vimrc vimrc.bundles )
+LIST=( agignore bash_prompt bashrc gitconfig i3 i3status.conf inputrc nvimrc pythonrc.py tmux.conf vimrc vimrc.bundles )
 for x in "${LIST[@]}"; do
-  ln -s ~/dotfiles/"$x" ."$x"
+  [[ -L "$x" ]] || ln -s ~/dotfiles/"$x" ."$x"
 done
-ln -s .vimrc .nvimrc
-ln -s .vimrc.bundles .nvimrc.bundles
 
 mkdir -p ~/bin
 cd ~/bin
