@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+[[ $# != 1 ]] && echo one arg && exit
+
+export POINT="${1%/}"
+DF=`df -T "${POINT}" | tail -n 1`
+export MOUNT=`echo "${DF}" | { read mount etc; echo "${mount}"; }`
+export FS=`echo "${DF}" | { read mount fs etc; echo "${fs}"; }`
+
+function exists () {
+  if [[ -z "$1" ]]; then
+    echo "$2" not found
+    exit 1
+  fi
+}
+
+exists "${POINT}" point
+exists "${MOUNT}" mount
+exists "${FS}" fs

@@ -37,6 +37,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
 bindsym $mod+F2 exec "pactl set-sink-volume 0 -- -5%; killall -USR1 i3status"
 bindsym $mod+F3 exec "pactl set-sink-volume 0 -- +5%; killall -USR1 i3status"
+bindsym $mod+Control+F2 exec "pactl set-sink-volume 0 -- -1%; killall -USR1 i3status"
+bindsym $mod+Control+F3 exec "pactl set-sink-volume 0 -- +1%; killall -USR1 i3status"
 bindsym $mod+F4 exec "amixer -D pulse set Capture toggle; killall -USR1 i3status"
 bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
@@ -196,5 +198,8 @@ exec_always synclient TapButton3=0
 
 #Not sure about this one
 focus_follows_mouse no
+
+#For youtube in cVim
+#bindsym $mod+braceleft scratchpad show; scratchpad show; xdotool key Escape
 
 # vim:filetype=conf

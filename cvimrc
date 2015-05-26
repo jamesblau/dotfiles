@@ -17,21 +17,20 @@ let searchalias w = "wikipedia"
 let mapleader = ","
 
 imap <C-o> editWithVim
-imap <C-q> selectAll
 
-imap <C-p> backwardLine
-imap <C-n> forwardLine
-imap <C-a> beginningOfLine
+imap <A-k> backwardLine
+imap <A-j> forwardLine
+imap <C-i> beginningOfLine
 imap <C-e> endOfLine
 imap <A-b> backwardWord
 imap <A-f> forwardWord
-imap <C-f> forwardChar
-imap <C-b> backwardChar
+imap <A-l> forwardChar
+imap <A-h> backwardChar
 
 imap <C-u> deleteToBeginning
 imap <C-k> deleteToEnd
-imap <C-w> deleteWord
-imap <A-w> deleteForwardWord
+imap <A-w> deleteWord
+imap <A-e> deleteForwardWord
 imap <C-h> deleteChar
 imap <C-d> deleteForwardChar
 
@@ -48,7 +47,7 @@ map <C-b> scrollFullPageUp
 map <C-d> scrollPageDown
 map <C-u> scrollPageUp
 
-map <C-j> nextCompletionResult
-imap <C-j> nextCompletionResult
-map <C-k> previousCompletionResult
-imap <C-k> previousCompletionResult
+map <A-n> nextCompletionResult
+imap <A-n> nextCompletionResult
+map <A-p> previousCompletionResult
+imap <A-p> previousCompletionResult

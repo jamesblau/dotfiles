@@ -1,12 +1,7 @@
 #!/bin/bash -e
 
-[[ $# != 1 ]] && echo one arg && exit
+source `dirname "$0"`/getmnt "$@"
 
-point="${1%/}"
-mount=`mount | grep "${point}" | sed 's/^\([^ ]*\).*/\1/'`
-
-[[ -z "${mount}" ]] && echo mount point not found && exit
-
-sudo umount "${point}"
-sudo mkdir "${point}"
-sudo mount -t vfat "${mount}" "${point}" -o async,umask=000,uid=james
+sudo umount "${POINT}"
+sudo mkdir "${POINT}"
+sudo mount -t "${FS}" "${MOUNT}" "${POINT}" -o async,umask=000,uid=james

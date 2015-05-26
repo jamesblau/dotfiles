@@ -118,7 +118,6 @@ set expandtab                   " Tabs are spaces, not tabs
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
 set matchpairs+=<:>             " Match, to be used with %
-set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 set mat=2
@@ -623,17 +622,6 @@ set showcmd                 " Show partial commands in status line and
 " Selected characters/lines in visual mode
 endif
 
-" <C-Space> leaves insert, visual without moving cursor. Not sure about this one...
-inoremap <C-Space> <Esc>`^
-imap <C-@> <C-Space>
-vnoremap <C-Space> <Esc>
-vmap <C-@> <C-Space>
-
-" kj with fast timeout for same as above
-"set ttimeoutlen=100
-"set <F13>=kj
-"imap <F13> <C-Space>
-
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
 au! FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
@@ -678,7 +666,6 @@ nmap <Leader>M a<CR><Esc><F5>
 cnoremap <C-T> <C-R>
 nnoremap Y y$
 nnoremap <Leader>p <Nop>
-nnoremap <Leader>p<Space> :set paste!<CR>
 nnoremap <Leader>pl mm$p`m
 nnoremap <Leader>pL mmA<Space><Esc>p`m
 nnoremap <Leader>ph mm0P`m
@@ -801,6 +788,7 @@ nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>ss :set spell!<CR>
+nnoremap <Leader>sp :set paste!<CR>
 nnoremap <Leader>sl :set cursorline!<CR>
 nnoremap <Leader>s2 :set expandtab sw=2 ts=2 sts=2<CR>
 nnoremap <Leader>s4 :set expandtab sw=4 ts=4 sts=4<CR>
