@@ -199,7 +199,13 @@ exec_always synclient TapButton3=0
 #Not sure about this one
 focus_follows_mouse no
 
-#For youtube in cVim
-#bindsym $mod+braceleft scratchpad show; scratchpad show; xdotool key Escape
+#For youtube in cVim: unfocus, refocus, escape
+bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool key Escape"
+
+#Arrow keys!
+bindsym --release $mod+Control+h exec --no-startup-id "xdotool key --clearmodifiers Left"
+bindsym --release $mod+Control+j exec --no-startup-id "xdotool key --clearmodifiers Down"
+bindsym --release $mod+Control+k exec --no-startup-id "xdotool key --clearmodifiers Up"
+bindsym --release $mod+Control+l exec --no-startup-id "xdotool key --clearmodifiers Right"
 
 # vim:filetype=conf
