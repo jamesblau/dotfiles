@@ -184,11 +184,11 @@ exec setxkbmap -option ctrl:nocaps
 exec parcellite
 #exec volti
 exec udisks-glue
-exec xkbset m
-exec xkbset exp =m
-exec_always xmodmap -e 'keycode 108 = Pointer_Button1'
-exec_always xmodmap -e 'keycode 107 = Pointer_Button2'
-exec_always xmodmap -e 'keycode 105 = Pointer_Button3'
+#exec xkbset m
+#exec xkbset exp =m
+#exec_always xmodmap -e 'keycode 108 = Pointer_Button1'
+#exec_always xmodmap -e 'keycode 107 = Pointer_Button2'
+#exec_always xmodmap -e 'keycode 105 = Pointer_Button3'
 #exec_always synclient TouchPadOff=0
 exec_always synclient VertTwoFingerScroll=1
 exec_always synclient HorizTwoFingerScroll=1
