@@ -1,6 +1,7 @@
 "vim: set sw=4 ts=4 sts=4 et ft=vim
 " Basics
 set nocompatible        " Must be first line
+set background=dark
 "if !(has('win16') || has('win32') || has('win64'))
 set shell=/bin/bash
 "endif
@@ -73,10 +74,8 @@ endif
 nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
 nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
 
-filetype on
-filetype off
-set rtp+=/home/james/.vim/bundle/vundle
-call vundle#rc()
+"filetype on
+"filetype off
 
 " Use local bundles if available
 source /home/james/.vimrc.bundles
@@ -503,15 +502,6 @@ if !exists('g:airline_powerline_fonts')
 let g:airline_left_sep='›'  " Slightly fancier than '>'
 let g:airline_right_sep='‹' " Slightly fancier than '<'
 endif
-
-" Functions
-" UnBundle
-function! UnBundle(arg, ...)
-  let bundle = vundle#config#init_bundle(a:arg, a:000)
-  call filter(g:bundles, 'v:val["name_spec"] != "' . a:arg . '"')
-endfunction
-"com! -nargs=+         UnBundle
-        \ call UnBundle(<args>)
 
 " Initialize directories
 function! InitializeDirectories()
