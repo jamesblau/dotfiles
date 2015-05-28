@@ -3,4 +3,4 @@
 # Reconnects to the tresata vpn
 #
 
-sudo vpnc /etc/vpnc/tresata.conf
+sudo vpnc ~/.tresata.conf

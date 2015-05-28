@@ -3,12 +3,12 @@
 [ $# -ne 1 ] && echo One argument... && exit 1
 
 case $1 in
-  wh) sudo /home/james/.screenlayout/work.conf.sh ;;
-  wv) sudo /home/james/.screenlayout/work_vert.conf.sh ;;
-  wp) sudo /home/james/.screenlayout/work_port.conf.sh ;;
-  hh) sudo /home/james/.screenlayout/home.conf.sh ;;
-  hv) sudo /home/james/.screenlayout/home_vert.conf.sh ;;
-  d) sudo /home/james/.screenlayout/default.conf.sh ;;
+  wh) sudo ~/dotfiles/screenlayout/work.conf.sh ;;
+  wv) sudo ~/dotfiles/screenlayout/work_vert.conf.sh ;;
+  wp) sudo ~/dotfiles/screenlayout/work_port.conf.sh ;;
+  hh) sudo ~/dotfiles/screenlayout/home.conf.sh ;;
+  hv) sudo ~/dotfiles/screenlayout/home_vert.conf.sh ;;
+  d) sudo ~/dotfiles/screenlayout/default.conf.sh ;;
   *) echo Invalid layout specified... ;;
 esac
 
