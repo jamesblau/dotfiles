@@ -1,30 +1,19 @@
 call plug#begin('~/.vim/plugged')
 
-" Deps
-"Plug 'MarcWeber/vim-addon-mw-utils'
-"Plug 'tomtom/tlib_vim'
-
 "Personal
 Plug 'bkad/CamelCaseMotion'
 Plug 'Parameter-Text-Objects'
-"Plug 'PreciseJump'
 Plug 'Tabmerge'
-if v:version > 702
-    "Plug 'Shougo/unite.vim'
-    Plug 'regedarek/ZoomWin'
-endif
 Plug 'airblade/vim-gitgutter'
 Plug 'Transparent'
 Plug 'oblitum/rainbow'
 Plug 't9md/vim-chef'
-"Plug 'TabBar'
 Plug 'goldfeld/ctrlr.vim'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'bufkill.vim'
 Plug 'wesQ3/vim-windowswap'
-"Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'chrisbra/csv.vim'
 Plug 'tyru/regbuf.vim'
 Plug 'tpope/vim-repeat'
@@ -51,94 +40,36 @@ Plug 'tpope/vim-unimpaired'
 "Plug 'zefei/vim-colortuner'
 Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git')
 
-if !exists('g:spf13_bundle_groups')
-    let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'twig', 'javascript', 'html', 'misc',]
-endif
-
- "General
-if count(g:spf13_bundle_groups, 'general')
-    if v:version > 702
-        Plug 'scrooloose/nerdtree'
-        Plug 'Lokaltog/vim-easymotion'
-    endif
-    "Plug 'altercation/vim-colors-solarized'
-    Plug 'spf13/vim-colors'
-    Plug 'tpope/vim-surround'
-    "Plug 'spf13/vim-autoclose'
-    Plug 'kien/ctrlp.vim'
-    Plug 'terryma/vim-multiple-cursors'
-    "Plug 'vim-scripts/sessionman.vim'
-    Plug 'matchit.zip'
-    if (has("python") || has("python3")) && exists('g:spf13_use_powerline') && !exists('g:spf13_use_old_powerline')
-        Plug 'Lokaltog/powerline', 'rtp':'/powerline/bindings/vim'
-    elseif exists('g:spf13_use_powerline') && exists('g:spf13_use_old_powerline')
-        Plug 'Lokaltog/vim-powerline'
-    else
-        Plug 'bling/vim-airline'
-    endif
-    "Plug 'bling/vim-bufferline'
-    "Plug 'godlygeek/csapprox'
-    Plug 'jistr/vim-nerdtree-tabs'
-    Plug 'flazz/vim-colorschemes'
-    Plug 'mbbill/undotree'
-    Plug 'nathanaelkane/vim-indent-guides'
-    "if !exists('g:spf13_no_views')
-        "Plug 'vim-scripts/restore_view.vim'
-    "endif
-    "Plug 'mhinz/vim-signify'
-    Plug 'tpope/vim-abolish'
-    Plug 'osyo-manga/vim-over'
-    Plug 'justinmk/vim-sneak'
-    Plug 'kana/vim-textobj-user'
-    Plug 'kana/vim-textobj-indent'
-endif
-
-" General Programming
-if count(g:spf13_bundle_groups, 'programming')
-    " Pick one of the checksyntax, jslint, or syntastic
-    Plug 'scrooloose/syntastic'
-    Plug 'tpope/vim-fugitive'
-    Plug 'mattn/webapi-vim'
-    Plug 'mattn/gist-vim'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'godlygeek/tabular'
-    if executable('ctags')
-        Plug 'majutsushi/tagbar'
-    endif
-endif
-
-if v:version > 702
-    " Snippets & AutoComplete
-    if count(g:spf13_bundle_groups, 'snipmate')
-        Plug 'garbas/vim-snipmate'
-        Plug 'honza/vim-snippets'
-        " Source support_function.vim to support vim-snippets.
-        if filereadable(expand("~/.vim/bundle/vim-snippets/snippets/support_functions.vim"))
-            source ~/.vim/bundle/vim-snippets/snippets/support_functions.vim
-        endif
-    elseif count(g:spf13_bundle_groups, 'youcompleteme')
-        Plug 'Valloric/YouCompleteMe'
-        Plug 'SirVer/ultisnips'
-        Plug 'honza/vim-snippets'
-    elseif count(g:spf13_bundle_groups, 'neocomplcache')
-        Plug 'Shougo/neocomplcache'
-        Plug 'Shougo/neosnippet'
-        "Plug 'Shougo/neosnippet-snippets'
-        Plug 'honza/vim-snippets'
-    elseif count(g:spf13_bundle_groups, 'neocomplete')
-        Plug 'Shougo/neocomplete.vim.git'
-        Plug 'Shougo/neosnippet'
-        Plug 'Shougo/neosnippet-snippets'
-        Plug 'honza/vim-snippets'
-    endif
-    "
+"General
+if !exists('g:james_minimal_plugins')
+  if v:version > 702
+    Plug 'Lokaltog/vim-easymotion'
+    Plug 'regedarek/ZoomWin'
+  endif
+  Plug 'spf13/vim-colors'
+  Plug 'tpope/vim-surround'
+  Plug 'kien/ctrlp.vim'
+  Plug 'terryma/vim-multiple-cursors'
+  Plug 'matchit.zip'
+  Plug 'bling/vim-airline'
+  Plug 'mbbill/undotree'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'tpope/vim-abolish'
+  Plug 'justinmk/vim-sneak'
+  Plug 'kana/vim-textobj-user'
+  Plug 'kana/vim-textobj-indent'
+  Plug 'scrooloose/syntastic'
+  Plug 'tpope/vim-fugitive'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'godlygeek/tabular'
+  if executable('ctags')
+    Plug 'majutsushi/tagbar'
+  endif
 endif
 
 " Scala
-if count(g:spf13_bundle_groups, 'scala')
-    Plug 'derekwyatt/vim-scala'
-    Plug 'derekwyatt/vim-sbt'
-    Plug 'rompetroll/vim-scalariform'
-endif
+Plug 'derekwyatt/vim-scala'
+Plug 'derekwyatt/vim-sbt'
+Plug 'rompetroll/vim-scalariform'
 
 call plug#end()

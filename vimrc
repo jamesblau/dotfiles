@@ -7,9 +7,6 @@ set shell=/bin/bash
 "endif
 
 " Globals
-let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'misc', 'scala', 'python']
-let g:neocomplcache_disable_auto_complete = 1
-let g:evervim_devtoken='S=s200:U=15f5845:E=1490b215f4f:C=141b3703353:P=1cd:A=en-devtoken:V=2:H=db1cc3d81bd4554cb82ba09928779b86'
 let g:multi_cursor_exit_from_insert_mode=0
 let g:multi_cursor_exit_from_visual_mode=0
 let g:indent_guides_enable_on_vim_startup=0
@@ -20,7 +17,6 @@ let g:autoclose_vim_commentmode = 1
 let g:DisableAutoPHPFolding = 0
 let g:PIVAutoClose = 0
 let g:NERDShutUp=1
-let g:nerdtree_tabs_open_on_gui_startup=0
 let g:snips_author = 'James Blau <james@tresata.com>'
 let g:pymode_lint_checker = "pyflakes"
 let g:pymode_utils_whitespaces = 0
@@ -47,8 +43,6 @@ let g:yankring_replace_n_nkey = '<Esc>n'
 "let g:solarized_termtrans = 1
 "let g:gitgutter_initialised = 1
 "let g:gitgutter_realtime = 0
-"let g:spf13_no_neosnippet_expand = 1
-"let g:spf13_keep_trailing_whitespace = 1
 "let g:airline_powerline_fonts = 1
 "\/ \/ https://github.com/airblade/vim-gitgutter/issues/106 \/ \/
 "let g:gitgutter_realtime = 1
@@ -147,33 +141,6 @@ noremap gj j
 noremap k gk
 noremap gk k
 
-" Stupid shift key fixes
-if !exists('g:spf13_no_keyfixes')
-if has("user_commands")
-    command! -bang -nargs=* -complete=file E e<bang> <args>
-    command! -bang -nargs=* -complete=file W w<bang> <args>
-    command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-    command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-    command! -bang Wa wa<bang>
-    command! -bang WA wa<bang>
-    command! -bang Q q<bang>
-    command! -bang QA qa<bang>
-    command! -bang Qa qa<bang>
-endif
-endif
-
-" Code folding options
-nmap <Leader>f0 :set foldlevel=0<CR>
-nmap <Leader>f1 :set foldlevel=1<CR>
-nmap <Leader>f2 :set foldlevel=2<CR>
-nmap <Leader>f3 :set foldlevel=3<CR>
-nmap <Leader>f4 :set foldlevel=4<CR>
-nmap <Leader>f5 :set foldlevel=5<CR>
-nmap <Leader>f6 :set foldlevel=6<CR>
-nmap <Leader>f7 :set foldlevel=7<CR>
-nmap <Leader>f8 :set foldlevel=8<CR>
-nmap <Leader>f9 :set foldlevel=9<CR>
-
 " Change Working Directory to that of the current file
 nnoremap <silent> <Leader>wd :lcd %:p:h<CR>
 
@@ -189,44 +156,6 @@ nnoremap vV v$h
 nnoremap Vv v_
 
 """""""""""""START UNTESTED
-" Fix home and end keybindings for screen, particularly on mac
-" - for some reason this fixes the arrow keys too. huh.
-"map <Esc>[F $
-"imap <Esc>[F <C-O>$
-"map <Esc>[H g0
-"imap <Esc>[H <C-O>g0
-
-" Adjust viewports to the same size
-map <Leader>= <C-W>=
-
-" Map <Leader>ff to display all lines with keyword under cursor
-" and ask which one to jump to
-nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
-" OmniComplete
-if has("autocmd") && exists("+omnifunc")
-au! Filetype *
-            \if &omnifunc == "" |
-            \setlocal omnifunc=syntaxcomplete#Complete |
-            \endif
-endif
-
-hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
-hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-
-" Some convenient mappings
-inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
-inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"
-inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
-inoremap <expr> <C-D>      pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<C-D>"
-inoremap <expr> <C-U>      pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<C-U>"
-
-" Automatically open and close the popup menu / preview window
-au! CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menu,preview,longest
-
 " Ctags
 set tags=./tags;/,/home/james/.vimtags
 
@@ -235,24 +164,6 @@ let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 
 if gitroot != ''
 let &tags = &tags . ',' . gitroot . '/.git/tags'
 endif
-
-" AutoCloseTag
-" Make it so AutoCloseTag works for xml and xhtml files as well
-"au! FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-"nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-
-" NerdTree
-map <C-Q> :NERDTreeToggle<CR>
-"map <Leader>e :NERDTreeFind<CR>
-"nmap <Leader>nt :NERDTreeFind<CR>
-
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-let NERDTreeChDirMode=0
-let NERDTreeQuitOnOpen=1
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
 
 " Tabularize
 nmap <Leader>a& :Tabularize /&<CR>
@@ -268,11 +179,6 @@ vmap <Leader>a, :Tabularize /,<CR>
 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
-" Session List
-set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
-nmap <Leader>sl :SessionList<CR>
-nmap <Leader>ss :SessionSave<CR>
-
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
 "nnoremap <silent> <D-t> :CtrlP<CR>
@@ -283,12 +189,6 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " TagBar
 nnoremap <silent> <Leader>tt :TagbarToggle<CR>
-"
-" PythonMode
-" Disable if python support not present
-if !has('python')
-  let g:pymode = 1
-endif
 
 " Fugitive
 nnoremap <silent> <Leader>gs :Gstatus<CR>
@@ -303,190 +203,10 @@ nnoremap <silent> <Leader>gw :Gwrite<CR>:GitGutter<CR>
 nnoremap <silent> <Leader>ge :Gedit<CR>
 nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
 
-" neocomplete
-if count(g:spf13_bundle_groups, 'neocomplete')
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#max_list = 15
-let g:neocomplete#force_overwrite_completefunc = 1
-" SuperTab like snippets behavior.
-"imap <silent><expr><TAB> neosnippet#expandable() ?
-            "\ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-            "\ "\<C-E>" : "\<TAB>")
-"smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions' }
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns =
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-" Plugin key-mappings
-" These two lines conflict with the default digraph mapping of <C-K>
-" If you prefer that functionality, add the following to your
-" .vimrc.before.local file:
-"   let g:spf13_no_neosnippet_expand = 1
-if !exists('g:spf13_no_neosnippet_expand')
-    imap <C-K> <Plug>(neosnippet_expand_or_jump)
-    smap <C-K> <Plug>(neosnippet_expand_or_jump)
-endif
-"inoremap <expr><C-G> neocomplete#undo_completion()
-inoremap <expr><C-L> neocomplete#complete_common_string()
-inoremap <expr><CR> neocomplete#complete_common_string()
-" <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-N>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-P>" : "\<TAB>"
-" <CR>: close popup
-" <s-CR>: close popup and save indent.
-inoremap <expr><s-CR> pumvisible() ? neocomplete#close_popup()"\<CR>" : "\<CR>"
-inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
-" <C-H>, <BS>: close popup and delete backword char.
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-H>"
-inoremap <expr><C-Y> neocomplete#close_popup()
-"
-" Enable omni completion.
-au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au! FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-au! FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-au! FileType python setlocal omnifunc=pythoncomplete#Complete
-au! FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-au! FileType ruby setlocal omnifunc=rubycomplete#Complete
-au! FileType haskell setlocal omnifunc=necoghc#omnifunc
-" Haskell post write lint and check with ghcmod
-" $ `cabal install ghcmod` if missing and ensure
-" ~/.cabal/bin is in your $PATH.
-if !executable("ghcmod")
-    au! BufWritePost *.hs GhcModCheckAndLintAsync
-endif
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns =
-endif
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-" Use honza's snippets.
-let g:neosnippet#snippets_directory='/home/james/.vim/bundle/vim-snippets/snippets'
-" Enable neosnippet snipmate compatibility mode
-let g:neosnippet#enable_snipmate_compatibility = 1
-" For snippet_complete marker.
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
-" Disable the neosnippet preview candidate window
-" When enabled, there can be too much visual noise
-" especially when splits are used.
-set completeopt-=preview
-endif
-
-" neocomplcache
-if count(g:spf13_bundle_groups, 'neocomplcache')
-let g:acp_enableAtStartup = 0
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_enable_auto_delimiter = 1
-let g:neocomplcache_max_list = 15
-let g:neocomplcache_force_overwrite_completefunc = 1
-" SuperTab like snippets behavior.
-imap <silent><expr><TAB> neosnippet#expandable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-            \ "\<C-E>" : "\<TAB>")
-smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions' }
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns= {}
-endif
-let g:neocomplcache_keyword_patterns._ = '\h\w*'
-" Plugin key-mappings
-" These two lines conflict with the default digraph mapping of <C-K>
-" If you prefer that functionality, add the following to your
-" .vimrc.before.local file:
-"   let g:spf13_no_neosnippet_expand = 1
-if !exists('g:spf13_no_neosnippet_expand')
-    imap <C-K> <Plug>(neosnippet_expand_or_jump)
-    smap <C-K> <Plug>(neosnippet_expand_or_jump)
-endif
-"inoremap <expr><C-G> neocomplcache#undo_completion()
-inoremap <expr><C-L> neocomplcache#complete_common_string()
-inoremap <expr><CR> neocomplcache#complete_common_string()
-" <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-N>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-P>" : "\<TAB>"
-" <CR>: close popup
-" <s-CR>: close popup and save indent.
-inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-" <C-H>, <BS>: close popup and delete backword char.
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-H>"
-inoremap <expr><C-Y> neocomplcache#close_popup()
-"
-" Enable omni completion.
-au! FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au! FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-au! FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-au! FileType python setlocal omnifunc=pythoncomplete#Complete
-au! FileType python setlocal equalprg=autopep8\ --aggressive\ --experimental\ /dev/stdin
-"au! FileType scala setlocal omnifunc=
-au! FileType scala setlocal equalprg=
-au! FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-au! FileType ruby setlocal omnifunc=rubycomplete#Complete
-au! FileType haskell setlocal omnifunc=necoghc#omnifunc
-" Haskell post write lint and check with ghcmod
-" $ `cabal install ghcmod` if missing and ensure
-" ~/.cabal/bin is in your $PATH.
-if !executable("ghcmod")
-    au! BufWritePost *.hs GhcModCheckAndLintAsync
-endif
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-" Use honza's snippets.
-let g:neosnippet#snippets_directory='/home/james/.vim/bundle/vim-snippets/snippets'
-" Enable neosnippet snipmate compatibility mode
-let g:neosnippet#enable_snipmate_compatibility = 1
-" For snippet_complete marker.
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
-" Disable the neosnippet preview candidate window
-" When enabled, there can be too much visual noise
-" especially when splits are used.
-set completeopt-=preview
-endif
-
 " UndoTree
 nnoremap <Leader>u :UndotreeToggle<CR>
 " If undotree is opened, it is likely one wants to interact with it.
 let g:undotree_SetFocusWhenToggle=1
-
-" indent_guides
-if !exists('g:spf13_no_indent_guides_autocolor')
-let g:indent_guides_auto_colors = 1
-else
-" For some colorschemes, autocolor will not work (eg: 'desert', 'ir_black')
-au! VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#212121 ctermbg=3
-au! VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
-endif
 
 " vim-airline
 " Set configuration options for the statusline plugin vim-airline.
@@ -541,56 +261,6 @@ for [dirname, settingname] in items(dir_list)
 endfor
 endfunction
 call InitializeDirectories()
-
-" Initialize NERDTree as needed
-function! NERDTreeInitAsNeeded()
-redir => bufoutput
-buffers!
-redir END
-let idx = stridx(bufoutput, "NERD_tree")
-if idx > -1
-    NERDTreeMirror
-    NERDTreeFind
-    wincmd l
-endif
-endfunction
-
-" Strip whitespace
-function! StripTrailingWhitespace()
-" To disable the stripping of whitespace, add the following to your
-" .vimrc.before.local file:
-"   let g:spf13_keep_trailing_whitespace = 1
-if !exists('g:spf13_keep_trailing_whitespace')
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " do the business:
-    %s/\s\+$//e
-    " clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endif
-endfunction
-
-" Shell command
-function! s:RunShellCommand(cmdline)
-    botright new
-    "setlocal buftype=nofile
-    setlocal bufhidden=delete
-    setlocal nobuflisted
-    setlocal noswapfile
-    setlocal nowrap
-    setlocal filetype=shell
-    setlocal syntax=shell
-    "call setline(1, a:cmdline)
-    call setline(2, substitute(a:cmdline, '.', '=', 'g'))
-    execute 'silent $read !' . escape(a:cmdline, '%#')
-    setlocal nomodifiable
-    1
-endfunction
-"command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-" e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
 """""""""""""END UNTESTED
 
 " Incremement character under cursor only
@@ -611,10 +281,6 @@ set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 set showcmd                 " Show partial commands in status line and
 " Selected characters/lines in visual mode
 endif
-
-" Instead of reverting the cursor to the last position in the buffer, we
-" set it to the first line when editing a git commit message
-au! FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 function! ResCur()
@@ -666,12 +332,6 @@ nnoremap <Leader>pk mmO<Esc>p`m
 nnoremap <Leader>pK mm3O<Esc>kp`m
 nnoremap <Leader>pp mm)O<CR><C-R>"<Esc>`m
 nnoremap <Leader>pP mm(O<C-R>"<CR><Esc>`m
-
-inoremap <expr><TAB> pumvisible() ? "\<C-N>" : <SID>check_back_space() ? "\<TAB>" : "\<C-X>\<C-U>"
-function! s:check_back_space()
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1] =~ '\s'
-endfunction
 
 " Versioned stuff...
 if v:version > 702
@@ -1095,6 +755,7 @@ vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g
 nnoremap <Leader>sc :%S/\<<C-R><C-W>\>/
 
 " Session stuff!
+set sessionoptions=blank,curdir,folds,tabpages,winsize
 nnoremap <Leader>S <Nop>
 nnoremap <Leader>SL :SessionList<CR>
 nnoremap <Leader>SO :OpenSession<Space>

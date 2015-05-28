@@ -15,7 +15,8 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 0
+font pango:DejaVu Sans Mono 6
+new_window 1pixel
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -30,13 +31,14 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # Show last workspace
-bindsym $mod+space workspace back_and_forth
+bindsym $mod+o workspace back_and_forth
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+Return exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
 bindsym $mod+F2 exec "pactl set-sink-volume 0 -- -5%; killall -USR1 i3status"
 bindsym $mod+F3 exec "pactl set-sink-volume 0 -- +5%; killall -USR1 i3status"
@@ -187,8 +189,8 @@ exec setxkbmap -option ctrl:nocaps
 exec parcellite
 #exec volti
 exec udisks-glue
-#exec xkbset m
-#exec xkbset exp =m
+exec xkbset m
+exec xkbset exp =m
 #exec_always xmodmap -e 'keycode 108 = Pointer_Button1'
 #exec_always xmodmap -e 'keycode 107 = Pointer_Button2'
 #exec_always xmodmap -e 'keycode 105 = Pointer_Button3'

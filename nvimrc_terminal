@@ -1,0 +1,3 @@
+let $VIMRUNTIME='~/src/opensource/neovim/runtime'
+source ~/.nvimrc
+tnoremap <C-D> <C-\><C-n>:q<CR>
