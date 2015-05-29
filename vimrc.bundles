@@ -1,29 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
-"Personal
-Plug 'bkad/CamelCaseMotion'
-Plug 'Parameter-Text-Objects'
-Plug 'Tabmerge'
-Plug 'airblade/vim-gitgutter'
-Plug 'Transparent'
-Plug 'oblitum/rainbow'
-Plug 't9md/vim-chef'
-Plug 'goldfeld/ctrlr.vim'
-Plug 'xolox/vim-session'
-Plug 'xolox/vim-misc'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'bufkill.vim'
-Plug 'wesQ3/vim-windowswap'
-Plug 'chrisbra/csv.vim'
-Plug 'tyru/regbuf.vim'
-Plug 'tpope/vim-repeat'
-Plug 'elzr/vim-json'
-Plug 'vsearch.vim'
-Plug 'CycleColor'
-"Plug 'Figlet.vim'
-"Plug 'YankRing.vim'
-"Plug 'danro/rename.vim'
-Plug 'tpope/vim-unimpaired'
+" To evaluate later
 "Plug 'tpope/vim-scriptease'
 "Plug 'tpope/vim-sleuth'
 "Plug 'tpope/vim-eunuch'
@@ -38,14 +15,34 @@ Plug 'tpope/vim-unimpaired'
 "Plug 'wellle/targets.vim'
 "Plug 'spiiph/vim-space'
 "Plug 'zefei/vim-colortuner'
-Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git')
 
-"General
+Plug 'Transparent'
+
 if !exists('g:james_minimal_plugins')
   if v:version > 702
     Plug 'Lokaltog/vim-easymotion'
     Plug 'regedarek/ZoomWin'
   endif
+  Plug 'bkad/CamelCaseMotion'
+  Plug 'Parameter-Text-Objects'
+  Plug 'Tabmerge'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'oblitum/rainbow'
+  Plug 't9md/vim-chef'
+  Plug 'goldfeld/ctrlr.vim'
+  Plug 'xolox/vim-session'
+  Plug 'xolox/vim-misc'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'bufkill.vim'
+  Plug 'wesQ3/vim-windowswap'
+  Plug 'chrisbra/csv.vim'
+  Plug 'tyru/regbuf.vim'
+  Plug 'tpope/vim-repeat'
+  Plug 'elzr/vim-json'
+  Plug 'vsearch.vim'
+  Plug 'CycleColor'
+  Plug 'tpope/vim-unimpaired'
+  Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git')
   Plug 'spf13/vim-colors'
   Plug 'tpope/vim-surround'
   Plug 'kien/ctrlp.vim'
@@ -65,11 +62,10 @@ if !exists('g:james_minimal_plugins')
   if executable('ctags')
     Plug 'majutsushi/tagbar'
   endif
+  " Scala
+  Plug 'derekwyatt/vim-scala'
+  Plug 'derekwyatt/vim-sbt'
+  Plug 'rompetroll/vim-scalariform'
 endif
-
-" Scala
-Plug 'derekwyatt/vim-scala'
-Plug 'derekwyatt/vim-sbt'
-Plug 'rompetroll/vim-scalariform'
 
 call plug#end()

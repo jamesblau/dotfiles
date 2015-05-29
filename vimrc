@@ -1,7 +1,6 @@
-"vim: set sw=4 ts=4 sts=4 et ft=vim
+"vim: set sw=2 ts=2 sts=2 expandtab ft=vim
 " Basics
 set nocompatible        " Must be first line
-set background=dark
 "if !(has('win16') || has('win32') || has('win64'))
 set shell=/bin/bash
 "endif
@@ -29,23 +28,12 @@ let g:rainbow_ctermfgs = ['LightBlue', 'DarkGreen', 'Yellow', 'DarkRed']
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
 let g:EasyMotion_keys = '0123456789abcdefghijklmnopqrstuvwxyz'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:tmux_navigator_no_mappings = 1
 let g:surround_no_mappings = 1
 let g:syntastic_mode_map = {'mode': 'passive'}
-let g:yankring_replace_n_pkey = '<Esc>p'
-let g:yankring_replace_n_nkey = '<Esc>n'
 "let g:windowswap_map_keys = 0
-"let g:airline_powerline_fonts = 1
-"let g:solarized_termtrans = 1
 "let g:gitgutter_initialised = 1
 "let g:gitgutter_realtime = 0
-"let g:airline_powerline_fonts = 1
-"\/ \/ https://github.com/airblade/vim-gitgutter/issues/106 \/ \/
-"let g:gitgutter_realtime = 1
 
 " Silver Searcher stuff
 if executable('ag')
@@ -122,11 +110,8 @@ set nohlsearch
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set noswapfile                  " Not sure about this one
 set nobackup                    " Not sure about this one
-"au! BufNewFile,BufRead *.scala set sw=2 ts=2 sts=2
+set omnifunc=syntaxcomplete#Complete
 au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
-"au! BufNewFile,BufRead *.txt syntax off
-"au! BufNewFile,BufRead *.txt set sw=4 ts=4 sts=4
-"au! BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 
 " Remove trailing whitespaces and ^M chars
 au! FileType c,cpp,java,go,php,javascript,python,twig,xml,yml au! BufWritePre <buffer> call StripTrailingWhitespace()
@@ -140,6 +125,17 @@ noremap j gj
 noremap gj j
 noremap k gk
 noremap gk k
+
+" Stupid shift key fixes
+command! -bang -nargs=* -complete=file E e<bang> <args>
+command! -bang -nargs=* -complete=file W w<bang> <args>
+command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+command! -bang Wa wa<bang>
+command! -bang WA wa<bang>
+command! -bang Q q<bang>
+command! -bang QA qa<bang>
+command! -bang Qa qa<bang>
 
 " Change Working Directory to that of the current file
 nnoremap <silent> <Leader>wd :lcd %:p:h<CR>
@@ -155,14 +151,13 @@ nnoremap VV _v$h
 nnoremap vV v$h
 nnoremap Vv v_
 
-"""""""""""""START UNTESTED
 " Ctags
 set tags=./tags;/,/home/james/.vimtags
 
 " Make tags placed in .git/tags file available in all levels of a repository
 let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
 if gitroot != ''
-let &tags = &tags . ',' . gitroot . '/.git/tags'
+  let &tags = &tags . ',' . gitroot . '/.git/tags'
 endif
 
 " Tabularize
@@ -184,8 +179,8 @@ let g:ctrlp_working_path_mode = 'ra'
 "nnoremap <silent> <D-t> :CtrlP<CR>
 "nnoremap <silent> <D-r> :CtrlPMRU<CR>
 "let g:ctrlp_custom_ignore = {
-        "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+  "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
+  "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
 " TagBar
 nnoremap <silent> <Leader>tt :TagbarToggle<CR>
@@ -208,60 +203,38 @@ nnoremap <Leader>u :UndotreeToggle<CR>
 " If undotree is opened, it is likely one wants to interact with it.
 let g:undotree_SetFocusWhenToggle=1
 
-" vim-airline
-" Set configuration options for the statusline plugin vim-airline.
-" Use the powerline theme and optionally enable powerline symbols.
-" To use the symbols , , , , , , and .in the statusline
-" segments add the following to your .vimrc.before.local file:
-"   let g:airline_powerline_fonts=1
-" If the previous symbols do not render for you then install a
-" powerline enabled font.
-let g:airline_theme = 'powerlineish'
-if !exists('g:airline_powerline_fonts')
-" Use the default set of separators with a few customizations
-let g:airline_left_sep='›'  " Slightly fancier than '>'
-let g:airline_right_sep='‹' " Slightly fancier than '<'
+if !exists('g:james_no_hud')
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+  let g:airline#extensions#tabline#buffer_nr_show = 1
+  "let g:airline_powerline_fonts = 1
+
+  " vim-airline
+  " Set configuration options for the statusline plugin vim-airline.
+  " Use the powerline theme and optionally enable powerline symbols.
+  " To use the symbols , , , , , , and .in the statusline
+  " segments add the following to your .vimrc.before.local file:
+  "   let g:airline_powerline_fonts=1
+  " If the previous symbols do not render for you then install a
+  " powerline enabled font.
+  let g:airline_theme = 'powerlineish'
+  if !exists('g:airline_powerline_fonts')
+    " Use the default set of separators with a few customizations
+    let g:airline_left_sep='›'  " Slightly fancier than '>'
+    let g:airline_right_sep='‹' " Slightly fancier than '<'
+  endif
+
+  set laststatus=2
+  " Broken down into easily includeable segments
+  set statusline=%<%f\                     " Filename
+  set statusline+=%w%h%m%r                 " Options
+  set statusline+=%{fugitive#statusline()} " Git Hotness
+  set statusline+=\ [%{&ff}/%Y]            " Filetype
+  set statusline+=\ [%{getcwd()}]          " Current dir
+  set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
-" Initialize directories
-function! InitializeDirectories()
-  let parent = $HOME
-  let prefix = 'vim'
-  let dir_list = {
-              \ 'backup': 'backupdir',
-              \ 'views': 'viewdir',
-              \ 'swap': 'directory' }
-  if has('persistent_undo')
-    let dir_list['undo'] = 'undodir'
-  endif
-" To specify a different directory in which to place the vimbackup,
-" vimviews, vimundo, and vimswap files/directories, add the following to
-" your .vimrc.before.local file:
-"   let g:spf13_consolidated_directory = <full path to desired directory>
-"   eg: let g:spf13_consolidated_directory = $HOME . '/.vim/'
-if exists('g:spf13_consolidated_directory')
-    let common_dir = g:spf13_consolidated_directory . prefix
-else
-    let common_dir = parent . '/.' . prefix
-endif
-for [dirname, settingname] in items(dir_list)
-    let directory = common_dir . dirname . '/'
-    if exists("*mkdir")
-        if !isdirectory(directory)
-            call mkdir(directory)
-        endif
-    endif
-    if !isdirectory(directory)
-        echo "Warning: Unable to create backup directory: " . directory
-        echo "Try: mkdir -p " . directory
-    else
-        let directory = substitute(directory, " ", "\\\\ ", "g")
-        exec "set " . settingname . "=" . directory
-    endif
-endfor
-endfunction
-call InitializeDirectories()
-"""""""""""""END UNTESTED
 
 " Incremement character under cursor only
 nnoremap <Leader>ic a <Esc>h<C-A>lxh
@@ -272,46 +245,30 @@ set nrformats=
 set mouse=
 set spellcapcheck=
 
-if has ('x') && has ('gui') " On Linux use + register for copy-paste
-set clipboard=unnamedplus
-endif
 if has('cmdline_info')
-set ruler                   " Show the ruler
-set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-set showcmd                 " Show partial commands in status line and
-" Selected characters/lines in visual mode
+  set ruler                   " Show the ruler
+  set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+  set showcmd                 " Show partial commands in status line and
 endif
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 function! ResCur()
-    if line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
 endfunction
 augroup resCur
-au!
-au! BufWinEnter * call ResCur()
+  au!
+  au! BufWinEnter * call ResCur()
 augroup END
 
 " Setting up the directories
-set backup                  " Backups are nice ...
+set undodir=~/.vimundo//
 if has('persistent_undo')
-set undofile                " So is persistent undo ...
-set undolevels=1000         " Maximum number of changes that can be undone
-set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
-endif
-
-if has('statusline')
-set laststatus=2
-
-" Broken down into easily includeable segments
-    set statusline=%<%f\                     " Filename
-    set statusline+=%w%h%m%r                 " Options
-    set statusline+=%{fugitive#statusline()} " Git Hotness
-    set statusline+=\ [%{&ff}/%Y]            " Filetype
-    set statusline+=\ [%{getcwd()}]          " Current dir
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+  set undofile                " So is persistent undo ...
+  set undolevels=1000         " Maximum number of changes that can be undone
+  set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
 
 " Break lines
@@ -335,13 +292,13 @@ nnoremap <Leader>pP mm(O<C-R>"<CR><Esc>`m
 
 " Versioned stuff...
 if v:version > 702
-" Keep window position
+  " Keep window position
   au! BufLeave * let b:winview = winsaveview()
   au! BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
-" JSON
+  " JSON
   nmap <Leader>jp <Esc>:%!underscore print<CR><Esc>:set filetype=json<CR><F5>
   nmap <Leader>jt <Esc>:%!python -mjson.tool<CR><Esc>:set filetype=json<CR><F5>
-" NumberToggle
+  " NumberToggle
   function! NumberToggle()
     if(&rnu == 1 && &nu == 1)
       set nonumber norelativenumber
@@ -351,11 +308,11 @@ if v:version > 702
   endfunction
   set number relativenumber
 else
-" JSON
+  " JSON
   nmap <Leader>jt <Esc>:%!python2.6 -mjson.tool<CR><Esc>:set filetype=json<CR><F5>
-" Backspace whatever. hack...
+  " Backspace whatever. hack...
   inoremap  <BS>
-" NumberToggle
+  " NumberToggle
   function! NumberToggle()
     if(&rnu == 1 && &nu == 1)
       set nonumber
@@ -515,18 +472,18 @@ nnoremap <Leader>Ev :vert sb<Space>
 nnoremap <Leader>Et :tab sb<Space>
 
 function! NextTorB()
-    if (tabpagenr("$") == 1)
-        bn
-    else
-        tabn
-    endif
+  if (tabpagenr("$") == 1)
+    bn
+  else
+    tabn
+  endif
 endfunction
 function! PrevTorB()
-    if (tabpagenr("$") == 1)
-        bp
-    else
-        tabp
-    endif
+  if (tabpagenr("$") == 1)
+    bp
+  else
+    tabp
+  endif
 endfunction
 
 " Tab, window, and buffer movement stuff!
@@ -560,50 +517,50 @@ nnoremap <Leader>bD :bd!<CR>
 nnoremap <Leader>Bd :call DeleteHiddenBuffers()<CR>
 nnoremap <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
 
-"function! SmoothMove(hjkl)
-    "if(&winheight == 999)
-        "wincmd ??
-    "else
-        "set winheight=999
-        "wincmd ??
-        "set winheight=1
-    "endif
-"endfunction
+function! SmoothMove(hjkl)
+  if(&winheight == 999)
+    wincmd ??
+  else
+    set winheight=999
+    wincmd ??
+    set winheight=1
+  endif
+endfunction
 
 function! SmoothDown()
-    if(&winheight == 999)
-        wincmd j
-    else
-        set winheight=999
-        wincmd j
-        set winheight=1
-    endif
+  if(&winheight == 999)
+    wincmd j
+  else
+    set winheight=999
+    wincmd j
+    set winheight=1
+  endif
 endfunction
 
 function! SmoothUp()
-    if(&winheight == 999)
-        wincmd k
-    else
-        set winheight=999
-        wincmd k
-        set winheight=1
-    endif
+  if(&winheight == 999)
+    wincmd k
+  else
+    set winheight=999
+    wincmd k
+    set winheight=1
+  endif
 endfunction
 
 function! DeleteHiddenBuffers()
-    let tpbl=[]
-    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
-    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
-        silent execute 'bwipeout' buf
-    endfor
+  let tpbl=[]
+  call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+  for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+    silent execute 'bwipeout' buf
+  endfor
 endfunction
 
 function! ReallyDeleteHiddenBuffers()
-    let tpbl=[]
-    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
-    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
-        silent execute 'bwipeout!' buf
-    endfor
+  let tpbl=[]
+  call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+  for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+    silent execute 'bwipeout!' buf
+  endfor
 endfunction
 
 " Easymotion stuff!
@@ -649,16 +606,16 @@ nnoremap <Leader>xg :call system("git rev-parse --show-toplevel \| tr -d '\n' \|
 nnoremap <Leader>rb :call setreg( "\"", join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ") )<CR>
 "xclip from buffers
 nnoremap <Leader>xb
-                \ :call system(
-                    \ "xclip -i -selection clipboard",
-                    \ join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ")
-                \ )<CR>
+      \ :call system(
+        \ "xclip -i -selection clipboard",
+        \ join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ")
+      \ )<CR>
 "Export buffers
 nnoremap <silent> <Leader>be
-                    \ :call writefile(
-                        \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
-                        \ system("echo /home/james/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
-                    \ )<CR>
+      \ :call writefile(
+        \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
+        \ system("echo /home/james/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
+      \ )<CR>
 "Register from All
 nnoremap <Leader>ra mmggVGy`m
 "xclip from All
@@ -702,11 +659,6 @@ nnoremap <Leader>Mhm yypVr-k0
 nnoremap <Leader>Mhf yyjVpVr-k0
 "Markdown minor header unmake
 nnoremap <Leader>Mhu j"_ddk0
-
-" ???
-"nnoremap <Leader>HM ,c ^i\|\| <esc>A \|\|<esc>"qyy"qP"qD999a=<esc>jhlk"qD"qyyj"qpVkk,c j^
-"nnoremap <Leader>HF jVkk,c 999A=<esc>jhlkDyyjpjddkVkk,c j^
-"nnoremap <Leader>HU kVjj,c \"qdd"qx"qx"qx$"qX"qX"qxj"qddqqqk^,c<Space>
 
 " Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
@@ -776,12 +728,6 @@ nnoremap <Leader>Q Q
 nnoremap K <Nop>
 nnoremap <Leader>K K
 
-"nnoremap <Leader>yf A<Backspace>" +\<Esc>2F"j999I <Esc>k2F"jdwi"<Esc>
-"function! s:indent_to_here(row)
-  "let col = col('.')
-  "return !col || getline('.')[col - 1] =~ '\s'
-"endfunction
-
 " Execute viml
 nnoremap <Leader>e. :execute getline(".")<CR>
 nnoremap <Leader>er : <C-R>"<CR>
@@ -839,42 +785,6 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> tran
 nnoremap <Leader>R <Nop>
 nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
 
-" Should be elsewhere? Resize windows.
-function! Sum(vals) "{{{
-    let acc = 0
-    for val in a:vals
-        let acc += val
-    endfor
-    return acc
-endfunction "}}}
-function! LogicalLineCounts() "{{{
-    if &wrap
-        let width = winwidth(0)
-        let line_counts = map(range(1, line('$')), "foldclosed(v:val)==v:val?1:(virtcol([v:val, '$'])/width)+1")
-    else
-        let line_counts = [line('$')]
-    endif
-    return line_counts
-endfunction "}}}
-function! LinesHiddenByFoldsCount() "{{{
-    let lines = range(1, line('$'))
-    call filter(lines, "foldclosed(v:val) > 0 && foldclosed(v:val) != v:val")
-    return len(lines)
-endfunction "}}}
-function! AutoResizeWindow(vert) "{{{
-    if a:vert
-        let longest = max(map(range(1, line('$')), "virtcol([v:val, '$'])"))
-        exec "vertical resize " . (longest+4)
-    else
-        let line_counts  = LogicalLineCounts()
-        let folded_lines = LinesHiddenByFoldsCount()
-        let lines        = Sum(line_counts) - folded_lines
-        exec 'resize ' . lines
-        1
-    endif
-endfunction "}}}
-nnoremap <Leader>wf :call AutoResizeWindow(0)<CR>
-
 " Bsc/Csv stuff
 au! BufNewFile,BufRead *.bsv set filetype=csv
 nnoremap <Leader>qw :WhatColumn<CR>
@@ -912,9 +822,9 @@ nnoremap <Leader>TR :call SacrificialTabRedraw()<CR>
 " Swap parameters (,-seperated, in parens)
 nnoremap <F14> /[,)]<C-I>hv?[ (]<C-I>l
 nmap <Plug>MoveParamRight <F14>"yy<F14>dll<F14>pF,P0/<C-T>y<C-I>
-  \:call repeat#set("\<Plug>MoveParamLeft")<CR>
+      \:call repeat#set("\<Plug>MoveParamLeft")<CR>
 nmap <Plug>MoveParamLeft <F14>"yy<F14>dhhh<F14>pllp0/<C-T>y<C-I>
-  \:call repeat#set("\<Plug>MoveParamRight")<CR>
+      \:call repeat#set("\<Plug>MoveParamRight")<CR>
 nmap <Leader>< <Plug>MoveParamLeft
 nmap <Leader>> <Plug>MoveParamRight
 
@@ -979,21 +889,6 @@ nnoremap dOR :diffg REMOTE<CR>
 nnoremap dOB :diffg BASE<CR>
 nnoremap dOL :diffg LOCAL<CR>
 nnoremap dU :diffupdate<CR>
-
-" YankRing stuff
-nnoremap <silent> <Leader><C-R> :YRShow<CR>
-nnoremap <silent> <Leader><Leader><C-R> :YRPop<CR>
-function! YRRunAfterMaps()
-  " Make Y yank to end of line.
-  nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-
-  " Fix L and H in operator-pending mode, so yH and such works.
-  omap <expr> L YRMapsExpression("", "$")
-  omap <expr> H YRMapsExpression("", "^")
-
-  " Don't clobber the yank register when pasting over text in visual mode.
-  "vnoremap p :<c-u>YRPaste 'p', 'v'<cr>gv:YRYankRange 'v'<cr>
-endfunction
 
 " Scalding stuff
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
