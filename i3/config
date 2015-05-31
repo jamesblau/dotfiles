@@ -190,7 +190,6 @@ bar {
 bindsym $mod+m move workspace to output left; move workspace to output up
 
 #Startup things...
-exec_always setxkbmap -option ctrl:nocaps
 exec parcellite
 #exec volti
 #exec udisks-glue
