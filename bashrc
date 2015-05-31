@@ -203,13 +203,13 @@ bind -m vi-insert "\C-a.":beginning-of-line
 bind -m vi-move "\C-a.":beginning-of-line
 bind -m vi-insert "\C-e.":end-of-line
 bind -m vi-move "\C-e.":end-of-line
-bind -m vi-insert "\C-w.":backward-kill-word
+stty werase undef # Required for remapping C-w
+bind -m vi-insert "\C-w.":unix-filename-rubout
 bind -m vi-insert "\C-n.":next-history
 bind -m vi-insert "\C-p.":previous-history
 bind -m vi-insert "\C-f.":forward-char
 bind -m vi-insert "\C-b.":backward-char
 bind -m vi-move "\C-d.":vi-delete
-bind -m vi-insert "\C-d.":vi-delete
 bind -m vi-insert "\C-d.":vi-delete
 bind -m vi-insert "\C-k.":
 bind -m vi-insert "\C-o.":

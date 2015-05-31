@@ -27,7 +27,7 @@ if !exists('g:james_minimal_plugins')
   Plug 'Parameter-Text-Objects'
   Plug 'Tabmerge'
   Plug 'airblade/vim-gitgutter'
-  Plug 'oblitum/rainbow'
+  Plug 'junegunn/rainbow_parentheses.vim'
   Plug 't9md/vim-chef'
   Plug 'goldfeld/ctrlr.vim'
   Plug 'xolox/vim-session'

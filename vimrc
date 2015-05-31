@@ -23,8 +23,8 @@ let g:pymode_options = 0
 let g:autoclose_on = 0
 let s:autoclose_mapped = 0
 let b:match_ignorecase = 1
-let g:rainbow_active = 1
-let g:rainbow_ctermfgs = ['LightBlue', 'DarkGreen', 'Yellow', 'DarkRed']
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+let g:rainbow#blacklist = [15, 121, 159]
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
 let g:EasyMotion_keys = '0123456789abcdefghijklmnopqrstuvwxyz'
@@ -112,6 +112,7 @@ set noswapfile                  " Not sure about this one
 set nobackup                    " Not sure about this one
 set omnifunc=syntaxcomplete#Complete
 au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
+au! BufNewFile,BufRead * RainbowParentheses
 
 " Remove trailing whitespaces and ^M chars
 au! FileType c,cpp,java,go,php,javascript,python,twig,xml,yml au! BufWritePre <buffer> call StripTrailingWhitespace()
@@ -569,6 +570,7 @@ map <C-\><C-\> <Plug>(easymotion-jumptoanywhere)
 map <Leader><Leader> <Leader><Leader>
 
 " Register stuff!
+" {
 "TODO: name register for all below
 nnoremap <Leader>c <Nop>
 nnoremap <Leader>x <Nop>
@@ -582,10 +584,13 @@ nnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR
 vnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 nnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
 vnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
+
+"Special swapping mappings!
 "Register from xclip
-nnoremap <Leader>rx :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
+nnoremap <Leader>d :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
 "xclip from register
-nnoremap <Leader>xr :call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nnoremap <Leader>f :call system("xclip -i -selection clipboard", getreg("\""))<CR>
+
 "Register from full path
 nnoremap <Leader>rp :call setreg("\"", expand("%:p"))<CR>
 "Xclip from full path
@@ -620,6 +625,7 @@ nnoremap <silent> <Leader>be
 nnoremap <Leader>ra mmggVGy`m
 "xclip from All
 nnoremap <Leader>xa mmggVGy:call system("xclip -i -selection clipboard", getreg("\""))<CR>`m
+" }
 
 " Center on search term, diff
 nmap n nzz
@@ -631,6 +637,7 @@ nmap [c [czz
 cmap w!! w !sudo tee % >/dev/null
 nmap ,ww! :w<CR>:bw<CR>
 cmap ww!<CR> w<CR>:bw<CR>
+" Wut
 nmap ,w!w!w! :w!!<CR>ll:bw<CR>
 cmap w!w!w! :w!!<CR>ll:bw<CR>
 
@@ -694,8 +701,7 @@ inoremap <C-F> <right>
 cnoremap <C-F> <Right>
 inoremap <C-B> <left>
 cnoremap <C-B> <Left>
-cnoremap <C-A> <Home>
-inoremap <C-D> <delete>
+"cnoremap <C-A> <Home>
 cnoremap <C-D> <delete>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
