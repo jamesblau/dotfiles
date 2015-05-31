@@ -898,3 +898,25 @@ nmap  <C-^>
 
 " Search stuff!
 vnoremap <Leader>/ yq/VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<CR>
+
+" No mouse scrolling
+map <Up> <F18>
+map <Down> <F18>
+imap <Up> <Nop>
+imap <Down> <Nop>
+cmap <Up> <Nop>
+cmap <Down> <Nop>
+
+map <S-Up> <F18>
+map <S-Down> <F18>
+imap <S-Up> <Nop>
+imap <S-Down> <Nop>
+cmap <S-Up> <Nop>
+cmap <S-Down> <Nop>
+
+map <C-Up> <F18>
+map <C-Down> <F18>
+imap <C-Up> <Nop>
+imap <C-Down> <Nop>
+cmap <C-Up> <Nop>
+cmap <C-Down> <Nop>

@@ -39,6 +39,8 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
+
+# Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
 bindsym $mod+F2 exec "pactl set-sink-volume 0 -- -5%; killall -USR1 i3status"
 bindsym $mod+F3 exec "pactl set-sink-volume 0 -- +5%; killall -USR1 i3status"
@@ -47,8 +49,11 @@ bindsym $mod+Control+F3 exec "pactl set-sink-volume 0 -- +1%; killall -USR1 i3st
 bindsym $mod+F4 exec "amixer -D pulse set Capture toggle; killall -USR1 i3status"
 bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
+bindsym $mod+F5 exec "xbacklight -dec 20"
+bindsym $mod+F6 exec "xbacklight -inc 20"
 
 # start a terminal here: just use <C-S-N>
+#bindsym $mod+b exec ~/.i3/shell.sh
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -185,21 +190,10 @@ bar {
 bindsym $mod+m move workspace to output left; move workspace to output up
 
 #Startup things...
-exec setxkbmap -option ctrl:nocaps
+exec_always setxkbmap -option ctrl:nocaps
 exec parcellite
 #exec volti
-exec udisks-glue
-exec xkbset m
-exec xkbset exp =m
-#exec_always xmodmap -e 'keycode 108 = Pointer_Button1'
-#exec_always xmodmap -e 'keycode 107 = Pointer_Button2'
-#exec_always xmodmap -e 'keycode 105 = Pointer_Button3'
-#exec_always synclient TouchPadOff=0
-exec_always synclient VertTwoFingerScroll=1
-exec_always synclient HorizTwoFingerScroll=1
-exec_always synclient TapButton1=0
-exec_always synclient TapButton2=0
-exec_always synclient TapButton3=0
+#exec udisks-glue
 
 #Not sure about this one
 focus_follows_mouse no

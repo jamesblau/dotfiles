@@ -1,0 +1,5 @@
+xkbset m
+xkbset exp =m
+xmodmap -e 'keycode 108 = Pointer_Button1'
+xmodmap -e 'keycode 107 = Pointer_Button2'
+xmodmap -e 'keycode 105 = Pointer_Button3'

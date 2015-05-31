@@ -246,3 +246,7 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 
 # Run twolfson/sexy-bash-prompt
 . ~/.bash_prompt
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# z jump around
+. ~/src/opensource/z/z.sh
