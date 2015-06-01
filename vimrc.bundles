@@ -59,9 +59,6 @@ if !exists('g:james_minimal_plugins')
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdcommenter'
   Plug 'godlygeek/tabular'
-  if executable('ctags')
-    Plug 'majutsushi/tagbar'
-  endif
   " Scala
   Plug 'derekwyatt/vim-scala'
   Plug 'derekwyatt/vim-sbt'

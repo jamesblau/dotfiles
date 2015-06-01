@@ -1,66 +1,6 @@
 "vim: set sw=2 ts=2 sts=2 expandtab ft=vim
-" Basics
-set nocompatible        " Must be first line
-"if !(has('win16') || has('win32') || has('win64'))
+set nocompatible
 set shell=/bin/bash
-"endif
-
-" Globals
-let g:multi_cursor_exit_from_insert_mode=0
-let g:multi_cursor_exit_from_visual_mode=0
-let g:indent_guides_enable_on_vim_startup=0
-let g:indent_guides_default_mapping=0
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:autoclose_vim_commentmode = 1
-let g:DisableAutoPHPFolding = 0
-let g:PIVAutoClose = 0
-let g:NERDShutUp=1
-let g:snips_author = 'James Blau <james@tresata.com>'
-let g:pymode_lint_checker = "pyflakes"
-let g:pymode_utils_whitespaces = 0
-let g:pymode_options = 0
-let g:autoclose_on = 0
-let s:autoclose_mapped = 0
-let b:match_ignorecase = 1
-let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-let g:rainbow#blacklist = [15, 121, 159]
-let g:session_autoload = 'no'
-let g:session_autosave = 'no'
-let g:EasyMotion_keys = '0123456789abcdefghijklmnopqrstuvwxyz'
-let g:tmux_navigator_no_mappings = 1
-let g:surround_no_mappings = 1
-let g:syntastic_mode_map = {'mode': 'passive'}
-"let g:windowswap_map_keys = 0
-"let g:gitgutter_initialised = 1
-"let g:gitgutter_realtime = 0
-
-" Silver Searcher stuff
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-" Tmux navigator stuff
-"nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<CR>
-"nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<CR>
-"nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<CR>
-"nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<CR>
-"nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
-
-" WindowSwap stuff
-"nmap <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
-"nmap <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
-"nmap <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
-
-" ZoomWin remap
-nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
-nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
-
-"filetype on
-"filetype off
-
-" Use local bundles if available
-source /home/james/.vimrc.bundles
 
 " General
 let mapleader=','
@@ -112,14 +52,38 @@ set noswapfile                  " Not sure about this one
 set nobackup                    " Not sure about this one
 set omnifunc=syntaxcomplete#Complete
 au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
-au! BufNewFile,BufRead * RainbowParentheses
 
-" Remove trailing whitespaces and ^M chars
-au! FileType c,cpp,java,go,php,javascript,python,twig,xml,yml au! BufWritePre <buffer> call StripTrailingWhitespace()
-au! FileType go au! BufWritePre <buffer> Fmt
-au! BufNewFile,BufRead *.html.twig set filetype=html.twig
-au! FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2 "best in a plugin...
-au! BufNewFile,BufRead *.coffee set filetype=coffee
+" Multi-cursor stuff
+let g:multi_cursor_exit_from_insert_mode=0
+let g:multi_cursor_exit_from_visual_mode=0
+
+" Silver Searcher stuff
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" Tmux navigator stuff
+let g:tmux_navigator_no_mappings = 1
+"nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<CR>
+"nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<CR>
+"nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<CR>
+"nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<CR>
+"nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
+
+" WindowSwap stuff
+"let g:windowswap_map_keys = 0
+"nmap <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
+"nmap <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
+"nmap <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
+
+" ZoomWin remap
+nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
+nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
+
+" Rainbow parentheses everywhere
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+let g:rainbow#blacklist = [15, 121, 159]
+au! BufNewFile,BufRead * RainbowParentheses
 
 " swap j/gj, k/gk
 noremap j gj
@@ -183,10 +147,9 @@ let g:ctrlp_working_path_mode = 'ra'
   "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
   "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
-" TagBar
-nnoremap <silent> <Leader>tt :TagbarToggle<CR>
-
-" Fugitive
+" Fugitive and GitGutter
+"let g:gitgutter_initialised = 1
+"let g:gitgutter_realtime = 0
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gd :Gdiff<CR>
 nnoremap <silent> <Leader>gm :Gdiff master<CR>
@@ -201,7 +164,6 @@ nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
 
 " UndoTree
 nnoremap <Leader>u :UndotreeToggle<CR>
-" If undotree is opened, it is likely one wants to interact with it.
 let g:undotree_SetFocusWhenToggle=1
 
 if !exists('g:james_no_hud')
@@ -212,13 +174,7 @@ if !exists('g:james_no_hud')
   "let g:airline_powerline_fonts = 1
 
   " vim-airline
-  " Set configuration options for the statusline plugin vim-airline.
-  " Use the powerline theme and optionally enable powerline symbols.
-  " To use the symbols , , , , , , and .in the statusline
-  " segments add the following to your .vimrc.before.local file:
-  "   let g:airline_powerline_fonts=1
-  " If the previous symbols do not render for you then install a
-  " powerline enabled font.
+  "let g:airline_powerline_fonts=1
   let g:airline_theme = 'powerlineish'
   if !exists('g:airline_powerline_fonts')
     " Use the default set of separators with a few customizations
@@ -239,18 +195,12 @@ endif
 
 " Incremement character under cursor only
 nnoremap <Leader>ic a <Esc>h<C-A>lxh
-" No octal, etc wierdness in increment
-set nrformats=
+
 
 " Other empty sets!
 set mouse=
-set spellcapcheck=
-
-if has('cmdline_info')
-  set ruler                   " Show the ruler
-  set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-  set showcmd                 " Show partial commands in status line and
-endif
+set nrformats=              " No octal, etc wierdness in increment
+set showcmd                 " Show partial commands in status line and
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 function! ResCur()
@@ -381,17 +331,24 @@ function! DiffWToggleRegex()
   echom &diffopt &diffexpr
 endfunction
 
+let &showbreak=repeat('>', 2)
+function! ShowBreakToggle()
+  if(&showbreak == repeat('>', 2))
+    set showbreak=
+  else
+    let &showbreak=repeat('>', 2)
+  endif
+endfunction
+
 " Sets and toggles!
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
-nnoremap <Leader>si :IndentGuidesToggle<CR>
 nnoremap <Leader>sn :call NumberToggle()<CR>
 nnoremap <Leader>sf :call NfAlphaToggle()<CR>
 nnoremap <Leader>sh :call HeightToggle()<CR>
 nnoremap <Leader>sS :call ShcfToggle()<CR>
 nnoremap <Leader>sd :call DiffWToggle()<CR>
 nmap     <Leader>sD :call DiffWToggleRegex("")<C-B><C-B>
-nnoremap <Leader>sy :SyntasticToggleMode<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
@@ -405,8 +362,18 @@ nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 nnoremap <Leader>sz :set foldmethod=manual<CR>
+nnoremap <Leader>sb :call ShowBreakToggle()<CR>
+
+" Indent guides stuff
+let g:indent_guides_enable_on_vim_startup=0
+let g:indent_guides_default_mapping=0
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+nnoremap <Leader>si :IndentGuidesToggle<CR>
 
 " Syntastic stuff
+let g:syntastic_mode_map = {'mode': 'passive'}
+nnoremap <Leader>sy :SyntasticToggleMode<CR>
 nnoremap <Leader>ys :SyntasticCheck<CR>
 
 "Replace comma with backslash for find backwards last.
@@ -565,6 +532,7 @@ function! ReallyDeleteHiddenBuffers()
 endfunction
 
 " Easymotion stuff!
+let g:EasyMotion_keys = '0123456789abcdefghijklmnopqrstuvwxyz'
 map <C-\> <Plug>(easymotion-prefix)
 map <C-\><C-\> <Plug>(easymotion-jumptoanywhere)
 map <Leader><Leader> <Leader><Leader>
@@ -670,21 +638,6 @@ nnoremap <Leader>Mhu j"_ddk0
 " Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
 
-"au! BufNewFile,BufRead fugitive://* set bufhidden=delete
-
-inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-cnoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
-let &showbreak=repeat('>', 2)
-function! ShowBreakToggle()
-  if(&showbreak == repeat('>', 2))
-    set showbreak=
-  else
-    let &showbreak=repeat('>', 2)
-  endif
-endfunction
-nnoremap <Leader>sb :call ShowBreakToggle()<CR>
-
 " Camel stuff!
 map -w <Plug>CamelCaseMotion_w
 map -b <Plug>CamelCaseMotion_b
@@ -701,7 +654,7 @@ inoremap <C-F> <right>
 cnoremap <C-F> <Right>
 inoremap <C-B> <left>
 cnoremap <C-B> <Left>
-"cnoremap <C-A> <Home>
+cnoremap <C-A> <Home>
 cnoremap <C-D> <delete>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
@@ -713,6 +666,8 @@ vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g
 nnoremap <Leader>sc :%S/\<<C-R><C-W>\>/
 
 " Session stuff!
+let g:session_autoload = 'no'
+let g:session_autosave = 'no'
 set sessionoptions=blank,curdir,folds,tabpages,winsize
 nnoremap <Leader>S <Nop>
 nnoremap <Leader>SL :SessionList<CR>
@@ -738,6 +693,9 @@ nnoremap <Leader>K K
 nnoremap <Leader>e. :execute getline(".")<CR>
 nnoremap <Leader>er : <C-R>"<CR>
 
+" Use local bundles if available
+source /home/james/.vimrc.bundles
+
 " Color stuff!
 colorscheme transparent
 "nnoremap <Leader>lr :hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
@@ -750,7 +708,7 @@ hi Normal             ctermfg=White
 "hi TabLine            ctermfg=Black         ctermbg=Yellow
 "hi TabLineSel         ctermfg=White         ctermbg=DarkRed
 "hi TabLineFill        ctermfg=None
-hi Search             ctermfg=White         ctermbg=Black       cterm=bold
+hi Search             ctermfg=White         ctermbg=DarkRed
 hi Visual             ctermfg=DarkRed       ctermbg=White
 hi vimLineComment     ctermfg=LightBlue
 hi NonText            ctermfg=DarkRed
@@ -787,10 +745,6 @@ hi MatchParen          cterm=undercurl,bold
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> trans<' . synIDattr(synID(line("."),col(".")+1,0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"fg#")<CR>
 
-" Resource and re-Filetype temp. hack...
-nnoremap <Leader>R <Nop>
-nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
-
 " Bsc/Csv stuff
 au! BufNewFile,BufRead *.bsv set filetype=csv
 nnoremap <Leader>qw :WhatColumn<CR>
@@ -817,6 +771,10 @@ nnoremap <Esc>K 25zl
 " Regbuf stuff
 nnoremap <Leader>sr :RegbufOpen<CR>
 
+" Resource and re-Filetype temp. hack...
+nnoremap <Leader>R <Nop>
+nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
+
 " Disgusting hack...
 function! SacrificialTabRedraw()
   exec ':tabnew'
@@ -839,9 +797,10 @@ nmap <Leader>> <Plug>MoveParamRight
 map <C-_> u.
 
 " Give S back to sneak and ,S to surround
+let g:surround_no_mappings = 1
 xmap S <Plug>Sneak_S
 xmap <Leader>S <Plug>VSurround
-" Defaults below
+" Largely defaults below
 nmap ds  <Plug>Dsurround
 nmap cs  <Plug>Csurround
 nmap ys  <Plug>Ysurround
@@ -849,7 +808,6 @@ nmap yS  <Plug>YSurround
 nmap yss <Plug>Yssurround
 nmap ySs <Plug>YSsurround
 nmap ySS <Plug>YSsurround
-"xmap S   <Plug>VSurround
 xmap gS  <Plug>VgSurround
 imap <C-S> <Plug>Isurround
 imap <C-G>s <Plug>Isurround
@@ -907,22 +865,32 @@ vnoremap <Leader>/ yq/VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<
 
 " No mouse scrolling
 map <Up> <F18>
-map <Down> <F18>
-imap <Up> <Nop>
-imap <Down> <Nop>
-cmap <Up> <Nop>
-cmap <Down> <Nop>
-
 map <S-Up> <F18>
-map <S-Down> <F18>
-imap <S-Up> <Nop>
-imap <S-Down> <Nop>
-cmap <S-Up> <Nop>
-cmap <S-Down> <Nop>
-
 map <C-Up> <F18>
+map <Down> <F18>
+map <S-Down> <F18>
 map <C-Down> <F18>
+imap <Up> <Nop>
+imap <S-Up> <Nop>
 imap <C-Up> <Nop>
+imap <Down> <Nop>
+imap <S-Down> <Nop>
 imap <C-Down> <Nop>
+cmap <Up> <Nop>
+cmap <S-Up> <Nop>
 cmap <C-Up> <Nop>
+cmap <Down> <Nop>
+cmap <S-Down> <Nop>
 cmap <C-Down> <Nop>
+
+" TODO: Delete these when I'm sure I don't need them
+"let g:autoclose_vim_commentmode = 1
+"let g:DisableAutoPHPFolding = 0
+"let g:PIVAutoClose = 0
+"let g:snips_author = 'James Blau <james@tresata.com>'
+"let g:pymode_lint_checker = "pyflakes"
+"let g:pymode_utils_whitespaces = 0
+"let g:pymode_options = 0
+"let g:autoclose_on = 0
+"let s:autoclose_mapped = 0
+"let b:match_ignorecase = 1

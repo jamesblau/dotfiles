@@ -1,0 +1,8 @@
+#! /bin/bash
+
+while true; do
+  value=$(cat  /proc/acpi/button/lid/LID/state | cut -f2 -d: | sed s/ *//)
+  if [ ! $value=open ]; then
+    gnome-screensaver-command -l
+  fi
+done
