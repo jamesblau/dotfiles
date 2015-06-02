@@ -123,28 +123,6 @@ fi
 # reset and kill n
 alias intnon='sudo modprobe -r iwlwifi; sudo modprobe iwlwifi 11n_disable=1'
 
-alias ..="cd .."
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
-alias ..6="cd ../../../../../.."
-alias ..7="cd ../../../../../../.."
-alias ..8="cd ../../../../../../../.."
-alias ..9="cd ../../../../../../../../.."
-alias ..10="cd ../../../../../../../../../.."
-
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ......="cd ../../../../.."
-alias .......="cd ../../../../../.."
-alias ........="cd ../../../../../../.."
-alias .........="cd ../../../../../../../.."
-alias ..........="cd ../../../../../../../../.."
-alias ...........="cd ../../../../../../../../../.."
-
 function mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
 #Open correct Ruby repl, irb1.9.1
@@ -250,3 +228,6 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 
 # z jump around
 . ~/src/opensource/z/z.sh
+
+# bd back to directory
+alias bd=". ~/src/opensource/bd/bd -si"

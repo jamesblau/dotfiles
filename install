@@ -11,3 +11,6 @@ cd ~/bin
 for x in `ls ~/dotfiles/bin`; do
   ln -s ~/dotfiles/bin/"$x" "$x"
 done
+
+cd /etc/bash_completion.d
+sudo ln -s ~/src/opensource/bd/bash_completion.d/bd bd

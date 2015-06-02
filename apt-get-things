@@ -1,18 +1,23 @@
-apt-get install dmenu
-apt-get install fonts-inconsolata
-apt-get install git
-apt-get install i3
-apt-get install i3lock
-apt-get install i3status
-apt-get install i3-wm
-apt-get install parcellite
-apt-get install silversearcher-ag
-apt-get install stterm
-apt-get install tmux
-apt-get install tree
-apt-get install udisks
-apt-get install vim
-apt-get install vpnc
-apt-get install wicd-curses
-apt-get install xclip
-apt-get install xdotool
+dmenu
+exuberant-ctags
+fonts-inconsolata
+git
+i3
+i3lock
+i3status
+i3-wm
+parcellite
+silversearcher-ag
+stterm
+sudoku
+tmux
+transmission
+tree
+udisks
+vim
+vlc
+vpnc
+wicd-curses
+xbacklight
+xclip
+xdotool
