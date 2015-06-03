@@ -206,4 +206,6 @@ bindsym --release $mod+Control+j exec --no-startup-id "xdotool key --clearmodifi
 bindsym --release $mod+Control+k exec --no-startup-id "xdotool key --clearmodifiers Up"
 bindsym --release $mod+Control+l exec --no-startup-id "xdotool key --clearmodifiers Right"
 
+# TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
+
 # vim:filetype=conf

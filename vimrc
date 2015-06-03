@@ -2,8 +2,12 @@
 set nocompatible
 set shell=/bin/bash
 
-" General
-let mapleader=','
+" Leader stuff!
+let mapleader = ","
+nnoremap \ ,
+nmap < ,
+nnoremap << <<
+
 filetype plugin indent on   " Automatically detect file types.
 syntax on                   " Syntax highlighting
 scriptencoding utf-8
@@ -23,7 +27,7 @@ set linespace=0                 " No extra spaces between rows
 set showmatch                   " Show matching brackets/parenthesis
 set incsearch                   " Find as you type search
 set hlsearch                    " Highlight search terms
-set winminheight=0              " Windows can be 0 line high
+set winminheight=0              " Windows can be 0 lines high
 set ignorecase                  " Case insensitive search
 set smartcase                   " Case sensitive when uc present
 set wildmenu                    " Show list instead of just completing
@@ -51,7 +55,9 @@ set nojoinspaces                " Prevents inserting two spaces after punctuatio
 set noswapfile                  " Not sure about this one
 set nobackup                    " Not sure about this one
 set omnifunc=syntaxcomplete#Complete
-au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
+set mouse=
+set nrformats=              " No octal, etc wierdness in increment
+set showcmd                 " Show partial commands in status line and
 
 " Multi-cursor stuff
 let g:multi_cursor_exit_from_insert_mode=0
@@ -141,8 +147,21 @@ vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
-"nnoremap <silent> <D-t> :CtrlP<CR>
-"nnoremap <silent> <D-r> :CtrlPMRU<CR>
+nnoremap <silent> <C-P> :CtrlP<CR>
+nnoremap <silent> <Esc><C-p> :CtrlPBuffer<CR>
+nnoremap <silent> <Esc>p :CtrlPMRU<CR>
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtBS()':              ['<c-h>', '<bs>', '<c-]>'],
+  \ 'PrtDelete()':          ['<c-d>', '<del>'],
+  \ 'PrtSelectMove("t")':   ['', '<Home>', '<kHome>'],
+  \ 'PrtSelectMove("b")':   ['<c-g>', '<End>', '<kEnd>'],
+  \ 'ToggleByFname()':      ['<c-i>'],
+  \ 'ToggleType(1)':        ['<c-l>', '<c-up>'],
+  \ 'ToggleType(-1)':       ['<c-down>'],
+  \ 'PrtCurLeft()':         ['<c-b>', '<left>', '<c-^>'],
+  \ 'PrtCurRight()':        ['<c-f>', '<right>'],
+  \ 'PrtExit()':            ['<esc>', '<c-c>'],
+  \ }
 "let g:ctrlp_custom_ignore = {
   "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
   "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
@@ -192,15 +211,8 @@ if !exists('g:james_no_hud')
   set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
-
 " Incremement character under cursor only
 nnoremap <Leader>ic a <Esc>h<C-A>lxh
-
-
-" Other empty sets!
-set mouse=
-set nrformats=              " No octal, etc wierdness in increment
-set showcmd                 " Show partial commands in status line and
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 function! ResCur()
@@ -331,16 +343,15 @@ function! DiffWToggleRegex()
   echom &diffopt &diffexpr
 endfunction
 
-let &showbreak=repeat('>', 2)
 function! ShowBreakToggle()
-  if(&showbreak == repeat('>', 2))
+  if(&showbreak == g:james_showbreak)
     set showbreak=
   else
-    let &showbreak=repeat('>', 2)
+    let &showbreak=g:james_showbreak
   endif
 endfunction
 
-" Sets and toggles!
+" Sets and toggles
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
 nnoremap <Leader>sn :call NumberToggle()<CR>
@@ -362,11 +373,15 @@ nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 nnoremap <Leader>sz :set foldmethod=manual<CR>
+
+" Break-lines stuff
+let g:james_showbreak=repeat('>',2)
+let &showbreak=g:james_showbreak
 nnoremap <Leader>sb :call ShowBreakToggle()<CR>
 
 " Indent guides stuff
-let g:indent_guides_enable_on_vim_startup=0
-let g:indent_guides_default_mapping=0
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_default_mapping = 0
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 nnoremap <Leader>si :IndentGuidesToggle<CR>
@@ -376,14 +391,7 @@ let g:syntastic_mode_map = {'mode': 'passive'}
 nnoremap <Leader>sy :SyntasticToggleMode<CR>
 nnoremap <Leader>ys :SyntasticCheck<CR>
 
-"Replace comma with backslash for find backwards last.
-nnoremap \ ,
-"Not sure about this one, but easier capitalized leader mappings
-nmap < ,
-"But don't mess up unindenting
-nnoremap << <<
-nnoremap <Space> <Nop>
-
+" Add/subtract stuff
 function! AddSubtract(char, back)
   let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
   call search(pattern, 'cw' . a:back)
@@ -395,13 +403,7 @@ nnoremap <silent> <Esc>a   :<C-U>call AddSubtract("\<C-A>", 'b')<CR>
 nnoremap <silent> <C-X> :<C-U>call AddSubtract("\<C-X>", '')<CR>
 nnoremap <silent> <Esc>x   :<C-U>call AddSubtract("\<C-X>", 'b')<CR>
 
-" Edit multiple
-command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
-command! -complete=file -nargs=+ Ewindows call s:ETW('edit', <f-args>)
-command! -complete=file -nargs=+ Eswindows call s:ETW('new', <f-args>)
-command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
-
-function! s:ETW(what, ...)
+function! ETW(what, ...)
   for f1 in a:000
     let files = glob(f1)
     if files == ''
@@ -414,11 +416,36 @@ function! s:ETW(what, ...)
   endfor
 endfunction
 
-" Tab stuff!
+" Edit multiple
+command! -complete=file -nargs=+ Etabs call ETW('tabnew', <f-args>)
+command! -complete=file -nargs=+ Ewindows call ETW('edit', <f-args>)
+command! -complete=file -nargs=+ Eswindows call ETW('new', <f-args>)
+command! -complete=file -nargs=+ Evwindows call ETW('vnew', <f-args>)
+
+function! NumTorB(number)
+  if (tabpagenr("$") == 1)
+    execute ":b" . a:number
+  else
+    execute ":tabn" . a:number
+  endif
+endfunction
+
+" Tab stuff
 nnoremap <Leader>th :tabfirst<CR>
 nnoremap <Leader>tl :tablast<CR>
 nnoremap <Leader>tm :tabm<Space>
 nnoremap <Leader>td :tabclose<CR>
+"Jump to tab
+noremap <Esc>1 :call NumTorB(1)<CR>
+noremap <Esc>2 :call NumTorB(2)<CR>
+noremap <Esc>3 :call NumTorB(3)<CR>
+noremap <Esc>4 :call NumTorB(4)<CR>
+noremap <Esc>5 :call NumTorB(5)<CR>
+noremap <Esc>6 :call NumTorB(6)<CR>
+noremap <Esc>7 :call NumTorB(7)<CR>
+noremap <Esc>8 :call NumTorB(8)<CR>
+noremap <Esc>9 :call NumTorB(9)<CR>
+noremap <Esc>0 :call NumTorB(10)<CR>
 
 " Some helpers to edit mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
@@ -439,16 +466,20 @@ nnoremap <Leader>Es :sb<Space>
 nnoremap <Leader>Ev :vert sb<Space>
 nnoremap <Leader>Et :tab sb<Space>
 
-function! NextTorB()
-  if (tabpagenr("$") == 1)
+function! NextTWorB()
+  if (tabpagenr("$") == 1) && (winnr("$") == 1)
     bn
+  elseif (tabpagenr("$") == 1)
+    wincmd w
   else
     tabn
   endif
 endfunction
-function! PrevTorB()
-  if (tabpagenr("$") == 1)
+function! PrevTWorB()
+  if (tabpagenr("$") == 1) && (winnr("$") == 1)
     bp
+  elseif (tabpagenr("$") == 1)
+    wincmd W
   else
     tabp
   endif
@@ -463,8 +494,8 @@ nnoremap <silent> <Esc>o        :bn<CR>
 nnoremap <silent> <Esc>h     :tabmove -1<CR>
 nnoremap <silent> <Esc>l     :tabmove +1<CR>
 "Buffer movement
-nnoremap          <Esc>j        :call PrevTorB()<CR>
-nnoremap          <Esc>k        :call NextTorB()<CR>
+nnoremap          <Esc>j        :call PrevTWorB()<CR>
+nnoremap          <Esc>k        :call NextTWorB()<CR>
 "inoremap          <Leader><Esc>j        <C-O>:bp<CR>
 "inoremap          <Leader><Esc>k        <C-O>:bn<CR>
 "Window movement
@@ -831,17 +862,16 @@ nmap <Leader>%D <F17>`pdd`odd
 nmap <Leader>%hd <F15>`pdd`old0
 nnoremap <Leader>%fd diw%x``x
 
-" Modify selected text using combining diacritics
-command! -range -nargs=0 Overline        call s:CombineSelection(<line1>, <line2>, '0305')
-command! -range -nargs=0 Underline       call s:CombineSelection(<line1>, <line2>, '0332')
-command! -range -nargs=0 DoubleUnderline call s:CombineSelection(<line1>, <line2>, '0333')
-command! -range -nargs=0 Strikethrough   call s:CombineSelection(<line1>, <line2>, '0336')
-
-function! s:CombineSelection(line1, line2, cp)
+function! CombineSelection(line1, line2, cp)
   execute 'let char = "\u'.a:cp.'"'
   execute a:line1.','.a:line2.'s/\%V[^[:cntrl:]]/&'.char.'/ge'
 endfunction
 
+" Modify selected text using combining diacritics
+command! -range -nargs=0 Overline        call CombineSelection(<line1>, <line2>, '0305')
+command! -range -nargs=0 Underline       call CombineSelection(<line1>, <line2>, '0332')
+command! -range -nargs=0 DoubleUnderline call CombineSelection(<line1>, <line2>, '0333')
+command! -range -nargs=0 Strikethrough   call CombineSelection(<line1>, <line2>, '0336')
 "vnoremap <Leader>z :Overline<CR>
 "vnoremap <C-K> <C-K>
 
@@ -894,3 +924,5 @@ cmap <C-Down> <Nop>
 "let g:autoclose_on = 0
 "let s:autoclose_mapped = 0
 "let b:match_ignorecase = 1
+
+au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
