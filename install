@@ -11,6 +11,45 @@ cd ~/bin
 for x in `ls ~/dotfiles/bin`; do
   ln -s ~/dotfiles/bin/"$x" "$x"
 done
+sudo ln -s ~/src/opensource/scalariform/cli/target/scala-2.10/cli-assembly-0.1.6.jar scalariform.jar
+sudo chmod 775 scalariform.jar
 
 cd /etc/bash_completion.d
 sudo ln -s ~/src/opensource/bd/bash_completion.d/bd bd
+
+
+#In /home/james/src/opensource/fzf/shell/key-bindings.bash, change:
+
+  ## CTRL-R - Paste the selected command from history into the command line
+  #bind '"\C-r": " \C-e\C-u$(__fzf_history__)\e\C-e\e^\er"'
+
+  ## ALT-C - cd into the selected directory
+  #bind '"\ec": " \C-e\C-u$(__fzf_cd__)\e\C-e\er\C-m"'
+
+#[...]
+
+  ## CTRL-R - Paste the selected command from history into the command line
+  #bind '"\C-r": "\eddi$(__fzf_history__)\C-x\C-e\C-x^\e$a\C-x\C-r"'
+  #bind -m vi-command '"\C-r": "i\C-r"'
+
+  ## ALT-C - cd into the selected directory
+  #bind '"\ec": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
+  #bind -m vi-command '"\ec": "i\ec"'
+
+#To:
+
+  ## CTRL-O - Paste the selected command from history into the command line
+  #bind '"\C-o": " \C-e\C-u$(__fzf_history__)\e\C-e\e^\er"'
+
+  ## CTRL-J - cd into the selected directory
+  #bind '"\C-j": " \C-e\C-u$(__fzf_cd__)\e\C-e\er\C-m"'
+
+##[...]
+
+  ## CTRL-O - Paste the selected command from history into the command line
+  #bind '"\C-o": "\eddi$(__fzf_history__)\C-x\C-e\C-x^\e$a\C-x\C-r"'
+  #bind -m vi-command '"\C-o": "i\C-o"'
+
+  ## CTRL-J - cd into the selected directory
+  #bind '"\C-j": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
+  #bind -m vi-command '"\C-j": "i\C-j"'

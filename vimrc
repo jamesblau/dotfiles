@@ -422,31 +422,6 @@ command! -complete=file -nargs=+ Ewindows call ETW('edit', <f-args>)
 command! -complete=file -nargs=+ Eswindows call ETW('new', <f-args>)
 command! -complete=file -nargs=+ Evwindows call ETW('vnew', <f-args>)
 
-function! NumTorB(number)
-  if (tabpagenr("$") == 1)
-    execute ":b" . a:number
-  else
-    execute ":tabn" . a:number
-  endif
-endfunction
-
-" Tab stuff
-nnoremap <Leader>th :tabfirst<CR>
-nnoremap <Leader>tl :tablast<CR>
-nnoremap <Leader>tm :tabm<Space>
-nnoremap <Leader>td :tabclose<CR>
-"Jump to tab
-noremap <Esc>1 :call NumTorB(1)<CR>
-noremap <Esc>2 :call NumTorB(2)<CR>
-noremap <Esc>3 :call NumTorB(3)<CR>
-noremap <Esc>4 :call NumTorB(4)<CR>
-noremap <Esc>5 :call NumTorB(5)<CR>
-noremap <Esc>6 :call NumTorB(6)<CR>
-noremap <Esc>7 :call NumTorB(7)<CR>
-noremap <Esc>8 :call NumTorB(8)<CR>
-noremap <Esc>9 :call NumTorB(9)<CR>
-noremap <Esc>0 :call NumTorB(10)<CR>
-
 " Some helpers to edit mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 nnoremap <Leader>ew :Ewindows<Space>
@@ -484,30 +459,15 @@ function! PrevTWorB()
     tabp
   endif
 endfunction
+function! NumTorB(number)
+  if (tabpagenr("$") == 1)
+    execute ":b" . a:number
+  else
+    execute ":tabn" . a:number
+  endif
+endfunction
 
-" Tab, window, and buffer movement stuff!
-"Tab movement
-nnoremap <silent> <Esc>i        :bp<CR>
-nnoremap <silent> <Esc>o        :bn<CR>
-"inoremap <silent> <Leader><Esc>h        <C-O>:tabp<CR>
-"inoremap <silent> <Leader><Esc>l        <C-O>:tabn<CR>
-nnoremap <silent> <Esc>h     :tabmove -1<CR>
-nnoremap <silent> <Esc>l     :tabmove +1<CR>
-"Buffer movement
-nnoremap          <Esc>j        :call PrevTWorB()<CR>
-nnoremap          <Esc>k        :call NextTWorB()<CR>
-"inoremap          <Leader><Esc>j        <C-O>:bp<CR>
-"inoremap          <Leader><Esc>k        <C-O>:bn<CR>
-"Window movement
-nnoremap          <C-J>      <C-W>j
-"nnoremap          <Esc><C-J> <C-W>j<C-W>_
-nnoremap          <Esc><C-J> :call SmoothDown()<CR>
-nnoremap          <C-K>      <C-W>k
-"nnoremap          <Esc><C-K> <C-W>k<C-W>_
-nnoremap          <Esc><C-K> :call SmoothUp()<CR>
-nnoremap          <C-H>      <C-W>h
-nnoremap          <C-L>      <C-W>l
-"Other buffer stuff
+" Buffer stuff
 nnoremap <Leader>b  <Nop>
 nnoremap <Leader>bl :buffers<CR>
 nnoremap <Leader>bt :tab ball<CR>
@@ -515,6 +475,35 @@ nnoremap <Leader>bd :bd<CR>
 nnoremap <Leader>bD :bd!<CR>
 nnoremap <Leader>Bd :call DeleteHiddenBuffers()<CR>
 nnoremap <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
+" Window stuff
+nnoremap <C-H>      <C-W>h
+nnoremap <C-J>      <C-W>j
+nnoremap <C-K>      <C-W>k
+nnoremap <C-L>      <C-W>l
+nnoremap <Esc><C-J> :call SmoothDown()<CR>
+nnoremap <Esc><C-K> :call SmoothUp()<CR>
+" Tab stuff
+nnoremap <Esc>i     :bp<CR>
+nnoremap <Esc>o     :bn<CR>
+nnoremap <Esc>h     :tabmove -1<CR>
+nnoremap <Esc>l     :tabmove +1<CR>
+nnoremap <Leader>th :tabfirst<CR>
+nnoremap <Leader>tl :tablast<CR>
+nnoremap <Leader>tm :tabm<Space>
+nnoremap <Leader>td :tabclose<CR>
+" Smart Tab, (Window), Buffer stuff
+nnoremap <Esc>j     :call PrevTWorB()<CR>
+nnoremap <Esc>k     :call NextTWorB()<CR>
+nnoremap <Esc>1     :call NumTorB(1)<CR>
+nnoremap <Esc>2     :call NumTorB(2)<CR>
+nnoremap <Esc>3     :call NumTorB(3)<CR>
+nnoremap <Esc>4     :call NumTorB(4)<CR>
+nnoremap <Esc>5     :call NumTorB(5)<CR>
+nnoremap <Esc>6     :call NumTorB(6)<CR>
+nnoremap <Esc>7     :call NumTorB(7)<CR>
+nnoremap <Esc>8     :call NumTorB(8)<CR>
+nnoremap <Esc>9     :call NumTorB(9)<CR>
+nnoremap <Esc>0     :call NumTorB(10)<CR>
 
 function! SmoothMove(hjkl)
   if(&winheight == 999)
@@ -913,6 +902,9 @@ cmap <Down> <Nop>
 cmap <S-Down> <Nop>
 cmap <C-Down> <Nop>
 
+" Scala stuff
+au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
+
 " TODO: Delete these when I'm sure I don't need them
 "let g:autoclose_vim_commentmode = 1
 "let g:DisableAutoPHPFolding = 0
@@ -924,5 +916,15 @@ cmap <C-Down> <Nop>
 "let g:autoclose_on = 0
 "let s:autoclose_mapped = 0
 "let b:match_ignorecase = 1
+
+" TODO: Just a reminder to namespace mappings...
+"autocmd FileType unite call s:unite_keymaps()
+"function! s:unite_keymaps()
+   "" Play nice with supertab
+  "let b:SuperTabDisabled=1 
+  "" Enable navigation with control-j and control-k in insert mode
+  "imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  "imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+"endfunction`
 
 au! BufNewFile,BufRead * set sw=2 ts=2 sts=2

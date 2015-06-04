@@ -62,7 +62,6 @@ if !exists('g:james_minimal_plugins')
   " Scala
   Plug 'derekwyatt/vim-scala'
   Plug 'derekwyatt/vim-sbt'
-  Plug 'rompetroll/vim-scalariform'
   Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
 endif
 
