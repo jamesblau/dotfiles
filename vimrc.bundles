@@ -63,6 +63,8 @@ if !exists('g:james_minimal_plugins')
   Plug 'derekwyatt/vim-scala'
   Plug 'derekwyatt/vim-sbt'
   Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
+  " Fun
+  Plug 'mattn/invader-vim'
 endif
 
 call plug#end()

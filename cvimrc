@@ -35,8 +35,9 @@ imap <C-h> deleteChar
 imap <C-d> deleteForwardChar
 
 map W :tabdetach<CR>
-map gb :buffer<Space>
 map gr rootFrame
+map b :bookmark
+map B :buffer
 
 map sh :set hud!<CR>
 map sn :set numerichints!<CR>

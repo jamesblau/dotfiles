@@ -41,8 +41,8 @@ sudo ln -s ~/src/opensource/bd/bash_completion.d/bd bd
   ## CTRL-O - Paste the selected command from history into the command line
   #bind '"\C-o": " \C-e\C-u$(__fzf_history__)\e\C-e\e^\er"'
 
-  ## CTRL-J - cd into the selected directory
-  #bind '"\C-j": " \C-e\C-u$(__fzf_cd__)\e\C-e\er\C-m"'
+  ## CTRL-] - cd into the selected directory
+  #bind '"\C-]": " \C-e\C-u$(__fzf_cd__)\e\C-e\er\C-m"'
 
 ##[...]
 
@@ -50,6 +50,6 @@ sudo ln -s ~/src/opensource/bd/bash_completion.d/bd bd
   #bind '"\C-o": "\eddi$(__fzf_history__)\C-x\C-e\C-x^\e$a\C-x\C-r"'
   #bind -m vi-command '"\C-o": "i\C-o"'
 
-  ## CTRL-J - cd into the selected directory
-  #bind '"\C-j": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
-  #bind -m vi-command '"\C-j": "i\C-j"'
+  ## CTRL-] - cd into the selected directory
+  #bind '"\C-]": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
+  #bind -m vi-command '"\C-]": "i\C-]"'

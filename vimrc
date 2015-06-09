@@ -33,7 +33,7 @@ set smartcase                   " Case sensitive when uc present
 set wildmenu                    " Show list instead of just completing
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
-set scrolljump=5                " Lines to scroll when cursor leaves screen
+set scrolljump=-9               " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 set list
@@ -905,7 +905,7 @@ cmap <C-Down> <Nop>
 " Scala stuff
 au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
 
-" TODO: Delete these when I'm sure I don't need them
+" TODO: Delete these when I'm sure I don't need them. Definitely by July.
 "let g:autoclose_vim_commentmode = 1
 "let g:DisableAutoPHPFolding = 0
 "let g:PIVAutoClose = 0

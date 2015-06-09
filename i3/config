@@ -194,10 +194,13 @@ exec parcellite
 #exec volti
 #exec udisks-glue
 
+#Strip trailing newline from clipboard
+bindsym $mod+i exec "echo -n $(xclip -o) | xclip"
+
 #Not sure about this one
 focus_follows_mouse no
 
-#For youtube in cVim: unfocus, refocus, escape
+#Disgusting hack for when sites like youtube get stuck between insert and normal modes in cVim: unfocus, refocus, escape
 bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool key Escape"
 
 #Arrow keys!
