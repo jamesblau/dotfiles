@@ -905,18 +905,6 @@ cmap <C-Down> <Nop>
 " Scala stuff
 au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
 
-" TODO: Delete these when I'm sure I don't need them. Definitely by July.
-"let g:autoclose_vim_commentmode = 1
-"let g:DisableAutoPHPFolding = 0
-"let g:PIVAutoClose = 0
-"let g:snips_author = 'James Blau <james@tresata.com>'
-"let g:pymode_lint_checker = "pyflakes"
-"let g:pymode_utils_whitespaces = 0
-"let g:pymode_options = 0
-"let g:autoclose_on = 0
-"let s:autoclose_mapped = 0
-"let b:match_ignorecase = 1
-
 " TODO: Just a reminder to namespace mappings...
 "autocmd FileType unite call s:unite_keymaps()
 "function! s:unite_keymaps()
