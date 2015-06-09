@@ -227,9 +227,9 @@ augroup resCur
 augroup END
 
 " Setting up the directories
-set undodir=~/.vimundo//
 if has('persistent_undo')
   set undofile                " So is persistent undo ...
+  set undodir=~/.vimundo//
   set undolevels=1000         " Maximum number of changes that can be undone
   set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
