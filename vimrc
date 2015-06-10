@@ -351,6 +351,14 @@ function! ShowBreakToggle()
   endif
 endfunction
 
+function! TabSpaces()
+  let l:num=nr2char(getchar())+0
+  setl expandtab
+  let &l:sw=l:num
+  let &l:ts=l:num
+  let &l:sts=l:num
+endfunction
+
 " Sets and toggles
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
@@ -366,8 +374,7 @@ nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>ss :set spell!<CR>
 nnoremap <Leader>sp :set paste!<CR>
 nnoremap <Leader>sl :set cursorline!<CR>
-nnoremap <Leader>s2 :set expandtab sw=2 ts=2 sts=2<CR>
-nnoremap <Leader>s4 :set expandtab sw=4 ts=4 sts=4<CR>
+nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
 nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
 nnoremap <Leader>sa <Plug>ToggleAutoCloseMappings
@@ -459,11 +466,15 @@ function! PrevTWorB()
     tabp
   endif
 endfunction
-function! NumTorB(number)
+function! NumTorB()
+  let l:num=nr2char(getchar())+0
+  if (l:num == 0)
+    let l:num=10
+  endif
   if (tabpagenr("$") == 1)
-    execute ":b" . a:number
+    execute ":b" . l:num
   else
-    execute ":tabn" . a:number
+    execute ":tabn" . l:num
   endif
 endfunction
 
@@ -494,16 +505,7 @@ nnoremap <Leader>td :tabclose<CR>
 " Smart Tab, (Window), Buffer stuff
 nnoremap <Esc>j     :call PrevTWorB()<CR>
 nnoremap <Esc>k     :call NextTWorB()<CR>
-nnoremap <Esc>1     :call NumTorB(1)<CR>
-nnoremap <Esc>2     :call NumTorB(2)<CR>
-nnoremap <Esc>3     :call NumTorB(3)<CR>
-nnoremap <Esc>4     :call NumTorB(4)<CR>
-nnoremap <Esc>5     :call NumTorB(5)<CR>
-nnoremap <Esc>6     :call NumTorB(6)<CR>
-nnoremap <Esc>7     :call NumTorB(7)<CR>
-nnoremap <Esc>8     :call NumTorB(8)<CR>
-nnoremap <Esc>9     :call NumTorB(9)<CR>
-nnoremap <Esc>0     :call NumTorB(10)<CR>
+nnoremap <expr> <Esc> ":call NumTorB()<CR>"
 
 function! SmoothMove(hjkl)
   if(&winheight == 999)
@@ -904,6 +906,9 @@ cmap <C-Down> <Nop>
 
 " Scala stuff
 au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
+
+" Drake stuff
+au! BufNewFile,BufRead Drakefile* setl ft=drake
 
 " TODO: Just a reminder to namespace mappings...
 "autocmd FileType unite call s:unite_keymaps()
