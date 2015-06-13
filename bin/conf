@@ -20,16 +20,21 @@ sleep 1.1
 
 stick="AlpsPS/2 ALPS DualPoint Stick"
 pad="AlpsPS/2 ALPS DualPoint TouchPad"
+
 xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
 xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
 xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
 xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
-xinput set-prop "${stick}" "Device Accel Constant Deceleration" .17
+
+xinput set-prop "${stick}" "Device Accel Profile" 2
+xinput set-prop "${stick}" "Device Accel Constant Deceleration" .15
 xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 20
-xinput set-prop "${stick}" "Device Accel Velocity Scaling" 1
+xinput set-prop "${stick}" "Device Accel Velocity Scaling" .5
+
 xinput set-prop "${pad}" "Synaptics Tap Time" 0
 xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
 xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
 xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
 xinput set-prop "${pad}" "Synaptics Off" 0
+#xinput set-prop "${pad}" "Synaptics Coasting Speed" 0 0

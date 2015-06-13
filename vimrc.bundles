@@ -20,7 +20,6 @@ Plug 'Transparent'
 
 if !exists('g:james_minimal_plugins')
   if v:version > 702
-    Plug 'Lokaltog/vim-easymotion'
     Plug 'regedarek/ZoomWin'
   endif
   Plug 'bkad/CamelCaseMotion'
@@ -59,6 +58,9 @@ if !exists('g:james_minimal_plugins')
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdcommenter'
   Plug 'godlygeek/tabular'
+  Plug 'danro/rename.vim', { 'do': 'sed -i /cabbrev/d ~/.vim/plugged/rename.vim/plugin/rename.vim' }
+  Plug 'repmo.vim'
+  Plug 'b4winckler/vim-angry'
   " Scala
   Plug 'derekwyatt/vim-scala'
   Plug 'derekwyatt/vim-sbt'

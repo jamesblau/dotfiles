@@ -44,7 +44,7 @@ set splitright                  " Puts new vsplit windows to the right of the cu
 set splitbelow                  " Puts new split windows to the bottom of the current
 set matchpairs+=<:>             " Match, to be used with %
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+set t_Co=256
 set mat=2
 set nospell
 set notimeout
@@ -505,7 +505,7 @@ nnoremap <Leader>td :tabclose<CR>
 " Smart Tab, (Window), Buffer stuff
 nnoremap <Esc>j     :call PrevTWorB()<CR>
 nnoremap <Esc>k     :call NextTWorB()<CR>
-nnoremap <expr> <Esc> ":call NumTorB()<CR>"
+nnoremap <expr> <Esc> ":silent! call NumTorB()<CR>"
 
 function! SmoothMove(hjkl)
   if(&winheight == 999)
@@ -553,12 +553,6 @@ function! ReallyDeleteHiddenBuffers()
   endfor
 endfunction
 
-" Easymotion stuff!
-let g:EasyMotion_keys = '0123456789abcdefghijklmnopqrstuvwxyz'
-map <C-\> <Plug>(easymotion-prefix)
-map <C-\><C-\> <Plug>(easymotion-jumptoanywhere)
-map <Leader><Leader> <Leader><Leader>
-
 " Register stuff!
 " {
 "TODO: name register for all below
@@ -577,9 +571,9 @@ vnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<C
 
 "Special swapping mappings!
 "Register from xclip
-nnoremap <Leader>d :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
+nnoremap <Leader>D :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
 "xclip from register
-nnoremap <Leader>f :call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nnoremap <Leader>F :call system("xclip -i -selection clipboard", getreg("\""))<CR>
 
 "Register from full path
 nnoremap <Leader>rp :call setreg("\"", expand("%:p"))<CR>
@@ -720,16 +714,11 @@ source /home/james/.vimrc.bundles
 
 " Color stuff!
 colorscheme transparent
-"nnoremap <Leader>lr :hi CursorLine   cterm=Bold ctermbg=DarkRed ctermfg=White
-"nnoremap <Leader>li :hi CursorLine   cterm=reverse,bold
 hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
 hi SignColumn         ctermfg=Yellow        ctermbg=None
 hi LineNr             ctermfg=Yellow        ctermbg=None
 hi CursorLineNr       ctermfg=Yellow        ctermbg=None
 hi Normal             ctermfg=White
-"hi TabLine            ctermfg=Black         ctermbg=Yellow
-"hi TabLineSel         ctermfg=White         ctermbg=DarkRed
-"hi TabLineFill        ctermfg=None
 hi Search             ctermfg=White         ctermbg=DarkRed
 hi Visual             ctermfg=DarkRed       ctermbg=White
 hi vimLineComment     ctermfg=LightBlue
@@ -752,16 +741,7 @@ hi GitGutterChangeDelete                    ctermbg=None
 hi GitGutterChangeLine                      ctermbg=None
 hi GitGutterDeleteDefault                   ctermbg=None
 hi shDoubleQuote                            ctermbg=None
-"hi Braces             ctermfg=None          ctermbg=None
-"hi vimHiCtermColor     ctermfg=Black
-"hi Highlight           ctermfg=Black
-"hi vimHiCtermFgBg     ctermfg=None          ctermbg=None
-"hi vimHiCTerm         ctermfg=None          ctermbg=None
-"hi preProc            ctermfg=None          ctermbg=None
-"hi Type               ctermfg=None          ctermbg=None
 hi MatchParen          cterm=undercurl,bold
-"hi clear MatchParen
-"hi Cursor
 
 " Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
@@ -814,10 +794,22 @@ nmap <Plug>MoveParamLeft <F14>"yy<F14>dhhh<F14>pllp0/<C-T>y<C-I>
 nmap <Leader>< <Plug>MoveParamLeft
 nmap <Leader>> <Plug>MoveParamRight
 
+" Expand/collapse braces
+nmap <Leader>{ 2yEysi{<C-J>/<C-T>"<CR>
+nmap <Leader>} 2yE?{<CR>Jh%kJ?<C-T>"<CR>
+nmap <Leader>( 2yEysi(<C-J>/<C-T>"<CR>
+nmap <Leader>) 2yE?(<CR>J"_xh%kJ?<C-T>"<CR>
+nmap <Leader>[ 2yEysi[<C-J>/<C-T>"<CR>
+nmap <Leader>] 2yE?[<CR>J"_xh%kJx?<C-T>"<CR>
+
+"TODO: For text objects <TO>, map [c,C]<TO> to perform the normal action and then place the cut text and replacement in a fixed-length 'queue' file.
+" Then, map [c,C]<TO><Foo> to applying the most recent change matching the cut text, or else fall back on normal [cC] operation.
+
 " Undo and redo (useful for 'undo paste numbered register and paste next number register')
 " Note that <C-_> is actually accessed with <C-7>!
 map <C-_> u.
 
+" Sneak and surround stuff
 " Give S back to sneak and ,S to surround
 let g:surround_no_mappings = 1
 xmap S <Plug>Sneak_S
@@ -834,6 +826,13 @@ xmap gS  <Plug>VgSurround
 imap <C-S> <Plug>Isurround
 imap <C-G>s <Plug>Isurround
 imap <C-G>S <Plug>ISurround
+
+" Repmo stuff
+map <Esc>; <F19>
+map <Esc>\ <F20>
+let g:repmo_key = "<F19>"
+let g:repmo_revkey = "<F20>"
+let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl {|} (|) e|b E|B w|b W|B"
 
 " Delete only braces [and their lines] (and indent)
 "Set marks and highlight between
@@ -914,10 +913,13 @@ au! BufNewFile,BufRead Drakefile* setl ft=drake
 "autocmd FileType unite call s:unite_keymaps()
 "function! s:unite_keymaps()
    "" Play nice with supertab
-  "let b:SuperTabDisabled=1 
+  "let b:SuperTabDisabled=1
   "" Enable navigation with control-j and control-k in insert mode
   "imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   "imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 "endfunction`
 
-au! BufNewFile,BufRead * set sw=2 ts=2 sts=2
+" NERDTree stuff
+"let NERDTreeHijackNetrw=1
+
+au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2

@@ -216,6 +216,16 @@ alias cag='ag --color'
 function quiet () { (nohup "$@" > /dev/null &); }
 function quieter () { (nohup "$@" > /dev/null &); exit; }
 
+#Generate output tersely and check &&/||
+alias A='echo A'
+function assert () {
+  if [ "$1" = -v ]; then
+    ("$@:2") && echo OK || echo NOPE
+  else
+    ("$@" &>/dev/null) && echo OK || echo NOPE
+  fi
+}
+
 export PERL_MB_OPT="--install_base \"~/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=~/perl5"
 export PERL5LIB=~/perl5/lib/perl5/local/

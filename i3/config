@@ -38,7 +38,11 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+Return exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
+bindsym $mod+Shift+Return exec gnome-terminal -e tmux
+bindsym $mod+Control+Shift+Return exec gnome-terminal -e "bash -c 'nvim -u ~/.nvimrc_terminal -c ter'"
+bindsym $mod+s exec stterm
+bindsym $mod+Shift+s exec stterm -e tmux
+bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
