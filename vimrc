@@ -91,12 +91,6 @@ let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:rainbow#blacklist = [15, 121, 159]
 au! BufNewFile,BufRead * RainbowParentheses
 
-" swap j/gj, k/gk
-noremap j gj
-noremap gj j
-noremap k gk
-noremap gk k
-
 " Stupid shift key fixes
 command! -bang -nargs=* -complete=file E e<bang> <args>
 command! -bang -nargs=* -complete=file W w<bang> <args>
@@ -832,7 +826,13 @@ map <Esc>; <F19>
 map <Esc>\ <F20>
 let g:repmo_key = "<F19>"
 let g:repmo_revkey = "<F20>"
-let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl {|} (|) e|b E|B w|b W|B"
+let g:repmo_mapmotions = "-|+ h|l <C-E>|<C-Y> zh|zl {|} (|) e|b E|B w|b W|B"
+
+" swap j/gj, k/gk
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
 
 " Delete only braces [and their lines] (and indent)
 "Set marks and highlight between
@@ -873,6 +873,10 @@ nnoremap dOR :diffg REMOTE<CR>
 nnoremap dOB :diffg BASE<CR>
 nnoremap dOL :diffg LOCAL<CR>
 nnoremap dU :diffupdate<CR>
+
+" Diff stuff!
+nnoremap <Leader>dt :windo diffo \| windo difft<CR>
+nnoremap <Leader>do :windo diffo<CR>
 
 " Scalding stuff
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>

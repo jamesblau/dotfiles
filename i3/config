@@ -55,6 +55,8 @@ bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3sta
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
 bindsym $mod+F5 exec "xbacklight -dec 20"
 bindsym $mod+F6 exec "xbacklight -inc 20"
+bindsym $mod+Shift+F5 exec "xbacklight -set 0"
+bindsym $mod+Shift+F6 exec "xbacklight -set 100"
 
 # start a terminal here: just use <C-S-N>
 #bindsym $mod+b exec ~/.i3/shell.sh
@@ -203,6 +205,15 @@ bindsym $mod+i exec "echo -n $(xclip -o) | xclip"
 
 #Not sure about this one
 focus_follows_mouse no
+
+#This is the clever part
+bindsym $mod+F7 exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"
+bindsym $mod+F8 exec "echo -n '¯\_(ツ)_/¯' | xclip"
+bindsym $mod+F9 exec "echo -n 'ಥ_ಥ' | xclip"
+bindsym $mod+F10 exec "echo -n 'ಠ_ಠ' | xclip"
+bindsym $mod+F11 exec "echo -n '(╯°□°)╯︵ ┻━┻' | xclip"
+bindsym $mod+F12 exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"
+bindsym $mod+Home exec "echo -n '☃' | xclip"
 
 #Disgusting hack for when sites like youtube get stuck between insert and normal modes in cVim: unfocus, refocus, escape
 bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool key Escape"
