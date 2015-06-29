@@ -30,7 +30,7 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
-# Show last workspace
+# Show swap jump to previous last workspace monitor screen
 bindsym $mod+o workspace back_and_forth
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -217,12 +217,6 @@ bindsym $mod+Home exec "echo -n '☃' | xclip"
 
 #Disgusting hack for when sites like youtube get stuck between insert and normal modes in cVim: unfocus, refocus, escape
 bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool key Escape"
-
-#Arrow keys!
-bindsym --release $mod+Control+h exec --no-startup-id "xdotool key --clearmodifiers Left"
-bindsym --release $mod+Control+j exec --no-startup-id "xdotool key --clearmodifiers Down"
-bindsym --release $mod+Control+k exec --no-startup-id "xdotool key --clearmodifiers Up"
-bindsym --release $mod+Control+l exec --no-startup-id "xdotool key --clearmodifiers Right"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 

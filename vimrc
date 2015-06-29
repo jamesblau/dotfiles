@@ -821,13 +821,6 @@ imap <C-S> <Plug>Isurround
 imap <C-G>s <Plug>Isurround
 imap <C-G>S <Plug>ISurround
 
-" Repmo stuff
-map <Esc>; <F19>
-map <Esc>\ <F20>
-let g:repmo_key = "<F19>"
-let g:repmo_revkey = "<F20>"
-let g:repmo_mapmotions = "-|+ h|l <C-E>|<C-Y> zh|zl {|} (|) e|b E|B w|b W|B"
-
 " swap j/gj, k/gk
 noremap j gj
 noremap k gk

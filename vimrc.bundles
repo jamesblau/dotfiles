@@ -59,7 +59,6 @@ if !exists('g:james_minimal_plugins')
   Plug 'scrooloose/nerdcommenter'
   Plug 'godlygeek/tabular'
   Plug 'danro/rename.vim', { 'do': 'sed -i /cabbrev/d ~/.vim/plugged/rename.vim/plugin/rename.vim' }
-  Plug 'repmo.vim'
   Plug 'b4winckler/vim-angry'
   " Scala
   Plug 'derekwyatt/vim-scala'

@@ -203,7 +203,7 @@ bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y
 #Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:$HOME/bin:$HOME/tresata"
 
 #Sbt console readline survives Ctrl-Z
 alias sbt-console='rlwrap sbt console -Xnojline'

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+case $1 in
+  -*) FLAGS="${1#?}"; INPUT="${@:2}";;
+   *) INPUT="$@";;
+esac
+
+# -m prevents compression of multiple spaces
+# -l drops leading spaces
+# -t drops trailing spaces
+# -a drops all leading and trailing spaces (equivalent to -lt)
+
+if [[ $FLAGS == *m* ]]; then
+  MAYBE_COMPRESSED="${INPUT}"
+else
+  MAYBE_COMPRESSED=`sed 's/\s\+/ /g' ${INPUT}`
+fi
+
+if [[ $FLAGS == *[la]* ]]; then
+  MAYBE_STRIPPED_LEADING=`sed 's/^\s*//' "${MAYBE_COMPRESSED}"`
+else
+  MAYBE_STRIPPED_LEADING="${MAYBE_COMPRESSED}"
+fi
+
+if [[ $FLAGS == *[ta]* ]]; then
+  MAYBE_STRIPPED_TRAILING=`sed 's/\s*$//' "${MAYBE_STRIPPED_LEADING}"`
+else
+  MAYBE_STRIPPED_TRAILING="${MAYBE_STRIPPED_LEADING}"
+fi
+
+cut -d ' ' -f "${MAYBE_STRIPPED_TRAILING}"

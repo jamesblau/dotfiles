@@ -12,7 +12,7 @@ case $1 in
   *) echo Invalid layout specified... ;;
 esac
 
-sudo setxkbmap -option ctrl:nocaps
+# UltraNav
 sudo modprobe -r psmouse
 sudo modprobe psmouse proto=auto
 
@@ -38,3 +38,14 @@ xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
 xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
 xinput set-prop "${pad}" "Synaptics Off" 0
 #xinput set-prop "${pad}" "Synaptics Coasting Speed" 0 0
+
+# Keyboard
+sudo setxkbmap -option ctrl:nocaps
+
+xmodmap -e "keysym Alt_R = Mode_switch"
+xmodmap -e "keycode 43 = h H Left Left"
+xmodmap -e "keycode 44 = j J Down Down"
+xmodmap -e "keycode 45 = k K Up Up"
+xmodmap -e "keycode 46 = l L Right Right"
+
+xmodmap -e "keycode 107 = Super_L Super_R"
