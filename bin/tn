@@ -3,4 +3,10 @@
 # Reconnects to the tresata vpn
 #
 
-sudo vpnc ~/tresata/vpnc_tresata.conf
+#sudo vpnc ~/tresata/vpnc_tresata.conf
+
+sudo ~/tresata/openconnect_dev
+sudo ip route add 192.168.1.0/24 dev tun11
+
+#sudo ~/tresata/ovdev
+#sudo ip route add 192.168.1.0/24 dev tun11

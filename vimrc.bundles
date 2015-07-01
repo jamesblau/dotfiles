@@ -19,30 +19,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'Transparent'
 
 if !exists('g:james_minimal_plugins')
-  if v:version > 702
-    Plug 'regedarek/ZoomWin'
-  endif
-  Plug 'bkad/CamelCaseMotion'
-  Plug 'Parameter-Text-Objects'
-  Plug 'Tabmerge'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/rainbow_parentheses.vim'
-  Plug 't9md/vim-chef'
   Plug 'goldfeld/ctrlr.vim'
-  Plug 'xolox/vim-session'
   Plug 'xolox/vim-misc'
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'bufkill.vim'
-  Plug 'wesQ3/vim-windowswap'
-  Plug 'chrisbra/csv.vim'
   Plug 'tyru/regbuf.vim'
   Plug 'tpope/vim-repeat'
-  Plug 'elzr/vim-json'
   Plug 'vsearch.vim'
-  Plug 'CycleColor'
   Plug 'tpope/vim-unimpaired'
-  Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git')
-  Plug 'spf13/vim-colors'
   Plug 'tpope/vim-surround'
   Plug 'kien/ctrlp.vim'
   Plug 'terryma/vim-multiple-cursors'
@@ -52,18 +37,44 @@ if !exists('g:james_minimal_plugins')
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'tpope/vim-abolish'
   Plug 'justinmk/vim-sneak'
-  Plug 'kana/vim-textobj-user'
-  Plug 'kana/vim-textobj-indent'
   Plug 'scrooloose/syntastic'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdcommenter'
   Plug 'godlygeek/tabular'
   Plug 'danro/rename.vim', { 'do': 'sed -i /cabbrev/d ~/.vim/plugged/rename.vim/plugin/rename.vim' }
+
+  " Color schemes
+  Plug 'CycleColor'
+  Plug 'spf13/vim-colors'
+
+  " Buffers / windows / tabs / sessions
+  Plug 'bufkill.vim'
+  if v:version > 702
+    Plug 'regedarek/ZoomWin'
+  endif
+  Plug 'Tabmerge'
+  Plug 'wesQ3/vim-windowswap'
+  Plug 'xolox/vim-session'
+
+  " Text objects
+  Plug 'bkad/CamelCaseMotion'
   Plug 'b4winckler/vim-angry'
+  Plug 'kana/vim-textobj-user'
+  Plug 'kana/vim-textobj-indent'
+  Plug 'kana/vim-textobj-entire'
+  Plug 'Parameter-Text-Objects'
+
   " Scala
   Plug 'derekwyatt/vim-scala'
   Plug 'derekwyatt/vim-sbt'
   Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
+
+  " Other languages' syntax, etc
+  Plug 'chrisbra/csv.vim'
+  Plug 'elzr/vim-json'
+  Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git')
+  Plug 't9md/vim-chef'
+
   " Fun
   Plug 'mattn/invader-vim'
 endif

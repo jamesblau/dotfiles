@@ -462,7 +462,9 @@ function! PrevTWorB()
 endfunction
 function! NumTorB()
   let l:num=nr2char(getchar())+0
-  if (l:num == 0)
+  if !(l:num =~ "[1-9]")
+    return
+  elseif (l:num == 0)
     let l:num=10
   endif
   if (tabpagenr("$") == 1)
@@ -694,7 +696,7 @@ nnoremap <Leader>STC :CloseTabSession<CR>
 cnoremap  <space><delete>
 
 " No accidental Ex-mode or keyword-lookup
-nnoremap Q <Nop>
+nnoremap Q gggqG
 nnoremap <Leader>Q Q
 nnoremap K <Nop>
 nnoremap <Leader>K K

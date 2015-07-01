@@ -41,11 +41,12 @@ xinput set-prop "${pad}" "Synaptics Off" 0
 
 # Keyboard
 sudo setxkbmap -option ctrl:nocaps
+xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
 
 xmodmap -e "keysym Alt_R = Mode_switch"
-xmodmap -e "keycode 43 = h H Left Left"
-xmodmap -e "keycode 44 = j J Down Down"
-xmodmap -e "keycode 45 = k K Up Up"
-xmodmap -e "keycode 46 = l L Right Right"
+xmodmap -e "keycode  43 = h H Left Left"
+xmodmap -e "keycode  44 = j J Down Down"
+xmodmap -e "keycode  45 = k K Up Up"
+xmodmap -e "keycode  46 = l L Right Right"
 
 xmodmap -e "keycode 107 = Super_L Super_R"

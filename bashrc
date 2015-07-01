@@ -238,10 +238,12 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 # Fzf stuff
 [ -f ~/.fzf.bash ] && {
   source ~/.fzf.bash
+  # Pipe output file names to fzf
   bind -m vi-command '"\C-f": "A | fzf\e"'
+  export FZF_DEFAULT_OPTS="--bind ctrl-g:toggle-all"
 }
 
-# Open output in vim
+# Open output file names in vim
 bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 
 # z jump around
