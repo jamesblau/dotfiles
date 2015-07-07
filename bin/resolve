@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo cp /home/james/dotfiles/etc_resolv.conf /run/resolvconf/resolv.conf

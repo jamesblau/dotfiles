@@ -37,10 +37,60 @@ xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
 xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
 xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
 xinput set-prop "${pad}" "Synaptics Off" 0
-#xinput set-prop "${pad}" "Synaptics Coasting Speed" 0 0
+xinput set-prop "${pad}" "Synaptics Coasting Speed" 20, 50
+
+xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
+xinput set-prop "${pad}" "Synaptics Area" 614, 3481, 307, 1740
+
+xinput set-prop "${pad}" "Device Enabled" 1
+xinput set-prop "${pad}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+xinput set-prop "${pad}" "Device Accel Profile" 1
+xinput set-prop "${pad}" "Device Accel Constant Deceleration" 2.500000
+xinput set-prop "${pad}" "Device Accel Adaptive Deceleration" 1.000000
+xinput set-prop "${pad}" "Device Accel Velocity Scaling" 12.500000
+#xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
+xinput set-prop "${pad}" "Synaptics Finger" 25, 30, 0
+#xinput set-prop "${pad}" "Synaptics Tap Time" 0
+xinput set-prop "${pad}" "Synaptics Tap Move" 201
+xinput set-prop "${pad}" "Synaptics Tap Durations" 180, 180, 100
+xinput set-prop "${pad}" "Synaptics ClickPad" 1
+xinput set-prop "${pad}" "Synaptics Middle Button Timeout" 0
+xinput set-prop "${pad}" "Synaptics Two-Finger Pressure" 282
+xinput set-prop "${pad}" "Synaptics Two-Finger Width" 7
+#xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
+#xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+#xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
+xinput set-prop "${pad}" "Synaptics Move Speed" 1.000000, 1.750000, 0.043687, 0.000000
+#xinput set-prop "${pad}" "Synaptics Off" 0
+xinput set-prop "${pad}" "Synaptics Locked Drags" 0
+xinput set-prop "${pad}" "Synaptics Locked Drags Timeout" 5000
+xinput set-prop "${pad}" "Synaptics Tap Action" 2, 3, 0, 0, 1, 3, 0
+xinput set-prop "${pad}" "Synaptics Click Action" 1, 3, 0
+xinput set-prop "${pad}" "Synaptics Circular Scrolling" 0
+xinput set-prop "${pad}" "Synaptics Circular Scrolling Distance" 0.100000
+xinput set-prop "${pad}" "Synaptics Circular Scrolling Trigger" 0
+xinput set-prop "${pad}" "Synaptics Circular Pad" 0
+xinput set-prop "${pad}" "Synaptics Palm Detection" 0
+xinput set-prop "${pad}" "Synaptics Palm Dimensions" 10, 200
+#xinput set-prop "${pad}" "Synaptics Coasting Speed" 20.000000, 50.000000
+xinput set-prop "${pad}" "Synaptics Pressure Motion" 30, 160
+xinput set-prop "${pad}" "Synaptics Pressure Motion Factor" 1.000000, 1.000000
+xinput set-prop "${pad}" "Synaptics Resolution Detect" 1
+xinput set-prop "${pad}" "Synaptics Grab Event Device" 0
+xinput set-prop "${pad}" "Synaptics Gestures" 1
+#xinput set-prop "${pad}" "Synaptics Capabilities" 1, 0, 0, 1, 1, 0, 0
+#xinput set-prop "${pad}" "Synaptics Pad Resolution" 38, 42
+#xinput set-prop "${pad}" "Synaptics Area" 0, 0, 0, 0
+xinput set-prop "${pad}" "Synaptics Soft Button Areas" 2047, 0, 1678, 0, 0, 0, 0, 0
+xinput set-prop "${pad}" "Synaptics Noise Cancellation" 22, 22
+#xinput set-prop "${pad}" "Device Product ID" 2, 8
+#xinput set-prop "${pad}" "Device Node" "/dev/input/event5"
+
+synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
 
 # Keyboard
 sudo setxkbmap -option ctrl:nocaps
+~/src/opensource/xcape/xcape
 xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
 
 xmodmap -e "keysym Alt_R = Mode_switch"

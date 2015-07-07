@@ -137,7 +137,7 @@ alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
 export GIT_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
-export VIMRUNTIME=/usr/share/vim/vim74
+[ -d /usr/share/vim/vim74 ] && export VIMRUNTIME=/usr/share/vim/vim74
 
 #Avoid typing . for bin scripts that change directory
 alias cdg=". /home/james/bin/cdg"

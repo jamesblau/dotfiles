@@ -502,6 +502,9 @@ nnoremap <Leader>td :tabclose<CR>
 nnoremap <Esc>j     :call PrevTWorB()<CR>
 nnoremap <Esc>k     :call NextTWorB()<CR>
 nnoremap <expr> <Esc> ":silent! call NumTorB()<CR>"
+" I don't even...fixes weird bug
+map <Esc>P <Esc>P
+imap <Esc>P <Esc>P
 
 function! SmoothMove(hjkl)
   if(&winheight == 999)
@@ -752,6 +755,7 @@ nnoremap <Leader>qs :SearchInColumn<Space>
 nnoremap <Leader>qh :HiColumn<CR>
 nnoremap <Leader>qH :HiColumn!<CR>
 nmap <Leader>qd :let g:csv_delim=''<C-B>
+nmap <Leader>qt :set ft=csv syn=csv<CR>
 nnoremap <silent> <Leader>qS :above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor<CR>:CSVTabularize<CR>ggVjjd<C-W>kVp<C-W>j
 " Fast horizontal navigation
 nnoremap <Esc>H zH
@@ -880,7 +884,7 @@ nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F
 nmap  <C-^>
 
 " Search stuff!
-vnoremap <Leader>/ yq/VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<CR>
+vnoremap <Leader>/ y/<C-G>VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<CR>
 
 " No mouse scrolling
 map <Up> <F18>

@@ -7,6 +7,7 @@
 
 sudo ~/tresata/openconnect_dev
 sudo ip route add 192.168.1.0/24 dev tun11
+sudo ~/bin/resolve
 
 #sudo ~/tresata/ovdev
 #sudo ip route add 192.168.1.0/24 dev tun11
