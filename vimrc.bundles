@@ -1,82 +1,318 @@
+" vim: set sw=2 ts=2 sts=2 expandtab ft=vim
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin('~/.vim/plugged')
 
-" To evaluate later
+" To evaluate later {{{
 "Plug 'tpope/vim-scriptease'
 "Plug 'tpope/vim-sleuth'
-"Plug 'tpope/vim-eunuch'
 "Plug 'tpope/vim-speeddating'
 "Plug 'tpope/vim-rsi'
-"Plug 'tpope/vim-obsession'
 "Plug 'tpope/vim-characterize'
 "Plug 'tpope/vim-afterimage'
 "Plug 'tpope/vim-flatfoot'
-"Plug 'dhruvasagar/vim-prosession'
 "Plug 'tommcdo/vim-lion'
 "Plug 'wellle/targets.vim'
 "Plug 'spiiph/vim-space'
 "Plug 'zefei/vim-colortuner'
+" }}}
 
+" Run always {{{
 Plug 'Transparent'
+" }}}
 
 if !exists('g:james_minimal_plugins')
-  Plug 'airblade/vim-gitgutter'
-  Plug 'junegunn/rainbow_parentheses.vim'
-  Plug 'goldfeld/ctrlr.vim'
-  Plug 'xolox/vim-misc'
-  Plug 'christoomey/vim-tmux-navigator'
-  Plug 'tyru/regbuf.vim'
-  Plug 'tpope/vim-repeat'
-  Plug 'vsearch.vim'
-  Plug 'tpope/vim-unimpaired'
-  Plug 'tpope/vim-surround'
-  Plug 'kien/ctrlp.vim'
-  Plug 'terryma/vim-multiple-cursors'
-  Plug 'matchit.zip'
-  Plug 'bling/vim-airline'
-  Plug 'mbbill/undotree'
-  Plug 'nathanaelkane/vim-indent-guides'
-  Plug 'tpope/vim-abolish'
-  Plug 'justinmk/vim-sneak'
-  Plug 'scrooloose/syntastic'
-  Plug 'tpope/vim-fugitive'
-  Plug 'scrooloose/nerdcommenter'
-  Plug 'godlygeek/tabular'
-  Plug 'danro/rename.vim', { 'do': 'sed -i /cabbrev/d ~/.vim/plugged/rename.vim/plugin/rename.vim' }
 
-  " Color schemes
-  Plug 'CycleColor'
-  Plug 'spf13/vim-colors'
+  " Aesthetic {{{
+    " Plug 'bling/vim-airline' {{{
+      if !exists('g:james_no_hud')
+        let g:airline#extensions#tabline#enabled = 1
+        let g:airline#extensions#tabline#left_sep = ' '
+        let g:airline#extensions#tabline#left_alt_sep = '|'
+        let g:airline#extensions#tabline#buffer_nr_show = 1
+        "let g:airline_powerline_fonts = 1
+        let g:airline_theme = 'powerlineish'
+        if !exists('g:airline_powerline_fonts')
+          " Use the default set of separators with a few customizations
+          let g:airline_left_sep='›'  " Slightly fancier than '>'
+          let g:airline_right_sep='‹' " Slightly fancier than '<'
+        endif
 
-  " Buffers / windows / tabs / sessions
-  Plug 'bufkill.vim'
-  if v:version > 702
-    Plug 'regedarek/ZoomWin'
-  endif
-  Plug 'Tabmerge'
-  Plug 'wesQ3/vim-windowswap'
-  Plug 'xolox/vim-session'
+        " Broken down into easily includeable segments
+        set statusline=%<%f\                     " Filename
+        set statusline+=%w%h%m%r                 " Options
+        set statusline+=%{fugitive#statusline()} " Git Hotness
+        set statusline+=\ [%{&ff}/%Y]            " Filetype
+        set statusline+=\ [%{getcwd()}]          " Current dir
+        set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+      endif
+      Plug 'bling/vim-airline'
+    " }}}
+    Plug 'CycleColor'
+    " Plug 'nathanaelkane/vim-indent-guides' {{{
+      let g:indent_guides_enable_on_vim_startup = 0
+      let g:indent_guides_default_mapping = 0
+      let g:indent_guides_start_level = 2
+      let g:indent_guides_guide_size = 1
+      nnoremap <Leader>si :IndentGuidesToggle<CR>
+      Plug 'nathanaelkane/vim-indent-guides'
+    " }}}
+    " Plug 'junegunn/rainbow_parentheses.vim' {{{
+      let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+      let g:rainbow#blacklist = [15, 121, 159]
+      au! BufNewFile,BufRead * RainbowParentheses
+      Plug 'junegunn/rainbow_parentheses.vim'
+    " }}}
+  " }}}
 
-  " Text objects
-  Plug 'bkad/CamelCaseMotion'
-  Plug 'b4winckler/vim-angry'
-  Plug 'kana/vim-textobj-user'
-  Plug 'kana/vim-textobj-indent'
-  Plug 'kana/vim-textobj-entire'
-  Plug 'Parameter-Text-Objects'
+  " Buffers / windows / tabs / sessions {{{
+    Plug 'bufkill.vim'
+    if v:version > 702
+      " Plug 'regedarek/ZoomWin' {{{
+        nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
+        nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
+        Plug 'regedarek/ZoomWin'
+      " }}}
+    endif
+    Plug 'Tabmerge'
+    "Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
+    " Plug 'wesQ3/vim-windowswap' {{{
+      "let g:windowswap_map_keys = 0
+      "nmap <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
+      "nmap <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
+      "nmap <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
+      Plug 'wesQ3/vim-windowswap'
+    " }}}
+    " Plug 'xolox/vim-misc' | Plug 'xolox/vim-session' {{{
+      let g:session_autoload = 'no'
+      let g:session_autosave = 'no'
+      nnoremap <Leader>S <Nop>
+      nnoremap <Leader>SL :SessionList<CR>
+      nnoremap <Leader>SO :OpenSession<Space>
+      nnoremap <Leader>SV :ViewSession<CR>
+      nnoremap <Leader>SS :SaveSession<Space>
+      nnoremap <Leader>SC :CloseSession<CR>
+      nnoremap <Leader>STO :OpenTabSession<CR>
+      nnoremap <Leader>STS :SaveTabSession<CR>
+      nnoremap <Leader>STA :AppendTabSession<CR>
+      nnoremap <Leader>STC :CloseTabSession<CR>
+      Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
+    " }}}
+  " }}}
 
-  " Scala
-  Plug 'derekwyatt/vim-scala'
-  Plug 'derekwyatt/vim-sbt'
-  Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
+  " Core {{{
+    " Plug 'justinmk/vim-sneak' {{{
+      " Don't lose S to vim-surround
+      xmap S <Plug>Sneak_S
+      Plug 'justinmk/vim-sneak'
+    " }}}
+    " Plug 'mbbill/undotree' {{{
+      let g:undotree_SetFocusWhenToggle=1
+      nnoremap <Leader>u :UndotreeToggle<CR>
+      Plug 'mbbill/undotree'
+    " }}}
+    Plug 'scrooloose/nerdcommenter'
+    " Plug 'scrooloose/nerdtree' {{{
+      let NERDTreeHijackNetrw=1
+      Plug 'scrooloose/nerdtree'
+    " }}}
+    Plug 'tmhedberg/matchit'
+    " Plug 'tpope/vim-abolish' {{{
+      vnoremap <Leader>s<Space> y:%S/<C-R>"/
+      vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g
+      nnoremap <Leader>sc :%S/\<<C-R><C-W>\>/
+      Plug 'tpope/vim-abolish'
+    " }}}
+    Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-sensible'
+    Plug 'tpope/vim-unimpaired'
+  " }}}
 
-  " Other languages' syntax, etc
-  Plug 'chrisbra/csv.vim'
-  Plug 'elzr/vim-json'
-  Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git')
-  Plug 't9md/vim-chef'
+  " Filters {{{
+    Plug 'goldfeld/ctrlr.vim'
+    Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
+    " Plug 'kien/ctrlp.vim' {{{
+      let g:ctrlp_working_path_mode = 'ra'
+      if executable('ag')
+        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+      endif
+      nnoremap <silent> <C-P> :CtrlP<CR>
+      nnoremap <silent> <Esc><C-p> :CtrlPBuffer<CR>
+      nnoremap <silent> <Esc>p :CtrlPMRU<CR>
+      let g:ctrlp_prompt_mappings = {
+        \ 'PrtBS()':              ['<c-h>', '<bs>', '<c-]>'],
+        \ 'PrtDelete()':          ['<c-d>', '<del>'],
+        \ 'PrtSelectMove("t")':   ['', '<Home>', '<kHome>'],
+        \ 'PrtSelectMove("b")':   ['<c-g>', '<End>', '<kEnd>'],
+        \ 'ToggleByFname()':      ['<c-i>'],
+        \ 'ToggleType(1)':        ['<c-l>', '<c-up>'],
+        \ 'ToggleType(-1)':       ['<c-down>'],
+        \ 'PrtCurLeft()':         ['<c-b>', '<left>', '<c-^>'],
+        \ 'PrtCurRight()':        ['<c-f>', '<right>'],
+        \ 'PrtExit()':            ['<esc>', '<c-c>'],
+        \ }
+      "let g:ctrlp_custom_ignore = {
+        "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
+        "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+      Plug 'kien/ctrlp.vim'
+    " }}}
+  " }}}
 
-  " Fun
-  Plug 'mattn/invader-vim'
+  " Fun {{{
+    Plug 'mattn/invader-vim', { 'on': 'Invader' }
+  " }}}
+
+  " Integration {{{
+    " Plug 'airblade/vim-gitgutter' {{{
+      "let g:gitgutter_initialised = 1
+      "let g:gitgutter_realtime = 0
+      nnoremap <silent> <Leader>gs :Gstatus<CR>
+      nnoremap <silent> <Leader>gd :Gdiff<CR>
+      nnoremap <silent> <Leader>gm :Gdiff master<CR>
+      nnoremap <silent> <Leader>gc :Gcommit<CR>
+      nnoremap <silent> <Leader>gb :Gblame<CR>
+      nnoremap <silent> <Leader>gl :Glog<CR>
+      nnoremap <silent> <Leader>gp :Git push<CR>
+      nnoremap <silent> <Leader>gr :Gread<CR>:GitGutter<CR>
+      nnoremap <silent> <Leader>gw :Gwrite<CR>:GitGutter<CR>
+      nnoremap <silent> <Leader>ge :Gedit<CR>
+      nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
+      Plug 'airblade/vim-gitgutter'
+    " }}}
+    " Plug 'christoomey/vim-tmux-navigator' {{{
+      let g:tmux_navigator_no_mappings = 1
+      "nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<CR>
+      "nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<CR>
+      "nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<CR>
+      "nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<CR>
+      "nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
+      Plug 'christoomey/vim-tmux-navigator'
+    " }}}
+    " Plug 'scrooloose/syntastic' {{{
+      let g:syntastic_mode_map = {'mode': 'passive'}
+      nnoremap <Leader>sy :SyntasticToggleMode<CR>
+      nnoremap <Leader>ys :SyntasticCheck<CR>
+      Plug 'scrooloose/syntastic'
+    " }}}
+    " Plug 'tpope/vim-fugitive' {{{
+      nnoremap <silent> <Leader>gs :Gstatus<CR>
+      nnoremap <silent> <Leader>gd :Gdiff<CR>
+      nnoremap <silent> <Leader>gm :Gdiff master<CR>
+      nnoremap <silent> <Leader>gc :Gcommit<CR>
+      nnoremap <silent> <Leader>gb :Gblame<CR>
+      nnoremap <silent> <Leader>gl :Glog<CR>
+      nnoremap <silent> <Leader>gp :Git push<CR>
+      nnoremap <silent> <Leader>ge :Gedit<CR>
+      Plug 'tpope/vim-fugitive'
+    " }}}
+  " }}}
+
+  " Language-specific {{{
+    Plug 'derekwyatt/vim-sbt', { 'for': 'scala' }
+    " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
+      au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
+      Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+    " }}}
+    " Plug 'chrisbra/csv.vim', { 'for': 'csv' } {{{
+      au! BufNewFile,BufRead *.bsv set filetype=csv
+      nnoremap <Leader>qw :WhatColumn<CR>
+      nnoremap <Leader>qW :WhatColumn!<CR>
+      nnoremap <Leader>qc :NrColumns<CR>
+      nnoremap <Leader>qs :SearchInColumn<Space>
+      nnoremap <Leader>qh :HiColumn<CR>
+      nnoremap <Leader>qH :HiColumn!<CR>
+      nmap <Leader>qd :let g:csv_delim=''<C-B>
+      nnoremap <silent> <Leader>qS :CSVTabularize<CR><C-W>T:above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor buftype=nofile<CR>ggVjjd<C-W>kVp<C-W>j
+      Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+    " }}}
+    Plug 'elzr/vim-json', { 'for': 'json' }
+    " Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' } {{{
+      au! BufNewFile,BufRead Drakefile* setl ft=drake
+      Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' }
+    " }}}
+    Plug 't9md/vim-chef'
+  " }}}
+
+  " Registers {{{
+    Plug 'RedirCommands'
+    Plug 'regRedir.vim'
+    " Plug 'tyru/regbuf.vim' {{{
+      nnoremap <Leader>sr :RegbufOpen<CR>
+      Plug 'tyru/regbuf.vim'
+    " }}}
+  " }}}
+
+  " Text objects {{{
+    Plug 'b4winckler/vim-angry'
+    " Plug 'bkad/CamelCaseMotion' {{{
+      map -w <Plug>CamelCaseMotion_w
+      map -b <Plug>CamelCaseMotion_b
+      map -e <Plug>CamelCaseMotion_e
+      omap i-w <Plug>CamelCaseMotion_iw
+      xmap i-w <Plug>CamelCaseMotion_iw
+      omap i-b <Plug>CamelCaseMotion_ib
+      xmap i-b <Plug>CamelCaseMotion_ib
+      omap i-e <Plug>CamelCaseMotion_ie
+      xmap i-e <Plug>CamelCaseMotion_ie
+      Plug 'bkad/CamelCaseMotion'
+    " }}}
+    Plug 'kana/vim-textobj-entire'
+    Plug 'kana/vim-textobj-indent'
+    Plug 'kana/vim-textobj-user'
+    Plug 'Parameter-Text-Objects'
+    " Plug 'tpope/vim-surround' {{{
+      " Sneak has S so use ,S
+      let g:surround_no_mappings = 1
+      xmap S <Plug>Sneak_S
+      xmap <Leader>S <Plug>VSurround
+      " Largely defaults below
+      nmap ds  <Plug>Dsurround
+      nmap cs  <Plug>Csurround
+      nmap ys  <Plug>Ysurround
+      nmap yS  <Plug>YSurround
+      nmap yss <Plug>Yssurround
+      nmap ySs <Plug>YSsurround
+      nmap ySS <Plug>YSsurround
+      xmap gS  <Plug>VgSurround
+      imap <C-S> <Plug>Isurround
+      imap <C-G>s <Plug>Isurround
+      imap <C-G>S <Plug>ISurround
+      Plug 'tpope/vim-surround'
+    " }}}
+  " }}}
+
+  " Visual / selection / alignment {{{
+    " Plug 'godlygeek/tabular' {{{
+      nmap <Leader>a& :Tabularize /&<CR>
+      vmap <Leader>a& :Tabularize /&<CR>
+      nmap <Leader>a= :Tabularize /=<CR>
+      vmap <Leader>a= :Tabularize /=<CR>
+      nmap <Leader>a: :Tabularize /:<CR>
+      vmap <Leader>a: :Tabularize /:<CR>
+      nmap <Leader>a:: :Tabularize /:\zs<CR>
+      vmap <Leader>a:: :Tabularize /:\zs<CR>
+      nmap <Leader>a, :Tabularize /,<CR>
+      vmap <Leader>a, :Tabularize /,<CR>
+      nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+      vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+      Plug 'godlygeek/tabular'
+    " }}}
+    " Plug 'terryma/vim-multiple-cursors' {{{
+      let g:multi_cursor_exit_from_insert_mode=0
+      let g:multi_cursor_exit_from_visual_mode=0
+      Plug 'terryma/vim-multiple-cursors'
+    " }}}
+    Plug 'visSum.vim'
+    Plug 'vsearch.vim'
+  " }}}
+
 endif
 
 call plug#end()
+" vim: set foldmethod=marker :

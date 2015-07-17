@@ -3,21 +3,16 @@ set nolinkanimations
 set nohud
 set noautofocus
 set cncpcompletion
-
 let cncpcompletion = "true"
 let scrollstep = 200
 let scrollduration = 1
 let vimcommand = "nvim"
-
 let completionengines = ["google", "wikipedia"]
 let searchalias g = "google"
 let searchalias w = "wikipedia"
-
 "let hintcharacters = "hklyuionmwertxcvbasdgjf"
 let mapleader = ","
-
 imap <C-o> editWithVim
-
 imap <A-k> backwardLine
 imap <A-j> forwardLine
 imap <C-i> beginningOfLine
@@ -26,29 +21,26 @@ imap <A-b> backwardWord
 imap <A-f> forwardWord
 imap <A-l> forwardChar
 imap <A-h> backwardChar
-
 imap <C-u> deleteToBeginning
 imap <C-k> deleteToEnd
 imap <A-w> deleteWord
 imap <A-e> deleteForwardWord
 imap <C-h> deleteChar
 imap <C-d> deleteForwardChar
-
 map W :tabdetach<CR>
 map gr rootFrame
-map b :bookmark
-map B :buffer
-
+map b :bookmarks!<Space>
+map B :buffer<Space>
+map <A-b> :bookmarks<Space>
 map sh :set hud!<CR>
 map sn :set numerichints!<CR>
 map sb createBookmark
-
 map <C-f> scrollFullPageDown
 map <C-b> scrollFullPageUp
 map <C-d> scrollPageDown
 map <C-u> scrollPageUp
-
 map <A-n> nextCompletionResult
 imap <A-n> nextCompletionResult
 map <A-p> previousCompletionResult
 imap <A-p> previousCompletionResult
+let blacklists = ["http://codeshare.io/*"]
