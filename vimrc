@@ -9,11 +9,14 @@ set background=dark
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set expandtab                   " Tabs are spaces, not tabs
 set foldenable                  " Auto fold code
+set foldtext=MyFoldText()
 set cedit=                    " Key to open command-line window
 set hidden                      " Allow buffer switching without saving
 set hlsearch                    " Highlight search terms
 set ignorecase                  " Case insensitive search
+set lazyredraw
 set linespace=0                 " No extra spaces between rows
+set list
 set matchpairs+=<:>             " Match, to be used with %
 set matchtime=2
 set mouse=
@@ -39,6 +42,7 @@ set textwidth=0
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
 set virtualedit=onemore         " Allow for cursor beyond last character
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
 
@@ -241,6 +245,16 @@ function! TabSpaces()
   endif
 endfunction
 
+function! RegisterFromUnnamed()
+  let l:char=nr2char(getchar())
+  execute ":let @" . l:char . "=@\""
+endfunction
+
+function! UnnamedFromRegister()
+  let l:char=nr2char(getchar())
+  execute ":let @\"=@" . l:char
+endfunction
+
 " Sets and toggles
 vnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
@@ -253,7 +267,7 @@ nmap     <Leader>sD :call DiffWToggleRegex("")<C-B><C-B>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
-nnoremap <Leader>ss :set spell!<CR>
+nnoremap <Leader>sc :set spell!<CR>
 nnoremap <Leader>sp :set paste!<CR>
 nnoremap <Leader>sl :set cursorline!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
@@ -416,7 +430,7 @@ function! ReallyDeleteHiddenBuffers()
 endfunction
 
 " Register stuff!
-" {
+" {{{
 "TODO: name register for all below
 nnoremap <Leader>c <Nop>
 nnoremap <Leader>x <Nop>
@@ -436,6 +450,9 @@ vnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<C
 nnoremap <Leader>D :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
 "xclip from register
 nnoremap <Leader>F :call system("xclip -i -selection clipboard", getreg("\""))<CR>
+"Swap registers
+nnoremap <expr> <Leader>R ":call RegisterFromUnnamed()<CR>"
+nnoremap <expr> <Leader>U ":call UnnamedFromRegister()<CR>"
 
 "Register from full path
 nnoremap <Leader>rp :call setreg("\"", expand("%:p"))<CR>
@@ -471,7 +488,7 @@ nnoremap <silent> <Leader>be
 nnoremap <Leader>ra mmggVGy`m
 "xclip from All
 nnoremap <Leader>xa mmggVGy:call system("xclip -i -selection clipboard", getreg("\""))<CR>`m
-" }
+" }}}
 
 " Center on search term, diff
 nmap n nzz
@@ -517,6 +534,11 @@ nnoremap <Leader>Mhf yyjVpVr-k0
 "Markdown minor header unmake
 nnoremap <Leader>Mhu j"_ddk0
 
+" Bundles folding
+"Create fold
+nnoremap <Leader>BF yyo" }}}<Esc>k>>PI" <Esc>A {{{<Esc>j_
+"Remove fold
+
 " Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
 
@@ -530,9 +552,6 @@ cnoremap <C-D> <delete>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 
-" Accept autocomplete selection
-cnoremap  <space><delete>
-
 " No accidental Ex-mode or keyword-lookup
 nnoremap Q gggqG
 nnoremap <Leader>Q Q
@@ -544,6 +563,8 @@ nnoremap <Leader>e. :execute getline(".")<CR>
 nnoremap <Leader>er : <C-R>"<CR>
 
 " Color stuff!
+"let g:seoul256_background = 253
+"colorscheme seoul256
 colorscheme transparent
 hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
 hi SignColumn         ctermfg=Yellow        ctermbg=None
@@ -577,18 +598,6 @@ hi MatchParen          cterm=undercurl,bold
 " Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col(".")+1,1),"name") . '> trans<' . synIDattr(synID(line("."),col(".")+1,0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col(".")+1,1)),"fg#")<CR>
-
-" Resource and re-Filetype temp. hack...
-nnoremap <Leader>R <Nop>
-nnoremap <Leader>RR :source /home/james/.vimrc<CR>:execute "setf ".&filetype<CR>
-
-" Disgusting hack...
-function! SacrificialTabRedraw()
-  exec ':tabnew'
-  exec ':redraw'
-  exec ':bw'
-endfunction
-nnoremap <Leader>TR :call SacrificialTabRedraw()<CR>
 
 " Expand/collapse braces
 nmap <Leader>{ 2yEysi{<C-J>/<C-T>"<CR>
@@ -676,16 +685,23 @@ nnoremap <Esc>K 25zl
 "nnoremap <Esc>H 25zh
 "nnoremap <Esc>L 25zl
 
-" Fast fold
+" Fold stuff
 nmap <C-\> za
+function! MyFoldText()
+  let line = getline(v:foldstart)
+  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+  let poorDevil = substitute(sub, '^\( *\)" ', '\1', '')
+  let pad = repeat(' ', (winwidth(0)/2)-strlen(line)-strlen(v:folddashes))
+  return poorDevil . v:folddashes . pad
+endfunction
 
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
 
-" TODO: Smaller buffer numbers: instead of creating a new buffer sometimes,
-" open the lowest-numbered empty hidden buffer
+" TODO: Smaller buffer numbers: instead of creating a new buffer sometimes, open the lowest-numbered empty hidden buffer.
+" TODO: Function to line up word under cursor with <count>th instance of same word on line above or below.
 
 " TODO: Just a reminder to namespace mappings...
 "autocmd FileType unite call s:unite_keymaps()
@@ -696,5 +712,12 @@ nmap <Leader>td :set ft=drake syn=drake<CR>
   "imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   "imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 "endfunction`
+
+nnoremap <Leader>wn :w! /dev/null<CR>
+
+" Once again protecting sneak...
+call yankstack#setup()
+nmap s <Plug>SneakForward
+nmap S <Plug>SneakBackward
 
 au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2

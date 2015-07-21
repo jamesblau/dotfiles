@@ -247,5 +247,7 @@ bindsym $mod+Home exec "echo -n '☃' | xclip"
 bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool key Escape"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
+#
+# TODO: Scratchpad "registers": on a scratchpad, shortcut + letter moves it to that lettered pad. (shortcut-h)ipchat, etc.
 
 # vim:filetype=conf

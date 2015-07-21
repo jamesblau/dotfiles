@@ -1,6 +1,12 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+#Choose term
+if [[ "${TERM}" == xterm-termite ]]; then
+  export TERMINFO="/usr/local/share/terminfo/"
+  #old_TERM=$TERM; TERM=dumb; TERM=$old_TERM; unset old_TERM
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -134,10 +140,18 @@ alias x2c="/home/james/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
 #Python check delimeters in table
 alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
 
-export GIT_EDITOR=vim
-export VISUAL=vim
-export EDITOR=vim
-[ -d /usr/share/vim/vim74 ] && export VIMRUNTIME=/usr/share/vim/vim74
+#Choose vim
+if [ -x /usr/local/bin/nvim ]; then
+  my_vim='nvim'
+else
+  my_vim='vim'
+fi
+export GIT_EDITOR="${my_vim}"
+export VISUAL="${my_vim}"
+export EDITOR="${my_vim}"
+alias vi="${my_vim}"
+#I forget why this is here \/
+[[ -d /usr/share/vim/vim74 && "${my_vim}" != 'nvim' ]] && export VIMRUNTIME=/usr/share/vim/vim74
 
 #Avoid typing . for bin scripts that change directory
 alias cdg=". /home/james/bin/cdg"
@@ -151,8 +165,6 @@ function loop () { while true; do clear; $@; read; done; }
 function myip () { if [ $# -eq 0 ]; then set -- "tun0"; fi; ifconfig "$1" | grep inet | head -n 1 | cut -d ":" -f 2 | cut -d " " -f 1; }
 function xip () { myip $1 | tee /dev/tty | xclip; }
 
-alias vi='vim'
-alias nv='nvim'
 export PYTHONSTARTUP=~/.pythonrc.py
 
 alias password="shuf /usr/share/dict/words | grep -v '[^a-z]' | grep '....' | grep -v '.....' | grep -v sS | sed -e 's/^./\U&/g' | head -n 3 | awk 'ORS=\" \"' | sed 's/\s//g; s/$/\n/'"

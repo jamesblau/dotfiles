@@ -8,22 +8,27 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+"let g:EclimCompletionMethod = 'omnifunc'
+
 " To evaluate later {{{
-"Plug 'tpope/vim-scriptease'
-"Plug 'tpope/vim-sleuth'
-"Plug 'tpope/vim-speeddating'
-"Plug 'tpope/vim-rsi'
-"Plug 'tpope/vim-characterize'
-"Plug 'tpope/vim-afterimage'
-"Plug 'tpope/vim-flatfoot'
-"Plug 'tommcdo/vim-lion'
-"Plug 'wellle/targets.vim'
-"Plug 'spiiph/vim-space'
-"Plug 'zefei/vim-colortuner'
+ " Plug 'tpope/vim-scriptease'
+ " Plug 'tpope/vim-sleuth'
+ " Plug 'tpope/vim-speeddating'
+ " Plug 'tpope/vim-rsi'
+ " Plug 'tpope/vim-characterize'
+ " Plug 'tpope/vim-afterimage'
+ " Plug 'tpope/vim-flatfoot'
+ " Plug 'tommcdo/vim-lion'
+ " Plug 'wellle/targets.vim'
+ " Plug 'spiiph/vim-space'
+ " Plug 'zefei/vim-colortuner'
+ " Plug 'jbnicolai/vim-AnsiEsc'
+ " Plug 'rkitover/vimpager'
 " }}}
 
 " Run always {{{
-Plug 'Transparent'
+  Plug 'vim-scripts/Transparent'
+  Plug 'junegunn/seoul256.vim'
 " }}}
 
 if !exists('g:james_minimal_plugins')
@@ -35,15 +40,15 @@ if !exists('g:james_minimal_plugins')
         let g:airline#extensions#tabline#left_sep = ' '
         let g:airline#extensions#tabline#left_alt_sep = '|'
         let g:airline#extensions#tabline#buffer_nr_show = 1
-        "let g:airline_powerline_fonts = 1
+        if v:version >= 704 " If I don't have up-to-date Vim, I probably don't have powerline fonts, and vice versa
+          let g:airline_powerline_fonts = 1
+        endif
         let g:airline_theme = 'powerlineish'
         if !exists('g:airline_powerline_fonts')
           " Use the default set of separators with a few customizations
           let g:airline_left_sep='›'  " Slightly fancier than '>'
           let g:airline_right_sep='‹' " Slightly fancier than '<'
         endif
-
-        " Broken down into easily includeable segments
         set statusline=%<%f\                     " Filename
         set statusline+=%w%h%m%r                 " Options
         set statusline+=%{fugitive#statusline()} " Git Hotness
@@ -53,14 +58,15 @@ if !exists('g:james_minimal_plugins')
       endif
       Plug 'bling/vim-airline'
     " }}}
-    Plug 'CycleColor'
-    " Plug 'nathanaelkane/vim-indent-guides' {{{
+    Plug 'osyo-manga/vim-over'
+    Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev', 'CycleColorRefresh'] }
+    " Plug 'nathanaelkane/vim-indent-guides' { 'on': 'IndentGuidesToggle' } {{{
       let g:indent_guides_enable_on_vim_startup = 0
       let g:indent_guides_default_mapping = 0
       let g:indent_guides_start_level = 2
       let g:indent_guides_guide_size = 1
       nnoremap <Leader>si :IndentGuidesToggle<CR>
-      Plug 'nathanaelkane/vim-indent-guides'
+      Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
     " }}}
     " Plug 'junegunn/rainbow_parentheses.vim' {{{
       let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
@@ -71,23 +77,12 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Buffers / windows / tabs / sessions {{{
-    Plug 'bufkill.vim'
-    if v:version > 702
-      " Plug 'regedarek/ZoomWin' {{{
-        nnoremap <silent> <C-W><C-W> <Plug>ZoomWin
-        nnoremap <silent> <C-W><C-W> :ZoomWin<CR>
-        Plug 'regedarek/ZoomWin'
-      " }}}
-    endif
-    Plug 'Tabmerge'
-    "Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
-    " Plug 'wesQ3/vim-windowswap' {{{
-      "let g:windowswap_map_keys = 0
-      "nmap <Leader>WY :call WindowSwap#MarkWindowSwap()<CR>
-      "nmap <Leader>WP :call WindowSwap#DoWindowSwap()<CR>
-      "nmap <Leader>WW :call WindowSwap#EasyWindowSwap()<CR>
-      Plug 'wesQ3/vim-windowswap'
+    " Plug 'troydm/zoomwintab.vim', { 'on': 'ZoomWinTabToggle' } {{{
+      nnoremap <silent> <C-W><C-W> :ZoomWinTabToggle<CR>
+      Plug 'troydm/zoomwintab.vim', { 'on': 'ZoomWinTabToggle' }
     " }}}
+    Plug 'vim-scripts/Tabmerge', { 'on': 'Tabmerge' }
+    "Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
     " Plug 'xolox/vim-misc' | Plug 'xolox/vim-session' {{{
       let g:session_autoload = 'no'
       let g:session_autosave = 'no'
@@ -105,46 +100,20 @@ if !exists('g:james_minimal_plugins')
     " }}}
   " }}}
 
-  " Core {{{
-    " Plug 'justinmk/vim-sneak' {{{
-      " Don't lose S to vim-surround
-      xmap S <Plug>Sneak_S
-      Plug 'justinmk/vim-sneak'
-    " }}}
-    " Plug 'mbbill/undotree' {{{
-      let g:undotree_SetFocusWhenToggle=1
-      nnoremap <Leader>u :UndotreeToggle<CR>
-      Plug 'mbbill/undotree'
-    " }}}
-    Plug 'scrooloose/nerdcommenter'
-    " Plug 'scrooloose/nerdtree' {{{
-      let NERDTreeHijackNetrw=1
-      Plug 'scrooloose/nerdtree'
-    " }}}
-    Plug 'tmhedberg/matchit'
-    " Plug 'tpope/vim-abolish' {{{
-      vnoremap <Leader>s<Space> y:%S/<C-R>"/
-      vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g
-      nnoremap <Leader>sc :%S/\<<C-R><C-W>\>/
-      Plug 'tpope/vim-abolish'
-    " }}}
-    Plug 'tpope/vim-eunuch'
-    Plug 'tpope/vim-repeat'
-    Plug 'tpope/vim-sensible'
-    Plug 'tpope/vim-unimpaired'
-  " }}}
-
-  " Filters {{{
+  " Completion / fuzzy find {{{
     Plug 'goldfeld/ctrlr.vim'
     Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
     " Plug 'kien/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
+      let g:ctrlp_use_caching = 10000
+      "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " Any advantage to integrating ag and git-ls-files?
       if executable('ag')
         let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
       endif
       nnoremap <silent> <C-P> :CtrlP<CR>
-      nnoremap <silent> <Esc><C-p> :CtrlPBuffer<CR>
-      nnoremap <silent> <Esc>p :CtrlPMRU<CR>
+      nnoremap <silent> <Esc><C-P> :CtrlPBuffer<CR>
+      nnoremap <silent> <Esc>p :CtrlPBuffer<CR>
+      nnoremap <silent>  :CtrlPMRU<CR>
       let g:ctrlp_prompt_mappings = {
         \ 'PrtBS()':              ['<c-h>', '<bs>', '<c-]>'],
         \ 'PrtDelete()':          ['<c-d>', '<del>'],
@@ -162,6 +131,49 @@ if !exists('g:james_minimal_plugins')
         "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
       Plug 'kien/ctrlp.vim'
     " }}}
+    Plug 'SirVer/ultisnips', { 'on': [] } " See YouCompleteMe below for loading mapping
+    " Plug 'Valloric/YouCompleteMe', { 'on': [] } {{{
+      nnoremap <Leader>s<Tab> :call plug#load('ultisnips', 'YouCompleteMe')<CR>:call youcompleteme#Enable()<CR>
+      Plug 'Valloric/YouCompleteMe', { 'on': [] }
+    " }}}
+    " Plug 'vim-scripts/cmdline-completion' {{{
+      cmap <C-J> <Plug>CmdlineCompletionBackward
+      cmap <C-K> <Plug>CmdlineCompletionForward
+      Plug 'vim-scripts/cmdline-completion'
+    " }}}
+  " }}}
+
+  " Core {{{
+    " Plug 'justinmk/vim-sneak' {{{
+      " Don't lose S to vim-surround
+      let g:sneak#streak = 1
+      xmap S <Plug>Sneak_S
+      Plug 'justinmk/vim-sneak'
+    " }}}
+    " Plug 'mbbill/undotree' { 'on': 'UndotreeToggle' } {{{
+      let g:undotree_SetFocusWhenToggle=1
+      nnoremap <Leader>u :UndotreeToggle<CR>
+      Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+    " }}}
+    Plug 'scrooloose/nerdcommenter'
+    " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } {{{
+      let NERDTreeHijackNetrw = 1
+      let loaded_netrwPlugin = 1
+      nnoremap ,T :NERDTreeToggle<CR>
+      Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+    " }}}
+    Plug 'tmhedberg/matchit'
+    " Plug 'tpope/vim-abolish' {{{
+      vnoremap <Leader>s<Space> y:OverCommandLine<CR>%S/<C-T>"/
+      vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g<C-G>
+      nnoremap <Leader>s<Space> :OverCommandLine<CR>%S/<C-T><C-W>/
+      nnoremap <Leader>ss :%S/<C-R><C-W>/<C-R><C-W>/g<C-G>
+      Plug 'tpope/vim-abolish'
+    " }}}
+    Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-sensible'
+    Plug 'tpope/vim-unimpaired'
   " }}}
 
   " Fun {{{
@@ -240,11 +252,20 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Registers {{{
-    Plug 'RedirCommands'
-    Plug 'regRedir.vim'
+    Plug 'vim-scripts/RedirCommands'
+    Plug 'vim-scripts/regRedir.vim'
     " Plug 'tyru/regbuf.vim' {{{
       nnoremap <Leader>sr :RegbufOpen<CR>
       Plug 'tyru/regbuf.vim'
+      "autocmd regbuf BufWinLeave <buffer> bw regbuf:preview
+    " }}}
+    " Plug 'maxbrunsfeld/vim-yankstack' {{{
+      let g:yankstack_map_keys = 0
+      nmap <BS> <Plug>yankstack_substitute_older_paste
+      xmap <BS> <Plug>yankstack_substitute_older_paste
+      nmap <M-BS> <Plug>yankstack_substitute_newer_paste
+      xmap <M-BS> <Plug>yankstack_substitute_newer_paste
+      Plug 'maxbrunsfeld/vim-yankstack'
     " }}}
   " }}}
 
@@ -265,11 +286,10 @@ if !exists('g:james_minimal_plugins')
     Plug 'kana/vim-textobj-entire'
     Plug 'kana/vim-textobj-indent'
     Plug 'kana/vim-textobj-user'
-    Plug 'Parameter-Text-Objects'
+    Plug 'vim-scripts/Parameter-Text-Objects'
     " Plug 'tpope/vim-surround' {{{
       " Sneak has S so use ,S
       let g:surround_no_mappings = 1
-      xmap S <Plug>Sneak_S
       xmap <Leader>S <Plug>VSurround
       " Largely defaults below
       nmap ds  <Plug>Dsurround
@@ -308,8 +328,8 @@ if !exists('g:james_minimal_plugins')
       let g:multi_cursor_exit_from_visual_mode=0
       Plug 'terryma/vim-multiple-cursors'
     " }}}
-    Plug 'visSum.vim'
-    Plug 'vsearch.vim'
+    Plug 'vim-scripts/visSum.vim'
+    Plug 'vim-scripts/vsearch.vim'
   " }}}
 
 endif

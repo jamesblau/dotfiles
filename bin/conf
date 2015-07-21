@@ -100,3 +100,7 @@ xmodmap -e "keycode  45 = k K Up Up"
 xmodmap -e "keycode  46 = l L Right Right"
 
 xmodmap -e "keycode 107 = Super_L Super_R"
+
+#TODO: Map: hold enter -> control, control + hold enter -> hold enter if possible
+#           hold tab, backslash (no modifiers) -> Super
+#           hold backtick -> "arrow mode"
