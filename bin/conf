@@ -90,7 +90,30 @@ synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
 
 # Keyboard
 sudo setxkbmap -option ctrl:nocaps
-ps aux | grep -v grep | grep -q opensource/xcape/xcape || ~/src/opensource/xcape/xcape
+# xcape {{{
+  # Map an unused modifier's keysym to the spacebar's keycode and make it a
+  # control modifier. It needs to be an existing key so that emacs won't
+  # spazz out when you press it. Hyper_L is a good candidate.
+  #spare_modifier1="Hyper_L"
+  #spare_modifier1="Hyper_R"
+  #xmodmap -e "keycode 23 = $spare_modifier1"
+  #xmodmap -e "keycode 51 = $spare_modifier2"
+  #xmodmap -e "remove mod4 = $spare_modifier1" # hyper_l is mod4 by default
+  #xmodmap -e "remove mod4 = $spare_modifier2" # hyper_r is mod4 by default
+  #xmodmap -e "add Super_L = $spare_modifier1"
+  #xmodmap -e "add Super_L = $spare_modifier2"
+
+  # Map space to an unused keycode (to keep it around for xcape to
+  # use).
+  #xmodmap -e "keycode any = Tab ISO_Left_Tab Tab ISO_Left_Tab"
+  #xmodmap -e "keycode any = backslash bar backslash bar backslash bar backslash bar"
+
+  # Finally use xcape to cause the space bar to generate a space when tapped.
+  ps aux | grep -v grep | grep -q opensource/alols/xcape/xcape && killall xcape
+  ~/src/opensource/alols/xcape/xcape
+  #~/src/opensource/alols/xcape/xcape -e "$spare_modifier1=Tab"
+  #~/src/opensource/alols/xcape/xcape -e "$spare_modifier2=backslash"
+#}}}
 xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
 
 xmodmap -e "keysym Alt_R = Mode_switch"

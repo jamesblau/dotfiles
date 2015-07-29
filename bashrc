@@ -5,6 +5,37 @@
 if [[ "${TERM}" == xterm-termite ]]; then
   export TERMINFO="/usr/local/share/terminfo/"
   #old_TERM=$TERM; TERM=dumb; TERM=$old_TERM; unset old_TERM
+  . /etc/profile.d/vte.sh
+  __vte_prompt_command
+fi
+
+#Choose color depth
+if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+  export TERM=xterm-256color
+  . ~/dotfiles/gnome-zenburn
+fi
+
+if [ "$TERM" = "linux" ]; then
+  /bin/echo -e "
+  \e]P0020202
+  \e]P1bc4c4c
+  \e]P26c9c6c
+  \e]P3d8d856
+  \e]P44b4cbd
+  \e]P5bc6ca4
+  \e]P64cb7bd
+  \e]P7e5e5e5
+  \e]P8414141
+  \e]P9dc6c6c
+  \e]PA8cbc8c
+  \e]PBfffd00
+  \e]PC6b6cdb
+  \e]PDbe89ae
+  \e]PE91d8db
+  \e]PFffffff
+  "
+  # get rid of artifacts
+  clear
 fi
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -34,27 +65,6 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
 # Newline before subsequent PS1s
 function __ps1_newline_login {
   if [[ -z "${PS1_NEWLINE_LOGIN}" ]]; then
@@ -64,47 +74,42 @@ function __ps1_newline_login {
   fi
 }
 PROMPT_COMMAND='__ps1_newline_login'
-TON='$(tput bold)'
-TOFF='$(tput sgr0)'
-function TP () { echo "${TON}$(tput setaf $@)"; }
-RED="\033[38;5;1m"
-YEL="\033[33m"
-GRN="\033[38;5;15m\033[38;5;2m"
-CYN="\033[1;36m"
 
-#PROMPT_USER_COLOR=`TP 1` # BOLD RED
-#PROMPT_PREPOSITION_COLOR=`TP 7` # BOLD WHITE
-#PROMPT_DEVICE_COLOR=`TP 3` # BOLD YELLOW
-#PROMPT_DIR_COLOR=`TP 2` # BOLD GREEN
-#PROMPT_GIT_STATUS_COLOR=`TP 6` # BOLD CYAN
-#PROMPT_GIT_PROGRESS_COLOR=`TP 7` # BOLD VIOLET
-#PROMPT_SYMBOL_COLOR=`TP 1` # BOLD RED
+if false; then
+  # Powerline
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
+  . /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
+else
+  TON='$(tput bold)'
+  TOFF='$(tput sgr0)'
+  function TP () { echo "${TON}$(tput setaf $@)"; }
+  RED="\033[38;5;1m"
+  YEL="\033[33m"
+  GRN="\033[38;5;15m\033[38;5;2m"
+  CYN="\033[1;36m"
 
-PROMPT_USER_COLOR="$(tput bold)${RED}"
-PROMPT_PREPOSITION_COLOR="$(tput bold)${YEL}"
-PROMPT_DEVICE_COLOR="$(tput bold)${GRN}"
-PROMPT_DIR_COLOR="$(tput bold)${CYN}"
-PROMPT_GIT_STATUS_COLOR=`TP 5`
-PROMPT_GIT_PROGRESS_COLOR="$(tput bold)${YEL}"
-PROMPT_SYMBOL_COLOR=`TP 5`
-export PS2="${TON}$(TP 5)> ${TOFF}"
-#export PS2="> "
+  PROMPT_USER_COLOR="$(tput bold)${RED}"
+  PROMPT_PREPOSITION_COLOR="$(tput bold)${YEL}"
+  PROMPT_DEVICE_COLOR="$(tput bold)${GRN}"
+  PROMPT_DIR_COLOR="$(tput bold)${CYN}"
+  PROMPT_GIT_STATUS_COLOR=`TP 5`
+  PROMPT_GIT_PROGRESS_COLOR="$(tput bold)${YEL}"
+  PROMPT_SYMBOL_COLOR=`TP 5`
+  export PS2="${TON}$(TP 5)> ${TOFF}"
+fi
 
-# If this is an xterm set the title to user@host:dir
-#case "$TERM" in
-#xterm*|rxvt*)
-    #PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    #;;
-#*)
-    #;;
-#esac
+# Run twolfson/sexy-bash-prompt
+. ~/.bash_prompt
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
+    alias ls='ls --color'
+    alias grep='grep --color'
 fi
+eval $( dircolors -b ~/.dir_colors )
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -150,7 +155,7 @@ export GIT_EDITOR="${my_vim}"
 export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
 alias vi="${my_vim}"
-#I forget why this is here \/
+#I forget why this is here
 [[ -d /usr/share/vim/vim74 && "${my_vim}" != 'nvim' ]] && export VIMRUNTIME=/usr/share/vim/vim74
 
 #Avoid typing . for bin scripts that change directory
@@ -244,9 +249,6 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 #export PERL5LIB=~/.cpan/build/JSON-2.90-SdtLVG/lib/
 #export PERL5LIB=~/.cpan/build/Math-Round-0.07-vJd8__/blib/lib/
 
-# Run twolfson/sexy-bash-prompt
-. ~/.bash_prompt
-
 # Fzf stuff
 [ -f ~/.fzf.bash ] && {
   source ~/.fzf.bash
@@ -259,7 +261,7 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 
 # z jump around
-[ -f ~/src/opensource/z/z.sh ] && source ~/src/opensource/z/z.sh
+[ -f ~/src/opensource/rupa/z/z.sh ] && source ~/src/opensource/rupa/z/z.sh
 
 # bd back to directory
-alias bd=". ~/src/opensource/bd/bd -si"
+alias bd=". ~/src/opensource/vigneshwaranr/bd/bd -si"

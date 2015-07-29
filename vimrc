@@ -50,14 +50,32 @@ set winminheight=0              " Windows can be 0 lines high
 source /home/james/dotfiles/vimrc.bundles
 
 " Enforce alt consistency between vim and nvim
-source /home/james/dotfiles/vimrc.alt
+if !has('nvim')
+  for c in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    execute 'nmap <Esc>'.c.' <A-'.c.'>'
+    execute 'cmap <Esc>'.c.' <A-'.c.'>'
+    execute 'nmap <Esc><C-'.c.'> <C-A-'.c.'>'
+    execute 'cmap <Esc><C-'.c.'> <C-A-'.c.'>'
+  endfor
+endif
 
 " Override vim-sensible
-set listchars=tab:›\ ,trail:•,extends:>,precedes:<,nbsp:•
+runtime! plugin/sensible.vim
+set listchars=tab:›\ ,trail:•,extends:>,precedes:<,nbsp:⚪
 set notimeout nottimeout
 set nrformats=
 set scrolloff=3
-set tags=./tags;/,/home/james/.vimtags
+
+" Tags stuff
+let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+if findfile(".tags", ".;") =~ "tags"
+  set tags=./.tags;/
+elseif gitroot != ''
+    let &tags = &tags . ',' . gitroot . '/.git/.tags'
+    let &tags = &tags . ',' . gitroot . '/.git/tags'
+    let &tags = &tags . ',' . gitroot . '/.tags'
+    let &tags = &tags . ',' . gitroot . '/tags'
+endif
 
 if has('persistent_undo')
   set undofile
@@ -91,12 +109,6 @@ nnoremap VV _v$h
 nnoremap vV v$h
 nnoremap Vv v_
 
-" Make tags placed in .git/tags file available in all levels of a repository
-let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-if gitroot != ''
-  let &tags = &tags . ',' . gitroot . '/.git/tags'
-endif
-
 " Incremement character under cursor only
 nnoremap <Leader>ic a <C-C>h<C-A>lxh
 
@@ -118,7 +130,6 @@ nmap <Leader>M a<CR><C-C><F5>
 
 " Yank and Pasting stuff
 cnoremap <C-T> <C-R>
-nnoremap Y y$
 nnoremap <Leader>p <Nop>
 nnoremap <Leader>pl mm$p`m
 nnoremap <Leader>pL mmA<Space><C-C>p`m
@@ -138,11 +149,16 @@ if v:version > 702
   " JSON
   nmap <Leader>jp :%!underscore print<CR>:set filetype=json<CR><F5>
   nmap <Leader>jt :%!python -mjson.tool<CR>:set filetype=json<CR><F5>
+  vmap <Leader>jp :!underscore print<CR>:set filetype=json<CR><F5>
+  vmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
 else
   " JSON
   nmap <Leader>jt :%!python2.6 -mjson.tool<CR>:set filetype=json<CR><F5>
-  " Backspace whatever. hack...
-  inoremap  <BS>
+  vmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
+  if !has('nvim')
+    " Backspace whatever. hack...
+    inoremap  <BS>
+  endif
 endif
 if v:version >= 704
   " NumberToggle
@@ -213,14 +229,12 @@ function! DiffWToggle()
     set diffopt+=iwhite
     set diffexpr=DiffW()
   endif
-  call SacrificialTabRedraw()
   echom &diffopt &diffexpr
 endfunction
 
 function! DiffWToggleRegex()
   set diffopt+=iwhite
   set diffexpr=DiffW()
-  call SacrificialTabRedraw()
   echom &diffopt &diffexpr
 endfunction
 
@@ -269,7 +283,7 @@ nnoremap <Leader>sN :set nu!<CR>
 nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>sc :set spell!<CR>
 nnoremap <Leader>sp :set paste!<CR>
-nnoremap <Leader>sl :set cursorline!<CR>
+nnoremap <Leader>sl :set cursorline! \| set cursorcolumn!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
 nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
@@ -289,9 +303,9 @@ function! AddSubtract(char, back)
   silent! call repeat#set(":\<C-U>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
 nnoremap <silent> <C-A> :<C-U>call AddSubtract("\<C-A>", '')<CR>
-nnoremap <silent> <Esc>a   :<C-U>call AddSubtract("\<C-A>", 'b')<CR>
+nnoremap <silent> <A-a>   :<C-U>call AddSubtract("\<C-A>", 'b')<CR>
 nnoremap <silent> <C-X> :<C-U>call AddSubtract("\<C-X>", '')<CR>
-nnoremap <silent> <Esc>x   :<C-U>call AddSubtract("\<C-X>", 'b')<CR>
+nnoremap <silent> <A-x>   :<C-U>call AddSubtract("\<C-X>", 'b')<CR>
 
 function! ETW(what, ...)
   for f1 in a:000
@@ -349,17 +363,11 @@ function! PrevTWorB()
     tabp
   endif
 endfunction
-function! NumTorB()
-  let l:num=nr2char(getchar())+0
-  if !(l:num =~ "[1-9]")
-    return
-  elseif (l:num == 0)
-    let l:num=10
-  endif
+function! NumTorB(number)
   if (tabpagenr("$") == 1)
-    execute ":b" . l:num
+    execute ":b" . a:number
   else
-    execute ":tabn" . l:num
+    execute ":tabn" . a:number
   endif
 endfunction
 
@@ -376,22 +384,23 @@ nnoremap <C-H>      <C-W>h
 nnoremap <C-J>      <C-W>j
 nnoremap <C-K>      <C-W>k
 nnoremap <C-L>      <C-W>l
-nnoremap <Esc><C-J> :call SmoothDown()<CR>
-nnoremap <Esc><C-K> :call SmoothUp()<CR>
+nnoremap <C-A-J> :call SmoothDown()<CR>
+nnoremap <C-A-K> :call SmoothUp()<CR>
 " Tab stuff
-nnoremap <Esc>i     :bp<CR>
-nnoremap <Esc>o     :bn<CR>
-nnoremap <Esc>h     :tabmove -1<CR>
-nnoremap <Esc>l     :tabmove +1<CR>
+nnoremap <A-i>     :bp<CR>
+nnoremap <A-o>     :bn<CR>
+nnoremap <A-h>     :tabmove -1<CR>
+nnoremap <A-l>     :tabmove +1<CR>
 " Smart Tab, (Window), Buffer stuff
-nnoremap <Esc>j     :call PrevTWorB()<CR>
-nnoremap <Esc>k     :call NextTWorB()<CR>
-nnoremap <expr> <Esc> ":silent! call NumTorB()<CR>"
-" I don't even...fixes weird bug involving NumTorB maybe?
-map <Esc>P <Esc>P
-"imap <Esc>P <Esc>P
-"nnoremap <Esc> <Esc>
-inoremap <Esc> <Esc>
+nnoremap <A-j>     :call PrevTWorB()<CR>
+nnoremap <A-k>     :call NextTWorB()<CR>
+" Numbered buffers and tabs
+for n in range(1, 9)
+  execute 'nnoremap <A-'.n.'> :call NumTorB('.n.')<CR>'
+endfor
+nnoremap <A-0> :call NumTorB(10)<CR>
+" <C-C> is unsafe in mappings
+inoremap <C-C> <Esc><Esc>
 
 function! SmoothDown()
   if(&winheight == 999)
@@ -493,12 +502,12 @@ nnoremap <Leader>xa mmggVGy:call system("xclip -i -selection clipboard", getreg(
 " Center on search term, diff
 nmap n nzz
 nmap N Nzz
-nnoremap <Esc>n n
-nnoremap <Esc>N N
+nnoremap <A-n> n
+nnoremap <A-N> N
 nmap ]c ]czz
 nmap [c [czz
-nnoremap <Esc>c ]c
-nnoremap <Esc>C [c
+nnoremap <A-c> ]c
+nnoremap <A-C> [c
 
 " Saving stuff
 cmap w!! w !sudo tee % >/dev/null
@@ -536,7 +545,7 @@ nnoremap <Leader>Mhu j"_ddk0
 
 " Bundles folding
 "Create fold
-nnoremap <Leader>BF yyo" }}}<Esc>k>>PI" <Esc>A {{{<Esc>j_
+nnoremap <Leader>BF yyo" }}}<C-C>k>>PI" <C-C>A {{{<C-C>j_
 "Remove fold
 
 " Remove whitespace
@@ -549,8 +558,8 @@ inoremap <C-B> <left>
 cnoremap <C-B> <Left>
 cnoremap <C-A> <Home>
 cnoremap <C-D> <delete>
-cnoremap <Esc>b <S-Left>
-cnoremap <Esc>f <S-Right>
+cnoremap <A-b> <S-Left>
+cnoremap <A-f> <S-Right>
 
 " No accidental Ex-mode or keyword-lookup
 nnoremap Q gggqG
@@ -563,37 +572,43 @@ nnoremap <Leader>e. :execute getline(".")<CR>
 nnoremap <Leader>er : <C-R>"<CR>
 
 " Color stuff!
-"let g:seoul256_background = 253
+"let g:seoul256_background = 233
 "colorscheme seoul256
-colorscheme transparent
-hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
-hi SignColumn         ctermfg=Yellow        ctermbg=None
-hi LineNr             ctermfg=Yellow        ctermbg=None
-hi CursorLineNr       ctermfg=Yellow        ctermbg=None
-hi Normal             ctermfg=White
-hi Search             ctermfg=White         ctermbg=DarkRed
-hi Visual             ctermfg=DarkRed       ctermbg=White
-hi vimLineComment     ctermfg=LightBlue
-hi NonText            ctermfg=DarkRed
-hi DiffAdd            ctermfg=Yellow        ctermbg=None
-hi DiffChange         ctermfg=Yellow        ctermbg=None
-hi DiffDelete         ctermfg=Yellow        ctermbg=None
-hi DiffText           ctermfg=None          ctermbg=DarkGray
-hi GitGutterAdd                             ctermbg=None
-hi GitGutterChange                          ctermbg=None
-hi GitGutterChangeDeleteDefault             ctermbg=None
-hi GitGutterChangeLineDefault               ctermbg=None
-hi GitGutterDeleteLine                      ctermbg=None
-hi GitGutterAddDefault                      ctermbg=None
-hi GitGutterChangeDefault                   ctermbg=None
-hi GitGutterChangeDeleteLine                ctermbg=None
-hi GitGutterDelete                          ctermbg=None
-hi GitGutterAddLine                         ctermbg=None
-hi GitGutterChangeDelete                    ctermbg=None
-hi GitGutterChangeLine                      ctermbg=None
-hi GitGutterDeleteDefault                   ctermbg=None
-hi shDoubleQuote                            ctermbg=None
-hi MatchParen          cterm=undercurl,bold
+let g:zenburn_old_Visual=1
+let g:zenburn_alternate_Visual=1
+let g:zenburn_high_Contrast=1
+colorscheme zenburn
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"colorscheme transparent
+"hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
+"hi SignColumn         ctermfg=Yellow        ctermbg=None
+"hi LineNr             ctermfg=Yellow        ctermbg=None
+"hi CursorLineNr       ctermfg=Yellow        ctermbg=None
+"hi Normal             ctermfg=White
+"hi Search             ctermfg=White         ctermbg=DarkRed
+"hi Visual             ctermfg=DarkRed       ctermbg=White
+"hi vimLineComment     ctermfg=LightBlue
+"hi NonText            ctermfg=DarkRed
+"hi DiffAdd            ctermfg=Yellow        ctermbg=None
+"hi DiffChange         ctermfg=Yellow        ctermbg=None
+"hi DiffDelete         ctermfg=Yellow        ctermbg=None
+"hi DiffText           ctermfg=None          ctermbg=DarkGray
+"hi GitGutterAdd                             ctermbg=None
+"hi GitGutterChange                          ctermbg=None
+"hi GitGutterChangeDeleteDefault             ctermbg=None
+"hi GitGutterChangeLineDefault               ctermbg=None
+"hi GitGutterDeleteLine                      ctermbg=None
+"hi GitGutterAddDefault                      ctermbg=None
+"hi GitGutterChangeDefault                   ctermbg=None
+"hi GitGutterChangeDeleteLine                ctermbg=None
+"hi GitGutterDelete                          ctermbg=None
+"hi GitGutterAddLine                         ctermbg=None
+"hi GitGutterChangeDelete                    ctermbg=None
+"hi GitGutterChangeLine                      ctermbg=None
+"hi GitGutterDeleteDefault                   ctermbg=None
+"hi shDoubleQuote                            ctermbg=None
+"hi MatchParen          cterm=undercurl,bold
 
 " Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
@@ -606,10 +621,6 @@ nmap <Leader>( 2yEysi(<C-J>/<C-T>"<CR>
 nmap <Leader>) 2yE?(<CR>J"_xh%kJ?<C-T>"<CR>
 nmap <Leader>[ 2yEysi[<C-J>/<C-T>"<CR>
 nmap <Leader>] 2yE?[<CR>J"_xh%kJx?<C-T>"<CR>
-
-" Undo and redo (useful for 'undo paste numbered register and paste next number register')
-" Note that <C-_> is actually accessed with <C-7>!
-map <C-_> u.
 
 " swap j/gj, k/gk
 noremap j gj
@@ -647,7 +658,7 @@ nnoremap <Leader>do :windo diffo<CR>
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
 
 " Last buffer more easily
-nmap  <C-^>
+nmap <BS> <C-^>
 
 " Search stuff!
 vnoremap <Leader>/ y/<C-G>VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<CR>
@@ -673,17 +684,17 @@ cmap <S-Down> <Nop>
 cmap <C-Down> <Nop>
 
 " Fast horizontal navigation
-nnoremap <Esc>H zH
-nnoremap <Esc>L zL
-nnoremap <Esc>J 25zh
-nnoremap <Esc>K 25zl
+nnoremap <A-H> zH
+nnoremap <A-L> zL
+nnoremap <A-J> 25zh
+nnoremap <A-K> 25zl
 " Or maybe:
 "nnoremap <C-B> zH
 "nnoremap <C-F> zL
-"nnoremap <Esc>J 15jzz
-"nnoremap <Esc>K 15kzz
-"nnoremap <Esc>H 25zh
-"nnoremap <Esc>L 25zl
+"nnoremap <A-J> 15jzz
+"nnoremap <A-K> 15kzz
+"nnoremap <A-H> 25zh
+"nnoremap <A-L> 25zl
 
 " Fold stuff
 nmap <C-\> za
@@ -699,9 +710,11 @@ endfunction
 nmap <Leader>tc :set ft=csv syn=csv<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
+nmap <Leader>t<Space> :set ft= syn= formatprg= <CR>
 
 " TODO: Smaller buffer numbers: instead of creating a new buffer sometimes, open the lowest-numbered empty hidden buffer.
 " TODO: Function to line up word under cursor with <count>th instance of same word on line above or below.
+" TODO: <Leader>L<Something> for :arglocal uses
 
 " TODO: Just a reminder to namespace mappings...
 "autocmd FileType unite call s:unite_keymaps()
@@ -713,11 +726,20 @@ nmap <Leader>td :set ft=drake syn=drake<CR>
   "imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 "endfunction`
 
+" Write to null (buffer doesn't look unsaved)
 nnoremap <Leader>wn :w! /dev/null<CR>
 
-" Once again protecting sneak...
-call yankstack#setup()
-nmap s <Plug>SneakForward
-nmap S <Plug>SneakBackward
+" Redraw mapping
+nnoremap <Leader><C-R> :redraw<CR>
+
+" Once again protecting sneak...this doesn't seem to work in vimrc.bundles
+if exists('g:yankstack_map_keys')
+  call yankstack#setup()
+  nmap s <Plug>Sneak_s
+  nmap S <Plug>Sneak_S
+  vmap s <Plug>Sneak_s
+  vmap S <Plug>Sneak_S
+  nmap Y y$
+endif
 
 au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2

@@ -29,6 +29,7 @@ call plug#begin('~/.vim/plugged')
 " Run always {{{
   Plug 'vim-scripts/Transparent'
   Plug 'junegunn/seoul256.vim'
+  Plug 'jnurmine/Zenburn'
 " }}}
 
 if !exists('g:james_minimal_plugins')
@@ -43,7 +44,7 @@ if !exists('g:james_minimal_plugins')
         if v:version >= 704 " If I don't have up-to-date Vim, I probably don't have powerline fonts, and vice versa
           let g:airline_powerline_fonts = 1
         endif
-        let g:airline_theme = 'powerlineish'
+        let g:airline_theme = 'zenburn'
         if !exists('g:airline_powerline_fonts')
           " Use the default set of separators with a few customizations
           let g:airline_left_sep='›'  " Slightly fancier than '>'
@@ -70,7 +71,7 @@ if !exists('g:james_minimal_plugins')
     " }}}
     " Plug 'junegunn/rainbow_parentheses.vim' {{{
       let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-      let g:rainbow#blacklist = [15, 121, 159]
+      "let g:rainbow#blacklist = [15, 121, 159]
       au! BufNewFile,BufRead * RainbowParentheses
       Plug 'junegunn/rainbow_parentheses.vim'
     " }}}
@@ -78,6 +79,7 @@ if !exists('g:james_minimal_plugins')
 
   " Buffers / windows / tabs / sessions {{{
     " Plug 'troydm/zoomwintab.vim', { 'on': 'ZoomWinTabToggle' } {{{
+      let g:zoomwintab_remap=0
       nnoremap <silent> <C-W><C-W> :ZoomWinTabToggle<CR>
       Plug 'troydm/zoomwintab.vim', { 'on': 'ZoomWinTabToggle' }
     " }}}
@@ -102,18 +104,21 @@ if !exists('g:james_minimal_plugins')
 
   " Completion / fuzzy find {{{
     Plug 'goldfeld/ctrlr.vim'
-    Plug 'junegunn/fzf', { 'dir': '~/src/opensource/fzf', 'do': 'yes \| ./install' }
+    Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
     " Plug 'kien/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
-      let g:ctrlp_use_caching = 10000
+      "let g:ctrlp_use_caching = 10000
       "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " Any advantage to integrating ag and git-ls-files?
       if executable('ag')
         let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
       endif
       nnoremap <silent> <C-P> :CtrlP<CR>
-      nnoremap <silent> <Esc><C-P> :CtrlPBuffer<CR>
-      nnoremap <silent> <Esc>p :CtrlPBuffer<CR>
-      nnoremap <silent>  :CtrlPMRU<CR>
+      nnoremap <silent> gb :CtrlPBuffer<CR>
+      nnoremap <silent> gm :CtrlPMRU<CR>
+      let g:ctrlp_buffer_func = { 'enter': 'BrightHighlightOn', }
+      function! BrightHighlightOn()
+        set cursorline
+      endfunction
       let g:ctrlp_prompt_mappings = {
         \ 'PrtBS()':              ['<c-h>', '<bs>', '<c-]>'],
         \ 'PrtDelete()':          ['<c-d>', '<del>'],
@@ -130,6 +135,15 @@ if !exists('g:james_minimal_plugins')
         "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
         "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
       Plug 'kien/ctrlp.vim'
+    " }}}
+    " Plug 'majutsushi/tagbar' {{{
+      let g:tagbar_autoclose=1
+      nnoremap <Leader><C-]> :TagbarToggle<CR>
+      Plug 'majutsushi/tagbar'
+    " }}}
+    " Plug 'rking/ag.vim' {{{
+      let g:ag_working_path_mode="r"
+      Plug 'rking/ag.vim'
     " }}}
     Plug 'SirVer/ultisnips', { 'on': [] } " See YouCompleteMe below for loading mapping
     " Plug 'Valloric/YouCompleteMe', { 'on': [] } {{{
@@ -157,8 +171,8 @@ if !exists('g:james_minimal_plugins')
     " }}}
     Plug 'scrooloose/nerdcommenter'
     " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } {{{
-      let NERDTreeHijackNetrw = 1
-      let loaded_netrwPlugin = 1
+      "let NERDTreeHijackNetrw = 1
+      "let loaded_netrwPlugin = 1
       nnoremap ,T :NERDTreeToggle<CR>
       Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
     " }}}
@@ -174,6 +188,7 @@ if !exists('g:james_minimal_plugins')
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-unimpaired'
+    Plug 'Shougo/vimproc.vim', { 'do': 'make' } | Plug 'Shougo/vimshell.vim'
   " }}}
 
   " Fun {{{
@@ -226,8 +241,24 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Language-specific {{{
-    Plug 'derekwyatt/vim-sbt', { 'for': 'scala' }
+    Plug 'derekwyatt/vim-sbt', { 'for': 'sbt.scala' }
     " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
+      let g:scala_use_default_keymappings = 0
+      let g:scala_sort_across_groups=1
+      let g:scala_first_party_namespaces='\(com\.tresata\)'
+      let g:scala_use_builtin_tagbar_defs=0
+      nnoremap          <C-S><C-A><C-T> :Ag  <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      nnoremap          <C-S><C-A><C-M> :Ag  <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      nnoremap          <C-S><C-A><C-R> :Ag  <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      nnoremap          <C-S><C-T>         :<C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
+      cnoremap          <C-S><C-T>          <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
+      nnoremap          <C-S><C-M>         :<C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
+      cnoremap          <C-S><C-M>          <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
+      nnoremap          <C-S><C-R>         :<C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR>
+      cnoremap          <C-S><C-R>          <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR>
+      nnoremap <silent> <C-S><C-P><C-T> :CtrlP <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><CR>
+      nnoremap <silent> <C-S><C-P><C-M> :CtrlP <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><CR>
+      nnoremap <silent> <C-S><C-P><C-R> :CtrlP <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
       au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
@@ -261,10 +292,10 @@ if !exists('g:james_minimal_plugins')
     " }}}
     " Plug 'maxbrunsfeld/vim-yankstack' {{{
       let g:yankstack_map_keys = 0
-      nmap <BS> <Plug>yankstack_substitute_older_paste
-      xmap <BS> <Plug>yankstack_substitute_older_paste
-      nmap <M-BS> <Plug>yankstack_substitute_newer_paste
-      xmap <M-BS> <Plug>yankstack_substitute_newer_paste
+      nmap [w <Plug>yankstack_substitute_older_paste
+      xmap [w <Plug>yankstack_substitute_older_paste
+      nmap ]w <Plug>yankstack_substitute_newer_paste
+      xmap ]w <Plug>yankstack_substitute_newer_paste
       Plug 'maxbrunsfeld/vim-yankstack'
     " }}}
   " }}}

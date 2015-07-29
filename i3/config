@@ -159,9 +159,9 @@ bindsym $mod+Control+Shift+0 focus parent; move container to workspace 10; works
 
 # move between monitors
 bindsym $mod+m focus output left; focus output up
+bindsym $mod+Control+m move workspace to output left; move workspace to output up
 bindsym $mod+Shift+m move container to output left; move container to output up
-bindsym $mod+Control+m move container to output left; move container to output up; focus output left; focus output up
-bindsym $mod+Control+Shift+m move workspace to output left; move workspace to output up
+bindsym $mod+Control+Shift+m move container to output left; move container to output up; focus output left; focus output up
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -204,9 +204,13 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
+  #i3bar_command /home/james/src/opensource/S0lll0s/i3bgbar/i3bar/i3bar
+
+  #status_command python /usr/local/lib/python2.7/dist-packages/powerline/bindings/i3/powerline-i3.py
+  #font pango:DejaVu Sans Mono 11
+
   status_command ~/bin/i3status_custom.sh
   #status_command i3status
   #status_command i3status | ~/scripts/status/status.pl
@@ -223,6 +227,8 @@ bar {
     #urgent_workspace   #2f343a #900000 #ffffff
   }
 }
+#exec /usr/local/lib/python2.7/dist-packages/powerline/bindings/bar/powerline-bar.py --i3 | bar
+
 #Startup things...
 exec parcellite
 #exec volti

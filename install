@@ -11,14 +11,15 @@ cd ~/bin
 for x in `ls ~/dotfiles/bin`; do
   ln -s ~/dotfiles/bin/"$x" "$x"
 done
-sudo ln -s ~/src/opensource/scalariform/cli/target/scala-2.10/cli-assembly-0.1.6.jar scalariform.jar
+sudo ln -s ~/src/opensource/daniel-trinh/scalariform/cli/target/scala-2.10/cli-assembly-0.1.6.jar scalariform.jar
 sudo chmod 775 scalariform.jar
 
 cd /etc/bash_completion.d
-sudo ln -s ~/src/opensource/bd/bash_completion.d/bd bd
+sudo ln -s ~/src/opensource/vigneshwaranr/bd/bash_completion.d/bd bd
+sudo ln -s ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ~/.dir_colors
 
 
-#In /home/james/src/opensource/fzf/shell/key-bindings.bash, change:
+#In /home/james/src/opensource/junegunn/fzf/shell/key-bindings.bash, change:
 
   ## CTRL-R - Paste the selected command from history into the command line
   #bind '"\C-r": " \C-e\C-u$(__fzf_history__)\e\C-e\e^\er"'
