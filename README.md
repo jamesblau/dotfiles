@@ -1,10 +1,6 @@
 # Dotfiles
 
-- &c
-
-# SYNOPSIS
-
-- &c
+This are my dotfiles, ~/bin scripts, etc.
 
 # SEE ALSO
 
