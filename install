@@ -1,7 +1,15 @@
 #!/bin/bash -x
 
-cd ~/dotfiles
-stow ag bash bin dir_colors git i3 inputrc nvim python tmux vim
+cd ~
+[ -L ~/bin ] && rm ~/bin
+ln -s ~/dotfiles/bin bin
+for dir in ag bash dir_colors git i3 inputrc nvim python tmux vim; do
+  for path in ~/dotfiles/"${dir}"/*; do
+    file_name=`basename "${path}"`
+    [ -L ."${file_name}" ] && rm ."${file_name}"
+    ln -s "${path}" ."${file_name}"
+  done
+done
 
 cd /etc/bash_completion.d
 sudo ln -s ~/src/opensource/vigneshwaranr/bd/bash_completion.d/bd bd
@@ -41,3 +49,4 @@ sudo ln -s ~/src/opensource/vigneshwaranr/bd/bash_completion.d/bd bd
   ## CTRL-] - cd into the selected directory
   #bind '"\C-]": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
   #bind -m vi-command '"\C-]": "i\C-]"'
+
