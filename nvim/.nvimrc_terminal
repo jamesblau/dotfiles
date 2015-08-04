@@ -1,0 +1,35 @@
+let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
+"let g:james_no_hud = 1
+"let g:james_minimal_plugins = 1
+source ~/.nvimrc
+
+"tnoremap <C-\><C-D> <C-\><C-n>:q<CR>
+
+"autocmd BufCreate * call CloseIfNoNamedBuffers()
+
+"function! CountNamedBuffers()
+  "let num_bufs = 0
+  "let idx = 1
+  "while idx <= bufnr("$")
+    "if bufname(idx) != ""
+      "let num_bufs += 1
+    "endif
+    "let idx += 1
+  "endwhile
+  "return num_bufs
+"endfunction
+"let g:counted_listed_buffers_yet=0
+
+"" Close all open buffers on entering a window if the only
+"" buffer that's left is the NERDTree buffer
+"function! CloseIfNoNamedBuffers()
+  "if g:counted_listed_buffers_yet > 3
+    "if bufnr('$') > 1
+      "if CountNamedBuffers() == 0
+        "q
+      "endif
+    "endif
+  "else
+    "let g:counted_listed_buffers_yet+=1
+  "endif
+"endfunction

@@ -1,5 +1,0 @@
-let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
-let g:james_no_hud = 1
-"let g:james_minimal_plugins = 1
-source ~/.nvimrc
-"tnoremap <C-D> <C-\><C-n>:q<CR>

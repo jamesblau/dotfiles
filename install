@@ -1,23 +1,10 @@
 #!/bin/bash -x
 
-cd ~
-LIST=( agignore bash_prompt bashrc gitconfig i3 i3status.conf inputrc nvimrc nvimrc_terminal pythonrc.py tmux.conf vimrc )
-for x in "${LIST[@]}"; do
-  [[ -L "$x" ]] || ln -s ~/dotfiles/"$x" ."$x"
-done
-
-mkdir -p ~/bin
-cd ~/bin
-for x in `ls ~/dotfiles/bin`; do
-  ln -s ~/dotfiles/bin/"$x" "$x"
-done
-sudo ln -s ~/src/opensource/daniel-trinh/scalariform/cli/target/scala-2.10/cli-assembly-0.1.6.jar scalariform.jar
-sudo chmod 775 scalariform.jar
+cd ~/dotfiles
+stow ag bash bin dir_colors git i3 inputrc nvim python tmux vim
 
 cd /etc/bash_completion.d
 sudo ln -s ~/src/opensource/vigneshwaranr/bd/bash_completion.d/bd bd
-sudo ln -s ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ~/.dir_colors
-
 
 #In /home/james/src/opensource/junegunn/fzf/shell/key-bindings.bash, change:
 

@@ -27,9 +27,58 @@ call plug#begin('~/.vim/plugged')
 " }}}
 
 " Run always {{{
-  Plug 'vim-scripts/Transparent'
-  Plug 'junegunn/seoul256.vim'
-  Plug 'jnurmine/Zenburn'
+  " Plug 'jnurmine/Zenburn' {{{
+    function! James_Zenburn()
+      let g:zenburn_old_Visual=1
+      let g:zenburn_alternate_Visual=1
+      let g:zenburn_high_Contrast=1
+      colorscheme zenburn
+      "hi NonText       guifg=#cc9393 gui=bold                ctermfg=174
+      hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+      hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+    endfunction
+    nnoremap <Leader><C-C>z :call James_Zenburn()<CR>
+    Plug 'jnurmine/Zenburn'
+  " }}}
+  " Plug 'junegunn/seoul256.vim' {{{
+    let g:seoul256_background = 233
+    Plug 'junegunn/seoul256.vim'
+  " }}}
+  " Plug 'vim-scripts/Transparent' {{{
+    function! James_Transparent()
+      colorscheme transparent
+      hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
+      hi SignColumn         ctermfg=Yellow        ctermbg=None
+      hi LineNr             ctermfg=Yellow        ctermbg=None
+      hi CursorLineNr       ctermfg=Yellow        ctermbg=None
+      hi Normal             ctermfg=White
+      hi Search             ctermfg=White         ctermbg=DarkRed
+      hi Visual             ctermfg=DarkRed       ctermbg=White
+      hi vimLineComment     ctermfg=LightBlue
+      hi NonText            ctermfg=DarkRed
+      hi DiffAdd            ctermfg=Yellow        ctermbg=None
+      hi DiffChange         ctermfg=Yellow        ctermbg=None
+      hi DiffDelete         ctermfg=Yellow        ctermbg=None
+      hi DiffText           ctermfg=None          ctermbg=DarkGray
+      hi GitGutterAdd                             ctermbg=None
+      hi GitGutterChange                          ctermbg=None
+      hi GitGutterChangeDeleteDefault             ctermbg=None
+      hi GitGutterChangeLineDefault               ctermbg=None
+      hi GitGutterDeleteLine                      ctermbg=None
+      hi GitGutterAddDefault                      ctermbg=None
+      hi GitGutterChangeDefault                   ctermbg=None
+      hi GitGutterChangeDeleteLine                ctermbg=None
+      hi GitGutterDelete                          ctermbg=None
+      hi GitGutterAddLine                         ctermbg=None
+      hi GitGutterChangeDelete                    ctermbg=None
+      hi GitGutterChangeLine                      ctermbg=None
+      hi GitGutterDeleteDefault                   ctermbg=None
+      hi shDoubleQuote                            ctermbg=None
+      hi MatchParen          cterm=undercurl,bold
+    endfunction
+    nnoremap <Leader><C-C>t :call James_Transparent()<CR>
+    Plug 'vim-scripts/Transparent'
+  " }}}
 " }}}
 
 if !exists('g:james_minimal_plugins')
@@ -75,6 +124,54 @@ if !exists('g:james_minimal_plugins')
       au! BufNewFile,BufRead * RainbowParentheses
       Plug 'junegunn/rainbow_parentheses.vim'
     " }}}
+    " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } {{{
+      "let g:goyo_width=100
+      "let g:goyo_height=100
+      "let g:goyo_linenr=0
+      nnoremap <Leader><C-G> :Goyo<CR>
+      Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+    " }}}
+    " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' } {{{
+      function! LimelightToggle()
+        if !exists('g:james_limelight')
+          let g:james_limelight=1
+          Limelight
+        else
+          if g:james_limelight == 1
+            let g:james_limelight=0
+            Limelight!
+          else
+            let g:james_limelight=1
+            Limelight
+          endif
+        endif
+      endfunction
+      nnoremap <Leader><C-L> :call LimelightToggle()<CR>
+      " Color name (:help cterm-colors) or ANSI code
+      let g:limelight_conceal_ctermfg = 'gray'
+      let g:limelight_conceal_ctermfg = 240
+
+      " Color name (:help gui-colors) or RGB color
+      let g:limelight_conceal_guifg = 'DarkGray'
+      let g:limelight_conceal_guifg = '#777777'
+
+      " Default: 0.5
+      let g:limelight_default_coefficient = 0.7
+
+      " Number of preceding/following paragraphs to include (default: 0)
+      let g:limelight_paragraph_span = 1
+
+      " Beginning/end of paragraph
+      "   When there's no empty line between the paragraphs
+      "   and each paragraph starts with indentation
+      let g:limelight_bop = '^\s'
+      let g:limelight_eop = '\ze\n^\s'
+
+      " Highlighting priority (default: 10)
+      "   Set it to -1 not to overrule hlsearch
+      let g:limelight_priority = -1
+      Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+    " }}}
   " }}}
 
   " Buffers / windows / tabs / sessions {{{
@@ -104,6 +201,7 @@ if !exists('g:james_minimal_plugins')
 
   " Completion / fuzzy find {{{
     Plug 'goldfeld/ctrlr.vim'
+    Plug 'gorkunov/smartgf.vim'
     Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
     " Plug 'kien/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
@@ -158,6 +256,7 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Core {{{
+    Plug 'cohama/lexima.vim'
     " Plug 'justinmk/vim-sneak' {{{
       " Don't lose S to vim-surround
       let g:sneak#streak = 1
@@ -279,6 +378,7 @@ if !exists('g:james_minimal_plugins')
       au! BufNewFile,BufRead Drakefile* setl ft=drake
       Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' }
     " }}}
+    Plug 'tpope/vim-ragtag'
     Plug 't9md/vim-chef'
   " }}}
 

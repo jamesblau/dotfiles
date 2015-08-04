@@ -4,6 +4,7 @@ set nocompatible
 "let g:james_minimal_plugins=1
 let mapleader = ","
 nnoremap \ ,
+nnoremap <Leader><C-S> :source ~/.vimrc<CR>
 
 set background=dark
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
@@ -47,7 +48,10 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
 set winminheight=0              " Windows can be 0 lines high
 
 " Use local bundles if available
-source /home/james/dotfiles/vimrc.bundles
+source ~/.vimrc.bundles
+
+" Color stuff!
+call James_Zenburn()
 
 " Enforce alt consistency between vim and nvim
 if !has('nvim')
@@ -61,7 +65,7 @@ endif
 
 " Override vim-sensible
 runtime! plugin/sensible.vim
-set listchars=tab:›\ ,trail:•,extends:>,precedes:<,nbsp:⚪
+set listchars=tab:›\ ,trail:•,extends:❱,precedes:❰,nbsp:⚪
 set notimeout nottimeout
 set nrformats=
 set scrolloff=3
@@ -124,9 +128,14 @@ augroup resCur
   au! BufWinEnter * call ResCur()
 augroup END
 
-" Break lines
-nmap <Leader>m i<CR><C-C><F5>
-nmap <Leader>M a<CR><C-C><F5>
+function! RepeatChar(char, count)
+  return repeat(a:char, a:count)
+endfunction
+" Insert single character
+nnoremap <expr> <Space>         ":<C-U>exec 'normal i'.RepeatChar(nr2char(getchar()), v:count1)<CR>"
+nnoremap <expr> <Leader><Space> ":<C-U>exec 'normal a'.RepeatChar(nr2char(getchar()), v:count1)<CR>"
+nmap <Space><CR>            i<CR><C-C><F5>
+nmap <Leader><Space><CR>    a<CR><C-C><F5>
 
 " Yank and Pasting stuff
 cnoremap <C-T> <C-R>
@@ -291,8 +300,13 @@ nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 nnoremap <Leader>sz :set foldmethod=manual<CR>
 
 " Break-lines stuff
-let g:james_showbreak=repeat('>',2)
+let g:james_showbreak="↳↳"
 let &showbreak=g:james_showbreak
+if v:version > 703 && has('patch338')
+  set linebreak
+  set breakindent
+  set breakindentopt=min:0,shift:-2, sbr:↳↳
+endif
 nnoremap <Leader>sb :call ShowBreakToggle()<CR>
 
 " Add/subtract stuff
@@ -549,7 +563,8 @@ nnoremap <Leader>BF yyo" }}}<C-C>k>>PI" <C-C>A {{{<C-C>j_
 "Remove fold
 
 " Remove whitespace
-nnoremap <silent> <F5> mm:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>'m
+nnoremap <silent> <F5> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
+vnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 
 " Emacs stuff!
 inoremap <C-F> <right>
@@ -570,45 +585,6 @@ nnoremap <Leader>K K
 " Execute viml
 nnoremap <Leader>e. :execute getline(".")<CR>
 nnoremap <Leader>er : <C-R>"<CR>
-
-" Color stuff!
-"let g:seoul256_background = 233
-"colorscheme seoul256
-let g:zenburn_old_Visual=1
-let g:zenburn_alternate_Visual=1
-let g:zenburn_high_Contrast=1
-colorscheme zenburn
-hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-"colorscheme transparent
-"hi CursorLine         ctermfg=White         ctermbg=DarkRed     cterm=Bold
-"hi SignColumn         ctermfg=Yellow        ctermbg=None
-"hi LineNr             ctermfg=Yellow        ctermbg=None
-"hi CursorLineNr       ctermfg=Yellow        ctermbg=None
-"hi Normal             ctermfg=White
-"hi Search             ctermfg=White         ctermbg=DarkRed
-"hi Visual             ctermfg=DarkRed       ctermbg=White
-"hi vimLineComment     ctermfg=LightBlue
-"hi NonText            ctermfg=DarkRed
-"hi DiffAdd            ctermfg=Yellow        ctermbg=None
-"hi DiffChange         ctermfg=Yellow        ctermbg=None
-"hi DiffDelete         ctermfg=Yellow        ctermbg=None
-"hi DiffText           ctermfg=None          ctermbg=DarkGray
-"hi GitGutterAdd                             ctermbg=None
-"hi GitGutterChange                          ctermbg=None
-"hi GitGutterChangeDeleteDefault             ctermbg=None
-"hi GitGutterChangeLineDefault               ctermbg=None
-"hi GitGutterDeleteLine                      ctermbg=None
-"hi GitGutterAddDefault                      ctermbg=None
-"hi GitGutterChangeDefault                   ctermbg=None
-"hi GitGutterChangeDeleteLine                ctermbg=None
-"hi GitGutterDelete                          ctermbg=None
-"hi GitGutterAddLine                         ctermbg=None
-"hi GitGutterChangeDelete                    ctermbg=None
-"hi GitGutterChangeLine                      ctermbg=None
-"hi GitGutterDeleteDefault                   ctermbg=None
-"hi shDoubleQuote                            ctermbg=None
-"hi MatchParen          cterm=undercurl,bold
 
 " Check coloring
 map <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
@@ -651,8 +627,17 @@ nnoremap dOL :diffg LOCAL<CR>
 nnoremap dU :diffupdate<CR>
 
 " Diff stuff!
+function! DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+
 nnoremap <Leader>dt :windo diffo \| windo difft<CR>
 nnoremap <Leader>do :windo diffo<CR>
+nnoremap <Leader>ds :call DiffWithSaved()<CR>
 
 " Scalding stuff
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
@@ -715,6 +700,7 @@ nmap <Leader>t<Space> :set ft= syn= formatprg= <CR>
 " TODO: Smaller buffer numbers: instead of creating a new buffer sometimes, open the lowest-numbered empty hidden buffer.
 " TODO: Function to line up word under cursor with <count>th instance of same word on line above or below.
 " TODO: <Leader>L<Something> for :arglocal uses
+" TODO: Remove <Leader>s options that duplicate unimpaired functionality? I do prefer mine...
 
 " TODO: Just a reminder to namespace mappings...
 "autocmd FileType unite call s:unite_keymaps()
