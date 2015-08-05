@@ -8,9 +8,9 @@
 [merge]
 	tool = vimdiff
 [difftool "vimdiff"]
-  cmd = nvim -d $LOCAL $REMOTE -c '$wincmd w'
+  cmd = ~/bin/myvim -d $LOCAL $REMOTE -c '$wincmd w'
 [mergetool "vimdiff"]
-  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  cmd = ~/bin/myvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [mergetool]
 	prompt = false
 	keepBackup = false

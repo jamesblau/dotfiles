@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -x /usr/local/bin/nvim ]; then
+  nvim "$@"
+else
+  vim "$@"
+fi
