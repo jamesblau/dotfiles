@@ -109,7 +109,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color'
     alias grep='grep --color'
 fi
-eval $( dircolors -b ~/.dir_colors )
+[ -f ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ] && eval $( dircolors -b ~/src/opensource/ivoarch/dircolors-zenburn/dircolors )
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

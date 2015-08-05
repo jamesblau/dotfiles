@@ -201,7 +201,11 @@ if !exists('g:james_minimal_plugins')
 
   " Completion / fuzzy find {{{
     Plug 'goldfeld/ctrlr.vim'
-    Plug 'gorkunov/smartgf.vim'
+    " Plug 'gorkunov/smartgf.vim' if 704 {{{
+      if v:version >= 704
+        Plug 'gorkunov/smartgf.vim'
+      endif
+    " }}}
     Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
     " Plug 'kien/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
@@ -234,10 +238,12 @@ if !exists('g:james_minimal_plugins')
         "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
       Plug 'kien/ctrlp.vim'
     " }}}
-    " Plug 'majutsushi/tagbar' {{{
-      let g:tagbar_autoclose=1
-      nnoremap <Leader><C-]> :TagbarToggle<CR>
-      Plug 'majutsushi/tagbar'
+    " Plug 'majutsushi/tagbar' if 704 {{{
+      if v:version >= 704
+        let g:tagbar_autoclose=1
+        nnoremap <Leader><C-]> :TagbarToggle<CR>
+        Plug 'majutsushi/tagbar'
+      endif
     " }}}
     " Plug 'rking/ag.vim' {{{
       let g:ag_working_path_mode="r"
@@ -256,7 +262,11 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Core {{{
-    Plug 'cohama/lexima.vim'
+    " Plug 'cohama/lexima.vim' if 704 {{{
+      if v:version >= 704
+        Plug 'cohama/lexima.vim'
+      endif
+    " }}}
     " Plug 'justinmk/vim-sneak' {{{
       " Don't lose S to vim-surround
       let g:sneak#streak = 1
@@ -287,7 +297,11 @@ if !exists('g:james_minimal_plugins')
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-unimpaired'
-    Plug 'Shougo/vimproc.vim', { 'do': 'make' } | Plug 'Shougo/vimshell.vim'
+    " Plug 'Shougo/vimproc.vim', { 'do': 'make' } | Plug 'Shougo/vimshell.vim' if 704 {{{
+      if v:version >= 704
+        Plug 'Shougo/vimproc.vim', { 'do': 'make' } | Plug 'Shougo/vimshell.vim'
+      endif
+    " }}}
   " }}}
 
   " Fun {{{
