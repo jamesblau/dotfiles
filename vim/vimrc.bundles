@@ -334,11 +334,13 @@ if !exists('g:james_minimal_plugins')
       "nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<CR>
       Plug 'christoomey/vim-tmux-navigator'
     " }}}
-    " Plug 'scrooloose/syntastic' {{{
-      let g:syntastic_mode_map = {'mode': 'passive'}
-      nnoremap <Leader>sy :SyntasticToggleMode<CR>
-      nnoremap <Leader>ys :SyntasticCheck<CR>
-      Plug 'scrooloose/syntastic'
+    " Plug 'scrooloose/syntastic' if 704 {{{
+      if v:version >= 704
+        let g:syntastic_mode_map = {'mode': 'passive'}
+        nnoremap <Leader>sy :SyntasticToggleMode<CR>
+        nnoremap <Leader>ys :SyntasticCheck<CR>
+        Plug 'scrooloose/syntastic'
+      endif
     " }}}
     " Plug 'tpope/vim-fugitive' {{{
       nnoremap <silent> <Leader>gs :Gstatus<CR>
