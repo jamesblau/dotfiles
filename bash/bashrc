@@ -45,6 +45,13 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# Add command to history
+bind -m vi-insert  '"\C-q":  "\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
+bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
+
+# Expand history in-line with space
+bind Space:magic-space
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100000
 HISTFILESIZE=200000
@@ -147,7 +154,11 @@ alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
 
 #Choose vim
 if [ -x /usr/local/bin/nvim ]; then
-  my_vim='nvim'
+  if [ "$james_in_neovim" == 1 ]; then
+    my_vim='nvim-terminal-edit.py'
+  else
+    my_vim='nvim'
+  fi
 else
   my_vim='vim'
 fi
@@ -167,8 +178,7 @@ alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s|.*\.||'"'"' | sor
 
 function loop () { while true; do clear; $@; read; done; }
 
-function myip () { if [ $# -eq 0 ]; then set -- "tun0"; fi; ifconfig "$1" | grep inet | head -n 1 | cut -d ":" -f 2 | cut -d " " -f 1; }
-function xip () { myip $1 | tee /dev/tty | xclip; }
+alias myip='wget -qO- http://ipecho.net/plain | tee /dev/tty | xclip; echo'
 
 export PYTHONSTARTUP=~/.pythonrc.py
 
@@ -210,10 +220,6 @@ bind -m vi-insert "\C-k.":
 bind -m vi-insert "\C-o.":
 #bind -m vi-insert "kj":vi-movement-mode forward-char
 
-# Add command to history
-bind -m vi-insert  '"\C-q":  "\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
-bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
-
 #This stuff available in vim, etc
 #BASH_ENV="~/.bash_ni"
 
@@ -237,9 +243,9 @@ function quieter () { (nohup "$@" > /dev/null &); exit; }
 alias A='echo A'
 function assert () {
   if [ "$1" = -v ]; then
-    ("$@:2") && echo OK || echo NOPE
+    ("$@:2") && echo YEAH TOTALLY || echo FAT CHANCE
   else
-    ("$@" &>/dev/null) && echo OK || echo NOPE
+    ("$@" &>/dev/null) && echo YEAH TOTALLY || echo FAT CHANCE
   fi
 }
 

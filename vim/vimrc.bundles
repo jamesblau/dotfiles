@@ -110,7 +110,7 @@ if !exists('g:james_minimal_plugins')
     " }}}
     Plug 'osyo-manga/vim-over'
     Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev', 'CycleColorRefresh'] }
-    " Plug 'nathanaelkane/vim-indent-guides' { 'on': 'IndentGuidesToggle' } {{{
+    " Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' } {{{
       let g:indent_guides_enable_on_vim_startup = 0
       let g:indent_guides_default_mapping = 0
       let g:indent_guides_start_level = 2
@@ -118,11 +118,9 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>si :IndentGuidesToggle<CR>
       Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
     " }}}
-    " Plug 'junegunn/rainbow_parentheses.vim' {{{
-      let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-      "let g:rainbow#blacklist = [15, 121, 159]
-      au! BufNewFile,BufRead * RainbowParentheses
-      Plug 'junegunn/rainbow_parentheses.vim'
+    " Plug 'luochen1990/rainbow' {{{
+      let g:rainbow_active = 1
+      Plug 'luochen1990/rainbow'
     " }}}
     " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } {{{
       "let g:goyo_width=100
@@ -172,6 +170,7 @@ if !exists('g:james_minimal_plugins')
       let g:limelight_priority = -1
       Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
     " }}}
+    Plug 'vasconcelloslf/vim-interestingwords'
   " }}}
 
   " Buffers / windows / tabs / sessions {{{
@@ -206,7 +205,14 @@ if !exists('g:james_minimal_plugins')
         Plug 'gorkunov/smartgf.vim'
       endif
     " }}}
-    Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
+    " Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' } {{{
+      command! FZFMru call fzf#run({
+      \  'source':  v:oldfiles,
+      \  'sink':    'e',
+      \  'options': '-m -x +s' })
+      Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
+      nnoremap <Leader>eo :FZFMru<CR>
+    " }}}
     " Plug 'kien/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
       "let g:ctrlp_use_caching = 10000
@@ -263,6 +269,7 @@ if !exists('g:james_minimal_plugins')
 
   " Core {{{
     " Plug 'cohama/lexima.vim' if 704 {{{
+      let g:lexima_no_default_rules=1
       if v:version >= 704
         Plug 'cohama/lexima.vim'
       endif
@@ -273,7 +280,7 @@ if !exists('g:james_minimal_plugins')
       xmap S <Plug>Sneak_S
       Plug 'justinmk/vim-sneak'
     " }}}
-    " Plug 'mbbill/undotree' { 'on': 'UndotreeToggle' } {{{
+    " Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' } {{{
       let g:undotree_SetFocusWhenToggle=1
       nnoremap <Leader>u :UndotreeToggle<CR>
       Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -356,6 +363,18 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Language-specific {{{
+    " Plug 'chrisbra/csv.vim', { 'for': 'csv' } {{{
+      au! BufNewFile,BufRead *.bsv set filetype=csv
+      nnoremap <Leader>qw :WhatColumn<CR>
+      nnoremap <Leader>qW :WhatColumn!<CR>
+      nnoremap <Leader>qc :NrColumns<CR>
+      nnoremap <Leader>qs :SearchInColumn<Space>
+      nnoremap <Leader>qh :HiColumn<CR>
+      nnoremap <Leader>qH :HiColumn!<CR>
+      nmap <Leader>qd :let g:csv_delim=''<C-B>
+      nnoremap <silent> <Leader>qS :CSVTabularize<CR><C-W>T:above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor buftype=nofile<CR>ggVjjd<C-W>kVp<C-W>j
+      Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+    " }}}
     Plug 'derekwyatt/vim-sbt', { 'for': 'sbt.scala' }
     " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
       let g:scala_use_default_keymappings = 0
@@ -377,25 +396,13 @@ if !exists('g:james_minimal_plugins')
       au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
-    " Plug 'chrisbra/csv.vim', { 'for': 'csv' } {{{
-      au! BufNewFile,BufRead *.bsv set filetype=csv
-      nnoremap <Leader>qw :WhatColumn<CR>
-      nnoremap <Leader>qW :WhatColumn!<CR>
-      nnoremap <Leader>qc :NrColumns<CR>
-      nnoremap <Leader>qs :SearchInColumn<Space>
-      nnoremap <Leader>qh :HiColumn<CR>
-      nnoremap <Leader>qH :HiColumn!<CR>
-      nmap <Leader>qd :let g:csv_delim=''<C-B>
-      nnoremap <silent> <Leader>qS :CSVTabularize<CR><C-W>T:above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor buftype=nofile<CR>ggVjjd<C-W>kVp<C-W>j
-      Plug 'chrisbra/csv.vim', { 'for': 'csv' }
-    " }}}
     Plug 'elzr/vim-json', { 'for': 'json' }
     " Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' } {{{
       au! BufNewFile,BufRead Drakefile* setl ft=drake
       Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' }
     " }}}
-    Plug 'tpope/vim-ragtag'
     Plug 't9md/vim-chef'
+    Plug 'tpope/vim-ragtag'
   " }}}
 
   " Registers {{{
@@ -405,14 +412,6 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>sr :RegbufOpen<CR>
       Plug 'tyru/regbuf.vim'
       "autocmd regbuf BufWinLeave <buffer> bw regbuf:preview
-    " }}}
-    " Plug 'maxbrunsfeld/vim-yankstack' {{{
-      let g:yankstack_map_keys = 0
-      nmap [w <Plug>yankstack_substitute_older_paste
-      xmap [w <Plug>yankstack_substitute_older_paste
-      nmap ]w <Plug>yankstack_substitute_newer_paste
-      xmap ]w <Plug>yankstack_substitute_newer_paste
-      Plug 'maxbrunsfeld/vim-yankstack'
     " }}}
   " }}}
 
@@ -441,15 +440,14 @@ if !exists('g:james_minimal_plugins')
       " Largely defaults below
       nmap ds  <Plug>Dsurround
       nmap cs  <Plug>Csurround
+      nmap cS  <Plug>CSurround
       nmap ys  <Plug>Ysurround
       nmap yS  <Plug>YSurround
       nmap yss <Plug>Yssurround
-      nmap ySs <Plug>YSsurround
       nmap ySS <Plug>YSsurround
       xmap gS  <Plug>VgSurround
-      imap <C-S> <Plug>Isurround
-      imap <C-G>s <Plug>Isurround
-      imap <C-G>S <Plug>ISurround
+      imap <A-s> <Plug>Isurround
+      imap <A-S> <Plug>ISurround
       Plug 'tpope/vim-surround'
     " }}}
   " }}}
@@ -473,6 +471,7 @@ if !exists('g:james_minimal_plugins')
     " Plug 'terryma/vim-multiple-cursors' {{{
       let g:multi_cursor_exit_from_insert_mode=0
       let g:multi_cursor_exit_from_visual_mode=0
+      nnoremap <C-N><C-A> :MultipleCursorsFind <C-R>=expand("<cword>")<CR><CR>
       Plug 'terryma/vim-multiple-cursors'
     " }}}
     Plug 'vim-scripts/visSum.vim'

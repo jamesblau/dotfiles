@@ -1,10 +1,12 @@
 let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
 "let g:james_no_hud = 1
 "let g:james_minimal_plugins = 1
+let g:terminal_scrollback_buffer_size=5000
 source ~/.nvimrc
 
 "tnoremap <C-\><C-D> <C-\><C-n>:q<CR>
 
+"What's the correct way to do this...
 "autocmd BufCreate * call CloseIfNoNamedBuffers()
 
 "function! CountNamedBuffers()

@@ -46,6 +46,7 @@ set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
+set title
 
 " Use local bundles if available
 source ~/.vimrc.bundles
@@ -138,6 +139,7 @@ nmap <Space><CR>            i<CR><C-C><F5>
 nmap <Leader><Space><CR>    a<CR><C-C><F5>
 
 " Yank and Pasting stuff
+nmap Y y$
 cnoremap <C-T> <C-R>
 nnoremap <Leader>p <Nop>
 nnoremap <Leader>pl mm$p`m
@@ -255,6 +257,28 @@ function! ShowBreakToggle()
   endif
 endfunction
 
+function! LineBreakToggle()
+  if(&linebreak == 1)
+    set nolinebreak
+  else
+    set linebreak
+  endif
+endfunction
+
+function! LeximaToggle()
+  if(g:lexima_no_default_rules == 1)
+    let g:lexima_no_default_rules=0
+    call lexima#set_default_rules()
+    let b:lexima_disabled=0
+  else
+    if(b:lexima_disabled == 1)
+      let b:lexima_disabled=0
+    else
+      let b:lexima_disabled=1
+    endif
+  endif
+endfunction
+
 function! TabSpaces()
   let l:char=nr2char(getchar())
   if(l:char == 'r')
@@ -287,6 +311,9 @@ nnoremap <Leader>sh :call HeightToggle()<CR>
 nnoremap <Leader>sS :call ShcfToggle()<CR>
 nnoremap <Leader>sd :call DiffWToggle()<CR>
 nmap     <Leader>sD :call DiffWToggleRegex("")<C-B><C-B>
+nnoremap <Leader>sb :call ShowBreakToggle()<CR>
+nnoremap <Leader>sB :call LineBreakToggle()<CR>
+nnoremap <Leader>sa :call LeximaToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
@@ -303,11 +330,9 @@ nnoremap <Leader>sz :set foldmethod=manual<CR>
 let g:james_showbreak="↳↳"
 let &showbreak=g:james_showbreak
 if v:version > 703 && has('patch338')
-  set linebreak
   set breakindent
   set breakindentopt=min:0,shift:-2, sbr:↳↳
 endif
-nnoremap <Leader>sb :call ShowBreakToggle()<CR>
 
 " Add/subtract stuff
 function! AddSubtract(char, back)
@@ -579,8 +604,6 @@ cnoremap <A-f> <S-Right>
 " No accidental Ex-mode or keyword-lookup
 nnoremap Q gggqG
 nnoremap <Leader>Q Q
-nnoremap K <Nop>
-nnoremap <Leader>K K
 
 " Execute viml
 nnoremap <Leader>e. :execute getline(".")<CR>
@@ -668,6 +691,10 @@ cmap <Down> <Nop>
 cmap <S-Down> <Nop>
 cmap <C-Down> <Nop>
 
+" Undo big insert-mode deletes
+inoremap <C-W> <C-C>a<C-W>
+inoremap <C-U> <C-C>a<C-U>
+
 " Fast horizontal navigation
 nnoremap <A-H> zH
 nnoremap <A-L> zL
@@ -695,7 +722,8 @@ endfunction
 nmap <Leader>tc :set ft=csv syn=csv<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
-nmap <Leader>t<Space> :set ft= syn= formatprg= <CR>
+nmap <Leader>t<Space> :set ft= syn= formatprg= linebreak showbreak= wrap<CR>
+nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbreak nowrap<CR>
 
 " TODO: Smaller buffer numbers: instead of creating a new buffer sometimes, open the lowest-numbered empty hidden buffer.
 " TODO: Function to line up word under cursor with <count>th instance of same word on line above or below.
@@ -718,14 +746,4 @@ nnoremap <Leader>wn :w! /dev/null<CR>
 " Redraw mapping
 nnoremap <Leader><C-R> :redraw<CR>
 
-" Once again protecting sneak...this doesn't seem to work in vimrc.bundles
-if exists('g:yankstack_map_keys')
-  call yankstack#setup()
-  nmap s <Plug>Sneak_s
-  nmap S <Plug>Sneak_S
-  vmap s <Plug>Sneak_s
-  vmap S <Plug>Sneak_S
-  nmap Y y$
-endif
-
-au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2
+au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2 | let b:lexima_disabled=1

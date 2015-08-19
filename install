@@ -3,7 +3,16 @@
 cd ~
 [ -L ~/bin ] && rm ~/bin
 ln -s ~/dotfiles/bin bin
-for dir in ag bash dir_colors git i3 inputrc nvim python tmux vim; do
+
+__deploy=( bash git inputrc python tmux vim )
+
+if [ -e ~/.not_a_server ]
+  __deploy+=( ag dir_colors i3 nvim )
+else
+  echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."
+fi
+
+for dir in "${__deploy[@]}"; do
   for path in ~/dotfiles/"${dir}"/*; do
     file_name=`basename "${path}"`
     [ -L ."${file_name}" ] && rm ."${file_name}"
