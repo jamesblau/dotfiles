@@ -471,7 +471,7 @@ if !exists('g:james_minimal_plugins')
     " Plug 'terryma/vim-multiple-cursors' {{{
       let g:multi_cursor_exit_from_insert_mode=0
       let g:multi_cursor_exit_from_visual_mode=0
-      nnoremap <C-N><C-A> :MultipleCursorsFind <C-R>=expand("<cword>")<CR><CR>
+      nnoremap <C-Q><C-N> :MultipleCursorsFind \<<C-R>=expand("<cword>")<CR>\><CR>
       Plug 'terryma/vim-multiple-cursors'
     " }}}
     Plug 'vim-scripts/visSum.vim'
