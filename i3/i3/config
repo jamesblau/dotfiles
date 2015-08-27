@@ -314,7 +314,7 @@ bar {
 #exec /usr/local/lib/python2.7/dist-packages/powerline/bindings/bar/powerline-bar.py --i3 | bar
 
 #Startup things...
-exec parcellite
+exec clipit
 exec feh --bg-scale deep_dream_landscape.jpg
 #exec volti
 #exec udisks-glue

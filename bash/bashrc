@@ -231,6 +231,8 @@ export PATH="$PATH:$HOME/bin:$HOME/tresata"
 #Sbt console readline survives Ctrl-Z
 alias sbt-console='rlwrap sbt console -Xnojline'
 alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
+alias sbt-testConsole='rlwrap sbt test:console -Xnojline'
+alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 
 #Color ag
 alias cag='ag --color'
