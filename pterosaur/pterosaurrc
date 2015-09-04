@@ -1,0 +1,5 @@
+source ~/.vimrc
+
+inoremap <Tab> <Esc><Tab>
+"nnoremap <C-a> <Esc>gg0vG$
+"inoremap <C-a> <Esc>gg0vG$

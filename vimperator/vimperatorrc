@@ -1,0 +1,28 @@
+set gui=nonavigation
+
+set hintchars=ifjklasdweuocvbnm
+highlight Hint z-index:5000; font-family:monospace; font-size:15px; color:white; background-color:blue; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 1px 0px 1px; position:absolute; text-transform: uppercase;
+
+noremap j 10<C-e>
+noremap k 10<C-y>
+
+noremap J gT
+noremap K gt
+
+noremap ,u :undo<Space>
+
+map <C-j> :tabmove! -1<CR>
+map <C-k> :tabmove! +1<CR>
+
+map ,g :open<space>google<space>
+map ,G :tabopen<space>google<space>
+map ,d :open<space>duckduckgo<space>
+map ,D :tabopen<space>duckduckgo<space>
+map ,w :open<space>wikipedia<space>
+map ,W :tabopen<space>wikipedia<space>
+
+map ,r :tabopen<space>reddit.com<CR>
+map ,s :tabopen<space>reddit.com/r/ssbpm<CR>
+
+" Hack: refocus on "Save" button in Reddit before hitting enter
+nnoremap <C-CR> <Tab><S-Tab><CR>
