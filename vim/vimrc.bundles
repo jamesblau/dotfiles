@@ -1,4 +1,4 @@
-" vim: set sw=2 ts=2 sts=2 expandtab ft=vim
+" vim: sw=2 ts=2 sts=2 expandtab ft=vim
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -108,7 +108,6 @@ if !exists('g:james_minimal_plugins')
       endif
       Plug 'bling/vim-airline'
     " }}}
-    Plug 'osyo-manga/vim-over'
     Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev', 'CycleColorRefresh'] }
     " Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' } {{{
       let g:indent_guides_enable_on_vim_startup = 0

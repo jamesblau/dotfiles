@@ -182,8 +182,17 @@ alias myip='wget -qO- http://ipecho.net/plain | tee /dev/tty | xclip; echo'
 
 export PYTHONSTARTUP=~/.pythonrc.py
 
-alias password="shuf /usr/share/dict/words | grep -v '[^a-z]' | grep '....' | grep -v '.....' | grep -v sS | sed -e 's/^./\U&/g' | head -n 3 | awk 'ORS=\" \"' | sed 's/\s//g; s/$/\n/'"
-alias passwords="while true; do clear; password; read; done"
+function password () {
+  (
+    local words=${1:-4};
+    local minLetters=${2:-3};
+    local maxLetters=${3:-10};
+    grep "^[a-z]\{$minLetters,$maxLetters\}$" /usr/share/dict/words | shuf -n $words | sed -e 's/^./\U&/g' | tr -d '\n';
+    echo -n '!1'
+  ) | tee /dev/tty | xclip;
+  echo;
+}
+function passwords () { while true; do clear; password $@; read; done; }
 
 #Use keychain
 alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa)'
@@ -228,7 +237,8 @@ alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons f
 
 export PATH="$PATH:$HOME/bin:$HOME/tresata"
 
-#Sbt console readline survives Ctrl-Z
+#Console readline survives Ctrl-Z
+alias scala='rlwrap scala -Xnojline'
 alias sbt-console='rlwrap sbt console -Xnojline'
 alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
 alias sbt-testConsole='rlwrap sbt test:console -Xnojline'

@@ -2,14 +2,11 @@
 map ,R :source ~/.vimperatorrc<CR>
 
 set hintchars=ifjklasdweuocvbnm
-highlight Hint font-family: monospace; font-size: 15px; font-weight: bold; text-transform: uppercase; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px;
-"highlight Hint z-index:5000; font-family:monospace; font-size:15px; color:white; background-color:blue; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 1px 0px 1px; position:absolute; text-transform: uppercase;
+highlight Hint font: bold 15px "Droid Sans Mono", monospace !important; margin: -.2ex; padding: 0 0 0 1px; outline: 1px solid rgba(0, 0, 0, .5); background: rgba(255, 248, 231, .8); color: black;
 
-set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs
-map ,b :set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs<CR>
-map ,B :set gui=all<CR>
-
-set editor="gnome-terminal --disable-factory -x vim"
+set guioptions=Cs
+map ,b :set guioptions=Cs<CR>
+map ,B :set guioptions=BmT<CR>
 
 map ,/ /☃☃☃<CR><Esc>
 
@@ -28,8 +25,6 @@ map <C-k> :tabmove! +1<CR>
 
 cmap <C-n> <Down>
 cmap <C-p> <Up>
-
-map W :winopen<Space>
 
 map ,g :open<space>google<space>
 map ,G :tabopen<space>google<space>

@@ -1,4 +1,4 @@
-" vim: set sw=2 ts=2 sts=2 expandtab ft=vim
+" vim: sw=2 ts=2 sts=2 expandtab ft=vim
 set nocompatible
 
 "let g:james_minimal_plugins=1
@@ -13,7 +13,6 @@ set foldenable                  " Auto fold code
 set foldtext=MyFoldText()
 set cedit=                    " Key to open command-line window
 set hidden                      " Allow buffer switching without saving
-set hlsearch                    " Highlight search terms
 set ignorecase                  " Case insensitive search
 set lazyredraw
 set linespace=0                 " No extra spaces between rows
@@ -430,9 +429,11 @@ nnoremap <A-i>     :bp<CR>
 nnoremap <A-o>     :bn<CR>
 nnoremap <A-h>     :tabmove -1<CR>
 nnoremap <A-l>     :tabmove +1<CR>
-" Smart Tab, (Window), Buffer stuff
-nnoremap <A-j>     :call PrevTWorB()<CR>
-nnoremap <A-k>     :call NextTWorB()<CR>
+" Smart Tab, (Window), Buffer stuff (and remappings for J, K)
+nnoremap J     :call PrevTWorB()<CR>
+nnoremap K     :call NextTWorB()<CR>
+nnoremap <A-j>     J
+nnoremap <A-k>     K
 " Numbered buffers and tabs
 for n in range(1, 9)
   execute 'nnoremap <A-'.n.'> :call NumTorB('.n.')<CR>'
