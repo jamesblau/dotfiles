@@ -238,7 +238,6 @@ alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons f
 export PATH="$PATH:$HOME/bin:$HOME/tresata"
 
 #Console readline survives Ctrl-Z
-alias scala='rlwrap scala -Xnojline'
 alias sbt-console='rlwrap sbt console -Xnojline'
 alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
 alias sbt-testConsole='rlwrap sbt test:console -Xnojline'
