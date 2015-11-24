@@ -200,7 +200,7 @@ if !exists('g:james_minimal_plugins')
   " Completion / fuzzy find {{{
     Plug 'goldfeld/ctrlr.vim'
     " Plug 'gorkunov/smartgf.vim' if 704 {{{
-      if v:version >= 704
+      if v:version >= 704 && executable('ag')
         Plug 'gorkunov/smartgf.vim'
       endif
     " }}}
