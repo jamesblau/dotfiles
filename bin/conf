@@ -6,6 +6,7 @@ case $1 in
   wh) sudo ~/dotfiles/screenlayout/work.conf.sh ;;
   wv) sudo ~/dotfiles/screenlayout/work_vert.conf.sh ;;
   wp) sudo ~/dotfiles/screenlayout/work_port.conf.sh ;;
+  wb) sudo ~/dotfiles/screenlayout/work_broken.conf.sh ;;
   hh) sudo ~/dotfiles/screenlayout/home.conf.sh ;;
   hv) sudo ~/dotfiles/screenlayout/home_vert.conf.sh ;;
   d) sudo ~/dotfiles/screenlayout/default.conf.sh ;;

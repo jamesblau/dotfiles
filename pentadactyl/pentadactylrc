@@ -43,3 +43,5 @@ nnoremap <C-CR> <Tab><S-Tab><CR>
 
 nnoremap <C-l> yo<C-v>
 nnoremap <C-z> <A-v><A-z><A-t>
+
+map <C-Q> <Nop>

@@ -363,7 +363,7 @@ if !exists('g:james_minimal_plugins')
 
   " Language-specific {{{
     " Plug 'chrisbra/csv.vim', { 'for': 'csv' } {{{
-      au! BufNewFile,BufRead *.bsv set filetype=csv
+      "au! BufNewFile,BufRead *.bsv set filetype=csv
       nnoremap <Leader>qw :WhatColumn<CR>
       nnoremap <Leader>qW :WhatColumn!<CR>
       nnoremap <Leader>qc :NrColumns<CR>

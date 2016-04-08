@@ -260,6 +260,9 @@ function assert () {
   fi
 }
 
+# Look for merge conflicts
+alias viconflicts='vi $(ag -l "^[<=>]{7}[^<=>]*$")'
+
 export PERL_MB_OPT="--install_base \"~/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=~/perl5"
 export PERL5LIB=~/perl5/lib/perl5/local/
@@ -282,3 +285,7 @@ bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 
 # bd back to directory
 alias bd=". ~/src/opensource/vigneshwaranr/bd/bd -si"
+
+# tree with common ignores
+alias trees="tree -I 'target|lib_managed'"
+alias treet="tree -I 'target|lib_managed|tmp'"
