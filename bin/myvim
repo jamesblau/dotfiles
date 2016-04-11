@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -x /usr/local/bin/nvim ]; then
+if [ -x /home/james/bin/nvim ]; then
   nvim "$@"
 else
   vim "$@"

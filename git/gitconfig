@@ -2,14 +2,14 @@
 	name = James Blau
 	email = james@tresata.com
 [diff]
-	tool = vimdiff
+	tool = nvimdiff
 [difftool]
 	prompt = false
 [merge]
-	tool = vimdiff
-[difftool "vimdiff"]
+	tool = nvimmerge
+[difftool "nvimdiff"]
   cmd = ~/bin/myvim -d $LOCAL $REMOTE -c '$wincmd w'
-[mergetool "vimdiff"]
+[mergetool "nvimmerge"]
   cmd = ~/bin/myvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [mergetool]
 	prompt = false
