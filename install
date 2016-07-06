@@ -4,7 +4,7 @@ __deploy=( bash git inputrc python tmux vim )
 
 if [ -e ~/.not_a_server ]; then
   cd /etc/bash_completion.d
-  [ -f /etc/bash_completion.d/bd ] || sudo ln -s ~/src/opensource/vigneshwaranr/bd/bash_completion.d/bd bd
+  [ -f /etc/bash_completion.d/bd ] || ln -s ~/src/opensource/vigneshwaranr/bd/bash_completion.d/bd bd
   __deploy+=( ag dir_colors i3 nvim pentadactyl vimperator pterosaur )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."

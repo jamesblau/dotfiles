@@ -115,7 +115,9 @@ esac
 stick="TPPS/2 IBM TrackPoint"
 pad="SynPS/2 Synaptics TouchPad"
 
-xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0 
+xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
+xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
 #}
 
 # Keyboard

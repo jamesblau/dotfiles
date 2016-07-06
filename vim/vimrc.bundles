@@ -36,8 +36,9 @@ call plug#begin('~/.vim/plugged')
       "hi NonText       guifg=#cc9393 gui=bold                ctermfg=174
       hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
       hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+      hi IndentGuidesEven ctermbg=grey
+      hi IndentGuidesOdd ctermbg=red
     endfunction
-    nnoremap <Leader><C-C>z :call James_Zenburn()<CR>
     Plug 'jnurmine/Zenburn'
   " }}}
   " Plug 'junegunn/seoul256.vim' {{{
@@ -76,7 +77,6 @@ call plug#begin('~/.vim/plugged')
       hi shDoubleQuote                            ctermbg=None
       hi MatchParen          cterm=undercurl,bold
     endfunction
-    nnoremap <Leader><C-C>t :call James_Transparent()<CR>
     Plug 'vim-scripts/Transparent'
   " }}}
 " }}}

@@ -1,6 +1,6 @@
 # Dotfiles
 
-This are my dotfiles, ~/bin scripts, etc.
+These are my dotfiles, ~/bin scripts, etc.
 
 ## SEE ALSO
 

@@ -302,7 +302,8 @@ bar {
   #status_command i3status
   #status_command i3status | ~/scripts/status/status.pl
   font pango:DejaVu Sans Mono 11
-  tray_output eDP1
+  #tray_output eDP1
+  tray_output LVDS1
   colors {
     #background #000000
     #statusline #00A5FF #that neon blue
