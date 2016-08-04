@@ -4,6 +4,15 @@ map ,R :source ~/.vimperatorrc<CR>
 set hintchars=ifjklasdweuocvbnm
 highlight Hint font-family: monospace; font-size: 15px; font-weight: bold; text-transform: uppercase; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px;
 "highlight Hint z-index:5000; font-family:monospace; font-size:15px; color:white; background-color:blue; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 1px 0px 1px; position:absolute; text-transform: uppercase;
+hi CompGroup -append font-size:10px
+hi CompGroup:not -append font-size:10px
+hi CompDesc -append font-size:10px
+hi CmdLine -append font-size:10px
+hi CompIcon -append font-size:10px
+hi CompItem -append font-size:10px
+hi CompMsg -append font-size:10px
+hi CompResult -append font-size:10px
+hi CompTitle -append font-size:10px
 
 set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs
 map ,b :set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs<CR>

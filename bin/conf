@@ -118,6 +118,10 @@ pad="SynPS/2 Synaptics TouchPad"
 xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
 xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
 xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
+xinput set-prop "${stick}" "Device Accel Profile" 6
+xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2
+xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+xinput set-prop "${stick}" "Device Accel Velocity Scaling" 20
 #}
 
 # Keyboard

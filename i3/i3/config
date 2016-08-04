@@ -133,10 +133,10 @@ bindsym $mod+Control+Shift+v exec gnome-terminal -e "nvim /home/james/.vimrc /ho
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
-bindsym $mod+F2 exec "pactl set-sink-volume 0 -- -5%; killall -USR1 i3status"
-bindsym $mod+F3 exec "pactl set-sink-volume 0 -- +5%; killall -USR1 i3status"
-bindsym $mod+Control+F2 exec "pactl set-sink-volume 0 -- -1%; killall -USR1 i3status"
-bindsym $mod+Control+F3 exec "pactl set-sink-volume 0 -- +1%; killall -USR1 i3status"
+bindsym $mod+F2 exec "pactl set-sink-volume 0 -5%; killall -USR1 i3status"
+bindsym $mod+F3 exec "pactl set-sink-volume 0 +5%; killall -USR1 i3status"
+bindsym $mod+Control+F2 exec "pactl set-sink-volume 0 -1%; killall -USR1 i3status"
+bindsym $mod+Control+F3 exec "pactl set-sink-volume 0 +1%; killall -USR1 i3status"
 bindsym $mod+F4 exec "amixer -D pulse set Capture toggle; killall -USR1 i3status"
 bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
@@ -302,8 +302,8 @@ bar {
   #status_command i3status
   #status_command i3status | ~/scripts/status/status.pl
   font pango:DejaVu Sans Mono 11
-  #tray_output eDP1
-  tray_output LVDS1
+  tray_output eDP1
+  #tray_output LVDS1
   colors {
     #background #000000
     #statusline #00A5FF #that neon blue
@@ -320,6 +320,8 @@ bar {
 #Startup things...
 exec clipit
 exec feh --bg-scale deep_dream_landscape.jpg
+exec nm-applet
+exec ~/.config/systemd/user/i3lock-wait-for-suspend.service
 #exec volti
 #exec udisks-glue
 

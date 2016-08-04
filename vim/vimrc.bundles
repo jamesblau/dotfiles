@@ -394,6 +394,7 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <C-S><C-P><C-M> :CtrlP <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><CR>
       nnoremap <silent> <C-S><C-P><C-R> :CtrlP <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
       au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
+      au! BufEnter *.scala setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
     Plug 'elzr/vim-json', { 'for': 'json' }
