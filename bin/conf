@@ -19,146 +19,146 @@ esac
 #modprobe -r psmouse
 #modprobe psmouse proto=auto
 
-#sleep 1.1
+stick="TPPS/2 IBM TrackPoint"
+xinput list | grep -q "${stick}" && {
+  xinput set-prop "${stick}" "Device Accel Profile" 6
+  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2
+  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 20
+}
 
-#{
-  xinput list | grep -q "SONiX USB Device" && stick2="SONiX USB Device"
-
-  xinput list | grep -q "SONiX USB Device" && {
-    xinput set-prop "${stick2}" "Evdev Wheel Emulation" 1
-    xinput set-prop "${stick2}" "Evdev Wheel Emulation Axes" 6 7 4 5
-    xinput set-prop "${stick2}" "Evdev Wheel Emulation Inertia" 2
-    xinput set-prop "${stick2}" "Evdev Wheel Emulation Timeout" 200
-    xinput set-prop "${stick2}" "Evdev Wheel Emulation Button" 2
-
-    xinput set-prop "${stick2}" "Device Accel Profile" 6
-    xinput set-prop "${stick2}" "Device Accel Constant Deceleration" 2
-    xinput set-prop "${stick2}" "Device Accel Adaptive Deceleration" 1
-    xinput set-prop "${stick2}" "Device Accel Velocity Scaling" 10
-  }
-#}
+pad="SynPS/2 Synaptics TouchPad"
+xinput list | grep -q "${pad}" && {
+  xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+  xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
+  xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
+}
 
 
-#{
-  #stick="AlpsPS/2 ALPS DualPoint Stick"
-  #pad="AlpsPS/2 ALPS DualPoint TouchPad"
+stick="SONiX USB Device"
+xinput list | grep -q "${stick}" && {
+  xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
+  xinput set-prop "${stick}" "Device Accel Profile" 6
+  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2
+  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
+}
 
-  #xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
-  #xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
-  #xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
-  #xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
-  #xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
 
-  #xinput set-prop "${stick}" "Device Accel Profile" 6
-  #xinput set-prop "${stick}" "Device Accel Constant Deceleration" 1
-  #xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-  #xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
+stick="AlpsPS/2 ALPS DualPoint Stick"
+xinput list | grep -q "${stick}" && {
+  xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
 
+  xinput set-prop "${stick}" "Device Accel Profile" 6
+  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 1
+  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
+}
+
+pad="AlpsPS/2 ALPS DualPoint TouchPad"
+xinput list | grep -q "${pad}" && {
+  xinput set-prop "${pad}" "Synaptics Tap Time" 0
+  xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
+  xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+  xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
+  xinput set-prop "${pad}" "Synaptics Off" 0
+  xinput set-prop "${pad}" "Synaptics Coasting Speed" 20, 50
+
+  xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
+  xinput set-prop "${pad}" "Synaptics Area" 614, 3481, 307, 1740
+
+  xinput set-prop "${pad}" "Device Enabled" 1
+  xinput set-prop "${pad}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+  xinput set-prop "${pad}" "Device Accel Profile" 1
+  xinput set-prop "${pad}" "Device Accel Constant Deceleration" 2.500000
+  xinput set-prop "${pad}" "Device Accel Adaptive Deceleration" 1.000000
+  xinput set-prop "${pad}" "Device Accel Velocity Scaling" 12.500000
+  #xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
+  xinput set-prop "${pad}" "Synaptics Finger" 25, 30, 0
   #xinput set-prop "${pad}" "Synaptics Tap Time" 0
+  xinput set-prop "${pad}" "Synaptics Tap Move" 201
+  xinput set-prop "${pad}" "Synaptics Tap Durations" 180, 180, 100
+  xinput set-prop "${pad}" "Synaptics ClickPad" 1
+  xinput set-prop "${pad}" "Synaptics Middle Button Timeout" 0
+  xinput set-prop "${pad}" "Synaptics Two-Finger Pressure" 282
+  xinput set-prop "${pad}" "Synaptics Two-Finger Width" 7
   #xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
   #xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
   #xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
+  xinput set-prop "${pad}" "Synaptics Move Speed" 1.000000, 1.750000, 0.043687, 0.000000
   #xinput set-prop "${pad}" "Synaptics Off" 0
-  #xinput set-prop "${pad}" "Synaptics Coasting Speed" 20, 50
+  xinput set-prop "${pad}" "Synaptics Locked Drags" 0
+  xinput set-prop "${pad}" "Synaptics Locked Drags Timeout" 5000
+  xinput set-prop "${pad}" "Synaptics Tap Action" 2, 3, 0, 0, 1, 3, 0
+  xinput set-prop "${pad}" "Synaptics Click Action" 1, 3, 0
+  xinput set-prop "${pad}" "Synaptics Circular Scrolling" 0
+  xinput set-prop "${pad}" "Synaptics Circular Scrolling Distance" 0.100000
+  xinput set-prop "${pad}" "Synaptics Circular Scrolling Trigger" 0
+  xinput set-prop "${pad}" "Synaptics Circular Pad" 0
+  xinput set-prop "${pad}" "Synaptics Palm Detection" 0
+  xinput set-prop "${pad}" "Synaptics Palm Dimensions" 10, 200
+  #xinput set-prop "${pad}" "Synaptics Coasting Speed" 20.000000, 50.000000
+  xinput set-prop "${pad}" "Synaptics Pressure Motion" 30, 160
+  xinput set-prop "${pad}" "Synaptics Pressure Motion Factor" 1.000000, 1.000000
+  xinput set-prop "${pad}" "Synaptics Resolution Detect" 1
+  xinput set-prop "${pad}" "Synaptics Grab Event Device" 0
+  xinput set-prop "${pad}" "Synaptics Gestures" 1
+  #xinput set-prop "${pad}" "Synaptics Capabilities" 1, 0, 0, 1, 1, 0, 0
+  #xinput set-prop "${pad}" "Synaptics Pad Resolution" 38, 42
+  #xinput set-prop "${pad}" "Synaptics Area" 0, 0, 0, 0
+  xinput set-prop "${pad}" "Synaptics Soft Button Areas" 2047, 0, 1678, 0, 0, 0, 0, 0
+  xinput set-prop "${pad}" "Synaptics Noise Cancellation" 22, 22
+  #xinput set-prop "${pad}" "Device Product ID" 2, 8
+  #xinput set-prop "${pad}" "Device Node" "/dev/input/event5"
 
-  #xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
-  #xinput set-prop "${pad}" "Synaptics Area" 614, 3481, 307, 1740
+  synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
+}
 
-  #xinput set-prop "${pad}" "Device Enabled" 1
-  #xinput set-prop "${pad}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
-  #xinput set-prop "${pad}" "Device Accel Profile" 1
-  #xinput set-prop "${pad}" "Device Accel Constant Deceleration" 2.500000
-  #xinput set-prop "${pad}" "Device Accel Adaptive Deceleration" 1.000000
-  #xinput set-prop "${pad}" "Device Accel Velocity Scaling" 12.500000
-  ##xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
-  #xinput set-prop "${pad}" "Synaptics Finger" 25, 30, 0
-  ##xinput set-prop "${pad}" "Synaptics Tap Time" 0
-  #xinput set-prop "${pad}" "Synaptics Tap Move" 201
-  #xinput set-prop "${pad}" "Synaptics Tap Durations" 180, 180, 100
-  #xinput set-prop "${pad}" "Synaptics ClickPad" 1
-  #xinput set-prop "${pad}" "Synaptics Middle Button Timeout" 0
-  #xinput set-prop "${pad}" "Synaptics Two-Finger Pressure" 282
-  #xinput set-prop "${pad}" "Synaptics Two-Finger Width" 7
-  ##xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
-  ##xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
-  ##xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
-  #xinput set-prop "${pad}" "Synaptics Move Speed" 1.000000, 1.750000, 0.043687, 0.000000
-  ##xinput set-prop "${pad}" "Synaptics Off" 0
-  #xinput set-prop "${pad}" "Synaptics Locked Drags" 0
-  #xinput set-prop "${pad}" "Synaptics Locked Drags Timeout" 5000
-  #xinput set-prop "${pad}" "Synaptics Tap Action" 2, 3, 0, 0, 1, 3, 0
-  #xinput set-prop "${pad}" "Synaptics Click Action" 1, 3, 0
-  #xinput set-prop "${pad}" "Synaptics Circular Scrolling" 0
-  #xinput set-prop "${pad}" "Synaptics Circular Scrolling Distance" 0.100000
-  #xinput set-prop "${pad}" "Synaptics Circular Scrolling Trigger" 0
-  #xinput set-prop "${pad}" "Synaptics Circular Pad" 0
-  #xinput set-prop "${pad}" "Synaptics Palm Detection" 0
-  #xinput set-prop "${pad}" "Synaptics Palm Dimensions" 10, 200
-  ##xinput set-prop "${pad}" "Synaptics Coasting Speed" 20.000000, 50.000000
-  #xinput set-prop "${pad}" "Synaptics Pressure Motion" 30, 160
-  #xinput set-prop "${pad}" "Synaptics Pressure Motion Factor" 1.000000, 1.000000
-  #xinput set-prop "${pad}" "Synaptics Resolution Detect" 1
-  #xinput set-prop "${pad}" "Synaptics Grab Event Device" 0
-  #xinput set-prop "${pad}" "Synaptics Gestures" 1
-  ##xinput set-prop "${pad}" "Synaptics Capabilities" 1, 0, 0, 1, 1, 0, 0
-  ##xinput set-prop "${pad}" "Synaptics Pad Resolution" 38, 42
-  ##xinput set-prop "${pad}" "Synaptics Area" 0, 0, 0, 0
-  #xinput set-prop "${pad}" "Synaptics Soft Button Areas" 2047, 0, 1678, 0, 0, 0, 0, 0
-  #xinput set-prop "${pad}" "Synaptics Noise Cancellation" 22, 22
-  ##xinput set-prop "${pad}" "Device Product ID" 2, 8
-  ##xinput set-prop "${pad}" "Device Node" "/dev/input/event5"
+# Keyboard {{{
+  setxkbmap -option ctrl:nocaps
+  # xcape {{{
+    # Map an unused modifier's keysym to the spacebar's keycode and make it a
+    # control modifier. It needs to be an existing key so that emacs won't
+    # spazz out when you press it. Hyper_L is a good candidate.
+    #spare_modifier1="Hyper_L"
+    #spare_modifier1="Hyper_R"
+    #xmodmap -e "keycode 23 = $spare_modifier1"
+    #xmodmap -e "keycode 51 = $spare_modifier2"
+    #xmodmap -e "remove mod4 = $spare_modifier1" # hyper_l is mod4 by default
+    #xmodmap -e "remove mod4 = $spare_modifier2" # hyper_r is mod4 by default
+    #xmodmap -e "add Super_L = $spare_modifier1"
+    #xmodmap -e "add Super_L = $spare_modifier2"
 
-  #synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
-#}
+    # Map space to an unused keycode (to keep it around for xcape to
+    # use).
+    #xmodmap -e "keycode any = Tab ISO_Left_Tab Tab ISO_Left_Tab"
+    #xmodmap -e "keycode any = backslash bar backslash bar backslash bar backslash bar"
 
-#{
-stick="TPPS/2 IBM TrackPoint"
-pad="SynPS/2 Synaptics TouchPad"
+    # Finally use xcape to cause the space bar to generate a space when tapped.
+    ps aux | grep -v grep | grep -q opensource/alols/xcape/xcape && killall xcape
+    ~/src/opensource/alols/xcape/xcape
+    #~/src/opensource/alols/xcape/xcape -e "$spare_modifier1=Tab"
+    #~/src/opensource/alols/xcape/xcape -e "$spare_modifier2=backslash"
+  #}}}
 
-xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
-xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
-xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
-xinput set-prop "${stick}" "Device Accel Profile" 6
-xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2
-xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-xinput set-prop "${stick}" "Device Accel Velocity Scaling" 20
-#}
+  xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
 
-# Keyboard
-setxkbmap -option ctrl:nocaps
-# xcape {{{
-  # Map an unused modifier's keysym to the spacebar's keycode and make it a
-  # control modifier. It needs to be an existing key so that emacs won't
-  # spazz out when you press it. Hyper_L is a good candidate.
-  #spare_modifier1="Hyper_L"
-  #spare_modifier1="Hyper_R"
-  #xmodmap -e "keycode 23 = $spare_modifier1"
-  #xmodmap -e "keycode 51 = $spare_modifier2"
-  #xmodmap -e "remove mod4 = $spare_modifier1" # hyper_l is mod4 by default
-  #xmodmap -e "remove mod4 = $spare_modifier2" # hyper_r is mod4 by default
-  #xmodmap -e "add Super_L = $spare_modifier1"
-  #xmodmap -e "add Super_L = $spare_modifier2"
+  xmodmap -e "keysym Alt_R = Mode_switch"
+  xmodmap -e "keycode  43 = h H Left Left"
+  xmodmap -e "keycode  44 = j J Down Down"
+  xmodmap -e "keycode  45 = k K Up Up"
+  xmodmap -e "keycode  46 = l L Right Right"
 
-  # Map space to an unused keycode (to keep it around for xcape to
-  # use).
-  #xmodmap -e "keycode any = Tab ISO_Left_Tab Tab ISO_Left_Tab"
-  #xmodmap -e "keycode any = backslash bar backslash bar backslash bar backslash bar"
-
-  # Finally use xcape to cause the space bar to generate a space when tapped.
-  ps aux | grep -v grep | grep -q opensource/alols/xcape/xcape && killall xcape
-  ~/src/opensource/alols/xcape/xcape
-  #~/src/opensource/alols/xcape/xcape -e "$spare_modifier1=Tab"
-  #~/src/opensource/alols/xcape/xcape -e "$spare_modifier2=backslash"
+  xmodmap -e "keycode 107 = Super_L Super_R"
 #}}}
-xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
-
-xmodmap -e "keysym Alt_R = Mode_switch"
-xmodmap -e "keycode  43 = h H Left Left"
-xmodmap -e "keycode  44 = j J Down Down"
-xmodmap -e "keycode  45 = k K Up Up"
-xmodmap -e "keycode  46 = l L Right Right"
-
-xmodmap -e "keycode 107 = Super_L Super_R"
 
 #TODO: Map: hold enter -> control, control + hold enter -> hold enter if possible
 #           hold tab, backslash (no modifiers) -> Super
