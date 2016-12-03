@@ -66,7 +66,7 @@ endif
 
 " Override vim-sensible
 runtime! plugin/sensible.vim
-set listchars=tab:›\ ,trail:•,extends:❱,precedes:❰,nbsp:⚪
+set listchars=tab:›\ ,trail:•,extends:❱,precedes:❰,nbsp:○
 set notimeout nottimeout
 set nrformats=
 set scrolloff=3
@@ -721,7 +721,10 @@ function! MyFoldText()
 endfunction
 
 " Set syntax
-nmap <Leader>tc :set ft=csv syn=csv<CR>
+function! LoadCsv()
+endfunction
+
+nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
 nmap <Leader>t<Space> :set ft= syn= formatprg= linebreak showbreak= wrap<CR>

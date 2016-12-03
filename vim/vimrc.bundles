@@ -363,7 +363,7 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Language-specific {{{
-    " Plug 'chrisbra/csv.vim', { 'for': 'csv' } {{{
+    " Plug 'chrisbra/csv.vim', { 'on': 'LoadCsv' } {{{
       "au! BufNewFile,BufRead *.bsv set filetype=csv
       nnoremap <Leader>qw :WhatColumn<CR>
       nnoremap <Leader>qW :WhatColumn!<CR>
@@ -373,7 +373,7 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>qH :HiColumn!<CR>
       nmap <Leader>qd :let g:csv_delim=''<C-B>
       nnoremap <silent> <Leader>qS :CSVTabularize<CR><C-W>T:above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor buftype=nofile<CR>ggVjjd<C-W>kVp<C-W>j
-      Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+      Plug 'chrisbra/csv.vim', { 'on': 'LoadCsv' }
     " }}}
     Plug 'derekwyatt/vim-sbt', { 'for': 'sbt.scala' }
     " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
@@ -414,6 +414,10 @@ if !exists('g:james_minimal_plugins')
       Plug 'tyru/regbuf.vim'
       "autocmd regbuf BufWinLeave <buffer> bw regbuf:preview
     " }}}
+  " }}}
+
+  " Terminal {{{
+    "Plug 'brettanomyces/nvim-terminus'
   " }}}
 
   " Text objects {{{

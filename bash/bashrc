@@ -12,7 +12,7 @@ fi
 #Choose color depth
 if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
   export TERM=xterm-256color
-  . ~/dotfiles/gnome-zenburn
+  #. ~/dotfiles/gnome-zenburn
 fi
 
 if [ "$TERM" = "linux" ]; then
@@ -235,13 +235,16 @@ bind -m vi-insert "\C-o.":
 #Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/bin:$HOME/tresata:$HOME/neovim/bin"
+export PATH="$PATH:$HOME/bin:$HOME/tresata:$HOME/neovim/bin:$HOME/share/bin"
+export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
+export PREFIX=$HOME/share
 
 #Console readline survives Ctrl-Z
 alias sbt-console='rlwrap sbt console -Xnojline'
 alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
 alias sbt-testConsole='rlwrap sbt test:console -Xnojline'
 alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
+export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xmx2048M -Xms2048M"
 
 #Color ag
 alias cag='ag --color'
@@ -285,6 +288,9 @@ bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 
 # bd back to directory
 alias bd=". ~/src/opensource/vigneshwaranr/bd/bd -si"
+
+# open new terminal with tmux in same directory
+function ncd () { wd=$PWD; i3-sensible-terminal -e "bash -c \"cd $wd; tmux\""; }
 
 # tree with common ignores
 alias trees="tree -I 'target|lib_managed'"

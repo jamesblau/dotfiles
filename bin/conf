@@ -22,7 +22,7 @@ esac
 stick="TPPS/2 IBM TrackPoint"
 xinput list | grep -q "${stick}" && {
   xinput set-prop "${stick}" "Device Accel Profile" 6
-  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2
+  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 1
   xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
   xinput set-prop "${stick}" "Device Accel Velocity Scaling" 20
 }
@@ -30,6 +30,7 @@ xinput list | grep -q "${stick}" && {
 pad="SynPS/2 Synaptics TouchPad"
 xinput list | grep -q "${pad}" && {
   xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+  xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
   xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
   xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
 }
@@ -124,7 +125,18 @@ xinput list | grep -q "${pad}" && {
 
 # Keyboard {{{
   setxkbmap -option ctrl:nocaps
-  # xcape {{{
+
+  xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
+
+  xmodmap -e "keysym Alt_R = Mode_switch"
+  xmodmap -e "keycode  43 = h H Left Left"
+  xmodmap -e "keycode  44 = j J Down Down"
+  xmodmap -e "keycode  45 = k K Up Up"
+  xmodmap -e "keycode  46 = l L Right Right"
+
+  xmodmap -e "keycode 107 = Super_L Super_R"
+
+  # TODO? xcape {{{
     # Map an unused modifier's keysym to the spacebar's keycode and make it a
     # control modifier. It needs to be an existing key so that emacs won't
     # spazz out when you press it. Hyper_L is a good candidate.
@@ -149,17 +161,10 @@ xinput list | grep -q "${pad}" && {
     #~/src/opensource/alols/xcape/xcape -e "$spare_modifier2=backslash"
   #}}}
 
-  xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
-
-  xmodmap -e "keysym Alt_R = Mode_switch"
-  xmodmap -e "keycode  43 = h H Left Left"
-  xmodmap -e "keycode  44 = j J Down Down"
-  xmodmap -e "keycode  45 = k K Up Up"
-  xmodmap -e "keycode  46 = l L Right Right"
-
-  xmodmap -e "keycode 107 = Super_L Super_R"
+  # TODO? Map: hold enter -> control, control + hold enter -> hold enter if possible
+  #            hold tab, backslash (no modifiers) -> Super
+  #            hold backtick -> "arrow mode"
 #}}}
 
-#TODO: Map: hold enter -> control, control + hold enter -> hold enter if possible
-#           hold tab, backslash (no modifiers) -> Super
-#           hold backtick -> "arrow mode"
+# Set background
+feh --bg-scale deepdream.jpg

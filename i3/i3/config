@@ -115,8 +115,8 @@ bindsym $mod+o workspace back_and_forth
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+Return exec gnome-terminal -e tmux
+bindsym $mod+Return exec i3-sensible-terminal -e tmux
+bindsym $mod+Shift+Return exec gnome-terminal
 bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/dotfiles/bash/bashrc_neovim'"
 bindsym $mod+s exec stterm
 bindsym $mod+Shift+s exec stterm -e tmux
@@ -319,7 +319,6 @@ bar {
 
 #Startup things...
 exec clipit
-exec feh --bg-scale deep_dream_landscape.jpg
 exec nm-applet
 exec ~/.config/systemd/user/i3lock-wait-for-suspend.service
 #exec volti
