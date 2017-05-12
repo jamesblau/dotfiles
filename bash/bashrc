@@ -167,7 +167,7 @@ export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
 alias vi="${my_vim}"
 #I forget why this is here
-[[ -d /usr/share/vim/vim74 && "${my_vim}" != 'nvim' ]] && export VIMRUNTIME=/usr/share/vim/vim74
+[[ -d ~/src/opensource/neovim/neovim/runtime && "${my_vim}" == 'nvim' ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
 
 #Avoid typing . for bin scripts that change directory
 alias cdg=". /home/james/bin/cdg"
@@ -266,6 +266,9 @@ function assert () {
 # Look for merge conflicts
 alias viconflicts='vi $(ag -l "^[<=>]{7}[^<=>]*$")'
 
+# Remove empty files without messing with sbt files
+alias rmempty='rm $(find -type f -empty | grep -v "\\$")'
+
 export PERL_MB_OPT="--install_base \"~/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=~/perl5"
 export PERL5LIB=~/perl5/lib/perl5/local/
@@ -295,3 +298,4 @@ function ncd () { wd=$PWD; i3-sensible-terminal -e "bash -c \"cd $wd; tmux\""; }
 # tree with common ignores
 alias trees="tree -I 'target|lib_managed'"
 alias treet="tree -I 'target|lib_managed|tmp'"
+alias treeu="tree -I 'target|lib_managed|tmp|test'"

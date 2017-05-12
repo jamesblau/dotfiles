@@ -7,8 +7,10 @@ case $1 in
   wv) ~/dotfiles/screenlayout/work_vert.conf.sh ;;
   wp) ~/dotfiles/screenlayout/work_port.conf.sh ;;
   wb) ~/dotfiles/screenlayout/work_broken.conf.sh ;;
+  wc) ~/dotfiles/screenlayout/work_crappy.conf.sh ;;
   hh) ~/dotfiles/screenlayout/home.conf.sh ;;
   hv) ~/dotfiles/screenlayout/home_vert.conf.sh ;;
+  hc) ~/dotfiles/screenlayout/home_crappy.conf.sh ;;
   d) ~/dotfiles/screenlayout/default.conf.sh ;;
   c) ~/dotfiles/screenlayout/default_t530.sh ;;
   cv) ~/dotfiles/screenlayout/work_vert_t530.sh ;;
@@ -44,8 +46,8 @@ xinput list | grep -q "${stick}" && {
   xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
   xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
   xinput set-prop "${stick}" "Device Accel Profile" 6
-  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2
-  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2.5
+  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1.5
   xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
 }
 

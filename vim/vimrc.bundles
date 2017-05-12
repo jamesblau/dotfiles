@@ -38,6 +38,7 @@ call plug#begin('~/.vim/plugged')
       hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
       hi IndentGuidesEven ctermbg=grey
       hi IndentGuidesOdd ctermbg=red
+      hi Whitespace ctermfg=white
     endfunction
     Plug 'jnurmine/Zenburn'
   " }}}
@@ -213,7 +214,7 @@ if !exists('g:james_minimal_plugins')
       Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
       nnoremap <Leader>eo :FZFMru<CR>
     " }}}
-    " Plug 'kien/ctrlp.vim' {{{
+    " Plug 'ctrlpvim/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
       "let g:ctrlp_use_caching = 10000
       "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " Any advantage to integrating ag and git-ls-files?
@@ -242,7 +243,7 @@ if !exists('g:james_minimal_plugins')
       "let g:ctrlp_custom_ignore = {
         "\ 'dir':  '\.git$\|\.hg$\|\.svn$',
         "\ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-      Plug 'kien/ctrlp.vim'
+      Plug 'ctrlpvim/ctrlp.vim'
     " }}}
     " Plug 'majutsushi/tagbar' if 704 {{{
       if v:version >= 704
@@ -285,7 +286,12 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>u :UndotreeToggle<CR>
       Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     " }}}
-    Plug 'scrooloose/nerdcommenter'
+    " Plug 'scrooloose/nerdcommenter' {{{
+      let g:NERDCustomDelimiters = {
+        \ 'scala': { 'left': '//', 'nested': 1, 'leftAlt': '/**', 'rightAlt': '*/', 'nestedAlt': 0 },
+      \ }
+      Plug 'scrooloose/nerdcommenter'
+    " }}}
     " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } {{{
       "let NERDTreeHijackNetrw = 1
       "let loaded_netrwPlugin = 1
@@ -377,6 +383,7 @@ if !exists('g:james_minimal_plugins')
     " }}}
     Plug 'derekwyatt/vim-sbt', { 'for': 'sbt.scala' }
     " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
+      let g:scala_scaladoc_indent = 1
       let g:scala_use_default_keymappings = 0
       let g:scala_sort_across_groups=1
       let g:scala_first_party_namespaces='\(com\.tresata\)'
@@ -393,8 +400,14 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <C-S><C-P><C-T> :CtrlP <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><CR>
       nnoremap <silent> <C-S><C-P><C-M> :CtrlP <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><CR>
       nnoremap <silent> <C-S><C-P><C-R> :CtrlP <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
-      au! BufEnter *.scala setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
-      au! BufEnter *.scala setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
+      function SetScalaOptions()
+        setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
+        setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
+        " Comments match scaladoc style
+        nnoremap <Leader>cs I/**<Space><Esc>o/<Esc>
+        vmap <Leader>cs <Esc>'<V'><C-V>I<Space><Space>*<Space><Esc>'<<<I/*<Esc>'>o/<Esc>0"yyf*gv:s/^$/<C-T>y/<CR>
+      endfunction
+      au! BufEnter *.scala call SetScalaOptions()
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
     Plug 'elzr/vim-json', { 'for': 'json' }

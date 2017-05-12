@@ -26,16 +26,23 @@ map <C-k> :tabmove! +1<CR>
 cmap <C-n> <Down>
 cmap <C-p> <Up>
 
-map ,g :open<space>google<space>
-map ,G :tabopen<space>google<space>
-map ,d :open<space>duckduckgo<space>
-map ,D :tabopen<space>duckduckgo<space>
-map ,w :open<space>wikipedia<space>
-map ,W :tabopen<space>wikipedia<space>
+set defsearch=google_search
 
-map ,r :tabopen<space>reddit.com<CR>
-map ,s :tabopen<space>reddit.com/r/ssbpm<CR>
-map ,m :tabopen<space>gmail.com<CR>
+map ,g :open<space>google_search<space>
+map ,G :tabopen<space>google_search<space>
+map ,d :open<space>duckduckgo_search<space>
+map ,D :tabopen<space>duckduckgo_search<space>
+map ,w :open<space>wikipedia_search<space>
+map ,W :tabopen<space>wikipedia_search<space>
+
+map ,r :open<space>reddit.com<CR>
+map ,R :tabopen<space>reddit.com<CR>
+map ,s :open<space>reddit.com/r/ssbpm<CR>
+map ,S :tabopen<space>reddit.com/r/ssbpm<CR>
+map ,u :open<space>reddit.com/message/unread<CR>
+map ,U :tabopen<space>reddit.com/message/unread<CR>
+map ,m :open<space>gmail.com<CR>
+map ,M :tabopen<space>gmail.com<CR>
 map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>:tabopen<space>octopuspie.com/<CR>JJJJJJ
 
 " Hack: refocus on "Save" button in Reddit before hitting enter
@@ -44,4 +51,6 @@ nnoremap <C-CR> <Tab><S-Tab><CR>
 nnoremap <C-l> yo<C-v>
 nnoremap <C-z> <A-v><A-z><A-t>
 
-map <C-Q> <Nop>
+nnoremap <C-Q> <Nop>
+nnoremap r <C-R>
+nnoremap d <C-W>

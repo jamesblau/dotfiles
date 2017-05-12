@@ -123,13 +123,13 @@ bindsym $mod+Shift+s exec stterm -e tmux
 bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
 
 #edit dotfiles
-bindsym $mod+Control+Shift+b exec gnome-terminal -e "nvim /home/james/.bashrc"
-bindsym $mod+Control+Shift+c exec gnome-terminal -e "nvim /home/james/bin/conf"
-bindsym $mod+Control+Shift+d exec gnome-terminal -e "nvim /home/james/dotfiles/install /home/james/dotfiles/apt-get-things"
-bindsym $mod+Control+Shift+f exec gnome-terminal -e "nvim /home/james/.pentadactylrc /home/james/.pterosaurrc /home/james/.vimperatorrc"
-bindsym $mod+Control+Shift+i exec gnome-terminal -e "nvim /home/james/.i3/config /home/james/.i3status.conf"
-bindsym $mod+Control+Shift+t exec gnome-terminal -e "nvim /home/james/.tmux.conf"
-bindsym $mod+Control+Shift+v exec gnome-terminal -e "nvim /home/james/.vimrc /home/james/.vimrc.bundles /home/james/.nvimrc /home/james/.nvimrc_terminal"
+bindsym $mod+Control+Shift+b exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.bashrc'"
+bindsym $mod+Control+Shift+c exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/bin/conf'"
+bindsym $mod+Control+Shift+d exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/dotfiles/install /home/james/dotfiles/apt-get-things'"
+bindsym $mod+Control+Shift+f exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.pentadactylrc /home/james/.pterosaurrc /home/james/.vimperatorrc'"
+bindsym $mod+Control+Shift+i exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.i3/config /home/james/.i3status.conf'"
+bindsym $mod+Control+Shift+t exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.tmux.conf'"
+bindsym $mod+Control+Shift+v exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.vimrc /home/james/.vimrc.bundles /home/james/.nvimrc /home/james/.nvimrc_terminal'"
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
@@ -337,6 +337,8 @@ bindsym $mod+F9 exec "echo -n 'ಥ_ಥ' | xclip"
 bindsym $mod+F10 exec "echo -n 'ಠ_ಠ' | xclip"
 bindsym $mod+F11 exec "echo -n '(╯°□°)╯︵ ┻━┻' | xclip"
 bindsym $mod+F12 exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"
+bindsym $mod+shift+F7 exec "echo -n '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"
+bindsym $mod+shift+F10 exec "echo -n 'ಠ_ರೃ' | xclip"
 bindsym $mod+Home exec "echo -n '☃' | xclip"
 
 #Disgusting hack for when sites like youtube get stuck between insert and normal modes in cVim: unfocus, refocus, escape
@@ -344,6 +346,9 @@ bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool
 
 #Firefox popups
 #for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
+
+#Firefox fucked up, so open that shit in Chromium
+bindsym $mod+Shift+G exec "chromium-browser $(xclip -o)"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 

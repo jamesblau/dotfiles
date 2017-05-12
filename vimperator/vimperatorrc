@@ -42,17 +42,24 @@ cmap <C-p> <Up>
 
 map W :winopen<Space>
 
-map ,g :open<space>google<space>
-map ,G :tabopen<space>google<space>
-map ,d :open<space>duckduckgo<space>
-map ,D :tabopen<space>duckduckgo<space>
-map ,w :open<space>wikipedia<space>
-map ,W :tabopen<space>wikipedia<space>
+set defsearch=google_search
 
-map ,r :tabopen<space>reddit.com<CR>
-map ,s :tabopen<space>reddit.com/r/ssbpm<CR>
-map ,m :tabopen<space>gmail.com<CR>
-map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>https://xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>:tabopen<space>octopuspie.com/<CR>JJJJJJ
+map ,g :open<space>google_search<space>
+map ,G :tabopen<space>google_search<space>
+map ,d :open<space>duckduckgo_search<space>
+map ,D :tabopen<space>duckduckgo_search<space>
+map ,w :open<space>wikipedia_search<space>
+map ,W :tabopen<space>wikipedia_search<space>
+
+map ,r :open<space>reddit.com<CR>
+map ,R :tabopen<space>reddit.com<CR>
+map ,s :open<space>reddit.com/r/ssbpm<CR>
+map ,S :tabopen<space>reddit.com/r/ssbpm<CR>
+map ,u :open<space>reddit.com/message/unread<CR>
+map ,U :tabopen<space>reddit.com/message/unread<CR>
+map ,m :open<space>gmail.com<CR>
+map ,M :tabopen<space>gmail.com<CR>
+map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>:tabopen<space>octopuspie.com/<CR>JJJJJJ
 
 " Hack: refocus on "Save" button in Reddit before hitting enter
 nnoremap <C-CR> <Tab><S-Tab><CR>
@@ -62,7 +69,24 @@ nnoremap <C-z> <A-v><A-z><A-t>
 
 " Don't open native search bar
 cmap <C-F> <Nop>
+cmap <S-C-G> <Nop>
+imap <C-F> <Nop>
+imap <C-G> <Nop>
+map ,<C-G> <Nop>
 
+" Don't repeat things...
+map . <Nop>
+
+" Doesn't work by default; cancel page loading
+nmap <C-c> :st<CR>
+
+" Other stuff
+nnoremap <C-Q> <Nop>
+nnoremap gr <Nop>
+"nnoremap r <C-R>
+"nnoremap d <C-W>
+"nnoremap t <C-t> o
+"nnoremap T y <C-t> o <C-v>
 
 " Fucked up autocomplete
 js services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
