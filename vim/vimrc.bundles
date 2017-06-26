@@ -287,6 +287,8 @@ if !exists('g:james_minimal_plugins')
       Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     " }}}
     " Plug 'scrooloose/nerdcommenter' {{{
+      let g:NERDCompactSexyComs=1
+      let g:NERDSpaceDelims=1
       let g:NERDCustomDelimiters = {
         \ 'scala': { 'left': '//', 'nested': 1, 'leftAlt': '/**', 'rightAlt': '*/', 'nestedAlt': 0 },
       \ }
@@ -404,13 +406,16 @@ if !exists('g:james_minimal_plugins')
         setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
         setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
         " Comments match scaladoc style
-        nnoremap <Leader>cs I/**<Space><Esc>o/<Esc>
-        vmap <Leader>cs <Esc>'<V'><C-V>I<Space><Space>*<Space><Esc>'<<<I/*<Esc>'>o/<Esc>0"yyf*gv:s/^$/<C-T>y/<CR>
+        nnoremap <Leader>cd I/**<Space><Esc>o/<Esc>
+        vmap <Leader>cd <Esc>'<V'><C-V>I<Space><Space>*<Space><Esc>'<<<I/*<Esc>'>o/<Esc>0"yyf*gv:s/^$/<C-T>y/<CR>
       endfunction
       au! BufEnter *.scala call SetScalaOptions()
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
-    Plug 'elzr/vim-json', { 'for': 'json' }
+    " Plug 'elzr/vim-json', { 'for': 'json' } {{{
+      au! BufNewFile,BufRead *.json setl fdm=syntax foldlevel=20
+      Plug 'elzr/vim-json', { 'for': 'json' }
+    " }}}
     " Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' } {{{
       au! BufNewFile,BufRead Drakefile* setl ft=drake
       Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' }

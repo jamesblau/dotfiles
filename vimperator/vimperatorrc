@@ -59,7 +59,7 @@ map ,u :open<space>reddit.com/message/unread<CR>
 map ,U :tabopen<space>reddit.com/message/unread<CR>
 map ,m :open<space>gmail.com<CR>
 map ,M :tabopen<space>gmail.com<CR>
-map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>:tabopen<space>octopuspie.com/<CR>JJJJJJ
+map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>JJJJJ
 
 " Hack: refocus on "Save" button in Reddit before hitting enter
 nnoremap <C-CR> <Tab><S-Tab><CR>
