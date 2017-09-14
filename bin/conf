@@ -23,10 +23,15 @@ esac
 
 stick="TPPS/2 IBM TrackPoint"
 xinput list | grep -q "${stick}" && {
-  xinput set-prop "${stick}" "Device Accel Profile" 6
-  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 1
+  xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
+  xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
+  xinput set-prop "${stick}" "Device Accel Profile" 2
+  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 0.3
   xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 20
+  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 100
 }
 
 pad="SynPS/2 Synaptics TouchPad"
@@ -47,7 +52,7 @@ xinput list | grep -q "${stick}" && {
   xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
   xinput set-prop "${stick}" "Device Accel Profile" 6
   xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2.5
-  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1.5
+  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
   xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
 }
 

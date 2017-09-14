@@ -61,6 +61,9 @@ map ,m :open<space>gmail.com<CR>
 map ,M :tabopen<space>gmail.com<CR>
 map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>JJJJJ
 
+" Select All
+imap <C-S-A> <Insert><C-A><Insert>
+
 " Hack: refocus on "Save" button in Reddit before hitting enter
 nnoremap <C-CR> <Tab><S-Tab><CR>
 

@@ -4,7 +4,7 @@ These are my dotfiles, ~/bin scripts, etc.
 
 ## SEE ALSO
 
-The Grand Canyon; I mean why not? Once, at least. Never been there myself.
+The Aurora Borealis; I mean why not? Once, at least. Never have, myself.
 
 ## LICENSE
 
