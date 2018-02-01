@@ -290,7 +290,7 @@ bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 [ -f ~/src/opensource/rupa/z/z.sh ] && source ~/src/opensource/rupa/z/z.sh
 
 # bd back to directory
-alias bd=". ~/src/opensource/vigneshwaranr/bd/bd -si"
+alias bd=". bd -si"
 
 # open new terminal with tmux in same directory
 function ncd () { wd=$PWD; i3-sensible-terminal -e "bash -c \"cd $wd; tmux\""; }

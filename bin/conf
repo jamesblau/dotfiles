@@ -3,132 +3,131 @@
 [ $# -ne 1 ] && echo One argument... && exit 1
 
 case $1 in
-  wh) ~/dotfiles/screenlayout/work.conf.sh ;;
-  wv) ~/dotfiles/screenlayout/work_vert.conf.sh ;;
-  wp) ~/dotfiles/screenlayout/work_port.conf.sh ;;
-  wb) ~/dotfiles/screenlayout/work_broken.conf.sh ;;
-  wc) ~/dotfiles/screenlayout/work_crappy.conf.sh ;;
-  hh) ~/dotfiles/screenlayout/home.conf.sh ;;
-  hv) ~/dotfiles/screenlayout/home_vert.conf.sh ;;
-  hc) ~/dotfiles/screenlayout/home_crappy.conf.sh ;;
-  d) ~/dotfiles/screenlayout/default.conf.sh ;;
-  c) ~/dotfiles/screenlayout/default_t530.sh ;;
-  cv) ~/dotfiles/screenlayout/work_vert_t530.sh ;;
+  s) ~/dotfiles/screenlayout/simurgh1.conf.sh ;;
+  s2) ~/dotfiles/screenlayout/simurgh2.conf.sh ;;
   *) echo Invalid layout specified... ;;
 esac
+
+laptop=t420s
 
 # UltraNav
 #modprobe -r psmouse
 #modprobe psmouse proto=auto
 
-stick="TPPS/2 IBM TrackPoint"
-xinput list | grep -q "${stick}" && {
-  xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
-  xinput set-prop "${stick}" "Device Accel Profile" 2
-  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 0.3
-  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 100
+[ ${laptop} == "t420s" ] && {
+  echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
+  xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
 }
 
-pad="SynPS/2 Synaptics TouchPad"
-xinput list | grep -q "${pad}" && {
-  xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
-  xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
-  xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
-  xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
-}
+# stick="TPPS/2 IBM TrackPoint"
+# xinput list | grep -q "${stick}" && {
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
+  # xinput set-prop "${stick}" "Device Accel Profile" 2
+  # xinput set-prop "${stick}" "Device Accel Constant Deceleration" 0.3
+  # xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  # xinput set-prop "${stick}" "Device Accel Velocity Scaling" 100
+# }
+
+# pad="SynPS/2 Synaptics TouchPad"
+# xinput list | grep -q "${pad}" && {
+  # xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+  # xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
+  # xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
+  # xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
+# }
 
 
-stick="SONiX USB Device"
-xinput list | grep -q "${stick}" && {
-  xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
-  xinput set-prop "${stick}" "Device Accel Profile" 6
-  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2.5
-  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
-}
+# Tex Yoda
+# stick="SONiX USB Device"
+# xinput list | grep -q "${stick}" && {
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
+  # xinput set-prop "${stick}" "Device Accel Profile" 6
+  # xinput set-prop "${stick}" "Device Accel Constant Deceleration" 2.5
+  # xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  # xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
+# }
 
 
-stick="AlpsPS/2 ALPS DualPoint Stick"
-xinput list | grep -q "${stick}" && {
-  xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
-  xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
+# stick="AlpsPS/2 ALPS DualPoint Stick"
+# xinput list | grep -q "${stick}" && {
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
+  # xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
 
-  xinput set-prop "${stick}" "Device Accel Profile" 6
-  xinput set-prop "${stick}" "Device Accel Constant Deceleration" 1
-  xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-  xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
-}
+  # xinput set-prop "${stick}" "Device Accel Profile" 6
+  # xinput set-prop "${stick}" "Device Accel Constant Deceleration" 1
+  # xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
+  # xinput set-prop "${stick}" "Device Accel Velocity Scaling" 10
+# }
 
-pad="AlpsPS/2 ALPS DualPoint TouchPad"
-xinput list | grep -q "${pad}" && {
-  xinput set-prop "${pad}" "Synaptics Tap Time" 0
-  xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
-  xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
-  xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
-  xinput set-prop "${pad}" "Synaptics Off" 0
-  xinput set-prop "${pad}" "Synaptics Coasting Speed" 20, 50
+# pad="AlpsPS/2 ALPS DualPoint TouchPad"
+# xinput list | grep -q "${pad}" && {
+  # xinput set-prop "${pad}" "Synaptics Tap Time" 0
+  # xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
+  # xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+  # xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
+  # xinput set-prop "${pad}" "Synaptics Off" 0
+  # xinput set-prop "${pad}" "Synaptics Coasting Speed" 20, 50
 
-  xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
-  xinput set-prop "${pad}" "Synaptics Area" 614, 3481, 307, 1740
+  # xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
+  # xinput set-prop "${pad}" "Synaptics Area" 614, 3481, 307, 1740
 
-  xinput set-prop "${pad}" "Device Enabled" 1
-  xinput set-prop "${pad}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
-  xinput set-prop "${pad}" "Device Accel Profile" 1
-  xinput set-prop "${pad}" "Device Accel Constant Deceleration" 2.500000
-  xinput set-prop "${pad}" "Device Accel Adaptive Deceleration" 1.000000
-  xinput set-prop "${pad}" "Device Accel Velocity Scaling" 12.500000
-  #xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
-  xinput set-prop "${pad}" "Synaptics Finger" 25, 30, 0
-  #xinput set-prop "${pad}" "Synaptics Tap Time" 0
-  xinput set-prop "${pad}" "Synaptics Tap Move" 201
-  xinput set-prop "${pad}" "Synaptics Tap Durations" 180, 180, 100
-  xinput set-prop "${pad}" "Synaptics ClickPad" 1
-  xinput set-prop "${pad}" "Synaptics Middle Button Timeout" 0
-  xinput set-prop "${pad}" "Synaptics Two-Finger Pressure" 282
-  xinput set-prop "${pad}" "Synaptics Two-Finger Width" 7
-  #xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
-  #xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
-  #xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
-  xinput set-prop "${pad}" "Synaptics Move Speed" 1.000000, 1.750000, 0.043687, 0.000000
-  #xinput set-prop "${pad}" "Synaptics Off" 0
-  xinput set-prop "${pad}" "Synaptics Locked Drags" 0
-  xinput set-prop "${pad}" "Synaptics Locked Drags Timeout" 5000
-  xinput set-prop "${pad}" "Synaptics Tap Action" 2, 3, 0, 0, 1, 3, 0
-  xinput set-prop "${pad}" "Synaptics Click Action" 1, 3, 0
-  xinput set-prop "${pad}" "Synaptics Circular Scrolling" 0
-  xinput set-prop "${pad}" "Synaptics Circular Scrolling Distance" 0.100000
-  xinput set-prop "${pad}" "Synaptics Circular Scrolling Trigger" 0
-  xinput set-prop "${pad}" "Synaptics Circular Pad" 0
-  xinput set-prop "${pad}" "Synaptics Palm Detection" 0
-  xinput set-prop "${pad}" "Synaptics Palm Dimensions" 10, 200
-  #xinput set-prop "${pad}" "Synaptics Coasting Speed" 20.000000, 50.000000
-  xinput set-prop "${pad}" "Synaptics Pressure Motion" 30, 160
-  xinput set-prop "${pad}" "Synaptics Pressure Motion Factor" 1.000000, 1.000000
-  xinput set-prop "${pad}" "Synaptics Resolution Detect" 1
-  xinput set-prop "${pad}" "Synaptics Grab Event Device" 0
-  xinput set-prop "${pad}" "Synaptics Gestures" 1
-  #xinput set-prop "${pad}" "Synaptics Capabilities" 1, 0, 0, 1, 1, 0, 0
-  #xinput set-prop "${pad}" "Synaptics Pad Resolution" 38, 42
-  #xinput set-prop "${pad}" "Synaptics Area" 0, 0, 0, 0
-  xinput set-prop "${pad}" "Synaptics Soft Button Areas" 2047, 0, 1678, 0, 0, 0, 0, 0
-  xinput set-prop "${pad}" "Synaptics Noise Cancellation" 22, 22
-  #xinput set-prop "${pad}" "Device Product ID" 2, 8
-  #xinput set-prop "${pad}" "Device Node" "/dev/input/event5"
+  # xinput set-prop "${pad}" "Device Enabled" 1
+  # xinput set-prop "${pad}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+  # xinput set-prop "${pad}" "Device Accel Profile" 1
+  # xinput set-prop "${pad}" "Device Accel Constant Deceleration" 2.500000
+  # xinput set-prop "${pad}" "Device Accel Adaptive Deceleration" 1.000000
+  # xinput set-prop "${pad}" "Device Accel Velocity Scaling" 12.500000
+  # #xinput set-prop "${pad}" "Synaptics Edges" 614, 3481, 307, 1740
+  # xinput set-prop "${pad}" "Synaptics Finger" 25, 30, 0
+  # #xinput set-prop "${pad}" "Synaptics Tap Time" 0
+  # xinput set-prop "${pad}" "Synaptics Tap Move" 201
+  # xinput set-prop "${pad}" "Synaptics Tap Durations" 180, 180, 100
+  # xinput set-prop "${pad}" "Synaptics ClickPad" 1
+  # xinput set-prop "${pad}" "Synaptics Middle Button Timeout" 0
+  # xinput set-prop "${pad}" "Synaptics Two-Finger Pressure" 282
+  # xinput set-prop "${pad}" "Synaptics Two-Finger Width" 7
+  # #xinput set-prop "${pad}" "Synaptics Scrolling Distance" 50, 50
+  # #xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
+  # #xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
+  # xinput set-prop "${pad}" "Synaptics Move Speed" 1.000000, 1.750000, 0.043687, 0.000000
+  # #xinput set-prop "${pad}" "Synaptics Off" 0
+  # xinput set-prop "${pad}" "Synaptics Locked Drags" 0
+  # xinput set-prop "${pad}" "Synaptics Locked Drags Timeout" 5000
+  # xinput set-prop "${pad}" "Synaptics Tap Action" 2, 3, 0, 0, 1, 3, 0
+  # xinput set-prop "${pad}" "Synaptics Click Action" 1, 3, 0
+  # xinput set-prop "${pad}" "Synaptics Circular Scrolling" 0
+  # xinput set-prop "${pad}" "Synaptics Circular Scrolling Distance" 0.100000
+  # xinput set-prop "${pad}" "Synaptics Circular Scrolling Trigger" 0
+  # xinput set-prop "${pad}" "Synaptics Circular Pad" 0
+  # xinput set-prop "${pad}" "Synaptics Palm Detection" 0
+  # xinput set-prop "${pad}" "Synaptics Palm Dimensions" 10, 200
+  # #xinput set-prop "${pad}" "Synaptics Coasting Speed" 20.000000, 50.000000
+  # xinput set-prop "${pad}" "Synaptics Pressure Motion" 30, 160
+  # xinput set-prop "${pad}" "Synaptics Pressure Motion Factor" 1.000000, 1.000000
+  # xinput set-prop "${pad}" "Synaptics Resolution Detect" 1
+  # xinput set-prop "${pad}" "Synaptics Grab Event Device" 0
+  # xinput set-prop "${pad}" "Synaptics Gestures" 1
+  # #xinput set-prop "${pad}" "Synaptics Capabilities" 1, 0, 0, 1, 1, 0, 0
+  # #xinput set-prop "${pad}" "Synaptics Pad Resolution" 38, 42
+  # #xinput set-prop "${pad}" "Synaptics Area" 0, 0, 0, 0
+  # xinput set-prop "${pad}" "Synaptics Soft Button Areas" 2047, 0, 1678, 0, 0, 0, 0, 0
+  # xinput set-prop "${pad}" "Synaptics Noise Cancellation" 22, 22
+  # #xinput set-prop "${pad}" "Device Product ID" 2, 8
+  # #xinput set-prop "${pad}" "Device Node" "/dev/input/event5"
 
-  synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
-}
+  # synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
+# }
 
 # Keyboard {{{
   setxkbmap -option ctrl:nocaps
@@ -174,4 +173,4 @@ xinput list | grep -q "${pad}" && {
 #}}}
 
 # Set background
-feh --bg-scale deepdream.jpg
+feh --bg-scale ~/Pictures/deepdream.jpg

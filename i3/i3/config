@@ -126,7 +126,7 @@ bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal 
 bindsym $mod+Control+Shift+b exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.bashrc'"
 bindsym $mod+Control+Shift+c exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/bin/conf'"
 bindsym $mod+Control+Shift+d exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/dotfiles/install /home/james/dotfiles/apt-get-things'"
-bindsym $mod+Control+Shift+f exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.pentadactylrc /home/james/.pterosaurrc /home/james/.vimperatorrc'"
+bindsym $mod+Control+Shift+f exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.pentadactylrc /home/james/.pterosaurrc /home/james/.vimperatorrc /home/james/.vimperatorrc_local'"
 bindsym $mod+Control+Shift+i exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.i3/config /home/james/.i3status.conf'"
 bindsym $mod+Control+Shift+t exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.tmux.conf'"
 bindsym $mod+Control+Shift+v exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.vimrc /home/james/.vimrc.bundles /home/james/.nvimrc /home/james/.nvimrc_terminal'"
@@ -140,10 +140,10 @@ bindsym $mod+Control+F3 exec "pactl set-sink-volume 0 +1%; killall -USR1 i3statu
 bindsym $mod+F4 exec "amixer -D pulse set Capture toggle; killall -USR1 i3status"
 bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
-bindsym $mod+F5 exec "xbacklight -dec 20"
-bindsym $mod+F6 exec "xbacklight -inc 20"
-bindsym $mod+Shift+F5 exec "xbacklight -set 0"
-bindsym $mod+Shift+F6 exec "xbacklight -set 100"
+# bindsym $mod+F5 exec "xbacklight -dec 20"
+# bindsym $mod+F6 exec "xbacklight -inc 20"
+# bindsym $mod+Shift+F5 exec "xbacklight -set 0"
+# bindsym $mod+Shift+F6 exec "xbacklight -set 100"
 
 # start a terminal here: just use <C-S-N>
 #bindsym $mod+b exec ~/.i3/shell.sh
@@ -256,6 +256,9 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#ff6600" -i -p "Really exit i3 X session?") = "YES" ] && i3-msg exit'
+# bindsym $mod+Shift+w exec sh -c 'xset dpms force standby'
+bindsym $mod+F5 exec sh -c 'sleep 1 && xset dpms force standby'
+# bindsym $mod+Shift+w exec gnome-terminal -e "xset dpms force standby"
 
 mode "resize" {
   bindsym u resize grow left 50 px or 50 ppt
@@ -302,8 +305,9 @@ bar {
   #status_command i3status
   #status_command i3status | ~/scripts/status/status.pl
   font pango:DejaVu Sans Mono 11
-  tray_output eDP1
-  #tray_output LVDS1
+  # tray_output eDP1
+  tray_output LVDS-1
+  tray_output LVDS-2
   colors {
     #background #000000
     #statusline #00A5FF #that neon blue
@@ -323,6 +327,7 @@ exec nm-applet
 exec ~/.config/systemd/user/i3lock-wait-for-suspend.service
 #exec volti
 #exec udisks-glue
+exec udiskie -s
 
 #Strip trailing newline from clipboard
 bindsym $mod+i exec "echo -n $(xclip -o) | xclip"
@@ -348,7 +353,8 @@ bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool
 #for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
 
 #Firefox fucked up, so open that shit in Chromium
-bindsym $mod+Shift+G exec "chromium-browser $(xclip -o)"
+# bindsym $mod+Shift+G exec "chromium-browser $(xclip -o)"
+bindsym $mod+Shift+G exec "google-chrome-stable $(xclip -o)"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 

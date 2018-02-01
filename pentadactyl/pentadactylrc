@@ -26,14 +26,14 @@ map <C-k> :tabmove! +1<CR>
 cmap <C-n> <Down>
 cmap <C-p> <Up>
 
-set defsearch=google_search
+set defsearch=g_s
 
-map ,g :open<space>google_search<space>
-map ,G :tabopen<space>google_search<space>
-map ,d :open<space>duckduckgo_search<space>
-map ,D :tabopen<space>duckduckgo_search<space>
-map ,w :open<space>wikipedia_search<space>
-map ,W :tabopen<space>wikipedia_search<space>
+map ,g :open<space>g_s<space>
+map ,G :tabopen<space>g_s<space>
+map ,d :open<space>d_s<space>
+map ,D :tabopen<space>d_s<space>
+map ,w :open<space>w_s<space>
+map ,W :tabopen<space>w_s<space>
 
 map ,r :open<space>reddit.com<CR>
 map ,R :tabopen<space>reddit.com<CR>
