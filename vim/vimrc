@@ -731,6 +731,7 @@ nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbr
 " TODO: Function to line up word under cursor with <count>th instance of same word on line above or below.
 " TODO: <Leader>L<Something> for :arglocal uses
 " TODO: Remove <Leader>s options that duplicate unimpaired functionality? I do prefer mine...
+" TODO: Fix position of space when pasting -- conditional on register matching pattern, toggle off?
 
 " TODO: Just a reminder to namespace mappings...
 "autocmd FileType unite call s:unite_keymaps()
@@ -741,6 +742,13 @@ nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbr
   "imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   "imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 "endfunction`
+
+" Convert markdown to pdf
+" nnoremap <Leader>mm :!pandoc --standalone -f markdown -t latex -o %.pdf %; nohup evince %.pdf > /dev/null &<CR>
+" nnoremap <Leader>mc :!pandoc --standalone -c style.css -f markdown -t latex -o %.pdf %; nohup evince %.pdf > /dev/null &<CR>
+" nnoremap <Leader>mh :!pandoc --standalone -c style.css -f markdown -t html -o %.html %<CR>
+nnoremap <Leader>m :!pandoc --standalone -c style.css -f markdown -t html -o %:r.html %<CR>
+" TODO: Cleanup.
 
 " Write to null (buffer doesn't look unsaved)
 nnoremap <Leader>wn :w! /dev/null<CR>
