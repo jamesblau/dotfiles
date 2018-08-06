@@ -10,14 +10,13 @@ case $1 in
   # *) echo Invalid layout specified... ;;
 esac
 
-# laptop=t420s
-laptop=t470p
+laptop=$(sudo dmidecode | grep "Version: ThinkPad" | sed 's/^.* \([^ ]*$\)/\1/')
 
 # UltraNav
 #modprobe -r psmouse
 #modprobe psmouse proto=auto
 
-[ ${laptop} == "t420s" ] && {
+[ ${laptop} == "T420s" ] && {
   echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
   xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
 
@@ -43,7 +42,7 @@ laptop=t470p
   }
 }
 
-[ ${laptop} == "t470p" ] && {
+[ ${laptop} == "T470p" ] && {
   echo 255 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
 
   stick="TPPS/2 IBM TrackPoint"
