@@ -3,6 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 exec_always "/usr/bin/xrandr --dpi 150"
+# exec_always "/usr/bin/xrandr --dpi 100"
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -303,8 +304,8 @@ bar {
   #status_command i3status | ~/scripts/status/status.pl
   font pango:DejaVu Sans Mono 11
   tray_output eDP-1
-  # tray_output LVDS-1
-  # tray_output LVDS-2
+  tray_output LVDS-1
+  tray_output LVDS-2
   colors {
     #background #000000
     #statusline #00A5FF #that neon blue
