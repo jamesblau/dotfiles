@@ -6,6 +6,8 @@ let mapleader = ","
 nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/.vimrc<CR>
 
+set syn=on
+set filetype=on
 set background=dark
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set expandtab                   " Tabs are spaces, not tabs

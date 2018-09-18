@@ -152,6 +152,9 @@ alias x2c="/home/james/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
 #Python check delimeters in table
 alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
 
+#Youtube-dl fix filenames for whitespace etc.
+alias youtube-dl="youtube-dl --restrict-filenames"
+
 #Choose vim
 if [ -x /usr/bin/nvim ]; then
   if [ "$james_in_neovim" == 1 ]; then
@@ -237,7 +240,7 @@ bind -m vi-insert "\C-o.":
 #Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/bin:$HOME/tresata:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin"
+export PATH="$PATH:$HOME/bin:$HOME/tresata:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/.cargo/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"

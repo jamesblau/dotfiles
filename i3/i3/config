@@ -121,13 +121,16 @@ bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal 
 bindsym $mod+Control+Shift+b exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.bashrc'"
 bindsym $mod+Control+Shift+c exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/bin/conf'"
 bindsym $mod+Control+Shift+d exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/dotfiles/install /home/james/dotfiles/apt-get-things'"
-bindsym $mod+Control+Shift+f exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.pentadactylrc /home/james/.pterosaurrc /home/james/.vimperatorrc /home/james/.vimperatorrc_local'"
+bindsym $mod+Control+Shift+f exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.tridactylrc /home/james/.vimperatorrc /home/james/.vimperatorrc_local'"
 bindsym $mod+Control+Shift+i exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.i3/config /home/james/.i3status.conf'"
 bindsym $mod+Control+Shift+j exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/judo_terms'"
 bindsym $mod+Control+Shift+r exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/Documents/resume/James_Blau_Resume.markdown /home/james/Documents/resume/style.css'"
 bindsym $mod+Control+Shift+t exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.tmux.conf'"
 bindsym $mod+Control+Shift+v exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.vimrc /home/james/.vimrc.bundles /home/james/.nvimrc /home/james/.nvimrc_terminal'"
 bindsym $mod+Control+Shift+o exec gnome-terminal --working-directory='/home/james/Downloads' -e tmux
+
+#audio mixer
+bindsym $mod+Shift+p exec pavucontrol
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"

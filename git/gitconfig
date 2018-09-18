@@ -15,7 +15,10 @@
 	prompt = false
 	keepBackup = false
 [alias]
+	aa = add --all
 	d = difftool
+	ds = difftool --staged
 	m = mergetool
+	s = status
 [push]
 	default = current

@@ -3,7 +3,7 @@
 __deploy=( bash git inputrc python ruby tmux vim )
 
 if [ -e ~/.not_a_server ]; then
-  __deploy+=( ag dir_colors i3 nvim pentadactyl vimperator pterosaur )
+  __deploy+=( ag dir_colors i3 nvim tridactyl )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."
 fi
@@ -20,39 +20,6 @@ for dir in "${__deploy[@]}"; do
   done
 done
 
-#In /home/james/src/opensource/junegunn/fzf/shell/key-bindings.bash, change:
+#Set HandlePowerKey=suspend in /etc/systemd/logind.conf
 
-  ## CTRL-R - Paste the selected command from history into the command line
-  #bind '"\C-r": " \C-e\C-u$(__fzf_history__)\e\C-e\e^\er"'
-
-  ## ALT-C - cd into the selected directory
-  #bind '"\ec": " \C-e\C-u$(__fzf_cd__)\e\C-e\er\C-m"'
-
-#[...]
-
-  ## CTRL-R - Paste the selected command from history into the command line
-  #bind '"\C-r": "\eddi$(__fzf_history__)\C-x\C-e\C-x^\e$a\C-x\C-r"'
-  #bind -m vi-command '"\C-r": "i\C-r"'
-
-  ## ALT-C - cd into the selected directory
-  #bind '"\ec": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
-  #bind -m vi-command '"\ec": "i\ec"'
-
-#To:
-
-  ## CTRL-O - Paste the selected command from history into the command line
-  #bind '"\C-o": " \C-e\C-u$(__fzf_history__)\e\C-e\e^\er"'
-
-  ## CTRL-] - cd into the selected directory
-  #bind '"\C-]": " \C-e\C-u$(__fzf_cd__)\e\C-e\er\C-m"'
-
-##[...]
-
-  ## CTRL-O - Paste the selected command from history into the command line
-  #bind '"\C-o": "\eddi$(__fzf_history__)\C-x\C-e\C-x^\e$a\C-x\C-r"'
-  #bind -m vi-command '"\C-o": "i\C-o"'
-
-  ## CTRL-] - cd into the selected directory
-  #bind '"\C-]": "\eddi$(__fzf_cd__)\C-x\C-e\C-x\C-r\C-m"'
-  #bind -m vi-command '"\C-]": "i\C-]"'
-
+#Set GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_sleep=nonvs" in /etc/default/grub for hibernate (TODO: double-check this)
