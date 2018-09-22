@@ -22,7 +22,6 @@ call plug#begin('~/.vim/plugged')
  " Plug 'wellle/targets.vim'
  " Plug 'spiiph/vim-space'
  " Plug 'zefei/vim-colortuner'
- " Plug 'jbnicolai/vim-AnsiEsc'
  " Plug 'rkitover/vimpager'
 " }}}
 
@@ -325,7 +324,8 @@ if !exists('g:james_minimal_plugins')
 
   " Integration {{{
     " Plug 'airblade/vim-gitgutter' {{{
-      "let g:gitgutter_initialised = 1
+      let g:gitgutter_enabled = 0
+      "let g:gitgutter_initialised = 0
       "let g:gitgutter_realtime = 0
       nnoremap <silent> <Leader>gs :Gstatus<CR>
       nnoremap <silent> <Leader>gd :Gdiff<CR>

@@ -6,6 +6,7 @@ let mapleader = ","
 nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/.vimrc<CR>
 
+set shortmess=I
 set syn=on
 set filetype=on
 set background=dark
@@ -182,7 +183,9 @@ if v:version >= 704
       set number relativenumber
     endif
   endfunction
-  set number relativenumber
+  if !exists('g:james_minimal_plugins')
+    set number relativenumber
+  endif
 else
   " NumberToggle
   function! NumberToggle()

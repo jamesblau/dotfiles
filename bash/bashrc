@@ -2,18 +2,21 @@
 [ -z "$PS1" ] && return
 
 #Choose term
-if [[ "${TERM}" == xterm-termite ]]; then
-  export TERMINFO="/usr/local/share/terminfo/"
-  #old_TERM=$TERM; TERM=dumb; TERM=$old_TERM; unset old_TERM
-  . /etc/profile.d/vte.sh
-  __vte_prompt_command
-fi
+# if [[ "${TERM}" == xterm-termite ]]; then
+  # export TERMINFO="/usr/local/share/terminfo/"
+  # #old_TERM=$TERM; TERM=dumb; TERM=$old_TERM; unset old_TERM
+  # . /etc/profile.d/vte.sh
+  # __vte_prompt_command
+# fi
+
+#Kitty terminal emulator
+alias kitty='kitty --config ~/.kitty.conf'
 
 #Choose color depth
-if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
-  export TERM=xterm-256color
-  #. ~/dotfiles/gnome-zenburn
-fi
+# if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+  # export TERM=xterm-256color
+  # #. ~/dotfiles/gnome-zenburn
+# fi
 
 if [ "$TERM" = "linux" ]; then
   /bin/echo -e "
@@ -252,22 +255,19 @@ alias sbt-testConsole='rlwrap sbt test:console -Xnojline'
 alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xmx2048M -Xms2048M"
 
-#Color ag
-alias cag='ag --color'
-
 #Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }
 function quieter () { (nohup "$@" > /dev/null &); exit; }
 
 #Generate output tersely and check &&/||
-alias A='echo A'
-function assert () {
-  if [ "$1" = -v ]; then
-    ("$@:2") && echo YEAH TOTALLY || echo FAT CHANCE
-  else
-    ("$@" &>/dev/null) && echo YEAH TOTALLY || echo FAT CHANCE
-  fi
-}
+# alias A='echo A'
+# function assert () {
+  # if [ "$1" = -v ]; then
+    # ("$@:2") && echo YEAH TOTALLY || echo FAT CHANCE
+  # else
+    # ("$@" &>/dev/null) && echo YEAH TOTALLY || echo FAT CHANCE
+  # fi
+# }
 
 # Look for merge conflicts
 alias viconflicts='vi $(ag -l "^[<=>]{7}[^<=>]*$")'
@@ -299,9 +299,17 @@ bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 alias bd=". bd -si"
 
 # open new terminal with tmux in same directory
-function ncd () { wd=$PWD; i3-sensible-terminal -e "bash -c \"cd $wd; tmux\""; }
+function ncd () { (nohup kitty --config ~/.kitty.conf -d $PWD &>/dev/null &); }
 
 # tree with common ignores
 alias trees="tree -I 'target|lib_managed'"
 alias treet="tree -I 'target|lib_managed|tmp'"
 alias treeu="tree -I 'target|lib_managed|tmp|test'"
+
+#IPA pronunciation; https://gitlab.com/ssb22/lexconvert
+alias say="python2 ~/src/opensource/ssb22/lexconvert/lexconvert.py --try unicode-ipa"
+
+#Concise xevent output
+alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
+
+source ~/.bashrc_private

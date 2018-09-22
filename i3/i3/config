@@ -24,17 +24,17 @@ bindsym $mod+Control+Shift+minus move scratchpad
 bindsym $mod+Control+minus scratchpad show
 
 # Chat scratchpad
-bindsym $mod+Shift+minus mark "chat", move scratchpad
-bindsym $mod+minus [con_mark="chat"] scratchpad show
+# bindsym $mod+Shift+minus mark "chat", move scratchpad
+# bindsym $mod+minus [con_mark="chat"] scratchpad show
 
-# Music scratchpad
-bindsym $mod+Shift+equal mark "music", move scratchpad
-bindsym $mod+equal [con_mark="music"] scratchpad show
+# # Music scratchpad
+# bindsym $mod+Shift+equal mark "music", move scratchpad
+# bindsym $mod+equal [con_mark="music"] scratchpad show
 
-# Terminal scratchpad
-bindsym $mod+Control+t exec i3-sensible-terminal -name scratchterminal
-for_window [instance="^scratchterminal$"] move to scratchpad
-bindsym $mod+t [instance="^scratchterminal$"] scratchpad show
+# # Terminal scratchpad
+# bindsym $mod+Control+t exec kitty --config ~/.kitty.conf --name scratchterminal
+# for_window [instance="^scratchterminal$"] move to scratchpad
+# bindsym $mod+t [instance="^scratchterminal$"] scratchpad show
 
 # Scratchpad marks
 mode "makeMark" {
@@ -110,27 +110,37 @@ bindsym $mod+o workspace back_and_forth
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal -e tmux
-bindsym $mod+Shift+Return exec gnome-terminal
-bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/dotfiles/bash/bashrc_neovim'"
-bindsym $mod+s exec stterm
-bindsym $mod+Shift+s exec stterm -e tmux
-bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
+bindsym $mod+Return exec kitty --config ~/.kitty.conf
+bindsym $mod+Control+Shift+Return exec i3-sensible-terminal -e tmux
+# bindsym $mod+Shift+Return exec gnome-terminal
+# bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/.bashrc_neovim'"
+# bindsym $mod+s exec stterm
+# bindsym $mod+Shift+s exec stterm -e tmux
+# bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
+
+#split terminal in same working directory
+bindsym --release Mod1+g split v; exec xdotool key --clearmodifiers alt+Return
+bindsym --release Mod1+v split h; exec xdotool key --clearmodifiers alt+Return
 
 #edit dotfiles
-bindsym $mod+Control+Shift+b exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.bashrc'"
-bindsym $mod+Control+Shift+c exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/bin/conf'"
-bindsym $mod+Control+Shift+d exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/dotfiles/install /home/james/dotfiles/apt-get-things'"
-bindsym $mod+Control+Shift+f exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.tridactylrc /home/james/.vimperatorrc /home/james/.vimperatorrc_local'"
-bindsym $mod+Control+Shift+i exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.i3/config /home/james/.i3status.conf'"
-bindsym $mod+Control+Shift+j exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/judo_terms'"
-bindsym $mod+Control+Shift+r exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/Documents/resume/James_Blau_Resume.markdown /home/james/Documents/resume/style.css'"
-bindsym $mod+Control+Shift+t exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.tmux.conf'"
-bindsym $mod+Control+Shift+v exec gnome-terminal -e "bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim /home/james/.vimrc /home/james/.vimrc.bundles /home/james/.nvimrc /home/james/.nvimrc_terminal'"
-bindsym $mod+Control+Shift+o exec gnome-terminal --working-directory='/home/james/Downloads' -e tmux
+bindsym $mod+Control+Shift+b exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.bashrc'
+bindsym $mod+Control+Shift+c exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/bin/conf'
+bindsym $mod+Control+Shift+d exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/dotfiles/install ~/dotfiles/apt-get-things'
+bindsym $mod+Control+Shift+e exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.muttrc'
+bindsym $mod+Control+Shift+f exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tridactylrc ~/.vimperatorrc ~/.vimperatorrc_local'
+bindsym $mod+Control+Shift+i exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.i3/config ~/.i3status.conf'
+bindsym $mod+Control+Shift+j exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/judo_terms'
+bindsym $mod+Control+Shift+k exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.kitty.conf'
+bindsym $mod+Control+Shift+r exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'
+bindsym $mod+Control+Shift+t exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tmux.conf'
+bindsym $mod+Control+Shift+v exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.vimrc ~/.vimrc.bundles ~/.nvimrc ~/dotfiles/page/pagerc ~/.nvimrc_terminal'
 
-#audio mixer
+#open directories
+bindsym $mod+Control+Shift+o exec kitty --config ~/.kitty.conf --directory='~/Downloads'
+
+#audio shortcuts
 bindsym $mod+Shift+p exec pavucontrol
+bindsym $mod+Control+Shift+n exec toggle_sleep_noise
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
@@ -150,7 +160,7 @@ bindsym $mod+Shift+F6 exec "light -S 100"
 #bindsym $mod+b exec ~/.i3/shell.sh
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+Control+Shift+F4 kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -256,7 +266,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#ff6600" -i -p "Really exit i3 X session?") = "YES" ] && i3-msg exit'
+bindsym $mod+Control+Shift+q exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#ff6600" -i -p "Really exit i3 X session?") = "YES" ] && i3-msg exit'
 # bindsym $mod+Shift+w exec sh -c 'xset dpms force standby'
 # bindsym $mod+F5 exec sh -c 'sleep 1 && xset dpms force standby'
 # bindsym $mod+Shift+w exec gnome-terminal -e "xset dpms force standby"
@@ -297,7 +307,7 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
-  #i3bar_command /home/james/src/opensource/S0lll0s/i3bgbar/i3bar/i3bar
+  #i3bar_command ~/src/opensource/S0lll0s/i3bgbar/i3bar/i3bar
 
   #status_command python /usr/local/lib/python2.7/dist-packages/powerline/bindings/i3/powerline-i3.py
   #font pango:DejaVu Sans Mono 11
@@ -355,8 +365,8 @@ bindsym --release $mod+braceleft scratchpad show; scratchpad show; exec "xdotool
 #for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
 
 #Firefox fucked up, so open that shit in Chromium
-# bindsym $mod+Shift+G exec "chromium-browser $(xclip -o)"
-bindsym $mod+Shift+G exec "google-chrome-stable $(xclip -o)"
+# bindsym $mod+Shift+g exec "chromium-browser $(xclip -o)"
+bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 

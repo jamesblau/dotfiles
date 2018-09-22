@@ -153,11 +153,15 @@ xinput list | grep -q "${pad}" && {
   xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
 
   xmodmap -e "keysym Alt_R = Mode_switch"
-  xmodmap -e "keycode  43 = h H Left Left"
-  xmodmap -e "keycode  44 = j J Down Down"
-  xmodmap -e "keycode  45 = k K Up Up"
-  xmodmap -e "keycode  46 = l L Right Right"
-  # TODO add same with control held (finally)
+  xmodmap -e "keycode 30 = u U Home Home Home Home"
+  xmodmap -e "keycode 31 = i I Prior Prior Prior Prior"
+  xmodmap -e "keycode 32 = o O Next Next Next Next"
+  xmodmap -e "keycode 33 = p P End End End End"
+  xmodmap -e "keycode 43 = h H Left Left Left Left"
+  xmodmap -e "keycode 44 = j J Down Down Down Down"
+  xmodmap -e "keycode 45 = k K Up Up Up Up"
+  xmodmap -e "keycode 46 = l L Right Right Right Right"
+  # TODO Why does Alt-R need to be pressed before shift, but not before control?
 
   xmodmap -e "keycode 107 = Super_L Super_R"
 

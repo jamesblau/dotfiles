@@ -1,3 +1,4 @@
+" vim: sw=2 ts=2 sts=2 expandtab ft=vim
 let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
 "let g:james_no_hud = 1
 "let g:james_minimal_plugins = 1

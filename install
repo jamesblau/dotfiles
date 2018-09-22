@@ -3,7 +3,7 @@
 __deploy=( bash git inputrc python ruby tmux vim )
 
 if [ -e ~/.not_a_server ]; then
-  __deploy+=( ag dir_colors i3 nvim tridactyl )
+  __deploy+=( ag i3 nvim tridactyl kitty )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."
 fi

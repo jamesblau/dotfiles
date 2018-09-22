@@ -1,3 +1,4 @@
+" vim: sw=2 ts=2 sts=2 expandtab ft=vim
 source ~/.vimrc
 nmap ,<C-T> :terminal bash --rcfile ~/dotfiles/bash/bashrc_neovim<CR>
 "tnoremap <C-\> <C-\><C-N>
