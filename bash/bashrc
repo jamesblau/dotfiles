@@ -243,7 +243,7 @@ bind -m vi-insert "\C-o.":
 #Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/bin:$HOME/tresata:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/bin:$HOME/tresata:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/scala/scala-2.12.6/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
@@ -270,7 +270,7 @@ function quieter () { (nohup "$@" > /dev/null &); exit; }
 # }
 
 # Look for merge conflicts
-alias viconflicts='vi $(ag -l "^[<=>]{7}[^<=>]*$")'
+alias viconflicts='vi $(rg -l "^[<=>]{7}[^<=>]*$")'
 
 # Remove empty files without messing with sbt files
 alias rmempty='rm $(find -type f -empty | grep -v "\\$")'
@@ -311,5 +311,8 @@ alias say="python2 ~/src/opensource/ssb22/lexconvert/lexconvert.py --try unicode
 
 #Concise xevent output
 alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
+
+#nicer to type
+# alias ag='rg'
 
 source ~/.bashrc_private

@@ -99,12 +99,13 @@ if !exists('g:james_minimal_plugins')
           let g:airline_left_sep='›'  " Slightly fancier than '>'
           let g:airline_right_sep='‹' " Slightly fancier than '<'
         endif
-        set statusline=%<%f\                     " Filename
-        set statusline+=%w%h%m%r                 " Options
-        set statusline+=%{fugitive#statusline()} " Git
-        set statusline+=\ [%{&ff}/%Y]            " Filetype
-        set statusline+=\ [%{getcwd()}]          " Current dir
-        set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+        " TODO: This stuff gets overwritten?
+        " set statusline=%<%f\                     " Filename
+        " set statusline+=%w%h%m%r                 " Options
+        " set statusline+=%{fugitive#statusline()} " Git
+        " set statusline+=\ [%{&ff}/%Y]            " Filetype
+        " set statusline+=\ [%{getcwd()}]          " Current dir
+        " set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
       endif
       Plug 'bling/vim-airline'
     " }}}
@@ -170,7 +171,7 @@ if !exists('g:james_minimal_plugins')
       let g:limelight_priority = -1
       Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
     " }}}
-    Plug 'vasconcelloslf/vim-interestingwords'
+    " Plug 'vasconcelloslf/vim-interestingwords'
   " }}}
 
   " Buffers / windows / tabs / sessions {{{
@@ -199,6 +200,12 @@ if !exists('g:james_minimal_plugins')
   " }}}
 
   " Completion / fuzzy find {{{
+    " Plug 'mileszs/ack.vim' {{{
+      if executable('rg')
+        let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
+      endif
+      Plug 'mileszs/ack.vim'
+    " }}}
     Plug 'goldfeld/ctrlr.vim'
     " Plug 'gorkunov/smartgf.vim' if 704 and has ag{{{
       if v:version >= 704 && executable('ag')
@@ -210,15 +217,15 @@ if !exists('g:james_minimal_plugins')
       \  'source':  v:oldfiles,
       \  'sink':    'e',
       \  'options': '-m -x +s' })
-      Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' }
+      Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install --all' }
       nnoremap <Leader>eo :FZFMru<CR>
     " }}}
     " Plug 'ctrlpvim/ctrlp.vim' {{{
       let g:ctrlp_working_path_mode = 'ra'
-      "let g:ctrlp_use_caching = 10000
+      let g:ctrlp_use_caching = 0
       "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " Any advantage to integrating ag and git-ls-files?
-      if executable('ag')
-        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+      if executable('rg')
+        let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
       endif
       nnoremap <silent> <C-P> :CtrlP<CR>
       nnoremap <silent> gb :CtrlPBuffer<CR>
@@ -250,10 +257,6 @@ if !exists('g:james_minimal_plugins')
         nnoremap <Leader><C-]> :TagbarToggle<CR>
         Plug 'majutsushi/tagbar'
       endif
-    " }}}
-    " Plug 'rking/ag.vim' {{{
-      let g:ag_working_path_mode="r"
-      Plug 'rking/ag.vim'
     " }}}
     Plug 'SirVer/ultisnips', { 'on': [] } " See YouCompleteMe below for loading mapping
     " Plug 'Valloric/YouCompleteMe', { 'on': [] } {{{
@@ -390,9 +393,9 @@ if !exists('g:james_minimal_plugins')
       let g:scala_sort_across_groups=1
       let g:scala_first_party_namespaces='\(com\.tresata\)'
       let g:scala_use_builtin_tagbar_defs=0
-      nnoremap          <C-S><C-A><C-T> :Ag  <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
-      nnoremap          <C-S><C-A><C-M> :Ag  <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
-      nnoremap          <C-S><C-A><C-R> :Ag  <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      nnoremap          <C-S><C-A><C-T> :Ack  <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      nnoremap          <C-S><C-A><C-M> :Ack  <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      nnoremap          <C-S><C-A><C-R> :Ack  <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
       nnoremap          <C-S><C-T>         :<C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
       cnoremap          <C-S><C-T>          <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
       nnoremap          <C-S><C-M>         :<C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
