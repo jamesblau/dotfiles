@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ $# -eq 0 ]
+then
+  server=1583
+else
+  server=$1
+fi
+
+if pgrep openvpn >/dev/null
+then
+  sudo killall -q openvpn
+else
+  sudo openvpn --config /etc/openvpn/ovpn_udp/us"${server}".nordvpn.com.udp.ovpn --auth-user-pass ~/.ovpnuserpass --daemon
+fi

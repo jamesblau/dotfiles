@@ -6,7 +6,6 @@ let mapleader = ","
 nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/.vimrc<CR>
 
-set shortmess=I
 set syn=on
 set filetype=on
 set background=dark
@@ -720,7 +719,6 @@ nnoremap <A-K> 25zl
 "nnoremap <A-L> 25zl
 
 " Fold stuff
-nmap <C-\> za
 function! MyFoldText()
   let line = getline(v:foldstart)
   let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
@@ -728,6 +726,7 @@ function! MyFoldText()
   let pad = repeat(' ', (winwidth(0)/2)-strlen(line)-strlen(v:folddashes))
   return poorDevil . v:folddashes . pad
 endfunction
+nmap <M-\> za
 
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>

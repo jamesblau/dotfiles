@@ -1,0 +1,6 @@
+#!/bin/bash
+# reset intratubes
+sudo killall -q openvpn
+sudo service network-manager stop
+sleep 0.5
+sudo service network-manager start

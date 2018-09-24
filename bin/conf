@@ -151,6 +151,7 @@ xinput list | grep -q "${pad}" && {
 # Keyboard {{{
   setxkbmap -option ctrl:nocaps
 
+  #Set AltRight+F12 to CapsLock
   xmodmap -e "keycode  96 = F12 F12 Caps_Lock F12 F12 F12 XF86Switch_VT_12 F12 F12 XF86Switch_VT_12"
 
   xmodmap -e "keysym Alt_R = Mode_switch"

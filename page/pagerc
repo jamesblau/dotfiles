@@ -1,5 +1,7 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 let g:james_minimal_plugins=1
+source ~/.vimrc
+setl shortmess=I
 setl scrollback=-1
 setl scrolloff=999
 setl signcolumn=no
@@ -7,6 +9,7 @@ setl modified
 setl nomodifiable
 setl invhlsearch
 setl clipboard+=unnamedplus
+setl laststatus=0
 nmap i <Nop>
 nmap I <Nop>
 nmap a <Nop>
@@ -15,3 +18,4 @@ nmap o <Nop>
 nmap O <Nop>
 nmap q :q<CR>
 nmap <C-C> :q<CR>
+" au TermEnter * exec normal G

@@ -495,10 +495,10 @@ if !exists('g:james_minimal_plugins')
       Plug 'godlygeek/tabular'
     " }}}
     " Plug 'terryma/vim-multiple-cursors' {{{
-      let g:multi_cursor_exit_from_insert_mode=0
-      let g:multi_cursor_exit_from_visual_mode=0
-      nnoremap <C-Q><C-N> :MultipleCursorsFind \<<C-R>=expand("<cword>")<CR>\><CR>
-      Plug 'terryma/vim-multiple-cursors'
+      " let g:multi_cursor_exit_from_insert_mode=0
+      " let g:multi_cursor_exit_from_visual_mode=0
+      " nnoremap <C-Q><C-N> :MultipleCursorsFind \<<C-R>=expand("<cword>")<CR>\><CR>
+      " Plug 'terryma/vim-multiple-cursors'
     " }}}
     Plug 'vim-scripts/visSum.vim'
     Plug 'vim-scripts/vsearch.vim'

@@ -95,19 +95,20 @@ else
   TON='$(tput bold)'
   TOFF='$(tput sgr0)'
   function TP () { echo "${TON}$(tput setaf $@)"; }
-  RED="\033[38;5;1m"
-  YEL="\033[33m"
-  GRN="\033[38;5;15m\033[38;5;2m"
-  CYN="\033[1;36m"
+  RED="\033[38;2;200;120;120m"
+  YEL="\033[38;2;223;175;143m"
+  GRN="\033[38;2;130;180;130m"
+  CYN="\033[38;2;140;208;211m"
+  PUR="\033[38;2;192;190;209m"
 
   PROMPT_USER_COLOR="$(tput bold)${RED}"
   PROMPT_PREPOSITION_COLOR="$(tput bold)${YEL}"
   PROMPT_DEVICE_COLOR="$(tput bold)${GRN}"
   PROMPT_DIR_COLOR="$(tput bold)${CYN}"
-  PROMPT_GIT_STATUS_COLOR=`TP 5`
+  PROMPT_GIT_STATUS_COLOR="$(tput bold)${PUR}"
   PROMPT_GIT_PROGRESS_COLOR="$(tput bold)${YEL}"
-  PROMPT_SYMBOL_COLOR=`TP 5`
-  export PS2="${TON}$(TP 5)> ${TOFF}"
+  PROMPT_SYMBOL_COLOR="$(tput bold)${PUR}"
+  export PS2="${TON}$(tput bold)${PUR}> ${TOFF}"
 fi
 
 # Run twolfson/sexy-bash-prompt
@@ -116,7 +117,7 @@ fi
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color'
+    alias ls='ls --color -N'
     alias grep='grep --color'
 fi
 [ -f ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ] && eval $( dircolors -b ~/src/opensource/ivoarch/dircolors-zenburn/dircolors )
@@ -183,6 +184,9 @@ stty -ixon
 alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s|.*\.||'"'"' | sort -u'
 
 function loop () { while true; do clear; $@; read; done; }
+
+#Kitty hangs...
+alias xclip='xclip -l 1'
 
 alias myip='wget -qO- http://ipecho.net/plain | tee /dev/tty | xclip; echo'
 
@@ -306,13 +310,11 @@ alias trees="tree -I 'target|lib_managed'"
 alias treet="tree -I 'target|lib_managed|tmp'"
 alias treeu="tree -I 'target|lib_managed|tmp|test'"
 
-#IPA pronunciation; https://gitlab.com/ssb22/lexconvert
+# IPA pronunciation; https://gitlab.com/ssb22/lexconvert
 alias say="python2 ~/src/opensource/ssb22/lexconvert/lexconvert.py --try unicode-ipa"
 
-#Concise xevent output
+# Concise xevent output
 alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 
-#nicer to type
-# alias ag='rg'
-
-source ~/.bashrc_private
+# Ripgrep
+alias rgf='rg --files | rg'
