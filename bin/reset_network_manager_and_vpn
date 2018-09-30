@@ -8,7 +8,7 @@ else
 fi
 sudo killall -q openvpn
 sudo service network-manager stop
-sleep 0.5
+sleep 1
 sudo service network-manager start
-sleep 0.5
-sudo openvpn --config /etc/openvpn/ovpn_udp/us"${server}".nordvpn.com.udp.ovpn --auth-user-pass ~/.ovpnuserpass --daemon
+sleep 1
+sudo openvpn --config /etc/openvpn/ovpn_tcp/us"${server}".nordvpn.com.tcp.ovpn --auth-user-pass ~/.ovpnuserpass --daemon --writepid ~/.openvpn_pid

@@ -1,9 +1,9 @@
-#!/bin/bash -x
+#!/bin/bash -xe
 
 __deploy=( bash git inputrc python ruby tmux vim )
 
 if [ -e ~/.not_a_server ]; then
-  __deploy+=( ag i3 nvim tridactyl kitty )
+  __deploy+=( ag i3 nvim tridactyl kitty Xresources )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."
 fi
@@ -26,3 +26,8 @@ done
 
 #In /etc/udev/rules.d/trackpoint.rules, put:
 #ACTION=="add", SUBSYSTEM=="input", ATTR{name}=="TPPS/2 IBM TrackPoint", ATTR{device/sensitivity}="255", ATTR{device/speed}="255"<Paste>
+
+#Add i3batwarn.sh to crontab every five minutes or so
+
+#ln -s ~/.nvimrc .config/nvim/init.vim
+#ln -s ~/dotfiles/rofi/config .config/rofi/config

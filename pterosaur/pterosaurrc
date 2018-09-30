@@ -1,6 +1,0 @@
-" vim: sw=2 ts=2 sts=2 expandtab ft=vim
-source ~/.vimrc
-
-inoremap <Tab> <Esc><Tab>
-"nnoremap <C-a> <Esc>gg0vG$
-"inoremap <C-a> <Esc>gg0vG$

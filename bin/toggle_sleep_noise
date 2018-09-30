@@ -1,24 +1,12 @@
-#!/bin/bash
-
-function GetClient () { pactl list clients | grep -B 11 $! | head -n 1 | sed 's/.*#//'; }
-function GetSinkInput () { pactl list short sink-inputs | grep $(GetClient) | cut -f1; }
-function SetVolume () { pactl set-sink-input-volume $(GetSinkInput) "${1}"%; }
+#!/bin/bash -x
 
 if [ -e ~/.sleeping ]
 then
-  ps aux | grep vlc.*/Music/noise_ | grep -v grep | awk '{print $2}' | xargs kill
+  ps aux | grep mpv.*/Music/noise_ | grep -v grep | awk '{print $2}' | xargs kill
   rm ~/.sleeping
 else
-  amixer -D pulse set Master toggle
-  nohup cvlc --repeat --no-video ~/Music/noise_blizzard.mka &>/dev/null &
-  sleep 0.1
-  SetVolume 60
-  nohup cvlc --repeat --no-video ~/Music/noise_thunderstorm.mka &>/dev/null &
-  sleep 0.1
-  SetVolume 60
-  nohup cvlc --repeat --no-video ~/Music/noise_brown.mka &>/dev/null &
-  sleep 0.1
-  SetVolume 100
+  nohup mpv --volume=60 --loop ~/Music/noise_blizzard.mka &>/dev/null &
+  nohup mpv --volume=60 --loop ~/Music/noise_thunderstorm.mka &>/dev/null &
+  nohup mpv --volume=100 --loop ~/Music/noise_brown.mka &>/dev/null &
   touch ~/.sleeping
-  amixer -D pulse set Master toggle
 fi

@@ -270,6 +270,37 @@ function! LineBreakToggle()
   endif
 endfunction
 
+function! ClipboardToggle()
+  if(&clipboard == 'unnamedplus')
+    set clipboard=
+  else
+    set clipboard+=unnamedplus
+  endif
+endfunction
+
+" Center on search term, diff
+function! MiddleToggle()
+  if(maparg('n', 'n') == '')
+    nmap n nzz
+    nmap N Nzz
+    nnoremap <A-n> n
+    nnoremap <A-N> N
+    nmap ]c ]czz
+    nmap [c [czz
+    nnoremap <A-c> ]c
+    nnoremap <A-C> [c
+  else
+    nunmap n
+    nunmap N
+    nunmap <A-n>
+    nunmap <A-N>
+    nunmap ]c
+    nunmap [c
+    nunmap <A-c>
+    nunmap <A-C>
+  endif
+endfunction
+
 function! LeximaToggle()
   if(g:lexima_no_default_rules == 1)
     let g:lexima_no_default_rules=0
@@ -318,6 +349,8 @@ nnoremap <Leader>sd :call DiffWToggle()<CR>
 nmap     <Leader>sD :call DiffWToggleRegex("")<C-B><C-B>
 nnoremap <Leader>sb :call ShowBreakToggle()<CR>
 nnoremap <Leader>sB :call LineBreakToggle()<CR>
+nnoremap <Leader>sC :call ClipboardToggle()<CR>
+nnoremap <Leader>sm :call MiddleToggle()<CR>
 nnoremap <Leader>sa :call LeximaToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
@@ -545,16 +578,6 @@ nnoremap <Leader>ra mmggVGy`m
 nnoremap <Leader>xa mmggVGy:call system("xclip -i -selection clipboard", getreg("\""))<CR>`m
 " }}}
 
-" Center on search term, diff
-nmap n nzz
-nmap N Nzz
-nnoremap <A-n> n
-nnoremap <A-N> N
-nmap ]c ]czz
-nmap [c [czz
-nnoremap <A-c> ]c
-nnoremap <A-C> [c
-
 " Saving stuff
 cmap w!! w !sudo tee % >/dev/null
 nmap ,ww! :w<CR>:bw<CR>
@@ -631,11 +654,15 @@ nmap <Leader>) 2yE?(<CR>J"_xh%kJ?<C-T>"<CR>
 nmap <Leader>[ 2yEysi[<C-J>/<C-T>"<CR>
 nmap <Leader>] 2yE?[<CR>J"_xh%kJx?<C-T>"<CR>
 
-" swap j/gj, k/gk
+" swap j/gj, k/gk, $/g$, 0/g0
 noremap j gj
 noremap k gk
 noremap gj j
 noremap gk k
+noremap $ g$
+noremap 0 g0
+noremap g$ $
+noremap g0 0
 
 function! CombineSelection(line1, line2, cp)
   execute 'let char = "\u'.a:cp.'"'

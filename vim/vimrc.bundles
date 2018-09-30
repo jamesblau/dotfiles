@@ -128,6 +128,7 @@ if !exists('g:james_minimal_plugins')
       "let g:goyo_height=100
       "let g:goyo_linenr=0
       nnoremap <Leader><C-G> :Goyo<CR>
+      nnoremap <Leader><C-F> :Goyo<CR>:set ft= syn= formatprg= linebreak showbreak= wrap<CR>
       Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " }}}
     " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' } {{{
@@ -405,7 +406,7 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <C-S><C-P><C-T> :CtrlP <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><CR>
       nnoremap <silent> <C-S><C-P><C-M> :CtrlP <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><CR>
       nnoremap <silent> <C-S><C-P><C-R> :CtrlP <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
-      function SetScalaOptions()
+      function! SetScalaOptions()
         setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
         setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
         " Comments match scaladoc style

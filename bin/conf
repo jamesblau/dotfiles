@@ -56,6 +56,7 @@ laptop=$(sudo dmidecode | grep "Version: ThinkPad" | sed 's/^.* \([^ ]*$\)/\1/')
   pad="SynPS/2 Synaptics TouchPad"
   xinput list | grep -q "${pad}" && {
     xinput set-prop "${pad}" "libinput Accel Speed" 0.8
+    xinput set-prop "${pad}" "libinput Natural Scrolling Enabled" 0
     xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
   }
 }
@@ -168,6 +169,8 @@ xinput list | grep -q "${pad}" && {
   xmodmap -e "keycode 107 = Super_L Super_R"
 
   # TODO? xcape {{{
+    pgrep xcape >/dev/null || xcape
+
     # Map an unused modifier's keysym to the spacebar's keycode and make it a
     # control modifier. It needs to be an existing key so that emacs won't
     # spazz out when you press it. Hyper_L is a good candidate.
@@ -186,8 +189,6 @@ xinput list | grep -q "${pad}" && {
     #xmodmap -e "keycode any = backslash bar backslash bar backslash bar backslash bar"
 
     # Finally use xcape to cause the space bar to generate a space when tapped.
-    ps aux | grep -v grep | grep -q opensource/alols/xcape/xcape && killall xcape
-    ~/src/opensource/alols/xcape/xcape
     #~/src/opensource/alols/xcape/xcape -e "$spare_modifier1=Tab"
     #~/src/opensource/alols/xcape/xcape -e "$spare_modifier2=backslash"
   #}}}

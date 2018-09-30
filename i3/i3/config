@@ -6,110 +6,21 @@ exec_always "/usr/bin/xrandr --dpi 150"
 # exec_always "/usr/bin/xrandr --dpi 100"
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 6
+# Font
+font pango:DejaVu Sans Mono Bold 7
 new_window 1pixel
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
 
-# All scratchpads
+# Scratchpad; $mod+Control+Space toggles without changing size
 bindsym $mod+Control+Shift+minus move scratchpad
 bindsym $mod+Control+minus scratchpad show
 
-# Chat scratchpad
-# bindsym $mod+Shift+minus mark "chat", move scratchpad
-# bindsym $mod+minus [con_mark="chat"] scratchpad show
-
-# # Music scratchpad
-# bindsym $mod+Shift+equal mark "music", move scratchpad
-# bindsym $mod+equal [con_mark="music"] scratchpad show
-
-# # Terminal scratchpad
-# bindsym $mod+Control+t exec kitty --config ~/.kitty.conf --name scratchterminal
-# for_window [instance="^scratchterminal$"] move to scratchpad
-# bindsym $mod+t [instance="^scratchterminal$"] scratchpad show
-
-# Scratchpad marks
-mode "makeMark" {
-  bindsym a mark "a", move scratchpad; mode "default"
-  bindsym b mark "b", move scratchpad; mode "default"
-  bindsym c mark "c", move scratchpad; mode "default"
-  bindsym d mark "d", move scratchpad; mode "default"
-  bindsym e mark "e", move scratchpad; mode "default"
-  bindsym f mark "f", move scratchpad; mode "default"
-  bindsym g mark "g", move scratchpad; mode "default"
-  bindsym h mark "h", move scratchpad; mode "default"
-  bindsym i mark "i", move scratchpad; mode "default"
-  bindsym j mark "j", move scratchpad; mode "default"
-  bindsym k mark "k", move scratchpad; mode "default"
-  bindsym l mark "l", move scratchpad; mode "default"
-  bindsym m mark "m", move scratchpad; mode "default"
-  bindsym n mark "n", move scratchpad; mode "default"
-  bindsym o mark "o", move scratchpad; mode "default"
-  bindsym p mark "p", move scratchpad; mode "default"
-  bindsym q mark "q", move scratchpad; mode "default"
-  bindsym r mark "r", move scratchpad; mode "default"
-  bindsym s mark "s", move scratchpad; mode "default"
-  bindsym t mark "t", move scratchpad; mode "default"
-  bindsym u mark "u", move scratchpad; mode "default"
-  bindsym v mark "v", move scratchpad; mode "default"
-  bindsym w mark "w", move scratchpad; mode "default"
-  bindsym x mark "x", move scratchpad; mode "default"
-  bindsym y mark "y", move scratchpad; mode "default"
-  bindsym z mark "z", move scratchpad; mode "default"
-
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-bindsym $mod+grave mode "makeMark"
-
-mode "goToMark" {
-  bindsym a [con_mark="a"] scratchpad show; mode "default"
-  bindsym b [con_mark="b"] scratchpad show; mode "default"
-  bindsym c [con_mark="c"] scratchpad show; mode "default"
-  bindsym d [con_mark="d"] scratchpad show; mode "default"
-  bindsym e [con_mark="e"] scratchpad show; mode "default"
-  bindsym f [con_mark="f"] scratchpad show; mode "default"
-  bindsym g [con_mark="g"] scratchpad show; mode "default"
-  bindsym h [con_mark="h"] scratchpad show; mode "default"
-  bindsym i [con_mark="i"] scratchpad show; mode "default"
-  bindsym j [con_mark="j"] scratchpad show; mode "default"
-  bindsym k [con_mark="k"] scratchpad show; mode "default"
-  bindsym l [con_mark="l"] scratchpad show; mode "default"
-  bindsym m [con_mark="m"] scratchpad show; mode "default"
-  bindsym n [con_mark="n"] scratchpad show; mode "default"
-  bindsym o [con_mark="o"] scratchpad show; mode "default"
-  bindsym p [con_mark="p"] scratchpad show; mode "default"
-  bindsym q [con_mark="q"] scratchpad show; mode "default"
-  bindsym r [con_mark="r"] scratchpad show; mode "default"
-  bindsym s [con_mark="s"] scratchpad show; mode "default"
-  bindsym t [con_mark="t"] scratchpad show; mode "default"
-  bindsym u [con_mark="u"] scratchpad show; mode "default"
-  bindsym v [con_mark="v"] scratchpad show; mode "default"
-  bindsym w [con_mark="w"] scratchpad show; mode "default"
-  bindsym x [con_mark="x"] scratchpad show; mode "default"
-  bindsym y [con_mark="y"] scratchpad show; mode "default"
-  bindsym z [con_mark="z"] scratchpad show; mode "default"
-
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-bindsym $mod+apostrophe mode "goToMark"
-
-# Show swap jump to previous last workspace monitor screen
+# Go to previous workspace/screen
 bindsym $mod+o workspace back_and_forth
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
+# Start a terminal
 bindsym $mod+Return exec kitty --config ~/.kitty.conf
 bindsym $mod+Control+Shift+Return exec i3-sensible-terminal -e tmux
 # bindsym $mod+Shift+Return exec gnome-terminal
@@ -118,27 +29,34 @@ bindsym $mod+Control+Shift+Return exec i3-sensible-terminal -e tmux
 # bindsym $mod+Shift+s exec stterm -e tmux
 # bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
 
-#split terminal in same working directory
+# Split terminal in same working directory
 bindsym --release Mod1+g split v; exec xdotool key --clearmodifiers alt+Return
 bindsym --release Mod1+v split h; exec xdotool key --clearmodifiers alt+Return
 
-#edit dotfiles
-bindsym $mod+Control+Shift+b exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.bashrc'
+# Edit dotfiles
+bindsym $mod+Control+Shift+a exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/dotfiles/install ~/dotfiles/apt-installs'
+bindsym $mod+Control+Shift+b exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.bashrc ~/.bashrc_neovim'
 bindsym $mod+Control+Shift+c exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/bin/conf'
-bindsym $mod+Control+Shift+d exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/dotfiles/install ~/dotfiles/apt-get-things'
-bindsym $mod+Control+Shift+e exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.muttrc'
-bindsym $mod+Control+Shift+f exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tridactylrc ~/.vimperatorrc'
-bindsym $mod+Control+Shift+i exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.i3/config ~/.i3status.conf'
+bindsym $mod+Control+Shift+f exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tridactylrc'
+bindsym $mod+Control+Shift+i exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.i3/config ~/.i3status.conf ~/dotfiles/bin/i3status_custom.sh'
 bindsym $mod+Control+Shift+j exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/judo_terms'
 bindsym $mod+Control+Shift+k exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.kitty.conf'
 bindsym $mod+Control+Shift+r exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'
 bindsym $mod+Control+Shift+t exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tmux.conf'
+bindsym $mod+Control+Shift+u exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.muttrc'
 bindsym $mod+Control+Shift+v exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.vimrc ~/.vimrc.bundles ~/.nvimrc ~/dotfiles/page/pagerc ~/.nvimrc_terminal'
 
-#open directories
+# Re-run conf; why does 'setxkbmap -option ctrl:nocaps' run more slowly in kitty?
+bindsym $mod+BackSpace exec kitty --config ~/.kitty.conf bash -c ~/bin/conf
+# bindsym $mod+BackSpace exec gnome-terminal -e 'bash -c ~/bin/conf'
+
+# Open directories
 bindsym $mod+Control+Shift+o exec kitty --config ~/.kitty.conf --directory='~/Downloads'
 
-#audio shortcuts
+# Open programs
+bindsym $mod+u exec kitty --config ~/.kitty.conf mutt
+
+# Audio shortcuts
 bindsym $mod+Shift+p exec pavucontrol
 bindsym $mod+Control+Shift+n exec toggle_sleep_noise
 
@@ -156,58 +74,53 @@ bindsym $mod+F6 exec "light -A 20"
 bindsym $mod+Shift+F5 exec "light -S 0"
 bindsym $mod+Shift+F6 exec "light -S 100"
 
-# start a terminal here: just use <C-S-N>
-#bindsym $mod+b exec ~/.i3/shell.sh
-
-# kill focused window
+# Kill focused window
 bindsym $mod+Control+Shift+F4 kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
+# Start dmenu
+bindsym $mod+d exec dmenu_run -nb '#1f1f1f' -sb '#87AFAF' -sf '#1f1f1f' -fn hack
+# Only displays applications shipping a .desktop file
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# change focus
+# Change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# move focused window
+# Move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# split in horizontal orientation, yes I know it says 'v'
+# Split in horizontal orientation, yes I know it says 'v'
 bindsym $mod+g split v
 
-# split in vertical orientation, yes I know it says 'h'
+# Split in vertical orientation, yes I know it says 'h'
 bindsym $mod+v split h
 
-# enter fullscreen mode for the focused container
+# Enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
-# change container layout (stacked, tabbed, toggle split)
+# Change container layout (stacked, tabbed, toggle split)
 bindsym $mod+q layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# toggle tiling / floating
+# Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
+# Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+# Focus the parent container
 bindsym $mod+p focus parent
 
-# focus the child container
+# Focus the child container
 bindsym $mod+n focus child
 
-# switch to workspace
+# Switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -219,7 +132,7 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-# move focused container to workspace
+# Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
@@ -231,7 +144,7 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# move focused container to workspace and go there
+# Move focused container to workspace and go there
 bindsym $mod+Control+1 move container to workspace 1; workspace 1
 bindsym $mod+Control+2 move container to workspace 2; workspace 2
 bindsym $mod+Control+3 move container to workspace 3; workspace 3
@@ -243,7 +156,7 @@ bindsym $mod+Control+8 move container to workspace 8; workspace 8
 bindsym $mod+Control+9 move container to workspace 9; workspace 9
 bindsym $mod+Control+0 move container to workspace 10; workspace 10
 
-# move focused container to workspace and go there
+# Move focused container to workspace and go there
 bindsym $mod+Control+Shift+1 focus parent; move container to workspace 1; workspace 1
 bindsym $mod+Control+Shift+2 focus parent; move container to workspace 2; workspace 2
 bindsym $mod+Control+Shift+3 focus parent; move container to workspace 3; workspace 3
@@ -255,18 +168,18 @@ bindsym $mod+Control+Shift+8 focus parent; move container to workspace 8; worksp
 bindsym $mod+Control+Shift+9 focus parent; move container to workspace 9; workspace 9
 bindsym $mod+Control+Shift+0 focus parent; move container to workspace 10; workspace 10
 
-# move between monitors
+# Move between monitors
 bindsym $mod+m focus output left; focus output up
 bindsym $mod+Control+m move workspace to output left; move workspace to output up
 bindsym $mod+Shift+m move container to output left; move container to output up
 bindsym $mod+Control+Shift+m move container to output left; move container to output up; focus output left; focus output up
 
-# reload the configuration file
+# Reload the configuration file
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Control+Shift+q exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#ff6600" -i -p "Really exit i3 X session?") = "YES" ] && i3-msg exit'
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Control+Shift+Delete exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#a8551e" -i -p "Really exit i3 X session?") = "YES" ] && i3-msg exit'
 # bindsym $mod+Shift+w exec sh -c 'xset dpms force standby'
 # bindsym $mod+F5 exec sh -c 'sleep 1 && xset dpms force standby'
 # bindsym $mod+Shift+w exec gnome-terminal -e "xset dpms force standby"
@@ -305,12 +218,21 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Colors
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #87AFAF #1f1f1f #2e9ef4   #87AFAF
+client.focused_inactive #333333 #5f676a #1f1f1f #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #9e2222 #1f1f1f #900000   #900000
+client.placeholder      #000000 #0c0c0c #1f1f1f #000000   #0c0c0c
+
+client.background       #1f1f1f
+
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
   #i3bar_command ~/src/opensource/S0lll0s/i3bgbar/i3bar/i3bar
 
   #status_command python /usr/local/lib/python2.7/dist-packages/powerline/bindings/i3/powerline-i3.py
-  #font pango:DejaVu Sans Mono 11
 
   status_command ~/bin/i3status_custom.sh
   #status_command i3status
@@ -320,34 +242,36 @@ bar {
   tray_output LVDS-1
   tray_output LVDS-2
   colors {
-    #background #000000
-    #statusline #00A5FF #that neon blue
-    #separator #666666
+    background #1f1f1f
+    statusline #87AFAF
+    separator #87AFAF
 
-    #focused_workspace  #4c7899 #285577 #ffffff
-    #active_workspace   #333333 #5f676a #ffffff
-    #inactive_workspace #333333 #222222 #888888
-    #urgent_workspace   #2f343a #900000 #ffffff
+    # class            border  backgr. text
+    focused_workspace  #87AFAF #87AFAF #1f1f1f
+    active_workspace   #333333 #5f676a #1f1f1f
+    inactive_workspace #333333 #222222 #888888
+    urgent_workspace   #2f343a #9e2222 #1f1f1f
   }
 }
-#exec /usr/local/lib/python2.7/dist-packages/powerline/bindings/bar/powerline-bar.py --i3 | bar
 
-#Startup things...
-exec_always ~/bin/conf
+# Startup things...
+# Does this work?
+exec_always sudo ~/bin/conf
+exec_always ~/bin/lid-lock
 exec clipit
 exec nm-applet
-exec ~/.config/systemd/user/i3lock-wait-for-suspend.service
-#exec volti
-#exec udisks-glue
+exec blueman-applet
+# exec volti
+# exec udisks-glue
 exec udiskie -s
 
-#Strip trailing newline from clipboard
+# Strip trailing newline from clipboard
 bindsym $mod+i exec "echo -n $(xclip -o) | xclip"
 
-#Not sure about this one
+# Not sure about this one
 focus_follows_mouse no
 
-#This is the clever part
+# This is the clever part
 bindsym $mod+F9 exec "echo -n '¯\_(ツ)_/¯' | xclip"
 bindsym $mod+F10 exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"
 bindsym $mod+F11 exec "echo -n 'ಥ_ಥ' | xclip"
@@ -357,20 +281,24 @@ bindsym $mod+Shift+F10 exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"
 bindsym $mod+Shift+F11 exec "echo -n '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"
 bindsym $mod+Shift+F12 exec "echo -n '☃' | xclip"
 
-#Slightly easier caret mode
+# Slightly easier caret mode
 bindsym --release Control+7 exec xdotool key --clearmodifiers F7
 
-#Firefox popups
-#for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
+# Firefox popups
+for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
 
-#Fix wifi TODO: Somehow obviate need for this
+# Firefox disable Ctrl+Q
+bindsym Control+q exec ~/bin/noctrlq.sh
+
+# Fix wifi TODO: Somehow obviate need for this
 bindsym $mod+F8 exec kitty --config ~/.kitty.conf bash -c reset_network_manager_and_vpn
 bindsym $mod+Control+F8 exec kitty --config ~/.kitty.conf bash -c kill_vpn_and_reset_network_manager
 bindsym $mod+Control+Shift+F8 exec kitty --config ~/.kitty.conf bash -c toggle_vpn
 
-#Firefox fucked up, so open that shit in Chromium
-# bindsym $mod+Shift+g exec "chromium-browser $(xclip -o)"
-bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
+# Firefox failed
+bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
+# bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
+bindsym $mod+Control+Shift+q exec "qutebrowser $(xclip -o)"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 

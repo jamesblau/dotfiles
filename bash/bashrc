@@ -95,11 +95,11 @@ else
   TON='$(tput bold)'
   TOFF='$(tput sgr0)'
   function TP () { echo "${TON}$(tput setaf $@)"; }
-  RED="\033[38;2;200;120;120m"
-  YEL="\033[38;2;223;175;143m"
-  GRN="\033[38;2;130;180;130m"
-  CYN="\033[38;2;140;208;211m"
-  PUR="\033[38;2;192;190;209m"
+  RED="\033[38;2;200;120;120m" #c87878
+  YEL="\033[38;2;223;175;143m" #dfaf8f
+  GRN="\033[38;2;130;180;130m" #82b482
+  CYN="\033[38;2;140;208;211m" #8cd0d3
+  PUR="\033[38;2;192;190;209m" #c0bed1
 
   PROMPT_USER_COLOR="$(tput bold)${RED}"
   PROMPT_PREPOSITION_COLOR="$(tput bold)${YEL}"
@@ -263,6 +263,12 @@ export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xmx2048M -Xms
 function quiet () { (nohup "$@" > /dev/null &); }
 function quieter () { (nohup "$@" > /dev/null &); exit; }
 
+#Quick opens
+alias qe='quiet evince'
+alias Qe='quieter evince'
+alias qv='quiet vlc'
+alias Qv='quieter vlc'
+
 #Generate output tersely and check &&/||
 # alias A='echo A'
 # function assert () {
@@ -315,6 +321,9 @@ alias say="python2 ~/src/opensource/ssb22/lexconvert/lexconvert.py --try unicode
 
 # Concise xevent output
 alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
+
+# Clever unique without sort
+alias uniq_nosort='awk '\''!x[$0]++'\'''
 
 # Ripgrep
 alias rgf='rg --files | rg'

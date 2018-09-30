@@ -25,11 +25,3 @@ do
   dat="[{ \"full_text\": \"${dat}\" },"
   echo "${line/[/$dat}" || exit 1
 done)
-
-#i3status | while :
-#do
-  #read line
-  #MIC="mic `amixer sget Capture | tail -n 1 | cut -d '[' -f 2,4 | sed 's/[][]//g'`"
-  ##echo "$line | $MIC" || exit 1
-  #echo "$line" || exit 1
-#done

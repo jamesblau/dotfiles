@@ -1,8 +1,3 @@
-#! /bin/bash
+#!/bin/bash
 
-while true; do
-  value=$(cat  /proc/acpi/button/lid/LID/state | cut -f2 -d: | sed 's/ *//')
-  if [ ! $value=open ]; then
-    i3-lock
-  fi
-done
+pgrep xss-lock >/dev/null || xss-lock -- i3lock -n -i ~/Pictures/deepdream.jpg &

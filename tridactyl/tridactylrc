@@ -11,6 +11,12 @@ bind <C-y> scrollline -1
 " Core
 bind <C-c> stop
 
+" Don't repeat things...
+unbind .
+
+" If only...
+unbind <C-q>
+
 " TODO: Get working
 " cmap <C-n> <Down>
 " cmap <C-p> <Up>
@@ -20,6 +26,9 @@ bind <C-c> stop
 
 " Comment toggler for Reddit and Hacker News
 bind ;c hint -c [class*="expand"],[class="togg"]
+" Upvote/downvote; I don't know how this works
+" bind ;u hint -c [class="arrow up login-required access-required"]
+" bind ;d hint -c [class="arrow down login-required access-required"]
 
 " Gui
 set theme dark
@@ -37,7 +46,9 @@ js tri.config.set("editorcmd", "kitty nvim")
 
 set hintchars hjklasdfgyuiopqwertnmzxcvb
 " set hintchars 4327895610
-set hintfiltermode vimperator-reflow
+set hintfiltermode simple
+bind ,h composite set hintchars 4327895610 | set hintfiltermode vimperator-reflow
+bind ,H composite set hintchars hjklasdfgyuiopqwertnmzxcvb | set hintfiltermode vimperator-reflow
 
 " Make Tridactyl work on more sites at the expense of some security
 set csp clobber
@@ -52,26 +63,21 @@ blacklistadd mail.google.com/
 " URL redirects
 " autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 
-" TODO
+bind ,d fillcmdline open duckduckgo
+bind ,D fillcmdline tabopen duckduckgo
+bind ,w fillcmdline open wikipedia
+bind ,W fillcmdline tabopen wikipedia
+bind ,e fillcmdline open search site:reddit.com
+bind ,E fillcmdline tabopen search site:reddit.com
 
-" Search
-" set defsearch=g_s
-
-" map ,g :open<space>g_s<space>
-" map ,G :tabopen<space>g_s<space>
-" map ,d :open<space>d_s<space>
-" map ,D :tabopen<space>d_s<space>
-" map ,w :open<space>w_s<space>
-" map ,W :tabopen<space>w_s<space>
-
-" map ,r :open<space>reddit.com<CR>
-" map ,R :tabopen<space>reddit.com<CR>
-" map ,s :open<space>reddit.com/r/ssbpm<CR>
-" map ,S :tabopen<space>reddit.com/r/ssbpm<CR>
-" map ,u :open<space>reddit.com/message/unread<CR>
-" map ,U :tabopen<space>reddit.com/message/unread<CR>
-" map ,m :open<space>gmail.com<CR>
-" map ,M :tabopen<space>gmail.com<CR>
-" map ,c :tabopen<space>nedroid.com/<CR>:tabopen<space>scarygoround.com/<CR>:tabopen<space>xkcd.com/<CR>:tabopen<space>smbc-comics.com/<CR>:tabopen<space>penny-arcade.com/comic<CR>:tabopen<space>harkavagrant.com/<CR>JJJJJ
+bind ,r open reddit.com
+bind ,R tabopen reddit.com
+bind ,u open reddit.com/message/unread
+bind ,U tabopen reddit.com/message/unread
+bind ,m open gmail.com
+bind ,M tabopen gmail.com
+bind ,o open https://discordapp.com/activity
+bind ,O tabopen https://discordapp.com/activity
+bind ,c composite tabopen -b harkavagrant.com | tabopen -b scarygoround.com | tabopen -b strongfemaleprotagonist.com | tabopen -b nedroid.com | tabopen -b existentialcomics.com | tabopen -b penny-arcade.com/comic | tabopen -b xkcd.com | tabopen -b smbc-comics.com
 
 " vim: set filetype=vim:
