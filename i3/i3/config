@@ -74,6 +74,21 @@ bindsym $mod+F6 exec "light -A 20"
 bindsym $mod+Shift+F5 exec "light -S 0"
 bindsym $mod+Shift+F6 exec "light -S 100"
 
+# TODO: Some of these?
+# 173 XF86AudioPrev
+# 172 XF86AudioPlay
+# 171 XF86AudioNext
+# 122 XF86AudioLowerVolume
+# 123 XF86AudioRaiseVolume
+# 121 XF86AudioMute
+# 198 XF86AudioMicMute
+# 232 XF86MonBrightnessDown
+# 233 XF86MonBrightnessUp
+# 235 XF86Display
+# 246 XF86WLAN
+# 179 XF86Tools
+# 245 XF86Bluetooth
+
 # Kill focused window
 bindsym $mod+Control+Shift+F4 kill
 
@@ -156,7 +171,7 @@ bindsym $mod+Control+8 move container to workspace 8; workspace 8
 bindsym $mod+Control+9 move container to workspace 9; workspace 9
 bindsym $mod+Control+0 move container to workspace 10; workspace 10
 
-# Move focused container to workspace and go there
+# Move parent container to workspace and go there
 bindsym $mod+Control+Shift+1 focus parent; move container to workspace 1; workspace 1
 bindsym $mod+Control+Shift+2 focus parent; move container to workspace 2; workspace 2
 bindsym $mod+Control+Shift+3 focus parent; move container to workspace 3; workspace 3
@@ -260,10 +275,10 @@ exec_always sudo ~/bin/conf
 exec_always ~/bin/lid-lock
 exec clipit
 exec nm-applet
-exec blueman-applet
+# exec blueman-applet
 # exec volti
 # exec udisks-glue
-exec udiskie -s
+# exec udiskie
 
 # Strip trailing newline from clipboard
 bindsym $mod+i exec "echo -n $(xclip -o) | xclip"
@@ -296,8 +311,8 @@ bindsym $mod+Control+F8 exec kitty --config ~/.kitty.conf bash -c kill_vpn_and_r
 bindsym $mod+Control+Shift+F8 exec kitty --config ~/.kitty.conf bash -c toggle_vpn
 
 # Firefox failed
-bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
-# bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
+# bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
+bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
 bindsym $mod+Control+Shift+q exec "qutebrowser $(xclip -o)"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor

@@ -1,45 +1,13 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-#Choose term
-# if [[ "${TERM}" == xterm-termite ]]; then
-  # export TERMINFO="/usr/local/share/terminfo/"
-  # #old_TERM=$TERM; TERM=dumb; TERM=$old_TERM; unset old_TERM
-  # . /etc/profile.d/vte.sh
-  # __vte_prompt_command
-# fi
-
-#Kitty terminal emulator
-alias kitty='kitty --config ~/.kitty.conf'
-
-#Choose color depth
-# if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
-  # export TERM=xterm-256color
-  # #. ~/dotfiles/gnome-zenburn
-# fi
-
-if [ "$TERM" = "linux" ]; then
-  /bin/echo -e "
-  \e]P0020202
-  \e]P1bc4c4c
-  \e]P26c9c6c
-  \e]P3d8d856
-  \e]P44b4cbd
-  \e]P5bc6ca4
-  \e]P64cb7bd
-  \e]P7e5e5e5
-  \e]P8414141
-  \e]P9dc6c6c
-  \e]PA8cbc8c
-  \e]PBfffd00
-  \e]PC6b6cdb
-  \e]PDbe89ae
-  \e]PE91d8db
-  \e]PFffffff
-  "
-  # get rid of artifacts
-  clear
+# Choose term
+if [[ "${TERM}" == xterm-termite ]]; then
+  export TERMINFO="/usr/local/share/terminfo/"
 fi
+
+# Kitty terminal emulator
+alias kitty='kitty --config ~/.kitty.conf'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -117,23 +85,14 @@ fi
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color -N'
-    alias grep='grep --color'
+    alias ls='ls --color=auto -N'
+    alias grep='grep --color=auto'
 fi
 [ -f ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ] && eval $( dircolors -b ~/src/opensource/ivoarch/dircolors-zenburn/dircolors )
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -142,12 +101,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# reset and kill n
-alias intnon='sudo modprobe -r iwlwifi; sudo modprobe iwlwifi 11n_disable=1'
+function mkcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
-function mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
-
-#Open correct Ruby repl, irb1.9.1
+#Open correct Ruby repl
 alias ir="irb1.9.1"
 
 #Python convert xlsx to csv
@@ -324,6 +280,8 @@ alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { prin
 
 # Clever unique without sort
 alias uniq_nosort='awk '\''!x[$0]++'\'''
+
+alias oc='octave --no-gui --silent'
 
 # Ripgrep
 alias rgf='rg --files | rg'

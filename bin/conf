@@ -199,4 +199,4 @@ xinput list | grep -q "${pad}" && {
 #}}}
 
 # Set background
-feh --bg-scale ~/Pictures/deepdream.jpg
+feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg

@@ -32,7 +32,8 @@ bind ;c hint -c [class*="expand"],[class="togg"]
 
 " Gui
 set theme dark
-" guiset_quiet navbar autohide
+guiset_quiet navbar autohide
+guiset_quiet tabs always
 " bind ,b :guiset gui none
 " bind ,B :guiset gui full
 
@@ -78,6 +79,6 @@ bind ,m open gmail.com
 bind ,M tabopen gmail.com
 bind ,o open https://discordapp.com/activity
 bind ,O tabopen https://discordapp.com/activity
-bind ,c composite tabopen -b harkavagrant.com | tabopen -b scarygoround.com | tabopen -b strongfemaleprotagonist.com | tabopen -b nedroid.com | tabopen -b existentialcomics.com | tabopen -b penny-arcade.com/comic | tabopen -b xkcd.com | tabopen -b smbc-comics.com
+bind ,c composite tabopen -b scarygoround.com | tabopen -b strongfemaleprotagonist.com | tabopen -b nedroid.com | tabopen -b existentialcomics.com | tabopen -b penny-arcade.com/comic | tabopen -b xkcd.com | tabopen -b smbc-comics.com
 
 " vim: set filetype=vim:

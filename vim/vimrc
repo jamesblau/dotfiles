@@ -659,10 +659,11 @@ noremap j gj
 noremap k gk
 noremap gj j
 noremap gk k
-noremap $ g$
-noremap 0 g0
-noremap g$ $
-noremap g0 0
+" noremap $ g$
+" noremap 0 g0
+" noremap g$ $
+" noremap g0 0
+" TODO: make $/0 remaps contextual?
 
 function! CombineSelection(line1, line2, cp)
   execute 'let char = "\u'.a:cp.'"'
@@ -782,7 +783,8 @@ nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbr
 " nnoremap <Leader>mm :!pandoc --standalone -f markdown -t latex -o %.pdf %; nohup evince %.pdf > /dev/null &<CR>
 " nnoremap <Leader>mc :!pandoc --standalone -c style.css -f markdown -t latex -o %.pdf %; nohup evince %.pdf > /dev/null &<CR>
 " nnoremap <Leader>mh :!pandoc --standalone -c style.css -f markdown -t html -o %.html %<CR>
-nnoremap <Leader>m :!pandoc --standalone -c style.css -f markdown -t html -o %:r.html %<CR>
+autocmd! FileType markdown nnoremap <silent> <buffer> <Leader>m :silent w <Bar>
+  \ silent !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % && chromium-browser --headless --no-margins --print-to-pdf=%:r.pdf %:r.html <CR>
 " TODO: Cleanup.
 
 " Write to null (buffer doesn't look unsaved)
