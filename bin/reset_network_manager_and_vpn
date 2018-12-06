@@ -1,14 +1,20 @@
 #!/bin/bash
 # reset intratubes
+sudo killall -q openvpn
 if [ $# -eq 0 ]
 then
-  server=1583
+  if [ -f ~/.openvpn_last_config ]
+  then
+    _VPN_CONFIG=$(head -n 1 ~/.openvpn_last_config)
+  else
+    _VPN_CONFIG="/etc/openvpn/ovpn_tcp/us1583.nordvpn.com.tcp.ovpn"
+  fi
 else
-  server=$1
+  _VPN_CONFIG="$1"
 fi
-sudo killall -q openvpn
 sudo service network-manager stop
 sleep 1
 sudo service network-manager start
-sleep 1
-sudo openvpn --config /etc/openvpn/ovpn_tcp/us"${server}".nordvpn.com.tcp.ovpn --auth-user-pass ~/.ovpnuserpass --daemon --writepid ~/.openvpn_pid
+sleep 2
+sudo openvpn --config $_VPN_CONFIG --auth-user-pass ~/.ovpnuserpass --daemon --writepid ~/.openvpn_pid
+echo $_VPN_CONFIG > ~/.openvpn_last_config

@@ -1,0 +1,20 @@
+#!/bin/sh
+exec scala -savecompiled "$0" "$@"
+vi: ft=scala
+!#
+
+def f = (_: String).filter{ c =>
+  val h = c.toHexString
+  h.size != 3 || h < "591" || h > "5c7"
+}
+
+if (args.size == 0 || (args.size == 1 && args.head == "-")) {
+  import scala.io.StdIn
+
+  var line = ""
+  while ({line = StdIn.readLine(); line != null}) {
+    println(f(line))
+  }
+} else {
+  println(args.map(f(_)).mkString(" "))
+}

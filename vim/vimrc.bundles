@@ -79,6 +79,12 @@ call plug#begin('~/.vim/plugged')
     endfunction
     Plug 'vim-scripts/Transparent'
   " }}}
+  " Plug 'justinmk/vim-sneak' {{{
+    " Don't lose S to vim-surround
+    let g:sneak#streak = 1
+    xmap S <Plug>Sneak_S
+    Plug 'justinmk/vim-sneak'
+  " }}}
 " }}}
 
 if !exists('g:james_minimal_plugins')
@@ -172,7 +178,7 @@ if !exists('g:james_minimal_plugins')
       let g:limelight_priority = -1
       Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
     " }}}
-    " Plug 'vasconcelloslf/vim-interestingwords'
+    Plug 'vasconcelloslf/vim-interestingwords'
   " }}}
 
   " Buffers / windows / tabs / sessions {{{
@@ -278,12 +284,6 @@ if !exists('g:james_minimal_plugins')
         Plug 'cohama/lexima.vim'
       endif
     " }}}
-    " Plug 'justinmk/vim-sneak' {{{
-      " Don't lose S to vim-surround
-      let g:sneak#streak = 1
-      xmap S <Plug>Sneak_S
-      Plug 'justinmk/vim-sneak'
-    " }}}
     " Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' } {{{
       let g:undotree_SetFocusWhenToggle=1
       nnoremap <Leader>u :UndotreeToggle<CR>
@@ -305,9 +305,7 @@ if !exists('g:james_minimal_plugins')
     " }}}
     Plug 'tmhedberg/matchit'
     " Plug 'tpope/vim-abolish' {{{
-      vnoremap <Leader>s<Space> y:OverCommandLine<CR>%S/<C-T>"/
       vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g<C-G>
-      nnoremap <Leader>s<Space> :OverCommandLine<CR>%S/<C-T><C-W>/
       nnoremap <Leader>ss :%S/<C-R><C-W>/<C-R><C-W>/g<C-G>
       Plug 'tpope/vim-abolish'
     " }}}

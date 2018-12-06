@@ -6,14 +6,15 @@ let mapleader = ","
 nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/.vimrc<CR>
 
-set syn=on
-set filetype=on
 set background=dark
+set cedit=                    " Key to open command-line window
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+set complete=.,w,b,u            " No tags...nor included files, whatever they are...
 set expandtab                   " Tabs are spaces, not tabs
+set filetype=on
 set foldenable                  " Auto fold code
 set foldtext=MyFoldText()
-set cedit=                    " Key to open command-line window
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 set hidden                      " Allow buffer switching without saving
 set ignorecase                  " Case insensitive search
 set lazyredraw
@@ -39,17 +40,16 @@ set smartcase                   " Case sensitive when uc present
 set splitbelow                  " Puts new split windows to the bottom of the current
 set splitright                  " Puts new vsplit windows to the right of the current
 set switchbuf=useopen
+set syn=on
 set t_Co=256
 set textwidth=0
+set title
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
 set virtualedit=onemore         " Allow for cursor beyond last character
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
-set title
-set complete=.,w,b,u            " No tags...nor included files, whatever they are...
-set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 
 " Use local bundles if available
 source ~/.vimrc.bundles
@@ -57,8 +57,9 @@ source ~/.vimrc.bundles
 " Color stuff!
 call James_Zenburn()
 
-" Enforce alt consistency between vim and nvim
+" Enforce alt consistency between vim and nvim; nvim-only sets
 if !has('nvim')
+  set inccommand=nosplit
   for c in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
     execute 'nmap <Esc>'.c.' <A-'.c.'>'
     execute 'cmap <Esc>'.c.' <A-'.c.'>'

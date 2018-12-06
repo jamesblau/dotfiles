@@ -20,8 +20,8 @@ shopt -s histappend
 bind -m vi-insert  '"\C-q":  "\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
 bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
 
-# Expand history in-line with space
-bind Space:magic-space
+# Expand history in-line with space -- too annoying?
+# bind Space:magic-space
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100000
@@ -83,12 +83,17 @@ fi
 . ~/.bash_prompt
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto -N'
-    alias grep='grep --color=auto'
+if [ -f ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ]
+then
+  alias ls='ls --color=auto -N'
+  alias grep='grep --color=auto'
+  eval $(dircolors -b ~/src/opensource/ivoarch/dircolors-zenburn/dircolors)
+elif [ -x /usr/bin/dircolors ]
+then
+  alias ls='ls --color=auto -N'
+  alias grep='grep --color=auto'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
-[ -f ~/src/opensource/ivoarch/dircolors-zenburn/dircolors ] && eval $( dircolors -b ~/src/opensource/ivoarch/dircolors-zenburn/dircolors )
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -164,6 +169,7 @@ function passwords () { while true; do clear; password $@; read; done; }
 
 #Use keychain
 alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa)'
+#TODO: fix or remove
 
 #Ethernet
 alias ethernet='killInternet; \
@@ -177,25 +183,28 @@ alias killInternet='sudo kill `ps aux | grep "eth0" | grep -v "grep" | ssc 2` 2>
 set -o vi
 bind '"[5~": beginning-of-history'
 bind '"[6~": end-of-history'
-bind -m vi-move "g":beginning-of-history
-bind -m vi-move "G":end-of-history
+bind -m vi-command "g":beginning-of-history
+bind -m vi-command "G":end-of-history
 bind -m vi-command "o":insert-last-argument
-bind -m vi-insert "\C-l.":clear-screen
-bind -m vi-insert "\C-a.":beginning-of-line
-bind -m vi-move "\C-a.":beginning-of-line
-bind -m vi-insert "\C-e.":end-of-line
-bind -m vi-move "\C-e.":end-of-line
+bind -m vi-insert "\C-l":clear-screen
+bind -m vi-insert "\C-a":beginning-of-line
+bind -m vi-command "\C-a":beginning-of-line
+bind -m vi-insert "\C-e":end-of-line
+bind -m vi-command "\C-e":end-of-line
 stty werase undef # Required for remapping C-w
-bind -m vi-insert "\C-w.":unix-filename-rubout
-bind -m vi-insert "\C-n.":next-history
-bind -m vi-insert "\C-p.":previous-history
-bind -m vi-insert "\C-f.":forward-char
-bind -m vi-insert "\C-b.":backward-char
-bind -m vi-move "\C-d.":vi-delete
-bind -m vi-insert "\C-d.":vi-delete
-bind -m vi-insert "\C-k.":
-bind -m vi-insert "\C-o.":
-#bind -m vi-insert "kj":vi-movement-mode forward-char
+bind -m vi-insert "\C-w":unix-filename-rubout
+bind -m vi-insert "\C-n":next-history
+bind -m vi-insert "\C-p":previous-history
+bind -m vi-insert "\C-f":forward-char
+bind -m vi-insert "\C-b":backward-char
+bind -m vi-command "\C-d":vi-delete
+bind -m vi-insert "\C-d":vi-delete
+bind -m vi-insert "\C-k":yank-pop
+# Dislike self-insert; overridden anyway if fzf is installed
+bind -m vi-insert "\C-o":
+# Why don't these work?
+# bind -m vi-command "\ek":yank-pop
+# bind -m vi-command "\ek":vi-yank-pop
 
 #This stuff available in vim, etc
 #BASH_ENV="~/.bash_ni"
@@ -224,6 +233,8 @@ alias qe='quiet evince'
 alias Qe='quieter evince'
 alias qv='quiet vlc'
 alias Qv='quieter vlc'
+alias qm='quiet rifle'
+alias Qm='quieter rifle'
 
 #Generate output tersely and check &&/||
 # alias A='echo A'
@@ -250,9 +261,12 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 # Fzf stuff
 [ -f ~/.fzf.bash ] && {
   source ~/.fzf.bash
+  export FZF_DEFAULT_OPTS="--bind ctrl-g:toggle-all"
+  # Remap Alt-C to Ctrl-O (leave old mapping because why not, it's unused)
+  bind -m vi-command "$(bind -s | grep __fzf_cd__ | sed 's/\\ec/\\C-o/')"
+  bind -m vi-insert "$(bind -s | grep __fzf_cd__ | sed 's/\\ec/\\C-o/')"
   # Pipe output file names to fzf
   bind -m vi-command '"\C-f": "A | fzf\e"'
-  export FZF_DEFAULT_OPTS="--bind ctrl-g:toggle-all"
 }
 
 # Open output file names in vim
@@ -264,7 +278,7 @@ bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 # bd back to directory
 alias bd=". bd -si"
 
-# open new terminal with tmux in same directory
+# open new terminal with kitty in same directory
 function ncd () { (nohup kitty --config ~/.kitty.conf -d $PWD &>/dev/null &); }
 
 # tree with common ignores
@@ -282,6 +296,8 @@ alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { prin
 alias uniq_nosort='awk '\''!x[$0]++'\'''
 
 alias oc='octave --no-gui --silent'
+
+alias math='rlwrap math -rawterm'
 
 # Ripgrep
 alias rgf='rg --files | rg'

@@ -254,6 +254,7 @@ bar {
   #status_command i3status | ~/scripts/status/status.pl
   font pango:DejaVu Sans Mono 11
   tray_output eDP-1
+  tray_output eDP-1-1
   tray_output LVDS-1
   tray_output LVDS-2
   colors {
@@ -302,7 +303,7 @@ bindsym --release Control+7 exec xdotool key --clearmodifiers F7
 # Firefox popups
 for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
 
-# Firefox disable Ctrl+Q
+# Firefox disable Control+Q
 bindsym Control+q exec ~/bin/noctrlq.sh
 
 # Fix wifi TODO: Somehow obviate need for this

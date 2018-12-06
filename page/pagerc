@@ -1,5 +1,8 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 let g:james_minimal_plugins=1
+let g:page_icon_instance = '§'
+let g:page_icon_redirect = '>§'
+let g:page_icon_pipe = '|§'
 source ~/.vimrc
 setl shortmess=I
 setl scrollback=-1
@@ -10,6 +13,7 @@ setl nomodifiable
 setl invhlsearch
 setl clipboard+=unnamedplus
 setl laststatus=0
+" setl termguicolors
 nmap i <Nop>
 nmap I <Nop>
 nmap a <Nop>
