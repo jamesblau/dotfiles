@@ -2,7 +2,6 @@
 if pgrep openvpn >/dev/null
 then
   sudo killall -q openvpn
-  rm ~/.openvpn_last_config
 else
   if [ $# -eq 0 ]
   then

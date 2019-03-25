@@ -16,12 +16,15 @@ bindsym $mod+Control+minus scratchpad show
 
 # Go to previous workspace/screen
 bindsym $mod+o workspace back_and_forth
+bindsym $mod+Shift+o move container to workspace back_and_forth
+bindsym $mod+Control+o move container to workspace 1; workspace back_and_forth
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # Start a terminal
 bindsym $mod+Return exec kitty --config ~/.kitty.conf
+# bindsym $mod+Return exec termite
 bindsym $mod+Control+Shift+Return exec i3-sensible-terminal -e tmux
 # bindsym $mod+Shift+Return exec gnome-terminal
 # bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/.bashrc_neovim'"
@@ -37,14 +40,27 @@ bindsym --release Mod1+v split h; exec xdotool key --clearmodifiers alt+Return
 bindsym $mod+Control+Shift+a exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/dotfiles/install ~/dotfiles/apt-installs'
 bindsym $mod+Control+Shift+b exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.bashrc ~/.bashrc_neovim'
 bindsym $mod+Control+Shift+c exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/bin/conf'
+bindsym $mod+Control+Shift+d exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/digraphs'
 bindsym $mod+Control+Shift+f exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tridactylrc'
 bindsym $mod+Control+Shift+i exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.i3/config ~/.i3status.conf ~/dotfiles/bin/i3status_custom.sh'
 bindsym $mod+Control+Shift+j exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/judo_terms'
 bindsym $mod+Control+Shift+k exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.kitty.conf'
+bindsym $mod+Control+Shift+p exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/nato'
 bindsym $mod+Control+Shift+r exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'
 bindsym $mod+Control+Shift+t exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tmux.conf'
 bindsym $mod+Control+Shift+u exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.muttrc'
 bindsym $mod+Control+Shift+v exec kitty --config ~/.kitty.conf bash -c 'VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.vimrc ~/.vimrc.bundles ~/.nvimrc ~/dotfiles/page/pagerc ~/.nvimrc_terminal'
+# bindsym $mod+Control+Shift+a exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/dotfiles/install ~/dotfiles/apt-installs"'
+# bindsym $mod+Control+Shift+b exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.bashrc ~/.bashrc_neovim"'
+# bindsym $mod+Control+Shift+c exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/bin/conf"'
+# bindsym $mod+Control+Shift+f exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tridactylrc"'
+# bindsym $mod+Control+Shift+i exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.i3/config ~/.i3status.conf ~/dotfiles/bin/i3status_custom.sh"'
+# bindsym $mod+Control+Shift+j exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/judo_terms"'
+# bindsym $mod+Control+Shift+k exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.kitty.conf"'
+# bindsym $mod+Control+Shift+r exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css"'
+# bindsym $mod+Control+Shift+t exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.tmux.conf"'
+# bindsym $mod+Control+Shift+u exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.muttrc"'
+# bindsym $mod+Control+Shift+v exec termite -e 'bash -c "VIMRUNTIME=~/src/opensource/neovim/neovim/runtime nvim ~/.vimrc ~/.vimrc.bundles ~/.nvimrc ~/dotfiles/page/pagerc ~/.nvimrc_terminal"'
 
 # Re-run conf; why does 'setxkbmap -option ctrl:nocaps' run more slowly in kitty?
 bindsym $mod+BackSpace exec kitty --config ~/.kitty.conf bash -c ~/bin/conf
@@ -282,7 +298,7 @@ exec nm-applet
 # exec udiskie
 
 # Strip trailing newline from clipboard
-bindsym $mod+i exec "echo -n $(xclip -o) | xclip"
+bindsym $mod+i exec ~/bin/strip_trailing_newline
 
 # Not sure about this one
 focus_follows_mouse no

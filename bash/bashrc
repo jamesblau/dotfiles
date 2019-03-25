@@ -154,6 +154,7 @@ alias myip='wget -qO- http://ipecho.net/plain | tee /dev/tty | xclip; echo'
 export PYTHONSTARTUP=~/.pythonrc.py
 alias python=python3
 alias pip=pip3
+alias ipy='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 
 function password () {
   (
@@ -229,6 +230,8 @@ function quiet () { (nohup "$@" > /dev/null &); }
 function quieter () { (nohup "$@" > /dev/null &); exit; }
 
 #Quick opens
+alias qa='quiet acroread'
+alias Qa='quieter acroread'
 alias qe='quiet evince'
 alias Qe='quieter evince'
 alias qv='quiet vlc'
@@ -286,9 +289,6 @@ alias trees="tree -I 'target|lib_managed'"
 alias treet="tree -I 'target|lib_managed|tmp'"
 alias treeu="tree -I 'target|lib_managed|tmp|test'"
 
-# IPA pronunciation; https://gitlab.com/ssb22/lexconvert
-alias say="python2 ~/src/opensource/ssb22/lexconvert/lexconvert.py --try unicode-ipa"
-
 # Concise xevent output
 alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 
@@ -298,6 +298,9 @@ alias uniq_nosort='awk '\''!x[$0]++'\'''
 alias oc='octave --no-gui --silent'
 
 alias math='rlwrap math -rawterm'
+
+#Jline2 is broken, but rlwrap prevents access to tab-complete...
+# alias scala='rlwrap -a scala'
 
 # Ripgrep
 alias rgf='rg --files | rg'

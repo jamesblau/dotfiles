@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# IPA pronunciation; https://gitlab.com/ssb22/lexconvert
+python2 ~/src/opensource/ssb22/lexconvert/lexconvert.py --try unicode-ipa "$@"

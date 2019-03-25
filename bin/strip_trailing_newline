@@ -1,0 +1,4 @@
+#!/bin/bash
+
+input=$(xclip -o)
+echo ${input//$'\n'} | xclip

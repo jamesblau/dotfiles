@@ -1,7 +1,6 @@
 #!/bin/bash
 # reset intratubes
 sudo killall -q openvpn
-rm ~/.openvpn_last_config
 sudo service network-manager stop
 sleep 1
 sudo service network-manager start

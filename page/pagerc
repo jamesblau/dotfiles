@@ -1,5 +1,6 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 let g:james_minimal_plugins=1
+let g:james_pager=1
 let g:page_icon_instance = '§'
 let g:page_icon_redirect = '>§'
 let g:page_icon_pipe = '|§'

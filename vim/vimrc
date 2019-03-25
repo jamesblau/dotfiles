@@ -362,6 +362,7 @@ nnoremap <Leader>sl :set cursorline! \| set cursorcolumn!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
 nnoremap <Leader>sw :set wrap!<CR>
 nnoremap <Leader>sW :windo set wrap!<CR>
+nnoremap <Leader>sL :if &linebreak \| set nowrap nolinebreak \| else \| set wrap linebreak \| endif<CR>
 nnoremap <silent> <Leader>/ :set invhlsearch<CR>
 nnoremap <Leader>sz :set foldmethod=manual<CR>
 
@@ -526,8 +527,9 @@ nnoremap <Leader>x <Nop>
 nnoremap <Leader>r <Nop>
 vnoremap <Leader>c <Nop>
 "Line to xclip
-nnoremap <Leader>C yy:call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nnoremap <Leader>C _y$:call system("xclip -i -selection clipboard", getreg("\""))<CR>
 vnoremap <Leader>C y:call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nmap <Leader>G yae<C-O>:call system("xclip -i -selection clipboard", getreg("\""))<CR>
 "Paste from xclip
 nnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 vnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
@@ -623,14 +625,18 @@ nnoremap <silent> <F5> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 vnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 
 " Emacs stuff!
-inoremap <C-F> <right>
+inoremap <C-F> <Right>
 cnoremap <C-F> <Right>
-inoremap <C-B> <left>
+inoremap <C-B> <Left>
 cnoremap <C-B> <Left>
+inoremap <C-D> <Delete>
+cnoremap <C-D> <Delete>
 cnoremap <C-A> <Home>
-cnoremap <C-D> <delete>
 cnoremap <A-b> <S-Left>
 cnoremap <A-f> <S-Right>
+
+" Dedent input mode (since <C-D> is taken above; <C-T> is indent)
+inoremap <C-Q> <C-D>
 
 " No accidental Ex-mode or keyword-lookup
 nnoremap gQ gggqG
@@ -704,6 +710,10 @@ nnoremap <Leader>ds :call DiffWithSaved()<CR>
 " Scalding stuff
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
 
+" Python stuff
+autocmd FileType python nnoremap <buffer> <Leader>cf :setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'<CR>
+autocmd FileType python nnoremap <buffer> <Leader>cF :set foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'<CR>
+
 " Last buffer more easily
 nmap <BS> <C-^>
 
@@ -731,8 +741,9 @@ cmap <S-Down> <Nop>
 cmap <C-Down> <Nop>
 
 " Undo big insert-mode deletes
-inoremap <C-W> <C-C>a<C-W>
-inoremap <C-U> <C-C>a<C-U>
+" Messes up C-U after new line...TODO: fix?
+" inoremap <C-W> <C-C>a<C-W>
+" inoremap <C-U> <C-C>a<C-U>
 
 " Fast horizontal navigation
 nnoremap <A-H> zH
@@ -755,7 +766,11 @@ function! MyFoldText()
   let pad = repeat(' ', (winwidth(0)/2)-strlen(line)-strlen(v:folddashes))
   return poorDevil . v:folddashes . pad
 endfunction
-nmap <M-\> za
+if !exists('g:james_pager')
+  nmap <C-\> za
+else
+  nmap <A-\> za
+endif
 
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
@@ -793,5 +808,120 @@ nnoremap <Leader>wn :w! /dev/null<CR>
 
 " Redraw mapping
 nnoremap <Leader><C-R> :redraw<CR>
+
+" Completion stuff
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr> <Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
+inoremap <expr> <S-Tab>  pumvisible() ? "\<C-P>" : "\<S-Tab>"
+
+" Say IPA
+map <F10> :!say <cWORD><CR>
+
+" Digraphs
+" •
+digraphs ** 8226
+" TODO: Complete and extract
+" ᴬ
+" ᴮ
+" ᴰ
+" ᴱ
+" ᴳ
+" ᴴ
+" ᴵ
+" ᴶ
+" ᴷ
+" ᴸ
+" ᴹ
+" ᴺ
+" ᴼ
+" ᴾ
+" ᴿ
+" ᵀ
+" ᵁ
+" ⱽ
+" ᵂ
+" ᶦ
+" ᶫ
+" ᶰ
+" ᶸ
+" ᵃ
+" ᵇ
+" ᶜ
+" ᵈ
+" ᵉ
+" ᶠ
+" ᵍ
+" ʰ
+" ⁱ
+" ʲ
+" ᵏ
+" ˡ
+" ᵐ
+" ⁿ
+" ᵒ
+" ᵖ
+" ʳ
+" ˢ
+" ᵗ
+" ᵘ
+" ᵛ
+" ʷ
+" ˣ
+" ʸ
+" ᶻ
+" ₐ
+" ₑ
+" ₕ
+" ᵢ
+" ⱼ
+" ₖ
+" ₗ
+" ₘ
+" ₙ
+" ₒ
+" ₚ
+" ᵣ
+" ₛ
+" ₜ
+" ᵤ
+" ᵥ
+" ₓ
+" Α
+" Β
+" Γ
+" Δ
+" Ε
+" Ζ
+" Η
+" Θ
+" Ι
+" Κ
+" Λ
+" Μ
+" Ν
+" Ξ
+" Ο
+" Π
+" Ρ
+" Σ
+" Τ
+" Υ
+" Φ
+" Χ
+" Ψ
+" Ω
+" ᵝ
+" ᵞ
+" ᵟ
+" ᵋ
+" ᶿ
+" ᶥ
+" ᵠ
+" ᵡ
+" ᵦ
+" ᵧ
+" ᵨ
+" ᵩ
+" ᵪ
 
 au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2 | let b:lexima_disabled=1

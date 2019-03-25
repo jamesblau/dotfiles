@@ -10,11 +10,14 @@ bind <C-y> scrollline -1
 
 " Core
 bind <C-c> stop
-bind I mode ignore
-bind --mode=ignore I mode normal
+bind <C-\> mode ignore
+bind --mode=ignore <C-\> mode normal
 
 " Don't repeat things...
 unbind .
+
+" Select all
+unbind <C-a>
 
 " If only...
 unbind <C-q>
@@ -45,7 +48,10 @@ guiset_quiet hoverlink top-left
 
 " Misc settings
 set allowautofocus false
-js tri.config.set("editorcmd", "kitty nvim")
+" set editorcmd 'termite -e "vi %f"'
+set editorcmd 'kitty --config ~/.kitty.conf nvim %f'
+js tri.config.set("editorcmd", "kitty --config ~/.kitty.conf nvim")
+" js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "st vim" : "auto"; tri.config.set("editorcmd", editorcmd)})
 " js tri.config.set("editorcmd", "auto")
 
 set hintchars hjklasdfgyuiopqwertnmzxcvb
@@ -74,6 +80,9 @@ bind ,W fillcmdline tabopen wikipedia
 bind ,e fillcmdline open search site:reddit.com
 bind ,E fillcmdline tabopen search site:reddit.com
 
+" TODO: Why can't I get rid of the defaults?
+" set searchurls {"!g":"https://www.google.com/search?q=","!scholar":"https://scholar.google.com/scholar?q=","!googleuk":"https://www.google.co.uk/search?q=","!bing":"https://www.bing.com/search?q=","!d":"https://duckduckgo.com/?q=","!yahoo":"https://search.yahoo.com/search?p=","!twitter":"https://twitter.com/search?q=","!w":"https://en.wikipedia.org/wiki/Special:Search/","!y":"https://www.youtube.com/results?search_query=","!a":"https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=","!amazonuk":"https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=","!startpage":"https://startpage.com/do/search?language=english&cat=web&query=","!github":"https://github.com/search?utf8=✓&q=","!searx":"https://searx.me/?category_general=on&q=","!cnrtl":"http://www.cnrtl.fr/lexicographie/","!osm":"https://www.openstreetmap.org/search?query=","!mdn":"https://developer.mozilla.org/en-US/search?q=","!gentoo_wiki":"https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=","!qwant":"https://www.qwant.com/?q="}
+
 bind ,r open reddit.com
 bind ,R tabopen reddit.com
 bind ,u open reddit.com/message/unread
@@ -82,6 +91,6 @@ bind ,m open gmail.com
 bind ,M tabopen gmail.com
 bind ,o open https://discordapp.com/activity
 bind ,O tabopen https://discordapp.com/activity
-bind ,c composite tabopen -b bobbins.horse | tabopen -b strongfemaleprotagonist.com | tabopen -b nedroid.com | tabopen -b existentialcomics.com | tabopen -b penny-arcade.com/comic | tabopen -b xkcd.com | tabopen -b smbc-comics.com
+bind ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b existentialcomics.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com
 
 " vim: set filetype=vim:
