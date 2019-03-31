@@ -5,3 +5,12 @@ Rofi
 Greenclip + autcutsel
 
 Emoji-picker with rofi
+
+Airline dies at least after command-mode autocompletion
+
+Vim completion: vc<something> completes e.g. "vim completion" from buffer
+
+Vim notes shortcuts
+    new line, indent, add "line continued" symbol (same used when wrapping)
+        for breaking up long sentences while showing continuity
+    headers

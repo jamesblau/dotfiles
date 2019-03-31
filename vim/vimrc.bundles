@@ -8,7 +8,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-"let g:EclimCompletionMethod = 'omnifunc'
 
 " To evaluate later {{{
  " Plug 'tpope/vim-scriptease'
@@ -18,13 +17,19 @@ call plug#begin('~/.vim/plugged')
  " Plug 'tpope/vim-characterize'
  " Plug 'tpope/vim-afterimage'
  " Plug 'tpope/vim-flatfoot'
+ " Plug 'tpope/vim-commentary'
  " Plug 'tommcdo/vim-lion'
  " Plug 'wellle/targets.vim'
  " Plug 'spiiph/vim-space'
  " Plug 'zefei/vim-colortuner'
  " Plug 'rkitover/vimpager'
- " Plug 'Shougo/echodoc.vim'
  " https://github.com/Shougo/dein.vim
+ " Plug 'buntec/neovim-scalavista', { 'do': ':UpdateRemotePlugins' }
+ " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
+ " Plug 'mg979/vim-visual-multi'
+ " Plug 'tmhedberg/SimpylFold'
+ " Plug 'Konfekt/FastFold'
+ " let g:EclimCompletionMethod = 'omnifunc'
 " }}}
 
 " Run always {{{
@@ -114,8 +119,10 @@ if !exists('g:james_minimal_plugins')
         " set statusline+=\ [%{&ff}/%Y]            " Filetype
         " set statusline+=\ [%{getcwd()}]          " Current dir
         " set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+        nnoremap <silent> <Leader><C-A> :AirlineToggle \| AirlineToggle<CR>
+        " TODO: shouldn't need this ^
+        Plug 'bling/vim-airline'
       endif
-      Plug 'bling/vim-airline'
     " }}}
     Plug 'vim-airline/vim-airline-themes'
     Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev', 'CycleColorRefresh'] }
@@ -208,7 +215,7 @@ if !exists('g:james_minimal_plugins')
     " }}}
   " }}}
 
-  " Completion / fuzzy find {{{
+  " Completion / fuzzy find / snippets {{{
     " Plug 'mileszs/ack.vim' {{{
       if executable('rg')
         let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
@@ -216,18 +223,14 @@ if !exists('g:james_minimal_plugins')
       Plug 'mileszs/ack.vim'
     " }}}
     Plug 'goldfeld/ctrlr.vim'
-    " Plug 'gorkunov/smartgf.vim' if 704 and has ag{{{
-      if v:version >= 704 && executable('ag')
-        Plug 'gorkunov/smartgf.vim'
-      endif
-    " }}}
     " Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install' } {{{
-      command! FZFMru call fzf#run({
-      \  'source':  v:oldfiles,
-      \  'sink':    'e',
-      \  'options': '-m -x +s' })
+      " command! FZFMru call fzf#run({
+      " \  'source':  v:oldfiles,
+      " \  'sink':    'e',
+      " \  'options': '-m -x +s' })
       Plug 'junegunn/fzf', { 'dir': '~/src/opensource/junegunn/fzf', 'do': 'yes \| ./install --all' }
-      nnoremap <Leader>eo :FZFMru<CR>
+      " nnoremap <Leader>eo :FZFMru<CR>
+      nnoremap g* :Rg <C-R><C-W><CR>
     " }}}
     Plug 'junegunn/fzf.vim'
     " Plug 'ctrlpvim/ctrlp.vim' {{{
@@ -268,23 +271,58 @@ if !exists('g:james_minimal_plugins')
         Plug 'majutsushi/tagbar'
       endif
     " }}}
-    " Plug 'ncm2/ncm2'
-    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': []} {{{
-      nnoremap <Leader>s<Tab> :call plug#load('deoplete.nvim')<CR>:call deoplete#enable()<CR>
-      if has('nvim')
-        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': [] }
-      else
-        Plug 'Shougo/deoplete.nvim'
-        Plug 'roxma/nvim-yarp'
-        Plug 'roxma/vim-hug-neovim-rpc'
-      endif
-      let g:deoplete#enable_at_startup = 0
+    Plug 'roxma/nvim-yarp'
+    " Plug 'ncm2/ncm2' {{{
+      Plug 'ncm2/ncm2'
+      " nnoremap <Leader>s<Tab> :call autocmd BufEnter * call ncm2#enable_for_buffer()<CR>
+      function! NCM2Toggle()
+        if exists('b:ncm2_enable') && b:ncm2_enable == 1
+          set completeopt=menu,preview
+          call ncm2#disable_for_buffer()
+        else
+          set completeopt=noinsert,menuone,noselect
+          call ncm2#enable_for_buffer()
+        endif
+      endfunction
+      nnoremap <Leader><Tab> :call NCM2Toggle()<CR>
+      " let ncm2#popup_delay = 5
+      " let ncm2#complete_length = [[1, 1]]
+      let g:ncm2#matcher = 'substrfuzzy'
+    " }}}
+    Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-path'
+    " Plug 'ncm2/ncm2-ultisnips' {{{
+      " let g:ncm2_ultisnips#source = {'priority': 10}
+      Plug 'ncm2/ncm2-ultisnips'
+    " }}}
+    Plug 'honza/vim-snippets'
+    " Plug 'SirVer/ultisnips' {{{
+      Plug 'SirVer/ultisnips'
+      inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+      let g:UltiSnipsExpandTrigger="<C-L>"
+      " let g:UltiSnipsExpandTrigger="<Plug>(ultisnips_expand)"
+      let g:UltiSnipsJumpForwardTrigger="<C-K>"
+      let g:UltiSnipsJumpBackwardTrigger="<C-J>"
+      " let g:UltiSnipsListSnippets = "<Leader><S-Tab>"
+      let g:UltiSnipsRemoveSelectModeMappings = 0
+      let g:UltiSnipsSnippetDirectories = ['/home/james/.vim/plugged/ultisnips/', '/home/james/dotfiles/ultisnips']
+      let g:UltiSnipsSnippetsDir = ['/home/james/dotfiles/ultisnips']
+      " if !exists(':UltiSnipsEdit')
+        " inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
+        " imap <tab> <Plug>(tab)
+      " endif
+    " }}}
+    " Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' } {{{
+      Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' }
+      nnoremap <Leader>se :EchoDocEnable<CR>
     " }}}
   " }}}
 
   " Core {{{
     " Plug 'cohama/lexima.vim' if 704 {{{
       let g:lexima_no_default_rules=1
+      let b:lexima_disabled=1
       if v:version >= 704
         Plug 'cohama/lexima.vim'
       endif
@@ -310,7 +348,7 @@ if !exists('g:james_minimal_plugins')
     " }}}
     Plug 'tmhedberg/matchit'
     " Plug 'tpope/vim-abolish' {{{
-      vnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g<C-G>
+      xnoremap <Leader>ss y:%S/<C-R>"/<C-R>"/g<C-G>
       nnoremap <Leader>ss :%S/<C-R><C-W>/<C-R><C-W>/g<C-G>
       Plug 'tpope/vim-abolish'
     " }}}
@@ -334,16 +372,8 @@ if !exists('g:james_minimal_plugins')
       let g:gitgutter_enabled = 0
       "let g:gitgutter_initialised = 0
       "let g:gitgutter_realtime = 0
-      nnoremap <silent> <Leader>gs :Gstatus<CR>
-      nnoremap <silent> <Leader>gd :Gdiff<CR>
-      nnoremap <silent> <Leader>gm :Gdiff master<CR>
-      nnoremap <silent> <Leader>gc :Gcommit<CR>
-      nnoremap <silent> <Leader>gb :Gblame<CR>
-      nnoremap <silent> <Leader>gl :Glog<CR>
-      nnoremap <silent> <Leader>gp :Git push<CR>
       nnoremap <silent> <Leader>gr :Gread<CR>:GitGutter<CR>
       nnoremap <silent> <Leader>gw :Gwrite<CR>:GitGutter<CR>
-      nnoremap <silent> <Leader>ge :Gedit<CR>
       nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
       Plug 'airblade/vim-gitgutter'
     " }}}
@@ -431,26 +461,20 @@ if !exists('g:james_minimal_plugins')
   " Visual / selection / alignment {{{
     " Plug 'godlygeek/tabular' {{{
       nmap <Leader>a& :Tabularize /&<CR>
-      vmap <Leader>a& :Tabularize /&<CR>
+      xmap <Leader>a& :Tabularize /&<CR>
       nmap <Leader>a= :Tabularize /=<CR>
-      vmap <Leader>a= :Tabularize /=<CR>
+      xmap <Leader>a= :Tabularize /=<CR>
       nmap <Leader>a# :Tabularize /#<CR>
-      vmap <Leader>a# :Tabularize /#<CR>
+      xmap <Leader>a# :Tabularize /#<CR>
       nmap <Leader>a: :Tabularize /:<CR>
-      vmap <Leader>a: :Tabularize /:<CR>
+      xmap <Leader>a: :Tabularize /:<CR>
       nmap <Leader>a:: :Tabularize /:\zs<CR>
-      vmap <Leader>a:: :Tabularize /:\zs<CR>
+      xmap <Leader>a:: :Tabularize /:\zs<CR>
       nmap <Leader>a, :Tabularize /,<CR>
-      vmap <Leader>a, :Tabularize /,<CR>
+      xmap <Leader>a, :Tabularize /,<CR>
       nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-      vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+      xmap <Leader>a<Bar> :Tabularize /<Bar><CR>
       Plug 'godlygeek/tabular'
-    " }}}
-    " Plug 'terryma/vim-multiple-cursors' {{{
-      " let g:multi_cursor_exit_from_insert_mode=0
-      " let g:multi_cursor_exit_from_visual_mode=0
-      " nnoremap <C-Q><C-N> :MultipleCursorsFind \<<C-R>=expand("<cword>")<CR>\><CR>
-      " Plug 'terryma/vim-multiple-cursors'
     " }}}
     Plug 'vim-scripts/visSum.vim'
     Plug 'vim-scripts/vsearch.vim'
@@ -476,13 +500,18 @@ if !exists('g:james_minimal_plugins')
       let g:jedi#goto_definitions_command = ""
       let g:jedi#documentation_command = "<M-k>"
       let g:jedi#usages_command = "<Leader>gn"
-      " let g:jedi#completions_command = "<C-Space>"
       let g:jedi#rename_command = "<Leader>gR"
-      let g:jedi#show_call_signatures = 0
       let g:jedi#completions_enabled = 0
-    " }}}
-    " Plug 'deoplete-plugins/deoplete-jedi' {{{
-      Plug 'deoplete-plugins/deoplete-jedi'
+      let g:jedi#auto_initialization = 1
+      let g:jedi#auto_vim_configuration = 0
+      let g:jedi#smart_auto_mappings = 0
+      let g:jedi#popup_on_dot = 0
+      let g:jedi#completions_command = ""
+      let g:jedi#show_call_signatures = 0
+      let g:jedi#show_call_signatures_delay = 0
+      let g:jedi#show_call_signatures_modes = 'i'  " ni = also in normal mode
+      let g:jedi#use_tabs_not_buffers = 0
+      let g:jedi#enable_speed_debugging=0
     " }}}
     Plug 'derekwyatt/vim-sbt', { 'for': 'sbt.scala' }
     " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
@@ -508,12 +537,11 @@ if !exists('g:james_minimal_plugins')
         setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
         " Comments match scaladoc style
         nnoremap <Leader>cd I/**<Space><Esc>o/<Esc>
-        vmap <Leader>cd <Esc>'<V'><C-V>I<Space><Space>*<Space><Esc>'<<<I/*<Esc>'>o/<Esc>0"yyf*gv:s/^$/<C-T>y/<CR>
+        xmap <Leader>cd <Esc>'<V'><C-V>I<Space><Space>*<Space><Esc>'<<<I/*<Esc>'>o/<Esc>0"yyf*gv:s/^$/<C-T>y/<CR>
       endfunction
       au! BufEnter *.scala call SetScalaOptions()
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
-    " Plug 'buntec/neovim-scalavista', { 'do': ':UpdateRemotePlugins' }
     " Plug 'elzr/vim-json', { 'for': 'json' } {{{
       au! BufNewFile,BufRead *.json setl fdm=syntax foldlevel=20
       Plug 'elzr/vim-json', { 'for': 'json' }

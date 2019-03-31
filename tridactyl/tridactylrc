@@ -93,4 +93,8 @@ bind ,o open https://discordapp.com/activity
 bind ,O tabopen https://discordapp.com/activity
 bind ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b existentialcomics.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com
 
+" Temporary hack for slow completion
+unbind --mode=ex <Space>
+bind --mode=ex <C-Enter> ex.insert_space_or_completion
+
 " vim: set filetype=vim:

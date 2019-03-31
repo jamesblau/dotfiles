@@ -4,8 +4,10 @@ set nocompatible
 "let g:james_minimal_plugins=1
 let mapleader = ","
 nnoremap \ ,
-nnoremap <Leader><C-S> :source ~/.vimrc<CR>
+nnoremap <Leader><C-S> :source ~/.vimrc \| e<CR>
 
+
+set sw=2 ts=2 sts=2
 set background=dark
 set cedit=                    " Key to open command-line window
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
@@ -50,6 +52,7 @@ set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
+set dictionary+=/usr/share/dict/words
 
 " Use local bundles if available
 source ~/.vimrc.bundles
@@ -58,14 +61,18 @@ source ~/.vimrc.bundles
 call James_Zenburn()
 
 " Enforce alt consistency between vim and nvim; nvim-only sets
-if !has('nvim')
+if has('nvim')
   set inccommand=nosplit
-  for c in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    execute 'nmap <Esc>'.c.' <A-'.c.'>'
-    execute 'cmap <Esc>'.c.' <A-'.c.'>'
-    execute 'nmap <Esc><C-'.c.'> <C-A-'.c.'>'
-    execute 'cmap <Esc><C-'.c.'> <C-A-'.c.'>'
-  endfor
+else
+  " for cha in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+  " \ 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
+  " \ 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+  " \ 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    " execute 'nmap <Esc>'.cha.' <A-'.cha.'>'
+    " execute 'cmap <Esc>'.cha.' <A-'.cha.'>'
+    " execute 'nmap <Esc><C-'.cha.'> <C-A-'.cha.'>'
+    " execute 'cmap <Esc><C-'.cha.'> <C-A-'.cha.'>'
+  " endfor
 endif
 
 " Override vim-sensible
@@ -109,10 +116,10 @@ nnoremap <silent> <Leader>wd :lcd %:p:h<CR>
 
 " Visual stuff!
 "     Visual shifting does not exit Visual mode
-vnoremap < <gv
-vnoremap > >gv
+xnoremap < <gv
+xnoremap > >gv
 "     Allow using the repeat operator with a visual selection: http://stackoverflow.com/a/8064607/127816
-vnoremap . :normal .<CR>
+xnoremap . :normal .<CR>
 nnoremap vv 0v$h
 nnoremap VV _v$h
 nnoremap vV v$h
@@ -164,12 +171,12 @@ if v:version > 702
   " JSON
   nmap <Leader>jp :%!underscore print<CR>:set filetype=json<CR><F5>
   nmap <Leader>jt :%!python -mjson.tool<CR>:set filetype=json<CR><F5>
-  vmap <Leader>jp :!underscore print<CR>:set filetype=json<CR><F5>
-  vmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
+  xmap <Leader>jp :!underscore print<CR>:set filetype=json<CR><F5>
+  xmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
 else
   " JSON
   nmap <Leader>jt :%!python2.6 -mjson.tool<CR>:set filetype=json<CR><F5>
-  vmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
+  xmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
   if !has('nvim')
     " Backspace whatever. hack...
     inoremap  <BS>
@@ -340,7 +347,7 @@ function! UnnamedFromRegister()
 endfunction
 
 " Sets and toggles
-vnoremap <Leader>s <Nop>
+xnoremap <Leader>s <Nop>
 nnoremap <Leader>s <Nop>
 nnoremap <Leader>sn :call NumberToggle()<CR>
 nnoremap <Leader>sf :call NfAlphaToggle()<CR>
@@ -356,15 +363,15 @@ nnoremap <Leader>sa :call LeximaToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
-nnoremap <Leader>sc :set spell!<CR>
-nnoremap <Leader>sp :set paste!<CR>
-nnoremap <Leader>sl :set cursorline! \| set cursorcolumn!<CR>
+nnoremap <Leader>sc :setl spell!<CR>
+nnoremap <Leader>sp :setl paste!<CR>
+nnoremap <Leader>sl :setl cursorline! \| set cursorcolumn!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
-nnoremap <Leader>sw :set wrap!<CR>
-nnoremap <Leader>sW :windo set wrap!<CR>
-nnoremap <Leader>sL :if &linebreak \| set nowrap nolinebreak \| else \| set wrap linebreak \| endif<CR>
-nnoremap <silent> <Leader>/ :set invhlsearch<CR>
-nnoremap <Leader>sz :set foldmethod=manual<CR>
+nnoremap <Leader>sw :setl wrap!<CR>
+nnoremap <Leader>sW :windo setl wrap!<CR>
+nnoremap <Leader>sL :if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
+nnoremap <silent> <Leader>/ :setl invhlsearch<CR>
+nnoremap <Leader>sz :setl foldmethod=manual<CR>
 
 " Break-lines stuff
 let g:james_showbreak="↳↳"
@@ -451,37 +458,37 @@ function! NumTorB(number)
 endfunction
 
 " Buffer stuff
-nnoremap <Leader>b  <Nop>
-nnoremap <Leader>bl :buffers<CR>
-nnoremap <Leader>bt :tab ball<CR>
-nnoremap <Leader>bd :bd<CR>
-nnoremap <Leader>bD :bd!<CR>
-nnoremap <Leader>Bd :call DeleteHiddenBuffers()<CR>
-nnoremap <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
+nnoremap <silent> <Leader>b  <Nop>
+nnoremap <silent> <Leader>bl :buffers<CR>
+nnoremap <silent> <Leader>bt :tab ball<CR>
+nnoremap <silent> <Leader>bd :bd<CR>
+nnoremap <silent> <Leader>bD :bd!<CR>
+nnoremap <silent> <Leader>Bd :call DeleteHiddenBuffers()<CR>
+nnoremap <silent> <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
 " Window stuff
-nnoremap <C-H>      <C-W>h
-nnoremap <C-J>      <C-W>j
-nnoremap <C-K>      <C-W>k
-nnoremap <C-L>      <C-W>l
-nnoremap <C-A-J> :call SmoothDown()<CR>
-nnoremap <C-A-K> :call SmoothUp()<CR>
+nnoremap <silent> <C-H>      <C-W>h
+nnoremap <silent> <C-J>      <C-W>j
+nnoremap <silent> <C-K>      <C-W>k
+nnoremap <silent> <C-L>      <C-W>l
+nnoremap <silent> <C-A-J> :call SmoothDown()<CR>
+nnoremap <silent> <C-A-K> :call SmoothUp()<CR>
 " Tab stuff
-nnoremap <A-i>     :bp<CR>
-nnoremap <A-o>     :bn<CR>
-nnoremap <A-h>     :tabmove -1<CR>
-nnoremap <A-l>     :tabmove +1<CR>
+nnoremap <silent> <A-i>     :bp<CR>
+nnoremap <silent> <A-o>     :bn<CR>
+nnoremap <silent> <A-h>     :tabmove -1<CR>
+nnoremap <silent> <A-l>     :tabmove +1<CR>
 " Smart Tab, (Window), Buffer stuff (and remappings for J, K)
-nnoremap J     :call PrevTWorB()<CR>
-nnoremap K     :call NextTWorB()<CR>
-nnoremap <A-j>     J
-nnoremap <A-k>     K
+nnoremap <silent> J     :call PrevTWorB()<CR>
+nnoremap <silent> K     :call NextTWorB()<CR>
+nnoremap <silent> <A-j>     J
+nnoremap <silent> <A-k>     K
 " Numbered buffers and tabs
 for n in range(1, 9)
   execute 'nnoremap <A-'.n.'> :call NumTorB('.n.')<CR>'
 endfor
 nnoremap <A-0> :call NumTorB(10)<CR>
-" <C-C> is unsafe in mappings
-inoremap <C-C> <Esc><Esc>
+" <C-C> doesn't trigger InputLeave
+inoremap <C-C> <Esc>
 
 function! SmoothDown()
   if(&winheight == 999)
@@ -525,16 +532,16 @@ endfunction
 nnoremap <Leader>c <Nop>
 nnoremap <Leader>x <Nop>
 nnoremap <Leader>r <Nop>
-vnoremap <Leader>c <Nop>
+xnoremap <Leader>c <Nop>
 "Line to xclip
 nnoremap <Leader>C _y$:call system("xclip -i -selection clipboard", getreg("\""))<CR>
-vnoremap <Leader>C y:call system("xclip -i -selection clipboard", getreg("\""))<CR>
+xnoremap <Leader>C y:call system("xclip -i -selection clipboard", getreg("\""))<CR>
 nmap <Leader>G yae<C-O>:call system("xclip -i -selection clipboard", getreg("\""))<CR>
 "Paste from xclip
 nnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
-vnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+xnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 nnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
-vnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
+xnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
 
 "Special swapping mappings!
 "Register from xclip
@@ -618,11 +625,11 @@ nnoremap <Leader>Mhu j"_ddk0
 " Bundles folding
 "Create fold
 nnoremap <Leader>BF yyo" }}}<C-C>k>>PI" <C-C>A {{{<C-C>j_
-"Remove fold
+"Remove fold TODO
 
 " Remove whitespace
 nnoremap <silent> <F5> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
-vnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
+xnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 
 " Emacs stuff!
 inoremap <C-F> <Right>
@@ -636,7 +643,7 @@ cnoremap <A-b> <S-Left>
 cnoremap <A-f> <S-Right>
 
 " Dedent input mode (since <C-D> is taken above; <C-T> is indent)
-inoremap <C-Q> <C-D>
+inoremap <C-G> <C-D>
 
 " No accidental Ex-mode or keyword-lookup
 nnoremap gQ gggqG
@@ -662,10 +669,14 @@ nmap <Leader>[ 2yEysi[<C-J>/<C-T>"<CR>
 nmap <Leader>] 2yE?[<CR>J"_xh%kJx?<C-T>"<CR>
 
 " swap j/gj, k/gk, $/g$, 0/g0
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+xnoremap j gj
+xnoremap k gk
+xnoremap gj j
+xnoremap gk k
 " noremap $ g$
 " noremap 0 g0
 " noremap g$ $
@@ -682,12 +693,11 @@ command! -range -nargs=0 Overline        call CombineSelection(<line1>, <line2>,
 command! -range -nargs=0 Underline       call CombineSelection(<line1>, <line2>, '0332')
 command! -range -nargs=0 DoubleUnderline call CombineSelection(<line1>, <line2>, '0333')
 command! -range -nargs=0 Strikethrough   call CombineSelection(<line1>, <line2>, '0336')
-"vnoremap <Leader>z :Overline<CR>
-"vnoremap <C-K> <C-K>
+"xnoremap <Leader>z :Overline<CR>
 
 " Merge stuff!
 " Search for merge conflics
-nnoremap <Leader>? /^[<=>]\{7\}[^<=>]*$<CR>
+nnoremap <Leader>fc /^[<=>]\{7\}[^<=>]*$<CR>
 " Obtain merge diffs
 nnoremap dOR :diffg REMOTE<CR>
 nnoremap dOB :diffg BASE<CR>
@@ -717,8 +727,16 @@ autocmd FileType python nnoremap <buffer> <Leader>cF :set foldmethod=expr foldex
 " Last buffer more easily
 nmap <BS> <C-^>
 
-" Search stuff!
-vnoremap <Leader>/ y/<C-G>VpA\/<ESC>V:s/\\/\\\\/g<CR>V:s/\//\\\//g<CR>I\V<ESC>$hhhD<CR>
+" Search for WORD
+" Would like to shorten, or, better, avoid opening command-line window.
+" Visual selection:
+xnoremap <silent> <Leader>/ y/<C-G>VpA\/<ESC>V
+  \ :<Home>keeppatterns<Space>silent<Space><End>s!\\!\\\\!g<CR>V
+  \ :<Home>keeppatterns<Space>silent<Space><End>s!/!\\/!g<CR>I\V<ESC>$hhhD<CR>
+" Under cursor:
+nnoremap <silent> <Leader>? /<C-R><C-A><C-G>A\/<ESC>V
+  \ :<Home>keeppatterns<Space>silent<Space><End>s!\\!\\\\!g<CR>V
+  \ :<Home>keeppatterns<Space>silent<Space><End>s!/!\\/!g<CR>I\V<ESC>$hhhD<CR>
 
 " No mouse scrolling
 map <Up> <F18>
@@ -757,6 +775,10 @@ nnoremap <A-K> 25zl
 "nnoremap <A-K> 15kzz
 "nnoremap <A-H> 25zh
 "nnoremap <A-L> 25zl
+
+" Move screen around, like zb/zt/zz
+nnoremap zB zb9<C-E>
+nnoremap zT zt9<C-Y>
 
 " Fold stuff
 function! MyFoldText()
@@ -810,9 +832,9 @@ nnoremap <Leader>wn :w! /dev/null<CR>
 nnoremap <Leader><C-R> :redraw<CR>
 
 " Completion stuff
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-inoremap <expr> <Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
-inoremap <expr> <S-Tab>  pumvisible() ? "\<C-P>" : "\<S-Tab>"
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr> <Tab>   pumvisible() ? "\<C-N>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
 
 " Say IPA
 map <F10> :!say <cWORD><CR>
@@ -820,108 +842,26 @@ map <F10> :!say <cWORD><CR>
 " Digraphs
 " •
 digraphs ** 8226
-" TODO: Complete and extract
-" ᴬ
-" ᴮ
-" ᴰ
-" ᴱ
-" ᴳ
-" ᴴ
-" ᴵ
-" ᴶ
-" ᴷ
-" ᴸ
-" ᴹ
-" ᴺ
-" ᴼ
-" ᴾ
-" ᴿ
-" ᵀ
-" ᵁ
-" ⱽ
-" ᵂ
-" ᶦ
-" ᶫ
-" ᶰ
-" ᶸ
-" ᵃ
-" ᵇ
-" ᶜ
-" ᵈ
-" ᵉ
-" ᶠ
-" ᵍ
-" ʰ
-" ⁱ
-" ʲ
-" ᵏ
-" ˡ
-" ᵐ
-" ⁿ
-" ᵒ
-" ᵖ
-" ʳ
-" ˢ
-" ᵗ
-" ᵘ
-" ᵛ
-" ʷ
-" ˣ
-" ʸ
-" ᶻ
-" ₐ
-" ₑ
-" ₕ
-" ᵢ
-" ⱼ
-" ₖ
-" ₗ
-" ₘ
-" ₙ
-" ₒ
-" ₚ
-" ᵣ
-" ₛ
-" ₜ
-" ᵤ
-" ᵥ
-" ₓ
-" Α
-" Β
-" Γ
-" Δ
-" Ε
-" Ζ
-" Η
-" Θ
-" Ι
-" Κ
-" Λ
-" Μ
-" Ν
-" Ξ
-" Ο
-" Π
-" Ρ
-" Σ
-" Τ
-" Υ
-" Φ
-" Χ
-" Ψ
-" Ω
-" ᵝ
-" ᵞ
-" ᵟ
-" ᵋ
-" ᶿ
-" ᶥ
-" ᵠ
-" ᵡ
-" ᵦ
-" ᵧ
-" ᵨ
-" ᵩ
-" ᵪ
+" Easy greek letters
+inoremap <expr> <C-S> "".nr2char(getchar())."*"
+cnoremap <expr> <C-S> "".nr2char(getchar())."*"
+" Overtildes
+inoremap <C-S>~ <C-V>u0303
+cnoremap <C-S>~ <C-V>u0303
 
-au! BufNewFile,BufRead * set expandtab sw=2 ts=2 sts=2 | let b:lexima_disabled=1
+" TODO: Make digraphs. Extract to file?
+" Super upper:
+" ᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁⱽᵂ
+" Super upper small-caps (probably don't bother)"
+" ᶦᶫᶰᶸ
+" Super lower:
+" ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻ
+" Sub lower:
+" ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓ
+" Super lower greek:
+" ᵝᵞᵟᵋᶿᶥᵠᵡ
+" Sub lower greek:
+" ᵦᵧᵨᵩᵪ
+
+" Newline with no comments
+nnoremap <silent> <C-S> o<Esc>0D

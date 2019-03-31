@@ -30,4 +30,15 @@ done
 #Add i3batwarn.sh to crontab every five minutes or so
 
 #ln -s ~/.nvimrc .config/nvim/init.vim
+
+# notes plugin:
+  #ln -s ~/dotfiles/ftplugin .config/nvim/ftplugin
+  #ln -s ~/dotfiles/ftplugin .vim/ftplugin
+
+  #ln -s ~/dotfiles/ftdetect .config/nvim/ftdetect
+  #ln -s ~/dotfiles/ftdetect .vim/ftdetect
+
+  #ln -s ~/dotfiles/syntax .config/nvim/syntax
+  #ln -s ~/dotfiles/syntax .vim/syntax
+
 #ln -s ~/dotfiles/rofi/config .config/rofi/config

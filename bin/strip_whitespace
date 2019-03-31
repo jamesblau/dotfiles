@@ -1,0 +1,25 @@
+#!/bin/bash
+
+input=$(xclip -o)
+echo -n input: "${input}"
+
+stripped=$(echo "${input}" | awk '{$1=$1;print}')
+echo -n stripped: "${stripped}"
+
+noempty=$(echo "${stripped}" | sed '/^$/d')
+echo -n noempty: "${noempty}"
+
+oneline=$(echo -n ${noempty})
+echo -n oneline: "${oneline}"
+
+if [ -z "$@" ]; then
+  echo -n "${noempty}" | xclip
+else
+  if [ "$@" == "-a" ]; then
+    echo -n "${oneline}" | xclip
+  elif [ "$@" == "-l" ]; then
+    echo "${noempty}" | xclip
+  else
+    echo "Invalid argument: use -l or -a"
+  fi
+fi
