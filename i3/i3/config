@@ -29,7 +29,7 @@ floating_modifier $mod
 # Start a terminal
 bindsym $mod+Return exec kitty --config ~/.kitty.conf
 # bindsym $mod+Return exec termite
-bindsym $mod+Control+Shift+Return exec i3-sensible-terminal -e tmux
+bindsym $mod+Control+Shift+Return exec kitty --config ~/.kitty.conf -e tmux
 # bindsym $mod+Shift+Return exec gnome-terminal
 # bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/.bashrc_neovim'"
 # bindsym $mod+s exec stterm
@@ -287,7 +287,6 @@ bar {
 }
 
 # Startup things...
-# Does this work?
 exec_always sudo ~/bin/conf
 exec_always ~/bin/lid-lock
 exec clipit
@@ -301,6 +300,7 @@ exec nm-applet
 bindsym $mod+i exec ~/bin/strip_whitespace
 bindsym $mod+Shift+i exec ~/bin/strip_whitespace -l
 bindsym $mod+Control+i exec ~/bin/strip_whitespace -a
+bindsym $mod+Mod1+i exec ~/bin/strip_whitespace -s
 
 # Not sure about this one
 focus_follows_mouse no

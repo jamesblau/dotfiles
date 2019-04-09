@@ -210,10 +210,11 @@ bind -m vi-insert "\C-o":
 #Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin"
+export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+export LD_LIBRARY_PATH="/usr/local/cuda-9.0/lib64"
 
 #Console readline survives Ctrl-Z
 alias sbt-console='rlwrap sbt console -Xnojline'
@@ -292,11 +293,11 @@ alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { prin
 # Clever unique without sort
 alias uniq_nosort='awk '\''!x[$0]++'\'''
 
+# Math
 alias oc='octave --no-gui --silent'
-
 alias math='rlwrap math -rawterm'
 
-#Jline2 is broken, but rlwrap prevents access to tab-complete...
+# Jline2 is broken, but rlwrap prevents access to tab-complete...
 # alias scala='rlwrap -a scala'
 
 # Ripgrep

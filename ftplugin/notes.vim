@@ -10,6 +10,7 @@ let b:did_ftplugin = 1
 
 let b:undo_ftplugin = 'setlocal comments< commentstring<'
 
+" Headers
 nnoremap <Leader>hm I#<Space><Esc>
 nnoremap <Leader>Hm I##<Space><Esc>yypVr#
 nnoremap <Leader>HM I###<Space><Esc>A<Space>XXX<Esc>yypVr#

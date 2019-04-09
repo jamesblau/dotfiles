@@ -53,6 +53,7 @@ set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
 set dictionary+=/usr/share/dict/words
+set iminsert=1
 
 " Use local bundles if available
 source ~/.vimrc.bundles
@@ -139,15 +140,6 @@ augroup resCur
   au!
   au! BufWinEnter * call ResCur()
 augroup END
-
-function! RepeatChar(char, count)
-  return repeat(a:char, a:count)
-endfunction
-" Insert single character
-nnoremap <expr> <Space>         ":<C-U>exec 'normal i'.RepeatChar(nr2char(getchar()), v:count1)<CR>"
-nnoremap <expr> <Leader><Space> ":<C-U>exec 'normal a'.RepeatChar(nr2char(getchar()), v:count1)<CR>"
-nmap <Space><CR>            i<CR><C-C><F5>
-nmap <Leader><Space><CR>    a<CR><C-C><F5>
 
 " Yank and Pasting stuff
 nmap Y y$
@@ -534,58 +526,57 @@ nnoremap <Leader>x <Nop>
 nnoremap <Leader>r <Nop>
 xnoremap <Leader>c <Nop>
 "Line to xclip
-nnoremap <Leader>C _y$:call system("xclip -i -selection clipboard", getreg("\""))<CR>
-xnoremap <Leader>C y:call system("xclip -i -selection clipboard", getreg("\""))<CR>
-nmap <Leader>G yae<C-O>:call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nnoremap <silent> <Leader>C _y$:silent call system("xclip -i -selection clipboard", getreg("\""))<CR>
+xnoremap <silent> <Leader>C y:silent call system("xclip -i -selection clipboard", getreg("\""))<CR>
 "Paste from xclip
-nnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
-xnoremap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
-nnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
-xnoremap <Leader>V :call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
+nnoremap <silent> <Leader>v :silent call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+xnoremap <silent> <Leader>v :silent call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+nnoremap <silent> <Leader>V :silent call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
+xnoremap <silent> <Leader>V :silent call setreg("\"",system("xclip -o -selection clipboard"))<CR>P
 
 "Special swapping mappings!
 "Register from xclip
-nnoremap <Leader>D :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
+nnoremap <silent> <Leader>D :silent call setreg("\"",system("xclip -o -selection clipboard"))<CR>
 "xclip from register
-nnoremap <Leader>F :call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nnoremap <silent> <Leader>F :silent call system("xclip -i -selection clipboard", getreg("\""))<CR>
 "Swap registers
 nnoremap <expr> <Leader>R ":call RegisterFromUnnamed()<CR>"
 nnoremap <expr> <Leader>U ":call UnnamedFromRegister()<CR>"
 
 "Register from full path
-nnoremap <Leader>rp :call setreg("\"", expand("%:p"))<CR>
+nnoremap <silent> <Leader>rp :silent call setreg("\"", expand("%:p"))<CR>
 "Xclip from full path
-nnoremap <Leader>xp :call system("xclip -i -selection clipboard", expand("%:p"))<CR>
+nnoremap <silent> <Leader>xp :silent call system("xclip -i -selection clipboard", expand("%:p"))<CR>
 "Register from filename
-nnoremap <Leader>rf :call setreg("\"", expand("%:t"))<CR>
+nnoremap <silent> <Leader>rf :silent call setreg("\"", expand("%:t"))<CR>
 "Xclip from filename
-nnoremap <Leader>xf :call system("xclip -i -selection clipboard", expand("%:t"))<CR>
+nnoremap <silent> <Leader>xf :silent call system("xclip -i -selection clipboard", expand("%:t"))<CR>
 "Register from dir
-nnoremap <Leader>rd :call setreg("\"", expand("%:p:h")."/")<CR>
+nnoremap <silent> <Leader>rd :silent call setreg("\"", expand("%:p:h")."/")<CR>
 "xclip from dir
-nnoremap <Leader>xd :call system("xclip -i -selection clipboard", expand("%:p:h")."/")<CR>
+nnoremap <silent> <Leader>xd :silent call system("xclip -i -selection clipboard", expand("%:p:h")."/")<CR>
 "Register from Git repo
-nnoremap <Leader>rg :call setreg("\"", system("git rev-parse --show-toplevel"))<CR>
+nnoremap <silent> <Leader>rg :silent call setreg("\"", system("git rev-parse --show-toplevel"))<CR>
 "xclip from Git repo
-nnoremap <Leader>xg :call system("git rev-parse --show-toplevel \| tr -d '\n' \| xclip -i -selection clipboard")<CR>
+nnoremap <silent> <Leader>xg :silent call system("git rev-parse --show-toplevel \| tr -d '\n' \| xclip -i -selection clipboard")<CR>
 "Register from buffers
-nnoremap <Leader>rb :call setreg( "\"", join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ") )<CR>
+nnoremap <silent> <Leader>rb :silent call setreg( "\"", join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ") )<CR>
 "xclip from buffers
-nnoremap <Leader>xb
-      \ :call system(
+nnoremap <silent> <Leader>xb
+      \ :silent call system(
         \ "xclip -i -selection clipboard",
         \ join(map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'), " ")
       \ )<CR>
 "Export buffers
 nnoremap <silent> <Leader>be
-      \ :call writefile(
+      \ :silent call writefile(
         \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
         \ system("echo /home/james/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
       \ )<CR>
 "Register from All
-nnoremap <Leader>ra mmggVGy`m
+nmap <silent> <Leader>ra yae<C-O>
 "xclip from All
-nnoremap <Leader>xa mmggVGy:call system("xclip -i -selection clipboard", getreg("\""))<CR>`m
+nmap <silent> <Leader>xa yae<C-O>:silent call system("xclip -i -selection clipboard", getreg("\""))<CR>
 " }}}
 
 " Saving stuff
@@ -727,16 +718,12 @@ autocmd FileType python nnoremap <buffer> <Leader>cF :set foldmethod=expr foldex
 " Last buffer more easily
 nmap <BS> <C-^>
 
-" Search for WORD
-" Would like to shorten, or, better, avoid opening command-line window.
-" Visual selection:
-xnoremap <silent> <Leader>/ y/<C-G>VpA\/<ESC>V
-  \ :<Home>keeppatterns<Space>silent<Space><End>s!\\!\\\\!g<CR>V
-  \ :<Home>keeppatterns<Space>silent<Space><End>s!/!\\/!g<CR>I\V<ESC>$hhhD<CR>
-" Under cursor:
-nnoremap <silent> <Leader>? /<C-R><C-A><C-G>A\/<ESC>V
-  \ :<Home>keeppatterns<Space>silent<Space><End>s!\\!\\\\!g<CR>V
-  \ :<Home>keeppatterns<Space>silent<Space><End>s!/!\\/!g<CR>I\V<ESC>$hhhD<CR>
+" Search for visual selection:
+xnoremap <silent> <Leader>/ "9y:silent let @/ = '\V'.substitute(substitute(substitute(@9, '\\', '\\\\', 'ge'),'/', '\\/', 'ge'),'\n', '\\n', 'ge')<CR>
+" Search for WORD under cursor (cWORD):
+nnoremap <silent> <Leader>? :silent let @/ = '\V'.substitute(substitute(expand('<cWORD>'), '\\', '\\\\', 'ge'), '/', '\\/', 'ge')<CR>
+" Test string with special characters:
+" <Leader>/y'/<C-G>Vp\A\/<ESC>\V:"'<End>s!\\!\\\"\!g<CR>\V:<Home>silent<Space><E"nd>s!/''!\\/!g<:'"CR>\I\V<ESC>$hhhD<CR>
 
 " No mouse scrolling
 map <Up> <F18>
@@ -840,19 +827,70 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
 map <F10> :!say <cWORD><CR>
 
 " Digraphs
-" •
+" forward tick: ´
+digraphs `` 180
+" bullet: •
 digraphs ** 8226
+" Double-strike 𝔼ℝℕℤℚℂⅈⅉⅇ
+digraphs EE 120124
+digraphs RR 8477
+digraphs NN 8469
+digraphs ZZ 8484
+digraphs QQ 8474
+digraphs CC 8450
+digraphs ii 8520
+digraphs jj 8521
+digraphs ee 8519
+" diagonal ellipses: ⋰ ⋱
+digraphs ./ 8944
+digraphs .\ 8945
+" extended matrix brackets: ⎡⎢⎣⎤⎥⎦
+digraphs bt 9121
+digraphs bm 9122
+digraphs bb 9123
+digraphs bT 9124
+digraphs bM 9125
+digraphs bB 9126
+" mathematical angle brackets: ⟨⟩
+digraphs B< 10216
+digraphs B> 10217
+" angle brackets: 〈〉
+digraphs b< 12296
+digraphs b> 12297
+" evaluate:
+"   left parenthesis: ⎛⎜⎝
+"   right parenthesis: ⎞⎟⎠
+"   left curly bracket: ⎧⎨⎩
+"   curly bracket extension: ⎪
+"   right curly bracket: ⎫⎬⎭
+"   integral extension: ⎮
+"   curly bracket sections: ⎰⎱
+"   large summation: ⎲⎳
+"   vertical square brackets: ⎴⎵⎶
+"   radical symbol bottom: ⎷
+"   vertical box lines: ⎸⎹
+"   horizontal lines: ⎺⎻⎼⎽⎯
 " Easy greek letters
 inoremap <expr> <C-S> "".nr2char(getchar())."*"
 cnoremap <expr> <C-S> "".nr2char(getchar())."*"
-" Overtildes
+lnoremap <expr> <C-S> "".nr2char(getchar())."*"
+" Matrix brackets
+nnoremap <silent> <C-S>[ :silent let @" = "⎡⎤\n⎢⎥\n⎣⎦\n"<CR>
+" Combining Diacritics
+inoremap <C-S>^ <C-V>u0302
+cnoremap <C-S>^ <C-V>u0302
+lnoremap <C-S>^ <C-V>u0302
 inoremap <C-S>~ <C-V>u0303
 cnoremap <C-S>~ <C-V>u0303
+lnoremap <C-S>~ <C-V>u0303
+inoremap <C-S>_ <C-V>u0332
+cnoremap <C-S>_ <C-V>u0332
+lnoremap <C-S>_ <C-V>u0332
 
 " TODO: Make digraphs. Extract to file?
 " Super upper:
 " ᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁⱽᵂ
-" Super upper small-caps (probably don't bother)"
+" Super small-caps (probably don't bother):
 " ᶦᶫᶰᶸ
 " Super lower:
 " ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻ
@@ -862,6 +900,16 @@ cnoremap <C-S>~ <C-V>u0303
 " ᵝᵞᵟᵋᶿᶥᵠᵡ
 " Sub lower greek:
 " ᵦᵧᵨᵩᵪ
+" Super combining lower aeioucdhmrtvx:
+" U+0363 U+0364 U+0365 U+0366 U+0367 U+0368 U+0369 U+036A U+036B U+036C U+036D U+036E U+036F
+" Extended brackets: https://unicode-search.net/unicode-namesearch.pl?term=BRACKET
+
+" Straighten notes - refreshes syntax, so gets weird if defined in syntax file
+function! Straighten()
+  bufdo 1
+  source $VIMRUNTIME/syntax/syntax.vim
+endfunction
+nnoremap <Leader>n mM:call Straighten()<CR>`M
 
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
