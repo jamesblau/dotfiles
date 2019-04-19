@@ -243,6 +243,11 @@ mode "resize" {
   bindsym Control+Shift+k resize shrink down 1 px or 1 ppt
   bindsym Control+Shift+l resize shrink left 1 px or 1 ppt
 
+  # notes resize
+  # TODO: this cannot be the best way to avoid large shrink being ignored
+  bindsym n resize shrink right 15 px or 15 ppt; resize shrink right 14 px or 14 ppt; resize shrink right 13 px or 13 ppt; resize shrink right 12 px or 12 ppt; resize shrink right 11 px or 11 ppt; resize shrink right 10 px or 10 ppt; resize shrink right 9 px or 9 ppt; resize shrink right 8 px or 8 ppt; resize shrink right 7 px or 7 ppt; resize shrink right 6 px or 6 ppt; resize shrink right 5 px or 5 ppt; resize shrink right 4 px or 4 ppt; resize shrink right 3 px or 3 ppt; resize shrink right 2 px or 2 ppt; resize shrink right 1 px or 1 ppt; \
+    resize grow right 31 px or 31 ppt; mode "default"
+
   bindsym Return mode "default"
   bindsym Escape mode "default"
 }

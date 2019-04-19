@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -f
+
 input=$(xclip -o)
-noleadtrailing=$(echo "$(echo "$(echo "${input}")" | tac)" | tac)
+noleadtrailing=$(echo "$(echo "$(echo "${input}")" | tac)" | tac | sed 's/^\s*//' | sed 's/\s*$//')
 noempty=$(echo "${noleadtrailing}" | sed '/^$/d')
 oneline=$(echo -n ${noempty})
 

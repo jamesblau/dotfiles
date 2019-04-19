@@ -52,7 +52,7 @@ set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
-set dictionary+=/usr/share/dict/words
+" set dictionary+=/usr/share/dict/words
 set iminsert=1
 
 " Use local bundles if available
@@ -831,7 +831,7 @@ map <F10> :!say <cWORD><CR>
 digraphs `` 180
 " bullet: •
 digraphs ** 8226
-" Double-strike 𝔼ℝℕℤℚℂⅈⅉⅇ
+" double-strike: 𝔼ℝℕℤℚℂⅈⅉⅇ
 digraphs EE 120124
 digraphs RR 8477
 digraphs NN 8469
@@ -876,7 +876,7 @@ cnoremap <expr> <C-S> "".nr2char(getchar())."*"
 lnoremap <expr> <C-S> "".nr2char(getchar())."*"
 " Matrix brackets
 nnoremap <silent> <C-S>[ :silent let @" = "⎡⎤\n⎢⎥\n⎣⎦\n"<CR>
-" Combining Diacritics
+" Combining diacritics:^~_
 inoremap <C-S>^ <C-V>u0302
 cnoremap <C-S>^ <C-V>u0302
 lnoremap <C-S>^ <C-V>u0302
@@ -909,7 +909,7 @@ function! Straighten()
   bufdo 1
   source $VIMRUNTIME/syntax/syntax.vim
 endfunction
-nnoremap <Leader>n mM:call Straighten()<CR>`M
+nnoremap <silent> <Leader>n mM:silent call Straighten()<CR>`M
 
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
