@@ -1,11 +1,11 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 set nocompatible
 
+" let g:james_no_hud = 1
 "let g:james_minimal_plugins=1
 let mapleader = ","
 nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/.vimrc \| e<CR>
-
 
 set sw=2 ts=2 sts=2
 set background=dark
@@ -50,9 +50,9 @@ set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatib
 set virtualedit=onemore         " Allow for cursor beyond last character
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
-set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+" TODO: figure out command line completion
+" set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set winminheight=0              " Windows can be 0 lines high
-" set dictionary+=/usr/share/dict/words
 set iminsert=1
 
 " Use local bundles if available
@@ -175,7 +175,6 @@ else
   endif
 endif
 if v:version >= 704
-  " NumberToggle
   function! NumberToggle()
     if(&rnu == 1 && &nu == 1)
       set nonumber norelativenumber
@@ -187,9 +186,8 @@ if v:version >= 704
     set number relativenumber
   endif
 else
-  " NumberToggle
   function! NumberToggle()
-    if(&rnu == 1 && &nu == 1)
+    if(&nu == 1)
       set nonumber
     else
       set number
@@ -623,18 +621,18 @@ nnoremap <silent> <F5> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 xnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 
 " Emacs stuff!
-inoremap <C-F> <Right>
-cnoremap <C-F> <Right>
-inoremap <C-B> <Left>
-cnoremap <C-B> <Left>
 inoremap <C-D> <Delete>
 cnoremap <C-D> <Delete>
-cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-F> <Right>
 cnoremap <A-b> <S-Left>
 cnoremap <A-f> <S-Right>
+cnoremap <C-A> <Home>
+" Backspace one character, ignoring tab settings, not breaking undo sequence
+inoremap <C-H> <Esc>cl
 
 " Dedent input mode (since <C-D> is taken above; <C-T> is indent)
-inoremap <C-G> <C-D>
+inoremap <C-B> <C-D>
 
 " No accidental Ex-mode or keyword-lookup
 nnoremap gQ gggqG
@@ -745,11 +743,6 @@ cmap <Down> <Nop>
 cmap <S-Down> <Nop>
 cmap <C-Down> <Nop>
 
-" Undo big insert-mode deletes
-" Messes up C-U after new line...TODO: fix?
-" inoremap <C-W> <C-C>a<C-W>
-" inoremap <C-U> <C-C>a<C-U>
-
 " Fast horizontal navigation
 nnoremap <A-H> zH
 nnoremap <A-L> zL
@@ -785,7 +778,7 @@ endif
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
-nmap <Leader>t<Space> :set ft= syn= formatprg= linebreak showbreak= wrap<CR>
+nmap <Leader>t<Space> :set ft=notes<CR>
 nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbreak nowrap<CR>
 
 " TODO: Smaller buffer numbers: instead of creating a new buffer sometimes, open the lowest-numbered empty hidden buffer.
@@ -832,15 +825,15 @@ digraphs `` 180
 " bullet: •
 digraphs ** 8226
 " double-strike: 𝔼ℝℕℤℚℂⅈⅉⅇ
-digraphs EE 120124
-digraphs RR 8477
-digraphs NN 8469
-digraphs ZZ 8484
-digraphs QQ 8474
 digraphs CC 8450
+digraphs NN 8469
+digraphs QQ 8474
+digraphs RR 8477
+digraphs ZZ 8484
+digraphs ee 8519
 digraphs ii 8520
 digraphs jj 8521
-digraphs ee 8519
+digraphs EE 120124
 " diagonal ellipses: ⋰ ⋱
 digraphs ./ 8944
 digraphs .\ 8945
@@ -851,12 +844,19 @@ digraphs bb 9123
 digraphs bT 9124
 digraphs bM 9125
 digraphs bB 9126
+" heavy operators: ✱
+digraphs *H 10033
+" heavy plus looks weird; use Japanese? 十
+digraphs +H 21313
 " mathematical angle brackets: ⟨⟩
 digraphs B< 10216
 digraphs B> 10217
 " angle brackets: 〈〉
 digraphs b< 12296
 digraphs b> 12297
+" bold numbers: 𝟬𝟭
+digraphs b0 120812
+digraphs b1 120813
 " evaluate:
 "   left parenthesis: ⎛⎜⎝
 "   right parenthesis: ⎞⎟⎠
@@ -870,13 +870,14 @@ digraphs b> 12297
 "   radical symbol bottom: ⎷
 "   vertical box lines: ⎸⎹
 "   horizontal lines: ⎺⎻⎼⎽⎯
+"   circled operators: ⊕⊖⊗⊘⊙⊚⊛⊜⊝
 " Easy greek letters
 inoremap <expr> <C-S> "".nr2char(getchar())."*"
 cnoremap <expr> <C-S> "".nr2char(getchar())."*"
 lnoremap <expr> <C-S> "".nr2char(getchar())."*"
 " Matrix brackets
 nnoremap <silent> <C-S>[ :silent let @" = "⎡⎤\n⎢⎥\n⎣⎦\n"<CR>
-" Combining diacritics:^~_
+" Combining diacritics:^~__⃖_⃗
 inoremap <C-S>^ <C-V>u0302
 cnoremap <C-S>^ <C-V>u0302
 lnoremap <C-S>^ <C-V>u0302
@@ -886,6 +887,12 @@ lnoremap <C-S>~ <C-V>u0303
 inoremap <C-S>_ <C-V>u0332
 cnoremap <C-S>_ <C-V>u0332
 lnoremap <C-S>_ <C-V>u0332
+inoremap <C-S>< <C-V>u20D6
+cnoremap <C-S>< <C-V>u20D6
+lnoremap <C-S>< <C-V>u20D6
+inoremap <C-S>> <C-V>u20D7
+cnoremap <C-S>> <C-V>u20D7
+lnoremap <C-S>> <C-V>u20D7
 
 " TODO: Make digraphs. Extract to file?
 " Super upper:
@@ -905,6 +912,7 @@ lnoremap <C-S>_ <C-V>u0332
 " Extended brackets: https://unicode-search.net/unicode-namesearch.pl?term=BRACKET
 
 " Straighten notes - refreshes syntax, so gets weird if defined in syntax file
+" TODO: Why does it mess up syntax?
 function! Straighten()
   bufdo 1
   source $VIMRUNTIME/syntax/syntax.vim
@@ -913,3 +921,5 @@ nnoremap <silent> <Leader>n mM:silent call Straighten()<CR>`M
 
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
+
+" TODO: FZF search in buffers

@@ -13,7 +13,7 @@ let b:undo_ftplugin = 'setlocal comments< commentstring<'
 " Headers
 nnoremap <Leader>hm I#<Space><Esc>
 nnoremap <Leader>Hm I##<Space><Esc>yypVr#
-nnoremap <Leader>HM I###<Space><Esc>A<Space>XXX<Esc>yypVr#
+nnoremap <Leader>HM I###<Space><Esc>A<Space>###<Esc>yypVr#
 
 setl linebreak showbreak= wrap sw=4 ts=4 sts=4 expandtab
 setl iskeyword=@,48-57,_,192-255

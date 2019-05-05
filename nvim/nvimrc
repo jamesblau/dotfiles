@@ -1,10 +1,22 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 source ~/.vimrc
-"tnoremap <C-\> <C-\><C-N>
-tnoremap <Leader><Esc> <C-\><C-N>
-nmap ,<C-T> :terminal<CR>
+tnoremap <C-Space> <C-\><C-N>
+function! JamesSetupTerminal()
+  " nnoremap <buffer> a aa
+  " nnoremap <buffer> A AA
+  " nnoremap <buffer> i ii
+  " nnoremap <buffer> I II
+  " setl modifiable
+  startinsert
+endfunction
+au! TermOpen * call JamesSetupTerminal()
+tnoremap <expr> <C-T> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+nmap <Leader><C-T> :terminal<CR>
 " TODO: Fix this
-" nmap ,<C-T> :terminal bash --rcfile ~/dotfiles/bash/bashrc_neovim<CR>
+" nmap <Leader><C-T> :terminal bash --rcfile ~/dotfiles/bash/bashrc_neovim<CR>
+
+" ipython prepare block for paste
+tnoremap <C-\><C-T> <Esc>a\<CR><Esc>kxa<C-\><C-N>
 
 " Stupid nonsense trying to open current terminal line in split, I seriously cannot believe how dumb this is
 "tnoremap <C-J> <C-\><C-N>G?.<CR>v?^\$<CR>lly:new<CR>:setl buftype=nofile<CR>:nnoremap <buffer> <lt>C-J> ggIa<lt>Esc>vG$y:bw<lt>CR>i<lt>Esc>dd<lt>C-\><lt>C-N>pi<CR>:inoremap <buffer> <lt>C-J> <lt>Esc>ggIa<lt>Esc>vG$y:bw<lt>CR>i<lt>Esc>dd<lt>C-\><lt>C-N>pi<CR>p
