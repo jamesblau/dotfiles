@@ -5,10 +5,17 @@
 exec_always "/usr/bin/xrandr --dpi 150"
 # exec_always "/usr/bin/xrandr --dpi 100"
 set $mod Mod4
+set $kitty kitty --config ~/.kitty.conf
+set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
 
 # Font
 font pango:DejaVu Sans Mono Bold 7
 new_window 1pixel
+
+# Go to previous workspace/screen
+bindsym $mod+o workspace back_and_forth
+bindsym $mod+Shift+o move container to workspace back_and_forth
+bindsym $mod+Control+o move container to workspace 1; workspace back_and_forth
 
 # Scratchpad
 bindsym $mod+Control+Shift+minus move scratchpad
@@ -18,18 +25,10 @@ bindsym $mod+Shift+space floating toggle
 # Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# Go to previous workspace/screen
-bindsym $mod+o workspace back_and_forth
-bindsym $mod+Shift+o move container to workspace back_and_forth
-bindsym $mod+Control+o move container to workspace 1; workspace back_and_forth
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
 # Start a terminal
-bindsym $mod+Return exec kitty --config ~/.kitty.conf
+bindsym $mod+Return exec $kitty
 # bindsym $mod+Return exec termite
-bindsym $mod+Control+Shift+Return exec kitty --config ~/.kitty.conf -e tmux
+bindsym $mod+Control+Shift+Return exec $kitty -e tmux
 # bindsym $mod+Shift+Return exec gnome-terminal
 # bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/.bashrc_neovim'"
 # bindsym $mod+s exec stterm
@@ -40,43 +39,12 @@ bindsym $mod+Control+Shift+Return exec kitty --config ~/.kitty.conf -e tmux
 bindsym --release Mod1+g split v; exec xdotool key --clearmodifiers alt+Return
 bindsym --release Mod1+v split h; exec xdotool key --clearmodifiers alt+Return
 
-# Edit dotfiles
-bindsym $mod+Control+Shift+a exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/install ~/dotfiles/apt-installs'
-bindsym $mod+Control+Shift+b exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'
-bindsym $mod+Control+Shift+c exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/bin/conf'
-bindsym $mod+Control+Shift+d exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/digraphs'
-bindsym $mod+Control+Shift+e exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'
-bindsym $mod+Control+Shift+f exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/tridactyl/tridactylrc'
-#       $mod+Control+Shift+g taken
-bindsym $mod+Control+Shift+h exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim $(xclip -o)'
-bindsym $mod+Control+Shift+i exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'
-bindsym $mod+Control+Shift+j exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/judo'
-bindsym $mod+Control+Shift+k exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/kitty/kitty.conf'
-#       $mod+Control+Shift+l free
-#       $mod+Control+Shift+m taken
-#       $mod+Control+Shift+n taken
-#       $mod+Control+Shift+o taken
-bindsym $mod+Control+Shift+p exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/nato'
-#       $mod+Control+Shift+q taken
-bindsym $mod+Control+Shift+r exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'
-#       $mod+Control+Shift+s free
-bindsym $mod+Control+Shift+t exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/tmux/tmux.conf'
-bindsym $mod+Control+Shift+u exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/.muttrc'
-bindsym $mod+Control+Shift+v exec kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard'
-#       $mod+Control+Shift+w free
-#       $mod+Control+Shift+x free
-#       $mod+Control+Shift+y free
-#       $mod+Control+Shift+z free
-
 # Re-run conf; why does 'setxkbmap -option ctrl:nocaps' run more slowly in kitty?
-bindsym $mod+BackSpace exec kitty --config ~/.kitty.conf bash -c ~/bin/conf
+bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
 # bindsym $mod+BackSpace exec gnome-terminal -e 'bash -c ~/bin/conf'
 
-# Open directories
-bindsym $mod+Control+Shift+o exec kitty --config ~/.kitty.conf --directory='~/Downloads'
-
 # Open programs
-# bindsym $mod+u exec kitty --config ~/.kitty.conf mutt
+# bindsym $mod+u exec $kitty mutt
 
 # Audio shortcuts
 bindsym $mod+Shift+p exec pavucontrol
@@ -84,7 +52,6 @@ bindsym $mod+Control+Shift+n exec toggle_sleep_noise
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
-# TODO: round volume to nearest 5?
 bindsym $mod+F2 exec "pactl set-sink-volume 0 -5%; killall -USR1 i3status"
 bindsym $mod+F3 exec "pactl set-sink-volume 0 +5%; killall -USR1 i3status"
 bindsym $mod+Control+F2 exec "pactl set-sink-volume 0 -1%; killall -USR1 i3status"
@@ -96,6 +63,7 @@ bindsym $mod+F5 exec "light -U 20"
 bindsym $mod+F6 exec "light -A 20"
 bindsym $mod+Shift+F5 exec "light -S 0"
 bindsym $mod+Shift+F6 exec "light -S 100"
+# TODO: round volume to nearest 5?
 
 # TODO: Some of these?
 # 173 XF86AudioPrev
@@ -150,7 +118,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+p focus parent
 
 # Focus the child container
-bindsym $mod+n focus child
+# bindsym $mod+n focus child
 
 # Switch to workspace
 bindsym $mod+1 workspace 1
@@ -200,12 +168,6 @@ bindsym $mod+Control+Shift+8 focus parent; move container to workspace 8; worksp
 bindsym $mod+Control+Shift+9 focus parent; move container to workspace 9; workspace 9
 bindsym $mod+Control+Shift+0 focus parent; move container to workspace 10; workspace 10
 
-# Move between monitors
-bindsym $mod+m focus output left; focus output up
-bindsym $mod+Control+m move workspace to output left; move workspace to output up
-bindsym $mod+Shift+m move container to output left; move container to output up
-bindsym $mod+Control+Shift+m move container to output left; move container to output up; focus output left; focus output up
-
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -216,6 +178,45 @@ bindsym $mod+Control+Shift+Delete exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#a
 # bindsym $mod+F5 exec sh -c 'sleep 1 && xset dpms force standby'
 # bindsym $mod+Shift+w exec gnome-terminal -e "xset dpms force standby"
 
+# Modes
+set $d mode "default"
+
+bindsym $mod+n mode "quick_open"
+mode "quick_open" {
+  # Edit dotfiles
+  bindsym a exec $kitty_open 'nvim ~/dotfiles/install ~/dotfiles/apt-installs'; $d
+  bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
+  bindsym c exec $kitty_open 'nvim ~/bin/conf'; $d
+  bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs';; $d
+  bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
+  bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc'; $d
+  #       g taken
+  #TODO: why did I do this?
+  # bindsym h exec $kitty_open 'nvim $(xclip -o)'
+  bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
+  bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
+  bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf'; $d
+  bindsym l exec $kitty_open 'ranger'; $d
+  #       m taken
+  #       n taken
+  bindsym o exec $kitty --directory='~/Downloads'; $d
+  bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
+  #       q taken
+  bindsym r exec $kitty_open 'nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'; $d
+  #       s free
+  bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
+  bindsym u exec $kitty_open 'nvim ~/.muttrc'; $d
+  bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/.pvimrc'; $d
+  bindsym w exec $kitty_open '~/pbin/worth'; $d
+  #       x free
+  bindsym y exec $kitty_open 'nvim ~/todo/list'; $d
+  #       z free
+
+  bindsym Return $d
+  bindsym Escape $d
+}
+
+bindsym $mod+r mode "resize"
 mode "resize" {
   bindsym u resize grow left 50 px or 50 ppt
   bindsym i resize grow down 50 px or 50 ppt
@@ -247,13 +248,40 @@ mode "resize" {
   # notes resize
   # TODO: this cannot be the best way to avoid large shrink being ignored
   bindsym n resize shrink right 15 px or 15 ppt; resize shrink right 14 px or 14 ppt; resize shrink right 13 px or 13 ppt; resize shrink right 12 px or 12 ppt; resize shrink right 11 px or 11 ppt; resize shrink right 10 px or 10 ppt; resize shrink right 9 px or 9 ppt; resize shrink right 8 px or 8 ppt; resize shrink right 7 px or 7 ppt; resize shrink right 6 px or 6 ppt; resize shrink right 5 px or 5 ppt; resize shrink right 4 px or 4 ppt; resize shrink right 3 px or 3 ppt; resize shrink right 2 px or 2 ppt; resize shrink right 1 px or 1 ppt; \
-    resize grow right 31 px or 31 ppt; mode "default"
+    resize grow right 31 px or 31 ppt; $d
 
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
+  bindsym Return $d
+  bindsym Escape $d
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+m mode "move"
+mode "move" {
+  # Move between monitors
+  bindsym o focus output left; focus output up; $d
+  bindsym w move workspace to output left; move workspace to output up; $d
+  bindsym c move container to output left; move container to output up; $d
+  bindsym a move container to output left; move container to output up; focus output left; focus output up; $d
+
+  bindsym Return $d
+  bindsym Escape $d
+}
+
+# This is the clever part
+bindsym $mod+F12 mode "special_characters"
+mode "special_characters" {
+  bindsym s exec "echo -n '¯\_(ツ)_/¯' | xclip"; $d
+  bindsym b exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"; $d
+  bindsym c exec "echo -n 'ಥ_ಥ' | xclip"; $d
+  bindsym g exec "echo -n 'ಠ_ಠ' | xclip"; $d
+  bindsym t exec "echo -n '(╯°□°)╯︵ ┻━┻' | xclip"; $d
+  bindsym w exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"; $d
+  bindsym y exec "echo -n '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"; $d
+  bindsym f exec "echo -n '☃' | xclip"; $d
+  # nonbreaking space
+  bindsym space exec "echo -n ​ | xclip"; $d
+
+  bindsym Escape $d
+}
 
 # Colors
 # class                 border  backgr. text    indicator child_border
@@ -311,16 +339,6 @@ bindsym $mod+Mod1+i exec ~/bin/strip_whitespace -s
 # Not sure about this one
 focus_follows_mouse no
 
-# This is the clever part
-bindsym $mod+F9 exec "echo -n '¯\_(ツ)_/¯' | xclip"
-bindsym $mod+F10 exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"
-bindsym $mod+F11 exec "echo -n 'ಥ_ಥ' | xclip"
-bindsym $mod+F12 exec "echo -n 'ಠ_ಠ' | xclip"
-bindsym $mod+Shift+F9 exec "echo -n '(╯°□°)╯︵ ┻━┻' | xclip"
-bindsym $mod+Shift+F10 exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"
-bindsym $mod+Shift+F11 exec "echo -n '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"
-bindsym $mod+Shift+F12 exec "echo -n '☃' | xclip"
-
 # Slightly easier caret mode
 bindsym --release Control+7 exec xdotool key --clearmodifiers F7
 
@@ -331,9 +349,9 @@ for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute cente
 bindsym Control+q exec ~/bin/noctrlq.sh
 
 # Fix wifi TODO: Somehow obviate need for this
-bindsym $mod+F8 exec kitty --config ~/.kitty.conf bash -c reset_network_manager_and_vpn
-bindsym $mod+Control+F8 exec kitty --config ~/.kitty.conf bash -c kill_vpn_and_reset_network_manager
-bindsym $mod+Control+Shift+F8 exec kitty --config ~/.kitty.conf bash -c toggle_vpn
+bindsym $mod+F8 exec $kitty bash -c reset_network_manager_and_vpn
+bindsym $mod+Control+F8 exec $kitty bash -c kill_vpn_and_reset_network_manager
+bindsym $mod+Control+Shift+F8 exec $kitty bash -c toggle_vpn
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"

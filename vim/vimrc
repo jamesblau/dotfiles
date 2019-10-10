@@ -55,6 +55,7 @@ set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
 set winminheight=0              " Windows can be 0 lines high
 set iminsert=1
 
+source ~/.pvimrc
 " Use local bundles if available
 source ~/.vimrc.bundles
 
@@ -155,6 +156,7 @@ nnoremap <Leader>pk mmO<C-C>p`m
 nnoremap <Leader>pK mm3O<C-C>kp`m
 nnoremap <Leader>pp mm)O<CR><C-R>"<C-C>`m
 nnoremap <Leader>pP mm(O<C-R>"<CR><C-C>`m
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 if v:version > 702
   " Keep window position
@@ -313,6 +315,38 @@ function! LeximaToggle()
   endif
 endfunction
 
+" No mouse scrolling
+map <Up> <F18>
+map <S-Up> <F18>
+map <C-Up> <F18>
+map <Down> <F18>
+map <S-Down> <F18>
+map <C-Down> <F18>
+imap <Up> <Nop>
+imap <S-Up> <Nop>
+imap <C-Up> <Nop>
+imap <Down> <Nop>
+imap <S-Down> <Nop>
+imap <C-Down> <Nop>
+cmap <Up> <Nop>
+cmap <S-Up> <Nop>
+cmap <C-Up> <Nop>
+cmap <Down> <Nop>
+cmap <S-Down> <Nop>
+cmap <C-Down> <Nop>
+
+function! MouseToggle()
+  if(&mouse == '')
+    set mouse=n
+    unmap <Up>
+    unmap <Down>
+  else
+    set mouse=
+    map <Up> <F18>
+    map <Down> <F18>
+  endif
+endfunction
+
 function! TabSpaces()
   let l:char=nr2char(getchar())
   if(l:char == 'r')
@@ -350,6 +384,7 @@ nnoremap <Leader>sB :call LineBreakToggle()<CR>
 nnoremap <Leader>sC :call ClipboardToggle()<CR>
 nnoremap <Leader>sm :call MiddleToggle()<CR>
 nnoremap <Leader>sa :call LeximaToggle()<CR>
+nnoremap <Leader>sM :call MouseToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
 "nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
@@ -716,32 +751,13 @@ autocmd FileType python nnoremap <buffer> <Leader>cF :set foldmethod=expr foldex
 " Last buffer more easily
 nmap <BS> <C-^>
 
+" TODO: Why doesn't it show up in search history?
 " Search for visual selection:
 xnoremap <silent> <Leader>/ "9y:silent let @/ = '\V'.substitute(substitute(substitute(@9, '\\', '\\\\', 'ge'),'/', '\\/', 'ge'),'\n', '\\n', 'ge')<CR>
 " Search for WORD under cursor (cWORD):
 nnoremap <silent> <Leader>? :silent let @/ = '\V'.substitute(substitute(expand('<cWORD>'), '\\', '\\\\', 'ge'), '/', '\\/', 'ge')<CR>
 " Test string with special characters:
 " <Leader>/y'/<C-G>Vp\A\/<ESC>\V:"'<End>s!\\!\\\"\!g<CR>\V:<Home>silent<Space><E"nd>s!/''!\\/!g<:'"CR>\I\V<ESC>$hhhD<CR>
-
-" No mouse scrolling
-map <Up> <F18>
-map <S-Up> <F18>
-map <C-Up> <F18>
-map <Down> <F18>
-map <S-Down> <F18>
-map <C-Down> <F18>
-imap <Up> <Nop>
-imap <S-Up> <Nop>
-imap <C-Up> <Nop>
-imap <Down> <Nop>
-imap <S-Down> <Nop>
-imap <C-Down> <Nop>
-cmap <Up> <Nop>
-cmap <S-Up> <Nop>
-cmap <C-Up> <Nop>
-cmap <Down> <Nop>
-cmap <S-Down> <Nop>
-cmap <C-Down> <Nop>
 
 " Fast horizontal navigation
 nnoremap <A-H> zH
@@ -773,6 +789,8 @@ if !exists('g:james_pager')
 else
   nmap <A-\> za
 endif
+" close folds recursively inside current fold
+nnoremap <Leader>z jVk$%kzCzo
 
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
@@ -922,4 +940,11 @@ nnoremap <silent> <Leader>n mM:silent call Straighten()<CR>`M
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
 
+" voice input
+" inoremap dot-dot-dot <Esc>
+
 " TODO: FZF search in buffers
+" TODO: in visual, make split (top or bottom?) and resize to barely fit selection
+" TODO: how to autocomplete "insert word that followed the previous usage of previous word"
+" TODO: map :[wW][ ]?['"]<CR> to NOP
+" TODO: mapping for gqi}

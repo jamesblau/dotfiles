@@ -64,7 +64,7 @@ PERCENT=`echo $(( $REM * 100 / $FULL ))`
 MESSAGE=$(printf 'LOW BATTERY! %.0s' {1..19})
 
 # set energy limit in percent, where warning should be displayed
-LIMIT="20"
+LIMIT="10"
 
 # required to play audio from non-interactive shell
 export XDG_RUNTIME_DIR=/run/user/$(id -u)

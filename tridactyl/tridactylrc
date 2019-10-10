@@ -38,10 +38,12 @@ bind ;c hint -c [class*="expand"],[class="togg"]
 " Gui
 set theme dark
 guiset_quiet navbar autohide
+" guiset_quiet navbar none
 guiset_quiet tabs always
 guiset_quiet hoverlink top-left
 " bind ,b :guiset gui none
 " bind ,B :guiset gui full
+colors dark
 
 " GitHub pull request checkout command to clipboard (only works if you're a collaborator or above)
 " bind yp composite js document.getElementById("clone-help-step-1").textContent.replace("git checkout -b", "git checkout -B").replace("git pull ", "git fetch ") + "git reset --hard " + document.getElementById("clone-help-step-1").textContent.split(" ")[3].replace("-","/") | yank
@@ -91,7 +93,7 @@ bind ,m open gmail.com
 bind ,M tabopen gmail.com
 bind ,o open https://discordapp.com/activity
 bind ,O tabopen https://discordapp.com/activity
-bind ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b existentialcomics.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com
+bind ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/cgi-bin/GiantITP/ootscript
 
 " Temporary hack for slow completion
 unbind --mode=ex <Space>

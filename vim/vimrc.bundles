@@ -149,13 +149,20 @@ if !exists('g:james_minimal_plugins')
       " let g:goyo_width=80
       " let g:goyo_height="85%"
       " let g:goyo_linenr=0
-      nnoremap <Leader><C-G> :Goyo<CR>
+      nnoremap <Leader><C-G> :silent let g:goyo_width=80 \| Goyo<CR>
       function! NotesGoyo()
+        set ft=notes
+        call MouseToggle()
+        let g:goyo_width=80
+        Goyo
+      endfunction
+      nnoremap <Leader><C-F> :silent call NotesGoyo()<CR>
+      function! NarrowNotesGoyo()
         set ft=notes
         let g:goyo_width=40
         Goyo
       endfunction
-      nnoremap <Leader><C-F> :call NotesGoyo()<CR>
+      nnoremap <Leader>g<C-F> :silent call NarrowNotesGoyo()<CR>
       " TODO: how to set these when Goyo enters, and unset them when leaving?
       " TODO: and add more temporary things (e.g. switch $ and g$)
       " nnoremap <silent> <C-K> :bp<CR>
@@ -430,6 +437,13 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <Leader>ge :Gedit<CR>
       Plug 'tpope/vim-fugitive'
     " }}}
+    " Plug 'ianding1/leetcode.vim' {{{
+      nnoremap <leader>ll :LeetCodeList<cr>
+      nnoremap <leader>lt :LeetCodeTest<cr>
+      nnoremap <leader>ls :LeetCodeSubmit<cr>
+      nnoremap <leader>li :LeetCodeSignIn<cr>
+      Plug 'ianding1/leetcode.vim'
+    " }}}
   " }}}
 
   " Registers {{{
@@ -585,3 +599,5 @@ endif
 
 call plug#end()
 " vim: set foldmethod=marker :
+" TODO: vim exchange? M-t word swap too?
+" TODO: sneak with number hints, to not interfere with most common normal-mode commands?

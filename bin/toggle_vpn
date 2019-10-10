@@ -9,7 +9,7 @@ else
     then
       _VPN_CONFIG=$(head -n 1 ~/.openvpn_last_config)
     else
-      _VPN_CONFIG="/etc/openvpn/ovpn_tcp/us1583.nordvpn.com.tcp.ovpn" 
+      _VPN_CONFIG="/etc/openvpn/ovpn_tcp/us1583.nordvpn.com.tcp.ovpn"
     fi
   else
     _VPN_CONFIG="$1"
