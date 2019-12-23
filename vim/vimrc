@@ -2,7 +2,7 @@
 set nocompatible
 
 " let g:james_no_hud = 1
-"let g:james_minimal_plugins=1
+" let g:james_minimal_plugins=1
 let mapleader = ","
 nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/.vimrc \| e<CR>
@@ -16,6 +16,7 @@ set expandtab                   " Tabs are spaces, not tabs
 set filetype=on
 set foldenable                  " Auto fold code
 set foldtext=MyFoldText()
+" set formatoptions-=l
 set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 set hidden                      " Allow buffer switching without saving
 set ignorecase                  " Case insensitive search
@@ -432,44 +433,54 @@ function! ETW(what, ...)
 endfunction
 
 " Edit multiple
-command! -complete=file -nargs=+ Etabs call ETW('tabnew', <f-args>)
 command! -complete=file -nargs=+ Ewindows call ETW('edit', <f-args>)
 command! -complete=file -nargs=+ Eswindows call ETW('new', <f-args>)
 command! -complete=file -nargs=+ Evwindows call ETW('vnew', <f-args>)
+command! -complete=file -nargs=+ Etabs call ETW('tabnew', <f-args>)
 
-" Some helpers to edit mode
+" Consistent mappings for opening things {here, in split, in v split, in new tab}
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
-nnoremap <Leader>ew :Ewindows<Space>
-nnoremap <Leader>es :Eswindows<Space>
-nnoremap <Leader>ev :Evwindows<Space>
-nnoremap <Leader>et :Etabs<Space>
-nmap <Leader>eW :Ewindows %%
-nmap <Leader>eS :Eswindows %%
-nmap <Leader>eV :Evwindows %%
-nmap <Leader>eT :Etabs %%
-nnoremap <Leader>EW :enew<CR>
-nnoremap <Leader>ES :new<CR>
-nnoremap <Leader>EV :vnew<CR>
-nnoremap <Leader>ET :tabnew<CR>
-nnoremap <Leader>Ew :b<Space>
-nnoremap <Leader>Es :sb<Space>
-nnoremap <Leader>Ev :vert sb<Space>
-nnoremap <Leader>Et :tab sb<Space>
+" choose files in cwd
+nnoremap <Leader>ecw :Ewindows<Space>
+nnoremap <Leader>ecs :Eswindows<Space>
+nnoremap <Leader>ecv :Evwindows<Space>
+nnoremap <Leader>ect :Etabs<Space>
+" choose files in current file's directory
+" TODO: Why no noremap?
+nmap <Leader>ecW :Ewindows %%
+nmap <Leader>ecS :Eswindows %%
+nmap <Leader>ecV :Evwindows %%
+nmap <Leader>ecT :Etabs %%
+" new
+nnoremap <Leader>ew :enew<CR>
+nnoremap <Leader>es :new<CR>
+nnoremap <Leader>ev :vert new<CR>
+nnoremap <Leader>et :tab new<CR>
+" buffer
+" TODO: getchar?
+nnoremap <Leader>bw :b<Space>
+nnoremap <Leader>bs :sb<Space>
+nnoremap <Leader>bv :vert sb<Space>
+nnoremap <Leader>bt :tab sb<Space>
 
 function! NextTWorB()
-  if (tabpagenr("$") == 1) && (winnr("$") == 1)
+  " if (tabpagenr("$") == 1) && (winnr("$") == 1)
+    " bn
+  " elseif (tabpagenr("$") == 1)
+    " wincmd w
+  if (tabpagenr("$") == 1)
     bn
-  elseif (tabpagenr("$") == 1)
-    wincmd w
   else
     tabn
   endif
 endfunction
 function! PrevTWorB()
-  if (tabpagenr("$") == 1) && (winnr("$") == 1)
+  " if (tabpagenr("$") == 1) && (winnr("$") == 1)
+    " bp
+  " elseif (tabpagenr("$") == 1)
+    " wincmd W
+  if (tabpagenr("$") == 1)
     bp
-  elseif (tabpagenr("$") == 1)
-    wincmd W
   else
     tabp
   endif
@@ -485,11 +496,12 @@ endfunction
 " Buffer stuff
 nnoremap <silent> <Leader>b  <Nop>
 nnoremap <silent> <Leader>bl :buffers<CR>
-nnoremap <silent> <Leader>bt :tab ball<CR>
 nnoremap <silent> <Leader>bd :bd<CR>
 nnoremap <silent> <Leader>bD :bd!<CR>
 nnoremap <silent> <Leader>Bd :call DeleteHiddenBuffers()<CR>
 nnoremap <silent> <Leader>BD :call ReallyDeleteHiddenBuffers()<CR>
+ " Buffer/Tab stuff
+nnoremap <silent> <Leader>tb :tab ball<CR>
 " Window stuff
 nnoremap <silent> <C-H>      <C-W>h
 nnoremap <silent> <C-J>      <C-W>j
@@ -717,7 +729,10 @@ command! -range -nargs=0 Overline        call CombineSelection(<line1>, <line2>,
 command! -range -nargs=0 Underline       call CombineSelection(<line1>, <line2>, '0332')
 command! -range -nargs=0 DoubleUnderline call CombineSelection(<line1>, <line2>, '0333')
 command! -range -nargs=0 Strikethrough   call CombineSelection(<line1>, <line2>, '0336')
-"xnoremap <Leader>z :Overline<CR>
+" xnoremap <Leader>-o :Overline<CR>
+" xnoremap <Leader>-u :Underline<CR>
+" xnoremap <Leader>-d :DoubleUnderline<CR>
+" xnoremap <Leader>-s :Strikethrough<CR>
 
 " Merge stuff!
 " Search for merge conflics
@@ -792,9 +807,35 @@ endif
 " close folds recursively inside current fold
 nnoremap <Leader>z jVk$%kzCzo
 
+" TODO: mark terminal in ScalaScratchTerm to make these work regardless of window layout?
+function! ScalaScratch()
+  set ft=scala syn=scala mouse=n
+  nmap <buffer> <Leader><CR> mqyae<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>g'q
+  nmap <buffer> <CR> mqyip<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>g'q
+  nmap <buffer> <BS> mwgg't<CR>'w
+  xmap <buffer> <CR> y<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>gv
+endfunction
+
+function! ScalaSbt()
+  set ft=scala syn=scala mouse=n
+  nmap <buffer> <CR> mq<C-L>i<Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+endfunction
+
+function! ScalaScratchTerm()
+  call ScalaScratch()
+  vsplit term://scala
+  normal i
+  wincmd p
+  stopinsert
+endfunction
+
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
+nmap <Leader>tS :call ScalaScratch()<CR>
+nmap <Leader>tB :call ScalaSbt()<CR>
+nmap <Leader>tT :call ScalaScratchTerm()<CR>
+nmap <Leader>tE :abo new \| setl bt=nowrite \| call ScalaScratch()<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
 nmap <Leader>t<Space> :set ft=notes<CR>
 nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbreak nowrap<CR>
@@ -937,14 +978,23 @@ function! Straighten()
 endfunction
 nnoremap <silent> <Leader>n mM:silent call Straighten()<CR>`M
 
+function! FixHexes()
+  %s/\//╱/ge
+  %s/\\/╲/ge
+  %s/_/▁/ge
+endfunction
+
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
 
 " voice input
 " inoremap dot-dot-dot <Esc>
 
-" TODO: FZF search in buffers
-" TODO: in visual, make split (top or bottom?) and resize to barely fit selection
-" TODO: how to autocomplete "insert word that followed the previous usage of previous word"
-" TODO: map :[wW][ ]?['"]<CR> to NOP
-" TODO: mapping for gqi}
+" TODO:
+" FZF search in buffers
+" in visual, make split (top or bottom?) and resize to barely fit selection
+" how to autocomplete "insert word that followed the previous usage of previous word"
+" map :[wW][ ]?['"]<CR> to NOP
+" mapping for gqi}
+" With windows and no tabs, keep C-hjkl for window movement, change J/K to switch buffers
+" folds open by default

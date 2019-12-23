@@ -14,3 +14,6 @@ Vim notes shortcuts
     new line, indent, add "line continued" symbol (same used when wrapping)
         for breaking up long sentences while showing continuity
     headers
+
+Figure out why mouse clicks are disabled while scrolling with the touchpad.
+  related? touchpad disabled while typing

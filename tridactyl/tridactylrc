@@ -7,6 +7,16 @@ bind <C-j> tabmove -1
 bind <C-k> tabmove +1
 bind <C-e> scrollline 1
 bind <C-y> scrollline -1
+bind %1 scrollto 10
+bind %2 scrollto 20
+bind %3 scrollto 30
+bind %4 scrollto 40
+bind %5 scrollto 50
+bind %6 scrollto 60
+bind %7 scrollto 70
+bind %8 scrollto 80
+bind %9 scrollto 90
+bind %0 scrollto 100
 
 " Core
 bind <C-c> stop
@@ -62,9 +72,12 @@ set hintfiltermode simple
 bind ,h composite set hintchars 4327895610 | set hintfiltermode vimperator-reflow
 bind ,H composite set hintchars hjklasdfgyuiopqwertnmzxcvb | set hintfiltermode vimperator-reflow
 
-" Make Tridactyl work on more sites at the expense of some security
-set csp clobber
+" Add helper commands that Mozillians think make Firefox irredeemably insecure.
+command fixamo_quiet jsb tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""'))
+command fixamo js tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""').then(tri.excmds.fillcmdline_tmp(3000, "Permissions added to user.js. Please restart Firefox to make them take affect.")))
 fixamo_quiet
+" No longer needed?
+set csp clobber
 
 " Make quickmarks for the sane Tridactyl issue view
 quickmark t https://github.com/cmcaine/tridactyl/issues?utf8=%E2%9C%93&q=sort%3Aupdated-desc+

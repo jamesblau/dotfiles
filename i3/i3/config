@@ -7,6 +7,7 @@ exec_always "/usr/bin/xrandr --dpi 150"
 set $mod Mod4
 set $kitty kitty --config ~/.kitty.conf
 set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
+workspace_layout tabbed
 
 # Font
 font pango:DejaVu Sans Mono Bold 7
@@ -187,7 +188,7 @@ mode "quick_open" {
   bindsym a exec $kitty_open 'nvim ~/dotfiles/install ~/dotfiles/apt-installs'; $d
   bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
   bindsym c exec $kitty_open 'nvim ~/bin/conf'; $d
-  bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs';; $d
+  bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc'; $d
   #       g taken
@@ -277,6 +278,7 @@ mode "special_characters" {
   bindsym w exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"; $d
   bindsym y exec "echo -n '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"; $d
   bindsym f exec "echo -n '☃' | xclip"; $d
+  bindsym m exec "echo -n 🎵 | xclip"; $d
   # nonbreaking space
   bindsym space exec "echo -n ​ | xclip"; $d
 
@@ -339,8 +341,13 @@ bindsym $mod+Mod1+i exec ~/bin/strip_whitespace -s
 # Not sure about this one
 focus_follows_mouse no
 
+# Firefox
 # Slightly easier caret mode
 bindsym --release Control+7 exec xdotool key --clearmodifiers F7
+# Tridactyl edit in split
+# bindsym --release Control+0 split h; exec xdotool key --clearmodifiers ctrl+i
+# Tridactyl save edit and unsplit
+# bindsym --release Control+9 exec ~/bin/tridactyl_save_and_close_split
 
 # Firefox popups
 for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current

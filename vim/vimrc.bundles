@@ -358,7 +358,7 @@ if !exists('g:james_minimal_plugins')
   " Core {{{
     " Plug 'cohama/lexima.vim' if 704 {{{
       let g:lexima_no_default_rules=1
-      let b:lexima_disabled=1
+      let g:lexima_disabled=1
       if v:version >= 704
         Plug 'cohama/lexima.vim'
       endif
@@ -392,7 +392,6 @@ if !exists('g:james_minimal_plugins')
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-unimpaired'
-    " }}}
   " }}}
 
   " Fun {{{

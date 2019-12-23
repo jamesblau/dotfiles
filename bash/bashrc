@@ -33,7 +33,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -143,7 +143,7 @@ alias cdg=". /home/james/bin/cdg"
 
 stty -ixon
 
-alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s|.*\.||'"'"' | sort -u'
+alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s/.*\.//'"'"' | sort -u'
 
 function loop () { while true; do clear; $@; read; done; }
 
@@ -233,7 +233,7 @@ alias sbt-console='rlwrap sbt console -Xnojline'
 alias sbt-consoleQuick='rlwrap sbt consoleQuick -Xnojline'
 alias sbt-testConsole='rlwrap sbt test:console -Xnojline'
 alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
-export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xmx2048M -Xms2048M"
+# export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xmx2048M -Xms2048M"
 # Jline2 is broken, but rlwrap prevents access to tab-complete...
 # alias scala='rlwrap -a scala'
 

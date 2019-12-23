@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # [ $# -ne 1 ] && echo One argument... && exit 1
 
@@ -162,7 +162,8 @@ xinput list | grep -q "${pad}" && {
   xmodmap -e "keycode 107 = Super_L Super_R"
 
   # TODO? xcape {{{
-    pgrep xcape >/dev/null || xcape
+    killall -q xcape || :
+    xcape
 
     # Map an unused modifier's keysym to the spacebar's keycode and make it a
     # control modifier. It needs to be an existing key so that emacs won't

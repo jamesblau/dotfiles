@@ -1,0 +1,6 @@
+#!/bin/bash
+
+activeworkspace=$(i3-msg -t get_workspaces | jq -c '.[] | select(.focused) | .name' --raw-output)
+xdotool key --clearmodifiers Z Z
+sleep 0.1
+i3-msg move right
