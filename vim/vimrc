@@ -441,21 +441,21 @@ command! -complete=file -nargs=+ Etabs call ETW('tabnew', <f-args>)
 " Consistent mappings for opening things {here, in split, in v split, in new tab}
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 " choose files in cwd
-nnoremap <Leader>ecw :Ewindows<Space>
-nnoremap <Leader>ecs :Eswindows<Space>
-nnoremap <Leader>ecv :Evwindows<Space>
-nnoremap <Leader>ect :Etabs<Space>
+nnoremap <Leader>ew :Ewindows<Space>
+nnoremap <Leader>es :Eswindows<Space>
+nnoremap <Leader>ev :Evwindows<Space>
+nnoremap <Leader>et :Etabs<Space>
 " choose files in current file's directory
 " TODO: Why no noremap?
-nmap <Leader>ecW :Ewindows %%
-nmap <Leader>ecS :Eswindows %%
-nmap <Leader>ecV :Evwindows %%
-nmap <Leader>ecT :Etabs %%
+nmap <Leader>fw :Ewindows %%
+nmap <Leader>fs :Eswindows %%
+nmap <Leader>fv :Evwindows %%
+nmap <Leader>ft :Etabs %%
 " new
-nnoremap <Leader>ew :enew<CR>
-nnoremap <Leader>es :new<CR>
-nnoremap <Leader>ev :vert new<CR>
-nnoremap <Leader>et :tab new<CR>
+nnoremap <Leader>nw :enew<CR>
+nnoremap <Leader>ns :new<CR>
+nnoremap <Leader>nv :vert new<CR>
+nnoremap <Leader>nt :tab new<CR>
 " buffer
 " TODO: getchar?
 nnoremap <Leader>bw :b<Space>
@@ -736,7 +736,7 @@ command! -range -nargs=0 Strikethrough   call CombineSelection(<line1>, <line2>,
 
 " Merge stuff!
 " Search for merge conflics
-nnoremap <Leader>fc /^[<=>]\{7\}[^<=>]*$<CR>
+nnoremap <Leader>mc /^[<=>]\{7\}[^<=>]*$<CR>
 " Obtain merge diffs
 nnoremap dOR :diffg REMOTE<CR>
 nnoremap dOB :diffg BASE<CR>
@@ -812,13 +812,26 @@ function! ScalaScratch()
   set ft=scala syn=scala mouse=n
   nmap <buffer> <Leader><CR> mqyae<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>g'q
   nmap <buffer> <CR> mqyip<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>g'q
-  nmap <buffer> <BS> mwgg't<CR>'w
   xmap <buffer> <CR> y<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>gv
+  " comment
+  nmap <buffer> <BS> vip,c<Space>
+  " run test block
+  " nmap <buffer> <Leader><BS> mwgg't<CR>'w
 endfunction
 
 function! ScalaSbt()
   set ft=scala syn=scala mouse=n
   nmap <buffer> <CR> mq<C-L>i<Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  execute "cd " . scala#GetRootDirForFuzzyFinder('%:p:h')
+endfunction
+
+function! ScalaSbtTerm()
+  call ScalaSbt()
+" cd %:p:h
+  vsplit term://sbt
+  normal i
+  wincmd p
+  stopinsert
 endfunction
 
 function! ScalaScratchTerm()
@@ -834,6 +847,7 @@ nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
 nmap <Leader>tS :call ScalaScratch()<CR>
 nmap <Leader>tB :call ScalaSbt()<CR>
+nmap <Leader>tt :call ScalaSbtTerm()<CR>
 nmap <Leader>tT :call ScalaScratchTerm()<CR>
 nmap <Leader>tE :abo new \| setl bt=nowrite \| call ScalaScratch()<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
@@ -976,13 +990,10 @@ function! Straighten()
   bufdo 1
   source $VIMRUNTIME/syntax/syntax.vim
 endfunction
-nnoremap <silent> <Leader>n mM:silent call Straighten()<CR>`M
+nnoremap <silent> <Leader>N mM:silent call Straighten()<CR>`M
 
-function! FixHexes()
-  %s/\//╱/ge
-  %s/\\/╲/ge
-  %s/_/▁/ge
-endfunction
+" Open markdown unfolded
+au! Syntax markdown normal zR
 
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
@@ -998,3 +1009,4 @@ nnoremap <silent> <C-S> o<Esc>0D
 " mapping for gqi}
 " With windows and no tabs, keep C-hjkl for window movement, change J/K to switch buffers
 " folds open by default
+" fix vim-tmux-navigator merge

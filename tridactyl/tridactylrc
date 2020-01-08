@@ -47,10 +47,14 @@ bind ;c hint -c [class*="expand"],[class="togg"]
 
 " Gui
 set theme dark
-guiset_quiet navbar autohide
+" guiset_quiet gui none
+" guiset_quiet tabs always
+colors dark
+
+" Gui old?
+" guiset_quiet navbar autohide
 " guiset_quiet navbar none
-guiset_quiet tabs always
-guiset_quiet hoverlink top-left
+" guiset_quiet hoverlink top-left
 " bind ,b :guiset gui none
 " bind ,B :guiset gui full
 colors dark

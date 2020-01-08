@@ -559,22 +559,23 @@ if !exists('g:james_minimal_plugins')
       let g:scala_sort_across_groups=1
       " let g:scala_first_party_namespaces='\(com\.company\)'
       let g:scala_use_builtin_tagbar_defs=0
-      nnoremap          <C-S><C-A><C-T> :Ack  <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
-      nnoremap          <C-S><C-A><C-M> :Ack  <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
-      nnoremap          <C-S><C-A><C-R> :Ack  <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
-      nnoremap          <C-S><C-T>         :<C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
-      cnoremap          <C-S><C-T>          <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
-      nnoremap          <C-S><C-M>         :<C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
-      cnoremap          <C-S><C-M>          <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
-      nnoremap          <C-S><C-R>         :<C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR>
-      cnoremap          <C-S><C-R>          <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR>
-      nnoremap <silent> <C-S><C-P><C-T> :CtrlP <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><CR>
-      nnoremap <silent> <C-S><C-P><C-M> :CtrlP <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><CR>
-      nnoremap <silent> <C-S><C-P><C-R> :CtrlP <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
+      " nnoremap          <C-S><C-A><C-T> :Ack  <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      " nnoremap          <C-S><C-A><C-M> :Ack  <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      " nnoremap          <C-S><C-A><C-R> :Ack  <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><Home><Right><Right><Right>
+      " nnoremap          <C-S><C-T>         :<C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
+      " cnoremap          <C-S><C-T>          <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR>
+      " nnoremap          <C-S><C-M>         :<C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
+      " cnoremap          <C-S><C-M>          <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR>
+      " nnoremap          <C-S><C-R>         :<C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR>
+      " cnoremap          <C-S><C-R>          <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR>
+      " nnoremap <silent> <C-S><C-P><C-T> :CtrlP <C-R>=scala#GetTestDirForFuzzyFinder('%:p:h')<CR><CR>
+      " nnoremap <silent> <C-S><C-P><C-M> :CtrlP <C-R>=scala#GetMainDirForFuzzyFinder('%:p:h')<CR><CR>
+      " nnoremap <silent> <C-S><C-P><C-R> :CtrlP <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
+      nnoremap <buffer> <silent> <Leader>dr :cd <C-R>=scala#GetRootDirForFuzzyFinder('%:p:h')<CR><CR>
       function! SetScalaOptions()
         setl formatprg=java\ -jar\ ~/bin/scalariform.jar\ -f\ -q\ +compactControlReadability\ +alignParameters\ +alignSingleLineCaseStatements\ +doubleIndentClassDeclaration\ +preserveDanglingCloseParenthesis\ +rewriteArrowSymbols\ +preserveSpaceBeforeArguments\ --stdin\ --stdout
         setl indentkeys=0{,0},0),!^F,o,O,e,=case,<CR>
-        " Comments match scaladoc style
+        " Make comment match scaladoc style
         nnoremap <Leader>cd I/**<Space><Esc>o/<Esc>
         xmap <Leader>cd <Esc>'<V'><C-V>I<Space><Space>*<Space><Esc>'<<<I/*<Esc>'>o/<Esc>0"yyf*gv:s/^$/<C-T>y/<CR>
       endfunction
