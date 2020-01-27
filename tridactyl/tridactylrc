@@ -1,26 +1,26 @@
 sanitise tridactyllocal tridactylsync
 
 " Navigation
-bind J tabprev
-bind K tabnext_gt
-bind <C-j> tabmove -1
-bind <C-k> tabmove +1
-bind <C-e> scrollline 1
-bind <C-y> scrollline -1
-bind %1 scrollto 10
-bind %2 scrollto 20
-bind %3 scrollto 30
-bind %4 scrollto 40
-bind %5 scrollto 50
-bind %6 scrollto 60
-bind %7 scrollto 70
-bind %8 scrollto 80
-bind %9 scrollto 90
-bind %0 scrollto 100
+bind --mode=normal J tabprev
+bind --mode=normal K tabnext_gt
+bind --mode=normal <C-j> tabmove -1
+bind --mode=normal <C-k> tabmove +1
+bind --mode=normal <C-e> scrollline 1
+bind --mode=normal <C-y> scrollline -1
+bind --mode=normal %1 scrollto 10
+bind --mode=normal %2 scrollto 20
+bind --mode=normal %3 scrollto 30
+bind --mode=normal %4 scrollto 40
+bind --mode=normal %5 scrollto 50
+bind --mode=normal %6 scrollto 60
+bind --mode=normal %7 scrollto 70
+bind --mode=normal %8 scrollto 80
+bind --mode=normal %9 scrollto 90
+bind --mode=normal %0 scrollto 100
 
 " Core
-bind <C-c> stop
-bind <C-\> mode ignore
+bind --mode=normal <C-c> stop
+bind --mode=normal <C-\> mode ignore
 bind --mode=ignore <C-\> mode normal
 
 " Don't repeat things...
@@ -35,28 +35,19 @@ unbind <C-q>
 " TODO: Get working
 " cmap <C-n> <Down>
 " cmap <C-p> <Up>
+" insert/input emacs shortcuts
 
 " Tree-style tabs
 " unbind <F1>
 
 " Comment toggler for Reddit and Hacker News
-bind ;c hint -c [class*="expand"],[class="togg"]
+bind --mode=normal ;c hint -c [class*="expand"],[class="togg"]
 " Upvote/downvote; I don't know how this works
 " bind ;u hint -c [class="arrow up login-required access-required"]
 " bind ;d hint -c [class="arrow down login-required access-required"]
 
 " Gui
 set theme dark
-" guiset_quiet gui none
-" guiset_quiet tabs always
-colors dark
-
-" Gui old?
-" guiset_quiet navbar autohide
-" guiset_quiet navbar none
-" guiset_quiet hoverlink top-left
-" bind ,b :guiset gui none
-" bind ,B :guiset gui full
 colors dark
 
 " GitHub pull request checkout command to clipboard (only works if you're a collaborator or above)
@@ -73,8 +64,8 @@ js tri.config.set("editorcmd", "kitty --config ~/.kitty.conf nvim")
 set hintchars hjklasdfgyuiopqwertnmzxcvb
 " set hintchars 4327895610
 set hintfiltermode simple
-bind ,h composite set hintchars 4327895610 | set hintfiltermode vimperator-reflow
-bind ,H composite set hintchars hjklasdfgyuiopqwertnmzxcvb | set hintfiltermode vimperator-reflow
+bind --mode=normal ,h composite set hintchars 4327895610 | set hintfiltermode vimperator-reflow
+bind --mode=normal ,H composite set hintchars hjklasdfgyuiopqwertnmzxcvb | set hintfiltermode vimperator-reflow
 
 " Add helper commands that Mozillians think make Firefox irredeemably insecure.
 command fixamo_quiet jsb tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""'))
@@ -92,25 +83,25 @@ blacklistadd mail.google.com/
 " URL redirects
 " autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 
-bind ,d fillcmdline open duckduckgo
-bind ,D fillcmdline tabopen duckduckgo
-bind ,w fillcmdline open wikipedia
-bind ,W fillcmdline tabopen wikipedia
-bind ,e fillcmdline open search site:reddit.com
-bind ,E fillcmdline tabopen search site:reddit.com
+bind --mode=normal ,d fillcmdline open duckduckgo
+bind --mode=normal ,D fillcmdline tabopen duckduckgo
+bind --mode=normal ,w fillcmdline open wikipedia
+bind --mode=normal ,W fillcmdline tabopen wikipedia
+bind --mode=normal ,e fillcmdline open search site:reddit.com
+bind --mode=normal ,E fillcmdline tabopen search site:reddit.com
 
 " TODO: Why can't I get rid of the defaults?
 " set searchurls {"!g":"https://www.google.com/search?q=","!scholar":"https://scholar.google.com/scholar?q=","!googleuk":"https://www.google.co.uk/search?q=","!bing":"https://www.bing.com/search?q=","!d":"https://duckduckgo.com/?q=","!yahoo":"https://search.yahoo.com/search?p=","!twitter":"https://twitter.com/search?q=","!w":"https://en.wikipedia.org/wiki/Special:Search/","!y":"https://www.youtube.com/results?search_query=","!a":"https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=","!amazonuk":"https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=","!startpage":"https://startpage.com/do/search?language=english&cat=web&query=","!github":"https://github.com/search?utf8=✓&q=","!searx":"https://searx.me/?category_general=on&q=","!cnrtl":"http://www.cnrtl.fr/lexicographie/","!osm":"https://www.openstreetmap.org/search?query=","!mdn":"https://developer.mozilla.org/en-US/search?q=","!gentoo_wiki":"https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=","!qwant":"https://www.qwant.com/?q="}
 
-bind ,r open reddit.com
-bind ,R tabopen reddit.com
-bind ,u open reddit.com/message/unread
-bind ,U tabopen reddit.com/message/unread
-bind ,m open gmail.com
-bind ,M tabopen gmail.com
-bind ,o open https://discordapp.com/activity
-bind ,O tabopen https://discordapp.com/activity
-bind ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/cgi-bin/GiantITP/ootscript
+bind --mode=normal ,r open reddit.com
+bind --mode=normal ,R tabopen reddit.com
+bind --mode=normal ,u open reddit.com/message/unread
+bind --mode=normal ,U tabopen reddit.com/message/unread
+bind --mode=normal ,m open gmail.com
+bind --mode=normal ,M tabopen gmail.com
+bind --mode=normal ,o open https://discordapp.com/activity
+bind --mode=normal ,O tabopen https://discordapp.com/activity
+bind --mode=normal ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/cgi-bin/GiantITP/ootscript
 
 " Temporary hack for slow completion
 unbind --mode=ex <Space>

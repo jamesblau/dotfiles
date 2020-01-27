@@ -51,8 +51,8 @@ set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatib
 set virtualedit=onemore         " Allow for cursor beyond last character
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
-" TODO: figure out command line completion
-" set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+set wildmode=longest,list,full
+set wildmenu
 set winminheight=0              " Windows can be 0 lines high
 set iminsert=1
 
@@ -810,9 +810,9 @@ nnoremap <Leader>z jVk$%kzCzo
 " TODO: mark terminal in ScalaScratchTerm to make these work regardless of window layout?
 function! ScalaScratch()
   set ft=scala syn=scala mouse=n
-  nmap <buffer> <Leader><CR> mqyae<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>g'q
-  nmap <buffer> <CR> mqyip<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>g'q
-  xmap <buffer> <CR> y<C-L>pGa<CR><C-Space>:wincmd<SPACE>p<CR>gv
+  nmap <buffer> <Leader><CR> mqyae<C-L>pGa<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  nmap <buffer> <CR> mqyip<C-L>pGa<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  xmap <buffer> <CR> y<C-L>pGa<CR><C-Space>G:wincmd<SPACE>p<CR>gv
   " comment
   nmap <buffer> <BS> vip,c<Space>
   " run test block
@@ -821,7 +821,7 @@ endfunction
 
 function! ScalaSbt()
   set ft=scala syn=scala mouse=n
-  nmap <buffer> <CR> mq<C-L>i<Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  nmap <buffer> <CR> mq<C-L>i<CR><CR><CR><Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
   execute "cd " . scala#GetRootDirForFuzzyFinder('%:p:h')
 endfunction
 

@@ -1,0 +1,6 @@
+#!/bin/bash -x
+
+echo $1
+sink=$(pactl list short | grep RUNNING | head -c 1)
+pactl set-sink-volume ${sink} ${1}
+killall -USR1 i3status

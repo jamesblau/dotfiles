@@ -53,10 +53,10 @@ bindsym $mod+Control+Shift+n exec toggle_sleep_noise
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
-bindsym $mod+F2 exec "pactl set-sink-volume 0 -5%; killall -USR1 i3status"
-bindsym $mod+F3 exec "pactl set-sink-volume 0 +5%; killall -USR1 i3status"
-bindsym $mod+Control+F2 exec "pactl set-sink-volume 0 -1%; killall -USR1 i3status"
-bindsym $mod+Control+F3 exec "pactl set-sink-volume 0 +1%; killall -USR1 i3status"
+bindsym $mod+F2 exec "~/dotfiles/bin/adjust_volume -5%"
+bindsym $mod+F3 exec "~/dotfiles/bin/adjust_volume +5%"
+bindsym $mod+Control+F2 exec "~/dotfiles/bin/adjust_volume -1%"
+bindsym $mod+Control+F3 exec "~/dotfiles/bin/adjust_volume +1%"
 bindsym $mod+F4 exec "amixer -D pulse set Capture toggle; killall -USR1 i3status"
 bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
@@ -192,8 +192,7 @@ mode "quick_open" {
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc'; $d
   #       g taken
-  #TODO: why did I do this?
-  # bindsym h exec $kitty_open 'nvim $(xclip -o)'
+  bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
   bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
   bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
   bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf'; $d
@@ -342,8 +341,6 @@ bindsym $mod+Mod1+i exec ~/bin/strip_whitespace -s
 focus_follows_mouse no
 
 # Firefox
-# Slightly easier caret mode
-bindsym --release Control+7 exec xdotool key --clearmodifiers F7
 # Tridactyl edit in split
 # bindsym --release Control+0 split h; exec xdotool key --clearmodifiers ctrl+i
 # Tridactyl save edit and unsplit
@@ -355,7 +352,8 @@ for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute cente
 # Firefox disable Control+Q
 bindsym Control+q exec ~/bin/noctrlq.sh
 
-# Fix wifi TODO: Somehow obviate need for this
+# Fix wifi
+# TODO: Somehow obviate need for this
 bindsym $mod+F8 exec $kitty bash -c reset_network_manager_and_vpn
 bindsym $mod+Control+F8 exec $kitty bash -c kill_vpn_and_reset_network_manager
 bindsym $mod+Control+Shift+F8 exec $kitty bash -c toggle_vpn
@@ -364,6 +362,10 @@ bindsym $mod+Control+Shift+F8 exec $kitty bash -c toggle_vpn
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
 bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
 bindsym $mod+Control+Shift+q exec "qutebrowser $(xclip -o)"
+
+# Screenshots
+bindsym $mod+Shift+F11 exec "gnome-screenshot -wB"
+bindsym $mod+F11 exec "gnome-screenshot -i"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 
