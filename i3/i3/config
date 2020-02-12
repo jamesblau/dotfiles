@@ -46,6 +46,7 @@ bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
 
 # Open programs
 # bindsym $mod+u exec $kitty mutt
+bindsym $mod+u exec $kitty nmtui-connect
 
 # Audio shortcuts
 bindsym $mod+Shift+p exec pavucontrol
@@ -119,6 +120,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+p focus parent
 
 # Focus the child container
+# TODO: Replace?
 # bindsym $mod+n focus child
 
 # Switch to workspace
@@ -326,7 +328,7 @@ exec_always sudo ~/bin/conf
 exec_always ~/bin/lid-lock
 exec clipit
 exec nm-applet
-# exec blueman-applet
+exec blueman-applet
 # exec volti
 # exec udisks-glue
 # exec udiskie

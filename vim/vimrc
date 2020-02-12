@@ -821,8 +821,12 @@ endfunction
 
 function! ScalaSbt()
   set ft=scala syn=scala mouse=n
-  nmap <buffer> <CR> mq<C-L>i<CR><CR><CR><Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
   execute "cd " . scala#GetRootDirForFuzzyFinder('%:p:h')
+  " Redo last command in existing terminal in right vertical split, and scroll to bottom
+  nmap <buffer> <CR> mq<C-L>i<CR><CR><CR><Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  " Highlight filenames from project in SBT
+  " TODO: should actually find correct project name
+  nnoremap <Leader><Leader>/ /\(terminallyhexed.*\n*.*\)\@<=[a-zA-Z\n]*.\n*s\n*c\n*a\n*l\n*a\n*:*\n*<Space>*\d*\n*\d*<CR>
 endfunction
 
 function! ScalaSbtTerm()
