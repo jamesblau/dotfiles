@@ -327,8 +327,8 @@ bar {
 exec_always sudo ~/bin/conf
 exec_always ~/bin/lid-lock
 exec clipit
-exec nm-applet
 exec blueman-applet
+# exec nm-applet
 # exec volti
 # exec udisks-glue
 # exec udiskie
