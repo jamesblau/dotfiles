@@ -79,6 +79,7 @@ quickmark t https://github.com/cmcaine/tridactyl/issues?utf8=%E2%9C%93&q=sort%3A
 
 " Blacklist
 blacklistadd mail.google.com/
+blacklistadd nytimes.com/crosswords/
 
 " URL redirects
 " autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")

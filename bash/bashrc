@@ -296,6 +296,30 @@ alias bd=". bd -si"
 # open new terminal with kitty in same directory
 function ncd () { (nohup kitty --config ~/.kitty.conf -d $PWD &>/dev/null &); }
 
+# clock functions
+function beep-every () { [[ $@ =~ ^[0-9]+$ ]] && while true; do mpv /usr/share/sounds/freedesktop/stereo/complete.oga; sleep $@; done; }
+function seconds_comparison () {
+    end=$1
+    start=$2
+    time=$(( end - start ))
+    seconds=$(printf %02d $(( time % 60 )))
+    minutes=$(printf %02d $(( (time / 60) % 60 )))
+    hours=$(printf %02d $(( time / 3600 )))
+    echo -n $hours:$minutes:$seconds
+}
+function timer () {
+  input=
+  lap=1
+  initial=$(date -u +%s)
+  lap_start=$initial
+  while [[ -z $input ]]; do read input
+    now=$(date -u +%s)
+    echo lap $(printf %02d $lap): $(seconds_comparison now lap_start)    total: $(seconds_comparison now initial)
+    lap_start=$now
+    lap=$(( lap + 1 ))
+  done
+}
+
 # tree with common ignores
 alias trees="tree -I 'target|lib_managed'"
 alias treet="tree -I 'target|lib_managed|tmp'"
@@ -309,3 +333,19 @@ alias uniq_nosort='awk '\''!x[$0]++'\'''
 
 # Ripgrep
 alias rgf='rg --files | rg'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/james/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/james/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/james/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/james/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

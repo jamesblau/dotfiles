@@ -393,8 +393,8 @@ nnoremap <Leader>sc :setl spell!<CR>
 nnoremap <Leader>sp :setl paste!<CR>
 nnoremap <Leader>sl :setl cursorline! \| set cursorcolumn!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
-nnoremap <Leader>sw :setl wrap!<CR>
-nnoremap <Leader>sW :windo setl wrap!<CR>
+nnoremap <Leader>sw :setl wrap! linebreak!<CR>
+nnoremap <Leader>sW :windo setl wrap! linebreak!<CR>
 nnoremap <Leader>sL :if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
 nnoremap <silent> <Leader>/ :setl invhlsearch<CR>
 nnoremap <Leader>sz :setl foldmethod=manual<CR>
@@ -807,12 +807,18 @@ endif
 " close folds recursively inside current fold
 nnoremap <Leader>z jVk$%kzCzo
 
-" TODO: mark terminal in ScalaScratchTerm to make these work regardless of window layout?
+" TODO: mark terminal in [...]Term to make these work regardless of window layout?
+
+function! ScratchMaps()
+  map <buffer> <F12> <C-L>A<CR><CR><CR><C-Space>pGA<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  nmap <buffer> <Leader><CR> mqyae<F12>
+  nmap <buffer> <CR> mqyip<F12>
+  xmap <buffer> <CR> y<F12>
+endfunction
+
 function! ScalaScratch()
   set ft=scala syn=scala mouse=n
-  nmap <buffer> <Leader><CR> mqyae<C-L>pGa<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
-  nmap <buffer> <CR> mqyip<C-L>pGa<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
-  xmap <buffer> <CR> y<C-L>pGa<CR><C-Space>G:wincmd<SPACE>p<CR>gv
+  call ScratchMaps()
   " comment
   nmap <buffer> <BS> vip,c<Space>
   " run test block
@@ -823,7 +829,7 @@ function! ScalaSbt()
   set ft=scala syn=scala mouse=n
   execute "cd " . scala#GetRootDirForFuzzyFinder('%:p:h')
   " Redo last command in existing terminal in right vertical split, and scroll to bottom
-  nmap <buffer> <CR> mq<C-L>i<CR><CR><CR><Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  nmap <buffer> <CR> mq<C-L>A<CR><CR><CR><Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
   " Highlight filenames from project in SBT
   " TODO: should actually find correct project name
   nnoremap <Leader><Leader>/ /\(terminallyhexed.*\n*.*\)\@<=[a-zA-Z\n]*.\n*s\n*c\n*a\n*l\n*a\n*:*\n*<Space>*\d*\n*\d*<CR>
@@ -846,13 +852,33 @@ function! ScalaScratchTerm()
   stopinsert
 endfunction
 
+function! PythonScratch()
+  set ft=python syn=python mouse=n
+  call ScratchMaps()
+  map <buffer> <F12> <C-L>A<CR><CR><CR><C-Space>pGA<CR><CR><C-Space>G:wincmd<SPACE>p<CR>g'q
+  " comment
+  nmap <buffer> <BS> vip,c<Space>
+  " run test block
+  " nmap <buffer> <Leader><BS> mwgg't<CR>'w
+endfunction
+
+function! PythonScratchTerm()
+  call PythonScratch()
+  vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent
+  normal i
+  wincmd p
+  stopinsert
+endfunction
+
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
-nmap <Leader>tS :call ScalaScratch()<CR>
 nmap <Leader>tB :call ScalaSbt()<CR>
 nmap <Leader>tt :call ScalaSbtTerm()<CR>
+nmap <Leader>tS :call ScalaScratch()<CR>
 nmap <Leader>tT :call ScalaScratchTerm()<CR>
+nmap <Leader>tp :call PythonScratch()<CR>
+nmap <Leader>tP :call PythonScratchTerm()<CR>
 nmap <Leader>tE :abo new \| setl bt=nowrite \| call ScalaScratch()<CR>
 nmap <Leader>td :set ft=drake syn=drake<CR>
 nmap <Leader>t<Space> :set ft=notes<CR>
