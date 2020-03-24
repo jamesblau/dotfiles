@@ -374,6 +374,7 @@ if !exists('g:james_minimal_plugins')
       let g:NERDCustomDelimiters = {
         \ 'scala': { 'left': '//', 'nested': 1, 'leftAlt': '/**', 'rightAlt': '*/', 'nestedAlt': 0 },
       \ }
+      map  <Plug>NERDCommenterToggle
       Plug 'scrooloose/nerdcommenter'
     " }}}
     " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } {{{

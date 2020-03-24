@@ -884,6 +884,9 @@ nmap <Leader>td :set ft=drake syn=drake<CR>
 nmap <Leader>t<Space> :set ft=notes<CR>
 nmap <Leader>t<CR> :set ft= syn= formatprg= nolinebreak showbreak=g:james_showbreak nowrap<CR>
 
+" Change default redundant vim behavior for 'change word'; I already have `ce`...
+nnoremap cw dwi
+
 " TODO: Smaller buffer numbers: instead of creating a new buffer sometimes, open the lowest-numbered empty hidden buffer.
 " TODO: Function to line up word under cursor with <count>th instance of same word on line above or below.
 " TODO: <Leader>L<Something> for :arglocal uses
