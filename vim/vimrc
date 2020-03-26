@@ -387,10 +387,8 @@ nnoremap <Leader>sm :call MiddleToggle()<CR>
 nnoremap <Leader>sa :call LeximaToggle()<CR>
 nnoremap <Leader>sM :call MouseToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
-"nnoremap <Leader>svt :call VirtualToggle()<CR>
 nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>sc :setl spell!<CR>
-nnoremap <Leader>sp :setl paste!<CR>
 nnoremap <Leader>sl :setl cursorline! \| set cursorcolumn!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
 nnoremap <Leader>sw :setl wrap! linebreak!<CR>

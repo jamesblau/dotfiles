@@ -217,7 +217,7 @@ bind -m vi-insert "\C-o":
 # Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:$HOME/pbin"
+export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:$HOME/pbin:$HOME/.local/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
