@@ -622,14 +622,6 @@ nmap <silent> <Leader>ra yae<C-O>
 nmap <silent> <Leader>xa yae<C-O>:silent call system("xclip -i -selection clipboard", getreg("\""))<CR>
 " }}}
 
-" Saving stuff
-cmap w!! w !sudo tee % >/dev/null
-nmap ,ww! :w<CR>:bw<CR>
-cmap ww!<CR> w<CR>:bw<CR>
-" Wut
-nmap ,w!w!w! :w!!<CR>ll:bw<CR>
-cmap w!w!w! :w!!<CR>ll:bw<CR>
-
 " Header stuff
 "Header make
 nnoremap <Leader>Hm ^i\|\|<Space><C-C>A<Space>\|\|<C-C>"qyy"qP"qD999a=<C-C>jhlk"qD"qyyj"qpqqqk^
@@ -862,7 +854,7 @@ endfunction
 
 function! PythonScratchTerm()
   call PythonScratch()
-  vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent
+  vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent --pylab
   normal i
   wincmd p
   stopinsert
@@ -908,9 +900,6 @@ nnoremap cw dwi
 autocmd! FileType markdown nnoremap <silent> <buffer> <Leader>m :silent w <Bar>
   \ silent !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % && chromium-browser --headless --no-margins --print-to-pdf=%:r.pdf %:r.html <CR>
 " TODO: Cleanup.
-
-" Write to null (buffer doesn't look unsaved)
-nnoremap <Leader>wn :w! /dev/null<CR>
 
 " Redraw mapping
 nnoremap <Leader><C-R> :redraw<CR>
