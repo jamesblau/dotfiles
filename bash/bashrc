@@ -7,7 +7,7 @@ if [[ "${TERM}" == xterm-termite ]]; then
 fi
 
 # Kitty terminal emulator
-alias kitty='kitty --config ~/.kitty.conf'
+alias kitty="kitty --config ${HOME}/.kitty.conf"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -26,7 +26,7 @@ bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y
 # Keep lots of history, where it won't get wiped if this file isn't sourced
 HISTSIZE=100000
 HISTFILESIZE=200000
-HISTFILE="~/.my_bash_history"
+HISTFILE="${HOME}/.my_bash_history"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -93,7 +93,7 @@ elif [ -x /usr/bin/dircolors ]
 then
   alias ls='ls --color=auto -N'
   alias grep='grep --color=auto'
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  test -r ~/.dircolors && eval "$(dircolors -b ${HOME}/.dircolors)" || eval "$(dircolors -b)"
 fi
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -113,10 +113,10 @@ function mkcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 alias ir="irb1.9.1"
 
 # Python convert xlsx to csv
-alias x2c="~/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
+alias x2c="${HOME}/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
 
 # Python check delimeters in table
-alias ctd="~/src/opensource/pythontools/check_delim.py"
+alias ctd="${HOME}/src/opensource/pythontools/check_delim.py"
 
 # Youtube-dl fix filenames for whitespace etc.
 alias youtube-dl="youtube-dl --restrict-filenames"
@@ -140,7 +140,7 @@ alias nvi="${my_vim} -c 'call NotesGoyo()'"
 [[ -d ~/src/opensource/neovim/neovim/runtime && "${my_vim}" == 'nvim' ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
 
 # Avoid typing . for bin scripts that change directory
-alias cdg=". ~/bin/cdg"
+alias cdg=". ${HOME}/bin/cdg"
 
 stty -ixon
 
@@ -176,7 +176,7 @@ function password () {
 function passwords () { while true; do clear; password $@; read; done; }
 
 # Use keychain
-alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa)'
+alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet '${HOME}'/.ssh/id_rsa)'
 # TODO: fix or remove
 
 # Ethernet
@@ -268,8 +268,8 @@ alias viconflicts='vi $(rg -l "^[<=>]{7}[^<=>]*$")'
 # Remove empty files without messing with sbt files
 alias rmempty='rm $(find -type f -empty | grep -v "\\$")'
 
-export PERL_MB_OPT="--install_base \"~/perl5\""
-export PERL_MM_OPT="INSTALL_BASE=~/perl5"
+export PERL_MB_OPT="--install_base \"${HOME}/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"
 export PERL5LIB=~/perl5/lib/perl5/local/
 # export PERL5LIB=~/.cpan/build/JSON-2.90-SdtLVG/lib/
 # export PERL5LIB=~/.cpan/build/Math-Round-0.07-vJd8__/blib/lib/
@@ -339,14 +339,14 @@ alias rgf='rg --files | rg'
 
 # Conda stuff; activate manually
 alias co="conda activate"
-__conda_setup="$('~/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$("${HOME}/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "~/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "~/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="~/anaconda3/bin:$PATH"
+        export PATH="${HOME}/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
