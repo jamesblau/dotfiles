@@ -332,7 +332,9 @@ alias xevc='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { prin
 # Clever unique without sort
 alias uniq_nosort='awk '\''!x[$0]++'\'''
 
-# Ripgrep
+# Ripgrep only small lines
+alias rgm='rg -M 10000'
+# Ripgrep within filenames
 alias rgf='rg --files | rg'
 
 # Conda stuff; activate manually

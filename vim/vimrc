@@ -742,7 +742,16 @@ function! DiffWithSaved()
   exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
 
-nnoremap <Leader>dt :windo diffo \| windo difft<CR>
+" Let gitgutter override vim-markdown when diffing
+function! DiffThese()
+  nunmap <buffer> [c
+  nunmap <buffer> ]c
+  Plug 'airblade/vim-gitgutter'
+  windo diffo
+  windo difft
+endfunction
+
+nnoremap <Leader>dt :call DiffThese()<CR>
 nnoremap <Leader>do :windo diffo<CR>
 nnoremap <Leader>ds :call DiffWithSaved()<CR>
 

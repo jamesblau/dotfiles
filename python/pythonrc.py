@@ -22,6 +22,14 @@ def _pythonrc():
     import readline
     import rlcompleter
 
+    # TODO: figure out running things at start
+    # c = get_config()
+
+    # c.InteractiveShellApp.exec_lines = [
+        # 'import numpy as np',
+        # 'import scipy'
+    # ]
+
     if 'libedit' in readline.__doc__:
         readline.parse_and_bind("bind ^I rl_complete")
     else:

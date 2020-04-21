@@ -102,7 +102,7 @@ bind --mode=normal ,m open gmail.com
 bind --mode=normal ,M tabopen gmail.com
 bind --mode=normal ,o open https://discordapp.com/activity
 bind --mode=normal ,O tabopen https://discordapp.com/activity
-bind --mode=normal ,c composite tabopen -b bobbins.horse ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/cgi-bin/GiantITP/ootscript
+bind --mode=normal ,c composite tabopen -b steeple.church ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/cgi-bin/GiantITP/ootscript
 
 " Temporary hack for slow completion
 unbind --mode=ex <Space>
