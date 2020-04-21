@@ -56,7 +56,9 @@ set wildmenu
 set winminheight=0              " Windows can be 0 lines high
 set iminsert=1
 
-source ~/.pvimrc
+if filereadable(expand('~/.pvimrc'))
+  source ~/.pvimrc
+endif
 " Use local bundles if available
 source ~/.vimrc.bundles
 
