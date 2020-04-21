@@ -344,8 +344,8 @@ if !exists('g:james_minimal_plugins')
       let g:UltiSnipsJumpBackwardTrigger="<C-J>"
       " let g:UltiSnipsListSnippets = "<Leader><S-Tab>"
       let g:UltiSnipsRemoveSelectModeMappings = 0
-      let g:UltiSnipsSnippetDirectories = ['/home/james/.vim/plugged/ultisnips/', '/home/james/dotfiles/ultisnips']
-      let g:UltiSnipsSnippetsDir = ['/home/james/dotfiles/ultisnips']
+      let g:UltiSnipsSnippetDirectories = ['~/.vim/plugged/ultisnips/', '~/dotfiles/ultisnips']
+      let g:UltiSnipsSnippetsDir = ['~/dotfiles/ultisnips']
       " if !exists(':UltiSnipsEdit')
         " inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
         " imap <tab> <Plug>(tab)

@@ -26,7 +26,7 @@ bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y
 # Keep lots of history, where it won't get wiped if this file isn't sourced
 HISTSIZE=100000
 HISTFILESIZE=200000
-HISTFILE="/home/james/.my_bash_history"
+HISTFILE="~/.my_bash_history"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -113,10 +113,10 @@ function mkcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 alias ir="irb1.9.1"
 
 # Python convert xlsx to csv
-alias x2c="/home/james/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
+alias x2c="~/src/opensource/pythontools/xlsx2csv/xlsx2csv.py"
 
 # Python check delimeters in table
-alias ctd="/home/james/src/opensource/pythontools/check_delim.py"
+alias ctd="~/src/opensource/pythontools/check_delim.py"
 
 # Youtube-dl fix filenames for whitespace etc.
 alias youtube-dl="youtube-dl --restrict-filenames"
@@ -140,7 +140,7 @@ alias nvi="${my_vim} -c 'call NotesGoyo()'"
 [[ -d ~/src/opensource/neovim/neovim/runtime && "${my_vim}" == 'nvim' ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
 
 # Avoid typing . for bin scripts that change directory
-alias cdg=". /home/james/bin/cdg"
+alias cdg=". ~/bin/cdg"
 
 stty -ixon
 
@@ -339,14 +339,14 @@ alias rgf='rg --files | rg'
 
 # Conda stuff; activate manually
 alias co="conda activate"
-__conda_setup="$('/home/james/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('~/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/james/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/james/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "~/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "~/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/james/anaconda3/bin:$PATH"
+        export PATH="~/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

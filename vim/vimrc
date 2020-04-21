@@ -616,7 +616,7 @@ nnoremap <silent> <Leader>xb
 nnoremap <silent> <Leader>be
       \ :silent call writefile(
         \ map(filter(range(0,bufnr('$')), 'buflisted(v:val)'), 'fnamemodify(bufname(v:val), ":p")'),
-        \ system("echo /home/james/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
+        \ system("echo ~/.buffersave/`date +\"\%Y\%m\%d_\%H:\%M:\%S\"`")
       \ )<CR>
 "Register from All
 nmap <silent> <Leader>ra yae<C-O>
