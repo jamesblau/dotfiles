@@ -58,12 +58,6 @@ set iminsert=1
 
 let loaded_matchparen = 1
 
-" Providers
-" TODO: redundant
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python3'
-let g:loaded_clipboard_provider = '/usr/bin/xsel'
-
 if filereadable(expand('~/pdotfiles/pvimrc'))
   source ~/pdotfiles/pvimrc
 endif

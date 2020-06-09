@@ -329,29 +329,19 @@ if !exists('g:james_minimal_plugins')
     Plug 'ncm2/ncm2-bufword'
     Plug 'ncm2/ncm2-path'
     " Plug 'ncm2/ncm2-ultisnips' {{{
-      " let g:ncm2_ultisnips#source = {'priority': 10}
-      " TODO: fix ultisnips
-      " Plug 'ncm2/ncm2-ultisnips', { 'on': 'NCM2Toggle' }
-      " Plug 'ncm2/ncm2-ultisnips'
+      let g:ncm2_ultisnips#source = {'priority': 10}
+      Plug 'ncm2/ncm2-ultisnips'
     " }}}
     Plug 'honza/vim-snippets'
     " Plug 'SirVer/ultisnips' {{{
       let g:UltiSnipsExpandTrigger="<C-L>"
-      " let g:UltiSnipsExpandTrigger="<Plug>(ultisnips_expand)"
       let g:UltiSnipsJumpForwardTrigger="<C-K>"
       let g:UltiSnipsJumpBackwardTrigger="<C-J>"
-      " let g:UltiSnipsListSnippets = "<Leader><S-Tab>"
+      let g:UltiSnipsListSnippets = "<S-Tab>"
       let g:UltiSnipsRemoveSelectModeMappings = 0
-      " let g:UltiSnipsSnippetDirectories = ['~/.vim/plugged/ultisnips/', '~/dotfiles/ultisnips']
-      " let g:UltiSnipsSnippetsDir = ['~/dotfiles/ultisnips']
-      " if !exists(':UltiSnipsEdit')
-        " inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
-        " imap <tab> <Plug>(tab)
-      " else
-      " endif
-      " inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-      " Plug 'SirVer/ultisnips'
-      " Plug 'SirVer/ultisnips', { 'on': 'NCM2Toggle' }
+      let g:UltiSnipsSnippetDirectories = ['UltiSnips', '~/.vim/plugged/UltiSnips/', '~/.vim/plugged/snippets/', '~/dotfiles/ultisnips']
+      inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+      Plug 'SirVer/ultisnips'
     " }}}
     " Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' } {{{
       Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' }
