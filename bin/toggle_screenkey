@@ -1,0 +1,10 @@
+#!/bin/bash -x
+
+if [ -e ~/.screenkeying ]
+then
+  killall screenkey
+  rm ~/.screenkeying
+else
+  touch ~/.screenkeying
+  screenkey
+fi

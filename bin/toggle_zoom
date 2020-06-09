@@ -1,0 +1,10 @@
+#!/bin/bash -x
+
+if [ -e ~/.zooming ]
+then
+  killall zoom
+  rm ~/.zooming
+else
+  touch ~/.zooming
+  zoom
+fi

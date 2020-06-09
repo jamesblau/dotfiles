@@ -15,36 +15,36 @@ install from http://pypi.python.org/pypi/readline or with easy_install.
 """
 
 
-def _pythonrc():
+# def _pythonrc():
 
-    import atexit
-    import os
-    import readline
-    import rlcompleter
+    # import atexit
+    # import os
+    # import readline
+    # import rlcompleter
 
-    # TODO: figure out running things at start
-    # c = get_config()
+    # # TODO: figure out running things at start
+    # # c = get_config()
 
-    # c.InteractiveShellApp.exec_lines = [
-        # 'import numpy as np',
-        # 'import scipy'
-    # ]
+    # # c.InteractiveShellApp.exec_lines = [
+        # # 'import numpy as np',
+        # # 'import scipy'
+    # # ]
 
-    if 'libedit' in readline.__doc__:
-        readline.parse_and_bind("bind ^I rl_complete")
-    else:
-        readline.parse_and_bind("tab: complete")
+    # if 'libedit' in readline.__doc__:
+        # readline.parse_and_bind("bind ^I rl_complete")
+    # else:
+        # readline.parse_and_bind("tab: complete")
 
-    history = os.path.expanduser("~/.py_history")
-    readline.set_history_length(500)
-    if os.path.exists(history):
-        readline.read_history_file(history)
+    # history = os.path.expanduser("~/.py_history")
+    # readline.set_history_length(500)
+    # if os.path.exists(history):
+        # readline.read_history_file(history)
 
-    @atexit.register
-    def write_history(history=history):
-        readline.write_history_file(history)
+    # @atexit.register
+    # def write_history(history=history):
+        # readline.write_history_file(history)
 
 
-_pythonrc()
+# _pythonrc()
 
-del _pythonrc
+# del _pythonrc

@@ -1,4 +1,9 @@
-Use .config/nvim/init.vim
+** move ~/.vim/autoload/plug.vim to dotfiles
+
+** separate files that should and should not be symlinked in install
+  e.g. bashrc yes, bashrc_neovim no, vimrc.bundles no
+
+Remove pythonrc? Or just fix/improve
 
 Rofi
 

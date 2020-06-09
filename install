@@ -1,18 +1,26 @@
 #!/bin/bash -xe
 
-__deploy=( bash git inputrc python ruby tmux vim )
+__deploy=( bash editrc git inputrc python ruby tmux vim conda )
 
 if [ -e ~/.not_a_server ]; then
-  __deploy+=( ag i3 nvim tridactyl kitty Xresources )
-
-  mkdir -p ~/.config/nvim
-  cd ~/.config/nvim
-  ln -s ~/dotfiles/ftdetect ftdetect
-  ln -s ~/dotfiles/ftplugin ftplugin
-  ln -s ~/dotfiles/syntax syntax
-  ln -s ~/.nvimrc init.vim
+  __deploy+=( ag i3 tridactyl kitty Xresources )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."
+fi
+
+mkdir -p ~/.vim
+cd ~/.vim
+[ -d ftdetect ] || ln -s ~/dotfiles/ftdetect ftdetect
+[ -d ftplugin ] || ln -s ~/dotfiles/ftplugin ftplugin
+[ -d syntax   ] || ln -s ~/dotfiles/syntax syntax
+
+if command -v nvim &>/dev/null; then
+  mkdir -p ~/.config/nvim
+  cd ~/.config/nvim
+  [ -d ftdetect ] || ln -s ~/dotfiles/ftdetect ftdetect
+  [ -d ftplugin ] || ln -s ~/dotfiles/ftplugin ftplugin
+  [ -d syntax   ] || ln -s ~/dotfiles/syntax syntax
+  [ -e init.vim ] || ln -s ~/dotfiles/nvim/nvimrc init.vim
 fi
 
 cd ~

@@ -8,7 +8,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-
 " To evaluate later {{{
  " Plug 'tpope/vim-scriptease'
  " Plug 'tpope/vim-sleuth'
@@ -310,7 +309,6 @@ if !exists('g:james_minimal_plugins')
     Plug 'roxma/nvim-yarp'
     " Plug 'ncm2/ncm2' {{{
       Plug 'ncm2/ncm2'
-      " nnoremap <Leader>s<Tab> :call autocmd BufEnter * call ncm2#enable_for_buffer()<CR>
       function! NCM2Toggle()
         if exists('b:ncm2_enable') && b:ncm2_enable == 1
           set completeopt=menu,preview
@@ -332,24 +330,28 @@ if !exists('g:james_minimal_plugins')
     Plug 'ncm2/ncm2-path'
     " Plug 'ncm2/ncm2-ultisnips' {{{
       " let g:ncm2_ultisnips#source = {'priority': 10}
-      Plug 'ncm2/ncm2-ultisnips'
+      " TODO: fix ultisnips
+      " Plug 'ncm2/ncm2-ultisnips', { 'on': 'NCM2Toggle' }
+      " Plug 'ncm2/ncm2-ultisnips'
     " }}}
     Plug 'honza/vim-snippets'
     " Plug 'SirVer/ultisnips' {{{
-      Plug 'SirVer/ultisnips'
-      inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
       let g:UltiSnipsExpandTrigger="<C-L>"
       " let g:UltiSnipsExpandTrigger="<Plug>(ultisnips_expand)"
       let g:UltiSnipsJumpForwardTrigger="<C-K>"
       let g:UltiSnipsJumpBackwardTrigger="<C-J>"
       " let g:UltiSnipsListSnippets = "<Leader><S-Tab>"
       let g:UltiSnipsRemoveSelectModeMappings = 0
-      let g:UltiSnipsSnippetDirectories = ['~/.vim/plugged/ultisnips/', '~/dotfiles/ultisnips']
-      let g:UltiSnipsSnippetsDir = ['~/dotfiles/ultisnips']
+      " let g:UltiSnipsSnippetDirectories = ['~/.vim/plugged/ultisnips/', '~/dotfiles/ultisnips']
+      " let g:UltiSnipsSnippetsDir = ['~/dotfiles/ultisnips']
       " if !exists(':UltiSnipsEdit')
         " inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
         " imap <tab> <Plug>(tab)
+      " else
       " endif
+      " inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+      " Plug 'SirVer/ultisnips'
+      " Plug 'SirVer/ultisnips', { 'on': 'NCM2Toggle' }
     " }}}
     " Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' } {{{
       Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' }
@@ -537,27 +539,6 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <Leader>qS :CSVTabularize<CR><C-W>T:above new<CR>:res 3<CR>:setl scrollbind buftype=nofile<CR><C-W>j:setl scrollbind sbo=hor buftype=nofile<CR>ggVjjd<C-W>kVp<C-W>j
       Plug 'chrisbra/csv.vim', { 'on': 'LoadCsv' }
     " }}}
-    " Plug 'davidhalter/jedi-vim' {{{
-      Plug 'davidhalter/jedi-vim'
-      let g:jedi#goto_command = "gd"
-      let g:jedi#goto_assignments_command = "<Leader>ga"
-      let g:jedi#goto_definitions_command = ""
-      let g:jedi#documentation_command = "<M-k>"
-      let g:jedi#usages_command = "<Leader>gn"
-      let g:jedi#rename_command = "<Leader>gR"
-      let g:jedi#completions_enabled = 0
-      let g:jedi#auto_initialization = 1
-      let g:jedi#auto_vim_configuration = 0
-      let g:jedi#smart_auto_mappings = 0
-      let g:jedi#popup_on_dot = 0
-      let g:jedi#completions_command = ""
-      let g:jedi#show_call_signatures = 0
-      let g:jedi#show_call_signatures_delay = 0
-      let g:jedi#show_call_signatures_modes = 'i'  " ni = also in normal mode
-      let g:jedi#use_tabs_not_buffers = 0
-      let g:jedi#enable_speed_debugging = 0
-      " TODO: Why does variable rename only affect current file?
-    " }}}
     Plug 'derekwyatt/vim-sbt', { 'for': 'sbt.scala' }
     " Plug 'derekwyatt/vim-scala', { 'for': 'scala' } {{{
       let g:scala_scaladoc_indent = 1
@@ -599,6 +580,8 @@ if !exists('g:james_minimal_plugins')
     Plug 'plasticboy/vim-markdown'
     Plug 't9md/vim-chef'
     Plug 'tpope/vim-ragtag'
+    Plug 'tpope/vim-dadbod', { 'for': 'sql' }
+    " Plug 'nvie/vim-flake8', { 'for': 'python' }
   " }}}
 
 endif

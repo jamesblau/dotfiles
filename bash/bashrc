@@ -122,7 +122,7 @@ alias ctd="${HOME}/src/opensource/pythontools/check_delim.py"
 alias youtube-dl="youtube-dl --restrict-filenames"
 
 # Choose vim
-if [ -x /usr/bin/nvim ]; then
+if command -v nvim &>/dev/null; then
   if [ "$james_in_neovim" == 1 ]; then
     my_vim='nvim-terminal-edit.py'
   else
@@ -136,8 +136,6 @@ export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
 alias vi="${my_vim}"
 alias nvi="${my_vim} -c 'call NotesGoyo()'"
-# I forget why this is here
-[[ -d ~/src/opensource/neovim/neovim/runtime && "${my_vim}" == 'nvim' ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
 
 # Avoid typing . for bin scripts that change directory
 alias cdg=". ${HOME}/bin/cdg"
@@ -218,14 +216,15 @@ bind -m vi-insert "\C-o":
 # Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:$HOME/pbin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/pbin:$HOME/.local/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 export LD_LIBRARY_PATH="/usr/local/cuda-9.0/lib64"
 
 # Math stuff
-alias oc='octave --no-gui --silent'
+alias ocg='octave --no-gui --silent'
+alias oc='octave --no-gui --silent --eval "format long g" --persist'
 alias math='rlwrap math -rawterm'
 
 # Scala stuff
@@ -237,6 +236,9 @@ alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 # export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xmx2048M -Xms2048M"
 # Jline2 is broken, but rlwrap prevents access to tab-complete...
 # alias scala='rlwrap -a scala'
+
+# Mongodb stuff
+alias mongo='rlwrap --always-readline mongo'
 
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }

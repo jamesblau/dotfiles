@@ -31,10 +31,10 @@ bindsym $mod+Return exec $kitty
 # bindsym $mod+Return exec termite
 bindsym $mod+Control+Shift+Return exec $kitty -e tmux
 # bindsym $mod+Shift+Return exec gnome-terminal
-# bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/.nvimrc_terminal -c 'terminal bash --rcfile ~/.bashrc_neovim'"
+# bindsym $mod+Control+Shift+Return exec gnome-terminal -e "nvim -u ~/dotfiles/nvim/nvimrc_terminal -c 'terminal bash --rcfile ~/dotfiles/bash/bashrc_neovim'"
 # bindsym $mod+s exec stterm
 # bindsym $mod+Shift+s exec stterm -e tmux
-# bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/.nvimrc_terminal -c ter'
+# bindsym $mod+Control+Shift+s exec stterm -e bash -c 'nvim -u ~/dotfiles/nvim/nvimrc_terminal -c ter'
 
 # Split terminal in same working directory
 bindsym --release Mod1+g split v; exec xdotool key --clearmodifiers alt+Return
@@ -47,10 +47,6 @@ bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
 # Open programs
 # bindsym $mod+u exec $kitty mutt
 bindsym $mod+u exec $kitty nmtui-connect
-
-# Audio shortcuts
-bindsym $mod+Shift+p exec pavucontrol
-bindsym $mod+Control+Shift+n exec toggle_sleep_noise
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
@@ -193,26 +189,28 @@ mode "quick_open" {
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc'; $d
-  #       g taken
+  #       g
   bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
   bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
   bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
   bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf'; $d
   bindsym l exec $kitty_open 'ranger'; $d
-  #       m taken
-  #       n taken
+  bindsym m exec pavucontrol; $d
+  bindsym n exec toggle_sleep_noise; $d
   bindsym o exec $kitty --directory='~/Downloads'; $d
   bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
-  #       q taken
+  #       q
   bindsym r exec $kitty_open 'nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'; $d
-  #       s free
+  bindsym s exec feh ~/Documents/metis/schedules/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
   bindsym u exec $kitty_open 'nvim ~/.muttrc'; $d
-  bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/.pvimrc'; $d
+  bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc'; $d
   bindsym w exec $kitty_open '~/pbin/worth'; $d
-  #       x free
+  bindsym x exec toggle_screenkey; $d
   bindsym y exec $kitty_open 'nvim ~/todo/list'; $d
-  #       z free
+  bindsym z exec toggle_zoom; $d
+
+  bindsym $mod+F4 kill; $d
 
   bindsym Return $d
   bindsym Escape $d
@@ -274,10 +272,12 @@ mode "special_characters" {
   bindsym s exec "echo -n '¯\_(ツ)_/¯' | xclip"; $d
   bindsym b exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"; $d
   bindsym c exec "echo -n 'ಥ_ಥ' | xclip"; $d
+  bindsym d exec "echo -n '(✿ ◕‿◕) ᓄ✂╰U╯' | xclip"; $d
   bindsym g exec "echo -n 'ಠ_ಠ' | xclip"; $d
   bindsym t exec "echo -n '(╯°□°)╯︵ ┻━┻' | xclip"; $d
   bindsym w exec "echo -n '( ͡° ͜ʖ ͡°)' | xclip"; $d
-  bindsym y exec "echo -n '(•_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"; $d
+  bindsym y exec "echo -n '( •_•)\n( •_•)>⌐■-■\n(⌐■_■)' | xclip"; $d
+  bindsym Shift+y exec "echo -n '(  •_•)\n(  •_•)>⌐■-■\n(⌐■_■)' | xclip"; $d
   bindsym f exec "echo -n '☃' | xclip"; $d
   bindsym m exec "echo -n 🎵 | xclip"; $d
   # nonbreaking space

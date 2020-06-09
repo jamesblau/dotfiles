@@ -5,7 +5,7 @@ set nocompatible
 " let g:james_minimal_plugins=1
 let mapleader = ","
 nnoremap \ ,
-nnoremap <Leader><C-S> :source ~/.vimrc \| e<CR>
+nnoremap <Leader><C-S> :source ~/dotfiles/vim/vimrc \| e<CR>
 
 set sw=2 ts=2 sts=2
 set background=dark
@@ -56,11 +56,19 @@ set wildmenu
 set winminheight=0              " Windows can be 0 lines high
 set iminsert=1
 
-if filereadable(expand('~/.pvimrc'))
-  source ~/.pvimrc
+let loaded_matchparen = 1
+
+" Providers
+" TODO: redundant
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+let g:loaded_clipboard_provider = '/usr/bin/xsel'
+
+if filereadable(expand('~/pdotfiles/pvimrc'))
+  source ~/pdotfiles/pvimrc
 endif
 " Use local bundles if available
-source ~/.vimrc.bundles
+source ~/dotfiles/vim/vimrc.bundles
 
 " Color stuff!
 call James_Zenburn()
@@ -164,7 +172,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 if v:version > 702
   " Keep window position
   au! BufLeave * let b:winview = winsaveview()
-  au! BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+  au! BufEnter * if(exists('b:winview') && &buftype != 'terminal') | call winrestview(b:winview) | endif
   " JSON
   nmap <Leader>jp :%!underscore print<CR>:set filetype=json<CR><F5>
   nmap <Leader>jt :%!python -mjson.tool<CR>:set filetype=json<CR><F5>
@@ -282,6 +290,9 @@ function! ClipboardToggle()
 endfunction
 
 " Center on search term, diff
+" TODO: Account for vim-interestingwords:
+"nnoremap <silent> n :call WordNavigation('forward')<cr>
+"nnoremap <silent> N :call WordNavigation('backward')<cr>
 function! MiddleToggle()
   if(maparg('n', 'n') == '')
     nmap n nzz
@@ -340,7 +351,7 @@ cmap <C-Down> <Nop>
 
 function! MouseToggle()
   if(&mouse == '')
-    set mouse=n
+    set mouse=nv
     unmap <Up>
     unmap <Down>
   else
@@ -391,11 +402,11 @@ nnoremap <Leader>sM :call MouseToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
 nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>sc :setl spell!<CR>
-nnoremap <Leader>sl :setl cursorline! \| set cursorcolumn!<CR>
+nnoremap <Leader>sl :setl cursorline!<CR>
+nnoremap <Leader>sL :setl cursorline! \| set cursorcolumn!<CR>
 nnoremap <expr> <Leader>st ":call TabSpaces()<CR>"
-nnoremap <Leader>sw :setl wrap! linebreak!<CR>
-nnoremap <Leader>sW :windo setl wrap! linebreak!<CR>
-nnoremap <Leader>sL :if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
+nnoremap <Leader>sw :if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
+nnoremap <Leader>sW :windo if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
 nnoremap <silent> <Leader>/ :setl invhlsearch<CR>
 nnoremap <Leader>sz :setl foldmethod=manual<CR>
 
@@ -660,7 +671,6 @@ nnoremap <silent> <F5> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 xnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 
 " Emacs stuff!
-inoremap <C-D> <Delete>
 cnoremap <C-D> <Delete>
 cnoremap <C-B> <Left>
 cnoremap <C-F> <Right>
@@ -669,9 +679,6 @@ cnoremap <A-f> <S-Right>
 cnoremap <C-A> <Home>
 " Backspace one character, ignoring tab settings, not breaking undo sequence
 inoremap <C-H> <Esc>cl
-
-" Dedent input mode (since <C-D> is taken above; <C-T> is indent)
-inoremap <C-B> <C-D>
 
 " No accidental Ex-mode or keyword-lookup
 nnoremap gQ gggqG
@@ -746,8 +753,8 @@ endfunction
 
 " Let gitgutter override vim-markdown when diffing
 function! DiffThese()
-  nunmap <buffer> [c
-  nunmap <buffer> ]c
+  silent! nunmap <buffer> [c
+  silent! nunmap <buffer> ]c
   Plug 'airblade/vim-gitgutter'
   windo diffo
   windo difft
@@ -817,8 +824,18 @@ function! ScratchMaps()
   xmap <buffer> <CR> y<F12>
 endfunction
 
+function! OctaveScratchTerm()
+  set ft=matlab syn=matlab mouse=nv
+  call ScratchMaps()
+  vsplit
+  terminal octave --no-gui --silent --eval "format long g" --persist
+  normal i
+  wincmd p
+  stopinsert
+endfunction
+
 function! ScalaScratch()
-  set ft=scala syn=scala mouse=n
+  set ft=scala syn=scala mouse=nv
   call ScratchMaps()
   " comment
   nmap <buffer> <BS> vip,c<Space>
@@ -827,10 +844,9 @@ function! ScalaScratch()
 endfunction
 
 function! ScalaSbt()
-  set ft=scala syn=scala mouse=n
+  call ScalaScratch()
   execute "cd " . scala#GetRootDirForFuzzyFinder('%:p:h')
   " Redo last command in existing terminal in right vertical split, and scroll to bottom
-  nmap <buffer> <CR> mq<C-L>A<CR><CR><CR><Esc>k<CR><C-Space>G:wincmd<SPACE>p<CR>g'q
   " Highlight filenames from project in SBT
   " TODO: should actually find correct project name
   nnoremap <Leader><Leader>/ /\(terminallyhexed.*\n*.*\)\@<=[a-zA-Z\n]*.\n*s\n*c\n*a\n*l\n*a\n*:*\n*<Space>*\d*\n*\d*<CR>
@@ -854,7 +870,7 @@ function! ScalaScratchTerm()
 endfunction
 
 function! PythonScratch()
-  set ft=python syn=python mouse=n
+  set ft=python syn=python mouse=nv textwidth=79
   call ScratchMaps()
   map <buffer> <F12> <C-L>A<CR><CR><CR><C-Space>pGA<CR><CR><C-Space>G:wincmd<SPACE>p<CR>g'q
   " comment
@@ -874,6 +890,8 @@ endfunction
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
+nmap <Leader>tg :call ScratchMaps()<CR>
+nmap <Leader>to :call OctaveScratchTerm()<CR>
 nmap <Leader>tB :call ScalaSbt()<CR>
 nmap <Leader>tt :call ScalaSbtTerm()<CR>
 nmap <Leader>tS :call ScalaScratch()<CR>
@@ -894,20 +912,7 @@ nnoremap cw dwi
 " TODO: Remove <Leader>s options that duplicate unimpaired functionality? I do prefer mine...
 " TODO: Fix position of space when pasting -- conditional on register matching pattern, toggle off?
 
-" TODO: Just a reminder to namespace mappings...
-"autocmd FileType unite call s:unite_keymaps()
-"function! s:unite_keymaps()
-   "" Play nice with supertab
-  "let b:SuperTabDisabled=1
-  "" Enable navigation with control-j and control-k in insert mode
-  "imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  "imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-"endfunction`
-
 " Convert markdown to pdf
-" nnoremap <Leader>mm :!pandoc --standalone -f markdown -t latex -o %.pdf %; nohup evince %.pdf > /dev/null &<CR>
-" nnoremap <Leader>mc :!pandoc --standalone -c style.css -f markdown -t latex -o %.pdf %; nohup evince %.pdf > /dev/null &<CR>
-" nnoremap <Leader>mh :!pandoc --standalone -c style.css -f markdown -t html -o %.html %<CR>
 autocmd! FileType markdown nnoremap <silent> <buffer> <Leader>m :silent w <Bar>
   \ silent !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % && chromium-browser --headless --no-margins --print-to-pdf=%:r.pdf %:r.html <CR>
 " TODO: Cleanup.

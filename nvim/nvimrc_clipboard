@@ -1,5 +1,5 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
-source ~/.nvimrc
+source ~/dotfiles/nvim/nvimrc
 
 " TODO: Get this actually working
 set nofixeol
