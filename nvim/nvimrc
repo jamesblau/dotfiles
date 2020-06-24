@@ -1,5 +1,6 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 
+let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
 source ~/.vimrc
 tnoremap <C-Space> <C-\><C-N>
 function! JamesSetupTerminal()

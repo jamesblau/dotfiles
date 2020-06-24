@@ -136,21 +136,36 @@ export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
 alias vi="${my_vim}"
 alias nvi="${my_vim} -c 'call NotesGoyo()'"
-[[ -d ~/src/opensource/neovim/neovim/runtime && "${my_vim}" == 'nvim' ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
+# TODO: annotate with why this is needed
+# [[ $(which nvim) == ${HOME}/bin/nvim ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
 
 # Avoid typing . for bin scripts that change directory
 alias cdg=". ${HOME}/bin/cdg"
 
+# TODO: comment
 stty -ixon
 
+# List extensions in directory, recursively
 alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s/.*\.//'"'"' | sort -u'
 
+# Rerun command on keypress
 function loop () { while true; do clear; $@; read; done; }
 
 # Kitty hangs...
 alias xclip='xclip -l 1'
 
+# Get IP
 alias myip='wget -qO- http://ipecho.net/plain | tee /dev/tty | xclip; echo'
+
+# Open tmux for running `git ds` and composing a commit message
+alias gic='tmux new-session \;\
+  send-keys "git ds" Enter \;\
+  split-window -v \;\
+  resize-pane -y 10 \;\
+  send-keys Escape "v:nnoremap CQ :cq<CR>" Enter "igit commit -m \""'
+
+# Avoid killing shell by accident (for tmux in particular)
+alias live='export IGNOREEOF=3; tmux set-environment -g -t$(tmux list-panes -F ''"''#{session_name}''"'') ''"''IGNOREEOF''"'' 3'
 
 # Python stuff
 export PYTHONSTARTUP=~/.pythonrc.py
@@ -161,6 +176,9 @@ alias ipy='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 function fluentpy () {
   python3 -m fluentpy "lib.sys.stdin.readlines()""$@"'.map(_.each.strip("\n")._).map(print)'
 }
+
+# R stuff
+alias r=radian
 
 function password () {
   (

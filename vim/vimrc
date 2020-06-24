@@ -674,12 +674,12 @@ cnoremap <C-A> <Home>
 " Backspace one character, ignoring tab settings, not breaking undo sequence
 inoremap <C-H> <Esc>cl
 
-" No accidental Ex-mode or keyword-lookup
-nnoremap gQ gggqG
+" No accidental Ex-mode
+nnoremap Q <Nop>
 nnoremap <Leader>Q Q
 
-" Escape from edit-and-execute-command
-nnoremap QQ ggVGd:wq
+" Quick quit all
+nnoremap QA :qa<CR>
 
 " Execute viml
 nnoremap <Leader>e. :execute getline(".")<CR>
@@ -801,10 +801,9 @@ function! MyFoldText()
   let pad = repeat(' ', (winwidth(0)/2)-strlen(line)-strlen(v:folddashes))
   return poorDevil . v:folddashes . pad
 endfunction
+" TODO: Why do I otherwise get "no fold found"?
 if !exists('g:james_pager')
   nmap <C-\> za
-else
-  nmap <A-\> za
 endif
 " close folds recursively inside current fold
 nnoremap <Leader>z jVk$%kzCzo

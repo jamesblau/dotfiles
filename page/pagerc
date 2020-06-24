@@ -1,4 +1,10 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
+
+" Providers
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3.6'
+let g:loaded_clipboard_provider = '/usr/bin/xsel'
+
 let g:james_minimal_plugins=1
 let g:james_pager=1
 let g:page_icon_instance = '§'

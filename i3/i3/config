@@ -188,7 +188,7 @@ mode "quick_open" {
   bindsym c exec $kitty_open 'nvim ~/bin/conf'; $d
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
-  bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc'; $d
+  bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
   #       g
   bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
   bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d

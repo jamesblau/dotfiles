@@ -7,15 +7,15 @@
 /* use 'customize' from menu and just drag the (+) button off the tabbar */
 /* on the bottom options bar make sure titlebar is on */
 /* setting density to compact is also nice */
-#tabbrowser-tabs, #tabbrowser-tabs > .tabbrowser-arrowscrollbox {
-    min-height: 0 !important;
-}
-#tabbrowser-tabs tab {
-    min-height: var(--tab-min-height)
-}
-#tabbrowser-tabs tab[first-visible-tab="true"][last-visible-tab="true"] {
-    visibility: collapse;
-}
+/* #tabbrowser-tabs, #tabbrowser-tabs > .tabbrowser-arrowscrollbox { */
+    /* min-height: 0 !important; */
+/* } */
+/* #tabbrowser-tabs tab { */
+    /* min-height: var(--tab-min-height) */
+/* } */
+/* #tabbrowser-tabs tab[first-visible-tab="true"][last-visible-tab="true"] { */
+    /* visibility: collapse; */
+/* } */
 
 /* autohide addressbar */
 /* will show address bar when focused with alt-d,ctrl-l,ctrl-k, or f6 */
@@ -36,4 +36,9 @@
 #nav-bar:focus-within,
 #nav-bar:active {
     height: auto !important;
+}
+
+/* Needed for for FF 75 megabar */
+#urlbar {
+	--urlbar-toolbar-height: 32px !important;
 }

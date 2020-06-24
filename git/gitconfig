@@ -1,26 +1,27 @@
 [user]
-	name = James Blau
-	email = jamesblau@gmail.com
+  name = James Blau
+  email = jamesblau@gmail.com
 [diff]
-	tool = nvimdiff
+  tool = nvimdiff
 [difftool]
-	prompt = false
+  prompt = false
+  trustExitCode = true
 [merge]
-	tool = nvimmerge
+  tool = nvimmerge
 [difftool "nvimdiff"]
-	cmd = ~/bin/myvim -d $LOCAL $REMOTE -c '$wincmd w'
+  cmd = ~/bin/myvim -d $LOCAL $REMOTE +'nnoremap CQ :cq<CR>' -c '$wincmd w'
 [mergetool "nvimmerge"]
-	cmd = ~/bin/myvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  cmd = ~/bin/myvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [mergetool]
-	prompt = false
-	keepBackup = false
+  prompt = false
+  keepBackup = false
 [alias]
-	aa = add --all
-	d = difftool
-	ds = difftool --staged
-	m = mergetool
-	s = status
+  aa = add --all
+  d = difftool
+  ds = difftool --staged
+  m = mergetool
+  s = status
 [push]
-	default = current
+  default = current
 [credential]
-	helper = cache
+  helper = cache

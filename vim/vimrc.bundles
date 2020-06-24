@@ -329,8 +329,8 @@ if !exists('g:james_minimal_plugins')
     Plug 'ncm2/ncm2-bufword'
     Plug 'ncm2/ncm2-path'
     " Plug 'ncm2/ncm2-ultisnips' {{{
-      let g:ncm2_ultisnips#source = {'priority': 10}
-      Plug 'ncm2/ncm2-ultisnips'
+      " let g:ncm2_ultisnips#source = {'priority': 10}
+      " Plug 'ncm2/ncm2-ultisnips'
     " }}}
     Plug 'honza/vim-snippets'
     " Plug 'SirVer/ultisnips' {{{
@@ -340,8 +340,8 @@ if !exists('g:james_minimal_plugins')
       let g:UltiSnipsListSnippets = "<S-Tab>"
       let g:UltiSnipsRemoveSelectModeMappings = 0
       let g:UltiSnipsSnippetDirectories = ['UltiSnips', '~/.vim/plugged/UltiSnips/', '~/.vim/plugged/snippets/', '~/dotfiles/ultisnips']
-      inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-      Plug 'SirVer/ultisnips'
+      " inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+      " Plug 'SirVer/ultisnips'
     " }}}
     " Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' } {{{
       Plug 'Shougo/echodoc.vim', { 'on': 'EchoDocEnable' }
