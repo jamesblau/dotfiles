@@ -164,6 +164,19 @@ alias gic='tmux new-session \;\
   resize-pane -y 10 \;\
   send-keys Escape "v:nnoremap CQ :cq<CR>" Enter "igit commit -m \""'
 
+# Git clone into github user's directory
+function gclone () {
+  if [[ $@ =~ ^https://github.com/([^/ ]*)/([^/ .]*).git$ ]]; then
+    mkdir -p ${BASH_REMATCH[1]}
+    cd ${BASH_REMATCH[1]}
+    git clone $1
+    cd ${BASH_REMATCH[2]}
+  else
+    echo Requires exactly one parameter: a github .git URL.
+    return 1
+  fi
+}
+
 # Avoid killing shell by accident (for tmux in particular)
 alias live='export IGNOREEOF=3; tmux set-environment -g -t$(tmux list-panes -F ''"''#{session_name}''"'') ''"''IGNOREEOF''"'' 3'
 
