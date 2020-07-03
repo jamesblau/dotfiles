@@ -201,7 +201,7 @@ mode "quick_open" {
   bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
   #       q
   bindsym r exec $kitty_open 'nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'; $d
-  bindsym s exec feh ~/Documents/metis/schedules/current.png; $d
+  bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
   bindsym u exec $kitty_open 'nvim ~/.muttrc'; $d
   bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc'; $d
