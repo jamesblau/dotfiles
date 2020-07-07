@@ -183,9 +183,9 @@ set $d mode "default"
 bindsym $mod+n mode "quick_open"
 mode "quick_open" {
   # Edit dotfiles
-  bindsym a exec $kitty_open 'nvim ~/dotfiles/install ~/dotfiles/apt-installs'; $d
+  #       a
   bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
-  bindsym c exec $kitty_open 'nvim ~/bin/conf'; $d
+  bindsym c exec $kitty_open 'nvim ~/bin/conf ~/dotfiles/install ~/dotfiles/apt-installs'; $d
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
@@ -326,7 +326,7 @@ bar {
 # Startup things...
 exec_always sudo ~/bin/conf
 exec_always ~/bin/lid-lock
-exec clipit
+exec clipster -d
 exec blueman-applet
 # exec nm-applet
 # exec volti
@@ -359,6 +359,10 @@ bindsym Control+q exec ~/bin/noctrlq.sh
 bindsym $mod+F8 exec $kitty bash -c reset_network_manager_and_vpn
 bindsym $mod+Control+F8 exec $kitty bash -c kill_vpn_and_reset_network_manager
 bindsym $mod+Control+Shift+F8 exec $kitty bash -c toggle_vpn
+
+# Clipboard management
+bindsym $mod+Control+q exec ~/src/opensource/gilbertw1/roficlip/roficlip
+bindsym $mod+Control+a exec $kitty_open 'nvim ~/.local/share/clipster/history +"call ClipsterEdit()"'
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"

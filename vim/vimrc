@@ -1027,6 +1027,14 @@ au! Syntax markdown normal zR
 " Newline with no comments
 nnoremap <silent> <C-S> o<Esc>0D
 
+" For clipster history editing
+function! ClipsterEdit()
+  %!json_pp
+  silent! %s/^   ],\n   "PRIMARY" : \[\(\n.*\)*\n^   ]$/   ]
+  nnoremap ZZ :silent! %s/,\n^   ]/\r   ]<CR>:w<CR>:!killall clipster<CR>:!clipster -d > /dev/null &<CR>:q<CR>
+  normal G
+endfunction
+
 " voice input
 " inoremap dot-dot-dot <Esc>
 

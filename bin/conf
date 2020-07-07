@@ -192,5 +192,7 @@ xinput list | grep -q "${pad}" && {
   #            hold backtick -> "arrow mode"
 #}}}
 
+# TODO: separate CLI-only commands in conf-cli
+
 # Set background
 feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg

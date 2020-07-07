@@ -4,8 +4,10 @@ chkrootkit
 chromium-browser
 clamav
 clipit
+curl
 dmenu
 exuberant-ctags
+feh
 fonts-inconsolata
 git
 gpick
@@ -13,8 +15,12 @@ i3
 i3lock
 i3status
 i3-wm
+ipython3
+kitty
 mpv
+python3-pip
 qutebrowser
+scala
 silversearcher-ag
 stterm
 sudoku

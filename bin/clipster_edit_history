@@ -1,0 +1,5 @@
+#!/bin/bash
+
+< ~/.local/share/clipster/history json_pp > clipster_history
+mv clipster_history ~/.local/share/clipster/history
+nvim ~/.local/share/clipster/history

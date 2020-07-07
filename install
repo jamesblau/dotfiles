@@ -4,6 +4,7 @@ __deploy=( bash editrc git inputrc python ruby tmux vim conda )
 
 if [ -e ~/.not_a_server ]; then
   __deploy+=( ag i3 tridactyl kitty Xresources )
+  __dot_config_deploy=( rofi clipster )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."
 fi
@@ -35,25 +36,46 @@ for dir in "${__deploy[@]}"; do
   done
 done
 
-#Set HandlePowerKey=suspend in /etc/systemd/logind.conf
+cd ~/.config
 
-#Set GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_sleep=nonvs" in /etc/default/grub for hibernate (TODO: double-check this)
+for dir in "${__dot_config_deploy[@]}"; do
+  for path in ~/dotfiles/"${dir}"/*; do
+    file_name=${dir}/`basename "${path}"`
+    mkdir -p "${dir}"
+    [ -L "${file_name}" ] && rm "${file_name}"
+    ln -s "${path}" "${file_name}"
+  done
+done
 
-#In /etc/udev/rules.d/trackpoint.rules, put:
+# sudo usermod -a -G video username
+# Didn't work? Add manually to video in /etc/group-
+# TODO: Why the hyphen?
+
+# Chrome:
+# wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+# sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+
+# gdrive:
+# go get github.com/prasmussen/gdrive
+# Credentials problem:
+# https://github.com/gdrive-org/gdrive/issues/506
+# Points to:
+# https://github.com/mbrother2/backuptogoogle/wiki/Create-own-Google-credential-step-by-step
+# Which means making a credential for a dummy project here:
+# https://console.developers.google.com/apis/credentials
+# Then editing the binary:
+# sed -i "s|367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com|INSERT_DOMAIN_HERE|g" path/to/the/executable/gdrive
+# sed -i "s|1qsNodXNaWq1mQuBjUjmvhoO|INSERT_TOKEN_HERE|g" path/to/the/executable/gdrive
+
+# UNDONE: Set HandlePowerKey=suspend in /etc/systemd/logind.conf
+
+# UNDONE: (TODO: Maybe?) In /etc/systemd/system.conf, uncomment #DefaultTimeoutStopSec=90s and set to 2s
+
+# UNDONE:In /etc/gdm3/custom.conf, uncomment #DWaylandEnable=false
+
+# UNDONE: Set GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_sleep=nonvs" in /etc/default/grub for hibernate (TODO: double-check this)
+
+# UNDONE: In /etc/udev/rules.d/trackpoint.rules, put:
 #ACTION=="add", SUBSYSTEM=="input", ATTR{name}=="TPPS/2 IBM TrackPoint", ATTR{device/sensitivity}="255", ATTR{device/speed}="255"<Paste>
 
-#Add i3batwarn.sh to crontab every five minutes or so
-
-#ln -s ~/.nvimrc .config/nvim/init.vim
-
-# notes plugin:
-  #ln -s ~/dotfiles/ftplugin .config/nvim/ftplugin
-  #ln -s ~/dotfiles/ftplugin .vim/ftplugin
-
-  #ln -s ~/dotfiles/ftdetect .config/nvim/ftdetect
-  #ln -s ~/dotfiles/ftdetect .vim/ftdetect
-
-  #ln -s ~/dotfiles/syntax .config/nvim/syntax
-  #ln -s ~/dotfiles/syntax .vim/syntax
-
-#ln -s ~/dotfiles/rofi/config .config/rofi/config
+# Add i3batwarn.sh to crontab every five minutes or so
