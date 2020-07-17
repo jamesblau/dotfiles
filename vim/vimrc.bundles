@@ -440,6 +440,7 @@ if !exists('g:james_minimal_plugins')
       nnoremap <leader>li :LeetCodeSignIn<cr>
       Plug 'ianding1/leetcode.vim'
     " }}}
+    Plug 'itchyny/calendar.vim'
   " }}}
 
   " Registers {{{

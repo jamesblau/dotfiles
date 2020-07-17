@@ -31,3 +31,6 @@ rofi.color-urgent:  #404040, #dca3a3, #404040, #1f1f1f, #dca3a3
 
 ! Set the desired separator style
 rofi.separator-style: solid
+
+! Font
+rofi.font: hack 20

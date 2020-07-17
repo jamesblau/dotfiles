@@ -2,6 +2,7 @@
 
 echo $1
 running_sink=$(pactl list short | grep RUNNING | head -c 1)
-sink=${running_sink:-0}
+#TODO: figure out how to not hard-code the default
+sink=${running_sink:-1}
 pactl set-sink-volume ${sink} ${1}
 killall -USR1 i3status

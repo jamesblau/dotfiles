@@ -44,13 +44,13 @@ laptop=$(sudo dmidecode | grep "Version: ThinkPad" | sed 's/^.* \([^ ]*$\)/\1/')
 }
 
 [ ${laptop} == "T470p" ] && {
-  # echo 255 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
+  echo 255 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
 
   stick="TPPS/2 IBM TrackPoint"
   xinput list | grep -q "${stick}" && {
-    #Accel Speed
     xinput set-prop "${stick}" "libinput Accel Profile Enabled" {0, 1}
     xinput set-prop "${stick}" "libinput Accel Speed" 1.0
+    xinput set-prop "${stick}" "Coordinate Transformation Matrix" 1.600000, 0.000000, 0.000000, 0.000000, 1.600000, 0.000000, 0.000000, 0.000000, 1.000000
   }
 
   pad="SynPS/2 Synaptics TouchPad"

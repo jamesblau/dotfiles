@@ -193,7 +193,7 @@ mode "quick_open" {
   bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
   bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
   bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
-  bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf'; $d
+  bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf ~/dotfiles/rofi/config'; $d
   bindsym l exec $kitty_open 'ranger'; $d
   bindsym m exec pavucontrol; $d
   bindsym n exec toggle_sleep_noise; $d
@@ -282,6 +282,9 @@ mode "special_characters" {
   bindsym m exec "echo -n 🎵 | xclip"; $d
   # nonbreaking space
   bindsym space exec "echo -n ​ | xclip"; $d
+
+  bindsym F12 exec "~/src/opensource/cspeterson/splatmoji/splatmoji copy"; $d
+  bindsym $mod+F12 exec "~/src/opensource/cspeterson/splatmoji/splatmoji -j copy"; $d
 
   bindsym Escape $d
 }
