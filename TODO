@@ -5,22 +5,9 @@
 
 Remove pythonrc? Or just fix/improve
 
-Rofi
-
-Greenclip + autcutsel
-
-Emoji-picker with rofi
-
 Airline dies at least after command-mode autocompletion
 
 Vim completion by acronym: vc<something> completes e.g. "vim completion" from buffer
 
-Vim notes shortcuts
-    new line, indent, add "line continued" symbol (same used when wrapping)
-        for breaking up long sentences while showing continuity
-    headers
-
 Figure out why mouse clicks are disabled while scrolling with the touchpad.
   related? touchpad disabled while typing
-
-Start small and centered, then expand height and width separately as needed.

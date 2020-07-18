@@ -1,0 +1,25 @@
+" vim: sw=2 ts=2 sts=2 expandtab ft=vim
+source ~/dotfiles/nvim/nvimrc
+
+" For when I don't want to mess with the layout
+
+" Window stuff
+nunmap <C-A-J>
+nunmap <C-A-K>
+" Window stuff from vimrc, unchanged, for reference
+" nnoremap <silent> <C-H>      <C-W>h
+" nnoremap <silent> <C-J>      <C-W>j
+" nnoremap <silent> <C-K>      <C-W>k
+" nnoremap <silent> <C-L>      <C-W>l
+
+" Tab stuff
+nunmap <A-i>
+nunmap <A-o>
+nunmap <A-h>
+nunmap <A-l>
+
+" Smart Tab, (Window), Buffer stuff (and remappings for J, K)
+nnoremap <silent> J          <C-W>h
+nnoremap <silent> K          <C-W>l
+nnoremap <silent> <A-j>      J
+nnoremap <silent> <A-k>      K

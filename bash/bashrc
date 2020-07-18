@@ -332,20 +332,6 @@ alias bd=". bd -si"
 function ncd () { (nohup kitty --config ~/.kitty.conf -d $PWD &>/dev/null &); }
 
 # clock functions
-function beep-every () {
-  [[ $@ =~ ^([0-9]*)([[:space:]]+([0-9]*))?$ ]] || {
-    echo -e "Takes two parameters, both optional:\nthe delay between beeps, in seconds (default 30),\nand the volume (default 100)."
-    return 1
-  }
-  while true; do
-    delay_seconds=$((${BASH_REMATCH[1]:-30} - 1))
-    volume=${BASH_REMATCH[3]:-100}
-    echo Beep! &&
-    mpv --volume ${volume} /usr/share/sounds/freedesktop/stereo/complete.oga &>/dev/null &&
-    sleep ${delay_seconds} ||
-    return 1
-  done
-}
 function seconds_comparison () {
     end=$1
     start=$2

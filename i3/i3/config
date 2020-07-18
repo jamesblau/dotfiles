@@ -204,11 +204,13 @@ mode "quick_open" {
   bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
   bindsym u exec $kitty_open 'nvim ~/.muttrc'; $d
-  bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc'; $d
+  bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
   bindsym w exec $kitty_open '~/pbin/worth'; $d
   bindsym x exec toggle_screenkey; $d
   bindsym y exec $kitty_open 'nvim ~/todo/list'; $d
   bindsym z exec toggle_zoom; $d
+
+  bindsym $mod+n exec $kitty ~/pbin/todo_list; exec $kitty_open 'nvim -u ~/dotfiles/nvim/nvimrc_static -c "set mouse=nv" -c "OpenSession secret_one"'; $d
 
   bindsym $mod+F4 kill; $d
 
