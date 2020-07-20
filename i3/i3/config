@@ -328,15 +328,13 @@ bar {
   }
 }
 
-# Startup things...
+# Startup things
 exec_always sudo ~/bin/conf
 exec_always ~/bin/lid-lock
 exec clipster -d
 exec blueman-applet
-# exec nm-applet
-# exec volti
-# exec udisks-glue
-# exec udiskie
+exec nordvpn
+exec udiskie
 
 # Strip trailing newline from clipboard
 bindsym $mod+i exec ~/bin/strip_whitespace
@@ -363,7 +361,7 @@ bindsym Control+q exec ~/bin/noctrlq.sh
 # TODO: Somehow obviate need for this
 bindsym $mod+F8 exec $kitty bash -c reset_network_manager_and_vpn
 bindsym $mod+Control+F8 exec $kitty bash -c kill_vpn_and_reset_network_manager
-bindsym $mod+Control+Shift+F8 exec $kitty bash -c toggle_vpn
+bindsym $mod+Control+Shift+F8 exec toggle_vpn
 
 # Clipboard management
 bindsym $mod+Control+q exec ~/src/opensource/gilbertw1/roficlip/roficlip

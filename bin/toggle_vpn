@@ -1,19 +1,16 @@
 #!/bin/bash
-if pgrep openvpn >/dev/null
-then
-  sudo killall -q openvpn
-else
-  if [ $# -eq 0 ]
-  then
-    if [ -f ~/.openvpn_last_config ]
-    then
-      _VPN_CONFIG=$(head -n 1 ~/.openvpn_last_config)
-    else
-      _VPN_CONFIG="/etc/openvpn/ovpn_tcp/us1583.nordvpn.com.tcp.ovpn"
-    fi
+
+if pgrep openvpn > /dev/null; then
+  if [[ $1 == "on" ]]; then
+    exit
   else
-    _VPN_CONFIG="$1"
+    nordvpn disconnect
+    rm -f ~/.openvpn_pid
   fi
-  sudo openvpn --config $_VPN_CONFIG --auth-user-pass ~/.ovpnuserpass --daemon --writepid ~/.openvpn_pid
-  echo $_VPN_CONFIG > ~/.openvpn_last_config
+elif [[ $1 == "off" ]]; then
+  rm -f ~/.openvpn_pid
+  exit
+else
+  nordvpn connect
+  pgrep openvpn > ~/.openvpn_pid
 fi

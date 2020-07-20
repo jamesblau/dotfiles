@@ -830,6 +830,7 @@ endfunction
 function! ScalaScratch()
   set ft=scala syn=scala mouse=nv
   call ScratchMaps()
+  map <buffer> <F12> <C-L>A<CR><CR><CR>:paste<CR><C-Space>pGA<CR><C-D><C-Space>G:wincmd<SPACE>p<CR>g'q
   " comment
   nmap <buffer> <BS> vip,c<Space>
   " run test block
