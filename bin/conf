@@ -6,7 +6,8 @@ case $1 in
   e) ~/dotfiles/screenlayout/eidolon.conf.sh ;;
   s) ~/dotfiles/screenlayout/simurgh1.conf.sh ;;
   s2) ~/dotfiles/screenlayout/simurgh2.conf.sh ;;
-  g) ~/dotfiles/screenlayout/home_green.conf.sh ;;
+  m) ~/dotfiles/screenlayout/monitor.conf.sh ;;
+  b) ~/dotfiles/screenlayout/both.conf.sh ;;
   *) ~/dotfiles/screenlayout/eidolon.conf.sh ;;
   # *) echo Invalid layout specified... ;;
 esac

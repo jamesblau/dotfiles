@@ -283,7 +283,7 @@ alias qe='quiet evince'
 alias Qe='quieter evince'
 alias qv='quiet vlc'
 alias Qv='quieter vlc'
-alias qm='quiet rifle'
+alias qm='rifle'
 alias Qm='quieter rifle'
 
 # Generate output tersely and check &&/||
@@ -369,6 +369,9 @@ alias uniq_nosort='awk '\''!x[$0]++'\'''
 alias rgm='rg -M 10000'
 # Ripgrep within filenames
 alias rgf='rg --files | rg'
+
+# Page with config
+alias page="page -c '~/dotfiles/page/pagerc' -E 'normal G'"
 
 # Conda stuff; activate manually
 alias co="conda activate"
