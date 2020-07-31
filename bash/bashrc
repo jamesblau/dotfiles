@@ -178,7 +178,13 @@ function gclone () {
 }
 
 # Avoid killing shell by accident (for tmux in particular)
-alias live='export IGNOREEOF=3; tmux set-environment -g -t$(tmux list-panes -F ''"''#{session_name}''"'') ''"''IGNOREEOF''"'' 3'
+function live () {
+  export IGNOREEOF=3
+  if [[ ! -z $TMUX ]]; then
+    session=$(tmux display-message -p '#{session_name}')
+    tmux set-environment -g -t${session} "IGNOREEOF" 3
+  fi
+}
 
 # Python stuff
 export PYTHONSTARTUP=~/.pythonrc.py
