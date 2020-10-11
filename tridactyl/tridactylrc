@@ -23,6 +23,10 @@ bind --mode=normal <C-c> stop
 bind --mode=normal <C-\> mode ignore
 bind --mode=ignore <C-\> mode normal
 
+" To keep uBlock Origin defaults
+unbind --mode=browser <C-,>
+bind --mode=browser <C-c> escapehatch
+
 " Don't repeat things...
 unbind .
 
@@ -42,9 +46,14 @@ unbind <C-q>
 
 " Comment toggler for Reddit and Hacker News
 bind --mode=normal ;c hint -c [class*="expand"],[class="togg"]
-" Upvote/downvote; I don't know how this works
-" bind ;u hint -c [class="arrow up login-required access-required"]
-" bind ;d hint -c [class="arrow down login-required access-required"]
+" Reddit common actions
+bind --mode=normal ;g hint -c [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"]
+bind --mode=normal ;G hint -tc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"]
+bind --mode=normal gG hint -qbc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"]
+" Reddit upvote/downvote
+bind --mode=normal ;u hint -c [class="arrow up login-required access-required"]
+bind --mode=normal ;d hint -c [class="arrow down login-required access-required"]
+" TODO: hint only "X comments" and "context" links
 
 " Gui
 set theme dark
@@ -102,7 +111,7 @@ bind --mode=normal ,m open gmail.com
 bind --mode=normal ,M tabopen gmail.com
 bind --mode=normal ,o open https://discordapp.com/activity
 bind --mode=normal ,O tabopen https://discordapp.com/activity
-bind --mode=normal ,c composite tabopen -b steeple.church ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/cgi-bin/GiantITP/ootscript
+bind --mode=normal ,c composite tabopen -b steeple.church ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/comics/ootslatest.html
 
 " Temporary hack for slow completion
 unbind --mode=ex <Space>

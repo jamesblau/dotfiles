@@ -47,6 +47,7 @@ bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
 # Open programs
 # bindsym $mod+u exec $kitty mutt
 bindsym $mod+u exec $kitty nmtui-connect
+bindsym $mod+Shift+u exec $kitty nmtui
 
 # Thinkpad buttons
 bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
@@ -81,10 +82,8 @@ bindsym $mod+Shift+F6 exec "light -S 100"
 # Kill focused window
 bindsym $mod+Control+Shift+F4 kill
 
-# Start dmenu
-bindsym $mod+d exec dmenu_run -nb '#1f1f1f' -sb '#87AFAF' -sf '#1f1f1f' -fn hack
-# Only displays applications shipping a .desktop file
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# Start rofi application picker
+bindsym $mod+d exec i3-msg -t command exec 'rofi -case-sensitive -show run'
 
 # Change focus
 bindsym $mod+h focus left
@@ -182,8 +181,7 @@ set $d mode "default"
 
 bindsym $mod+n mode "quick_open"
 mode "quick_open" {
-  # Edit dotfiles
-  #       a
+  bindsym a exec say $(xsel -o); $d
   bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
   bindsym c exec $kitty_open 'nvim ~/bin/conf ~/dotfiles/install ~/dotfiles/apt-installs'; $d
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
@@ -269,8 +267,8 @@ mode "move" {
 }
 
 # This is the clever part
-bindsym $mod+F12 mode "special_characters"
-mode "special_characters" {
+bindsym $mod+Home mode "clipboard_emoji"
+mode "clipboard_emoji" {
   bindsym s exec "echo -n '¯\_(ツ)_/¯' | xclip"; $d
   bindsym b exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"; $d
   bindsym c exec "echo -n 'ಥ_ಥ' | xclip"; $d
@@ -282,11 +280,19 @@ mode "special_characters" {
   bindsym Shift+y exec "echo -n '(  •_•)\n(  •_•)>⌐■-■\n(⌐■_■)' | xclip"; $d
   bindsym f exec "echo -n '☃' | xclip"; $d
   bindsym m exec "echo -n 🎵 | xclip"; $d
-  # nonbreaking space
+
+  bindsym Home exec "~/src/opensource/cspeterson/splatmoji/splatmoji copy"; $d
+  bindsym $mod+Home exec "~/src/opensource/cspeterson/splatmoji/splatmoji -j copy"; $d
+
+  bindsym Escape $d
+}
+
+bindsym $mod+End mode "clipboard_text"
+mode "clipboard_text" {
+  # Nonbreaking space
   bindsym space exec "echo -n ​ | xclip"; $d
 
-  bindsym F12 exec "~/src/opensource/cspeterson/splatmoji/splatmoji copy"; $d
-  bindsym $mod+F12 exec "~/src/opensource/cspeterson/splatmoji/splatmoji -j copy"; $d
+  bindsym r exec "echo -n 'site:reddit.com' | xclip"; $d
 
   bindsym Escape $d
 }

@@ -2,12 +2,12 @@
 
 set -f
 
-input=$(xclip -o)
+input=$(xsel -o)
 noleadtrailing=$(echo "$(echo "$(echo "${input}")" | tac)" | tac | sed 's/^\s*//' | sed 's/\s*$//')
 noempty=$(echo "${noleadtrailing}" | sed '/^$/d')
 oneline=$(echo -n ${noempty})
 
-if false; then
+if true; then
   echo -ne "\ninput: ${input}"
   echo -ne "\noleadtrailing: ${noleadtrailing}"
   echo -ne "\nnoempty: ${noempty}"
@@ -15,14 +15,14 @@ if false; then
 fi
 
 if [ -z "$@" ]; then
-  echo -n "${noempty}" | xclip
+  echo -n "${noempty}" | xsel
 else
   if [ "$@" == "-a" ]; then
-    echo -n "${oneline}" | xclip
+    echo -n "${oneline}" | xsel
   elif [ "$@" == "-l" ]; then
-    echo "${noempty}" | xclip
+    echo "${noempty}" | xsel
   elif [ "$@" == "-s" ]; then
-    echo -n "${noleadtrailing}" | xclip
+    echo -n "${noleadtrailing}" | xsel
   else
     echo "Invalid argument: use -l, -a, or -s"
   fi

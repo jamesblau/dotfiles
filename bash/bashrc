@@ -17,8 +17,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # Add command to history
-bind -m vi-insert  '"\C-q":  "\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
-bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xclip\C-m"'
+bind -m vi-insert  '"\C-q":  "\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xsel\C-m"'
+bind -m vi-command '"\C-q": "I\C-e\C-u history -s '\''\C-y'\''; echo -n '\''\C-y'\'' | xsel\C-m"'
 
 # Expand history in-line with space -- too annoying?
 # bind Space:magic-space
@@ -151,11 +151,8 @@ alias filetypes='find -type f -name '"'"'*.*'"'"' | sed '"'"'s/.*\.//'"'"' | sor
 # Rerun command on keypress
 function loop () { while true; do clear; $@; read; done; }
 
-# Kitty hangs...
-alias xclip='xclip -l 1'
-
-# Get IP
-alias myip='wget -qO- http://ipecho.net/plain | tee /dev/tty | xclip; echo'
+# Get IP info
+alias myip='curl ipinfo.io; echo'
 
 # Open tmux for running `git ds` and composing a commit message
 alias gic='tmux new-session \;\
@@ -206,7 +203,7 @@ function password () {
     local maxLetters=${3:-10};
     grep "^[a-z]\{$minLetters,$maxLetters\}$" /usr/share/dict/words | shuf -n $words | sed -e 's/^./\U&/g' | tr -d '\n';
     echo -n '!1'
-  ) | tee /dev/tty | xclip;
+  ) | tee /dev/tty | xsel;
   echo;
 }
 function passwords () { while true; do clear; password $@; read; done; }
@@ -265,6 +262,16 @@ alias ocg='octave --no-gui --silent'
 alias oc='octave --no-gui --silent --eval "format long g" --persist'
 alias math='rlwrap math -rawterm'
 
+# Brief translations
+alias trab='trans -b -no-autocorrect'
+# TODO: fix round-trip translation, for testing translation accuracy
+# function tround () {
+  # trans -b -no-autocorrect "$1": "$(trans -b -no-autocorrect :"'"'"$1"'"'" "'"'"$*:2"'"'")"
+  # trans -b -no-autocorrect $1: '"'"$(trans -b -no-autocorrect :$1 ${@:2})"'"'
+  # destination=$(trans -b -no-autocorrect :"'"'"$1"'"'" "'"'"$*:2"'"'")
+  # echo '"'"$1": "$(trans -b -no-autocorrect :"$1" "$*:2")"'"'
+# }
+
 # Scala stuff
 # Console readline survives Ctrl-Z
 alias sbt-console='rlwrap sbt console -Xnojline'
@@ -291,6 +298,8 @@ alias qv='quiet vlc'
 alias Qv='quieter vlc'
 alias qm='rifle'
 alias Qm='quieter rifle'
+alias qf='feh'
+alias Qf='quieter feh'
 
 # Generate output tersely and check &&/||
 # alias A='echo A'
@@ -327,6 +336,9 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 
 # Open output file names in vim
 bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
+
+# Relative path to full path to clipboard
+bind -m vi-command '"\C-o": "Ireadlink -f \eA | xsel\e"'
 
 # z jump around
 [ -f ~/src/opensource/rupa/z/z.sh ] && source ~/src/opensource/rupa/z/z.sh

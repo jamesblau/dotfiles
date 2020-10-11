@@ -40,5 +40,10 @@
 
 /* Needed for for FF 75 megabar */
 #urlbar {
-	--urlbar-toolbar-height: 32px !important;
+    --urlbar-toolbar-height: 32px !important;
+}
+
+/* Thank you for the help but I know when I am on a video conference */
+#webrtcIndicator {
+  display: none! important;
 }

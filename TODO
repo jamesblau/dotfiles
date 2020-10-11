@@ -1,7 +1,7 @@
 ** move ~/.vim/autoload/plug.vim to dotfiles
 
-** separate files that should and should not be symlinked in install
-  e.g. bashrc yes, bashrc_neovim no, vimrc.bundles no
+Append to bash history immediately, keeping a separate history file per terminal.
+  allows searching through the commands that opened running programs.
 
 Remove pythonrc? Or just fix/improve
 

@@ -52,6 +52,9 @@ laptop=$(sudo dmidecode | grep "Version: ThinkPad" | sed 's/^.* \([^ ]*$\)/\1/')
     xinput set-prop "${stick}" "libinput Accel Profile Enabled" {0, 1}
     xinput set-prop "${stick}" "libinput Accel Speed" 1.0
     xinput set-prop "${stick}" "Coordinate Transformation Matrix" 1.600000, 0.000000, 0.000000, 0.000000, 1.600000, 0.000000, 0.000000, 0.000000, 1.000000
+    # For minetest
+    # TODO: toggle more elegantly elsewhere
+    # xinput set-prop "${stick}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
   }
 
   pad="SynPS/2 Synaptics TouchPad"
