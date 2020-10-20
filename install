@@ -67,15 +67,4 @@ done
 # sed -i "s|367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com|INSERT_DOMAIN_HERE|g" path/to/the/executable/gdrive
 # sed -i "s|1qsNodXNaWq1mQuBjUjmvhoO|INSERT_TOKEN_HERE|g" path/to/the/executable/gdrive
 
-# UNDONE: Set HandlePowerKey=suspend in /etc/systemd/logind.conf
-
-# UNDONE: (TODO: Maybe?) In /etc/systemd/system.conf, uncomment #DefaultTimeoutStopSec=90s and set to 2s
-
-# UNDONE:In /etc/gdm3/custom.conf, uncomment #DWaylandEnable=false
-
-# UNDONE: Set GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_sleep=nonvs" in /etc/default/grub for hibernate (TODO: double-check this)
-
-# UNDONE: In /etc/udev/rules.d/trackpoint.rules, put:
-#ACTION=="add", SUBSYSTEM=="input", ATTR{name}=="TPPS/2 IBM TrackPoint", ATTR{device/sensitivity}="255", ATTR{device/speed}="255"<Paste>
-
 # Add i3batwarn.sh to crontab every five minutes or so

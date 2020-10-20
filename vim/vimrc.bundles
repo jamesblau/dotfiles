@@ -262,7 +262,10 @@ if !exists('g:james_minimal_plugins')
         \ 'source': 'rg -n ^ --color always',
         \ 'options': '--ansi --delimiter : --nth 3..',
         \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
-      imap <C-X><C-K> <plug>(fzf-complete-word)
+      " Match case of first letter, by copying /usr/share/dict/words with each entry duplicated with
+      " the first letter's case toggled. Lowercase words should come before uppercase words, since
+      " all-lowercase inputs trigger case-insensitive matching. Fixes matches at sentence start.
+      imap <expr> <C-X><C-K> fzf#vim#complete('cat /usr/share/dict/case_insensitive_words')
       imap <C-X><C-F> <plug>(fzf-complete-path)
       imap <C-X><C-J> <plug>(fzf-complete-file-ag)
     " }}}
@@ -271,7 +274,7 @@ if !exists('g:james_minimal_plugins')
       let g:ctrlp_working_path_mode = 'ra'
       let g:ctrlp_use_caching = 0
       " Any advantage to integrating ag and git-ls-files?
-      "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+      " let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
       if executable('rg')
         let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
       endif
@@ -386,6 +389,7 @@ if !exists('g:james_minimal_plugins')
       Plug 'tpope/vim-abolish'
     " }}}
     Plug 'tpope/vim-eunuch'
+    Plug 'lambdalisue/suda.vim'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-unimpaired'

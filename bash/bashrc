@@ -389,7 +389,7 @@ alias rgm='rg -M 10000'
 alias rgf='rg --files | rg'
 
 # Page with config
-alias page="page -c '~/dotfiles/page/pagerc' -E 'normal G'"
+alias nv="${HOME}/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G'"
 
 # Conda stuff; activate manually
 alias co="conda activate"

@@ -3,11 +3,13 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 exec_always "/usr/bin/xrandr --dpi 150"
-# exec_always "/usr/bin/xrandr --dpi 100"
 set $mod Mod4
 set $kitty kitty --config ~/.kitty.conf
 set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
 workspace_layout tabbed
+
+# It is conceivable that you might want to change this
+set $user james
 
 # Font
 font pango:DejaVu Sans Mono Bold 7
@@ -83,7 +85,7 @@ bindsym $mod+Shift+F6 exec "light -S 100"
 bindsym $mod+Control+Shift+F4 kill
 
 # Start rofi application picker
-bindsym $mod+d exec i3-msg -t command exec 'rofi -case-sensitive -show run'
+bindsym $mod+d exec i3-msg -t command exec 'PATH=$PATH:/home/'$user'/bin:/home/'$user'/pbin rofi -case-sensitive -show run'
 
 # Change focus
 bindsym $mod+h focus left
@@ -170,7 +172,7 @@ bindsym $mod+Control+Shift+0 focus parent; move container to workspace 10; works
 bindsym $mod+Shift+c reload
 # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# Exit i3 (logs you out of your X session)
+# Exit i3 (log out of X session)
 bindsym $mod+Control+Shift+Delete exec sh -c '[ $(echo "NO\nYES" | dmenu -sb "#a8551e" -i -p "Really exit i3 X session?") = "YES" ] && i3-msg exit'
 # bindsym $mod+Shift+w exec sh -c 'xset dpms force standby'
 # bindsym $mod+F5 exec sh -c 'sleep 1 && xset dpms force standby'
@@ -198,7 +200,7 @@ mode "quick_open" {
   bindsym o exec $kitty --directory='~/Downloads'; $d
   bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
   #       q
-  bindsym r exec $kitty_open 'nvim ~/Documents/resume/James_Blau_Resume.markdown ~/Documents/resume/style.css'; $d
+  #       r
   bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
   bindsym u exec $kitty_open 'nvim ~/.muttrc'; $d
@@ -208,7 +210,7 @@ mode "quick_open" {
   bindsym y exec $kitty_open 'nvim -c Calendar'; $d
   bindsym z exec toggle_zoom; $d
 
-  bindsym $mod+n exec $kitty ~/pbin/todo_list; exec $kitty_open 'nvim -u ~/dotfiles/nvim/nvimrc_static -c "set mouse=nv" -c "OpenSession secret_one"'; $d
+  # bindsym $mod+n exec $kitty ~/pbin/todo_list; exec $kitty_open 'nvim -u ~/dotfiles/nvim/nvimrc_static -c "set mouse=nv" -c "OpenSession secret_one"'; $d
 
   bindsym $mod+F4 kill; $d
 

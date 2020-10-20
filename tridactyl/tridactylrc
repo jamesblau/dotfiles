@@ -44,12 +44,10 @@ unbind <C-q>
 " Tree-style tabs
 " unbind <F1>
 
-" Comment toggler for Reddit and Hacker News
-bind --mode=normal ;c hint -c [class*="expand"],[class="togg"]
 " Reddit common actions
-bind --mode=normal ;g hint -c [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"]
-bind --mode=normal ;G hint -tc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"]
-bind --mode=normal gG hint -qbc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"]
+bind --mode=normal ;g hint -c [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"],[class*="expand"],[class="togg"],[class="user"]
+bind --mode=normal ;G hint -tc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"],[class*="expand"],[class="togg"],[class="user"]
+bind --mode=normal gG hint -qbc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"],[class*="expand"],[class="togg"],[class="user"]
 " Reddit upvote/downvote
 bind --mode=normal ;u hint -c [class="arrow up login-required access-required"]
 bind --mode=normal ;d hint -c [class="arrow down login-required access-required"]
