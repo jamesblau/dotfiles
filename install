@@ -46,25 +46,3 @@ for dir in "${__dot_config_deploy[@]}"; do
     ln -s "${path}" "${file_name}"
   done
 done
-
-# sudo usermod -a -G video username
-# Didn't work? Add manually to video in /etc/group-
-# TODO: Why the hyphen?
-
-# Chrome:
-# wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-# sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-
-# gdrive:
-# go get github.com/prasmussen/gdrive
-# Credentials problem:
-# https://github.com/gdrive-org/gdrive/issues/506
-# Points to:
-# https://github.com/mbrother2/backuptogoogle/wiki/Create-own-Google-credential-step-by-step
-# Which means making a credential for a dummy project here:
-# https://console.developers.google.com/apis/credentials
-# Then editing the binary:
-# sed -i "s|367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com|INSERT_DOMAIN_HERE|g" path/to/the/executable/gdrive
-# sed -i "s|1qsNodXNaWq1mQuBjUjmvhoO|INSERT_TOKEN_HERE|g" path/to/the/executable/gdrive
-
-# Add i3batwarn.sh to crontab every five minutes or so

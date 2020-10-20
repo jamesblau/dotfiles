@@ -18,32 +18,6 @@ laptop=$(sudo dmidecode | grep "Version: ThinkPad" | sed 's/^.* \([^ ]*$\)/\1/')
 #modprobe -r psmouse
 #modprobe psmouse proto=auto
 
-[ ${laptop} == "T420s" ] && {
-  echo 250 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
-  xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
-
-  stick="TPPS/2 IBM TrackPoint"
-  xinput list | grep -q "${stick}" && {
-    xinput set-prop "${stick}" "Evdev Wheel Emulation" 1
-    xinput set-prop "${stick}" "Evdev Wheel Emulation Axes" 6 7 4 5
-    xinput set-prop "${stick}" "Evdev Wheel Emulation Inertia" 2
-    xinput set-prop "${stick}" "Evdev Wheel Emulation Timeout" 200
-    xinput set-prop "${stick}" "Evdev Wheel Emulation Button" 2
-    xinput set-prop "${stick}" "Device Accel Profile" 2
-    xinput set-prop "${stick}" "Device Accel Constant Deceleration" 0.3
-    xinput set-prop "${stick}" "Device Accel Adaptive Deceleration" 1
-    xinput set-prop "${stick}" "Device Accel Velocity Scaling" 100
-  }
-
-  pad="SynPS/2 Synaptics TouchPad"
-  xinput list | grep -q "${pad}" && {
-    xinput set-prop "${pad}" "Synaptics Edge Scrolling" 0, 0, 0
-    xinput set-prop "${pad}" "Synaptics Two-Finger Scrolling" 1, 1
-    xinput set-prop "${pad}" "Synaptics Tap Action" 0 0 0 0 0 0
-    xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
-  }
-}
-
 [ ${laptop} == "T470p" ] && {
   echo 255 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
 

@@ -122,12 +122,9 @@ alias ctd="${HOME}/src/opensource/pythontools/check_delim.py"
 alias youtube-dl="youtube-dl --restrict-filenames"
 
 # Choose vim
+# TODO: When in neovim terminal, open files in neovim buffer
 if command -v nvim &>/dev/null; then
-  if [ "$james_in_neovim" == 1 ]; then
-    my_vim='nvim-terminal-edit.py'
-  else
-    my_vim='nvim'
-  fi
+  my_vim='nvim'
 else
   my_vim='vim'
 fi
@@ -241,7 +238,7 @@ bind -m vi-insert "\C-b":backward-char
 bind -m vi-command "\C-d":vi-delete
 bind -m vi-insert "\C-d":vi-delete
 bind -m vi-insert "\C-k":yank-pop
-# Dislike self-insert; overridden anyway if fzf is installed
+# Dislike self-insert
 bind -m vi-insert "\C-o":
 # Why don't these work?
 # bind -m vi-command "\ek":yank-pop
@@ -326,12 +323,8 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 # Fzf stuff
 [ -f ~/.fzf.bash ] && {
   source ~/.fzf.bash
-  export FZF_DEFAULT_OPTS="--bind ctrl-g:toggle-all"
-  # Remap Alt-C to Ctrl-O (leave old mapping because why not, it's unused)
-  bind -m vi-command "$(bind -s | grep __fzf_cd__ | sed 's/\\ec/\\C-o/')"
-  bind -m vi-insert "$(bind -s | grep __fzf_cd__ | sed 's/\\ec/\\C-o/')"
-  # Pipe output file names to fzf
-  bind -m vi-command '"\C-f": "A | fzf\e"'
+  # TODO: needed?
+  # export FZF_DEFAULT_OPTS="--bind ctrl-g:toggle-all"
 }
 
 # Open output file names in vim
@@ -389,7 +382,7 @@ alias rgm='rg -M 10000'
 alias rgf='rg --files | rg'
 
 # Page with config
-alias nv="${HOME}/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G'"
+alias np="${HOME}/.cargo/bin/page -c '~/dotfiles/page/pagerc'"
 
 # Conda stuff; activate manually
 alias co="conda activate"

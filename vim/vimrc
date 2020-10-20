@@ -728,7 +728,7 @@ command! -range -nargs=0 Strikethrough   call CombineSelection(<line1>, <line2>,
 " xnoremap <Leader>-s :Strikethrough<CR>
 
 " Merge stuff!
-" Search for merge conflics
+" Search for merge conflicts
 nnoremap <Leader>mc /^[<=>]\{7\}[^<=>]*$<CR>
 " Obtain merge diffs
 nnoremap dOR :diffg REMOTE<CR>

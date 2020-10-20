@@ -1,0 +1,9 @@
+#!/bin/bash
+
+chosen=$(echo -e "yes\nno" | rofi -dmenu -l 2 -p "Run borg backup")
+
+case $chosen in
+  yes)
+    kitty --config ~/.kitty.conf ~/pbin/borg_script
+    ;;
+esac

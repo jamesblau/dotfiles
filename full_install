@@ -1,0 +1,109 @@
+#!/bin/bash -xe
+
+echo "These dotfiles assume specific hardware; some edits may be required."
+echo "Font sizes for t420s:"
+echo "i3/config: 5 (main) and 7 (i3bar)"
+echo "kitty: 8.0"
+echo "rofi: 15"
+
+cd
+touch .not_a_server
+cd $HOME/dotfiles
+./install
+
+# backup
+  # authorize from borgbase
+  # fetch
+    # pbin
+    # pdotfiles
+    # desired large directories
+
+# crontab -e add:
+  # */5 * * * * $HOME/dotfiles/bin/i3batwarn.sh
+  # TODO: fix borg script prompt cronjob
+  # 0 18 * * * $HOME/bin/backup
+
+# firefox
+  # sign in
+  # about:config
+    # toolkit.legacyUserProfileCustomizations.stylesheets to true
+    # if needed, devPixelsPerPx to e.g. 1
+    # to see only changed settings, go to Ctrl+Shift+K console:
+      # allow pasting
+      # var elements = document.getElementsByTagName('tr');
+      # [...elements].filter(
+        # el => !el.classList.contains('has-user-value')
+      # ).forEach(
+        # el => el.style.display = (el.style.display === 'none') ? 'table-row' : 'none'
+      # );
+  # curl -fsSl https://raw.githubusercontent.com/tridactyl/tridactyl/master/native/install.sh -o /tmp/trinativeinstall.sh && \
+    # bash /tmp/trinativeinstall.sh 1.20.2
+  # find and cd into user directory in ~/.mozilla/firefox/
+    # ln -s ~/dotfiles/firefox/userChrome.css chrome/userChrome.css
+
+sudo usermod -a -G video $USER
+
+sudo apt update
+sudo apt upgrade
+
+sudo apt install arandr aria2 autocutsel axel bd beep blueman chkrootkit chromium-browser clamav clipit cmake curl dmenu exuberant-ctags feh fonts-inconsolata gawk git golang-go google-chrome-stable gpick htop i3 i3lock i3status i3-wm ipython3 kitty libgtk2.0-dev libgtk-3-dev libpango1.0-dev libtool-bin libxmu-dev libxxf86vm-dev mpv neovim octave python2.7 python3-pip python-wxgtk3.0-dev qutebrowser ripgrep rlwrap rofi scala silversearcher-ag stterm sudoku tmux transmission tree udiskie vim vlc vpnc xbacklight xcape xclip xdotool xsel xss-lock xvkbd
+
+sudo apt install --no-install-recommends ca-certificates qtbase5-dev qtbase5-private-dev git cmake make gcc g++ pkg-config libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libxi-dev libxrandr-dev libudev-dev libevdev-dev libsfml-dev libminiupnpc-dev libmbedtls-dev libcurl4-openssl-dev libhidapi-dev libsystemd-dev libbluetooth-dev libasound2-dev libpulse-dev libpugixml-dev libbz2-dev libzstd-dev liblzo2-dev libpng-dev libusb-1.0-0-dev gettext
+
+sudo ln -s /usr/bin/python3 /usr/bin/python
+
+mkdir -p ~/src/opensource
+
+cd ~/src/opensource && \
+  gclone https://github.com/gilbertw1/roficlip.git
+
+cd ~/src/opensource && \
+  gclone https://github.com/cspeterson/splatmoji.git
+
+cd ~/src/opensource && \
+  gclone https://github.com/mrichar1/clipster.git
+
+cd ~/src/opensource && \
+  gclone https://github.com/junegunn/fzf.git && \
+  ./install
+# TODO: needed?
+# ln -s ~/dotfiles/.fzf.bash .fzf.bash
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh && \
+  cd ~/src/opensource && \
+  gclone https://github.com/I60R/page.git && \
+  rustup install stable && \
+  rustup default stable && \
+  cargo install --path . && \
+
+cd ~/src/opensource && \
+  gclone https://github.com/Birdthulu/FPM-Installer.git && \
+  sh -c "$(curl -Ls https://github.com/Birdthulu/FPM-Installer/raw/master/setup)"
+
+cd ~/src/opensource && \
+  gclone https://github.com/neovim/neovim.git && \
+  git checkout stable && \
+  make CMAKE_BUILD_TYPE=Release
+
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && \
+  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+
+sudo snap install discord
+
+go get github.com/prasmussen/gdrive
+  # in case of credentials problem:
+    # make credential for dummy project
+      # https://console.developers.google.com/apis/credentials
+    # edit binary
+      # sed -i "s|367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com|INSERT_DOMAIN_HERE|g" path/to/the/executable/gdrive
+      # sed -i "s|1qsNodXNaWq1mQuBjUjmvhoO|INSERT_TOKEN_HERE|g" path/to/the/executable/gdrive
+
+# If trackpoint speed cannot be increased sufficiently:
+  # "DEVICE" below is e.g. "TPPS/2 IBM TrackPoint"
+  # add to /etc/udev/rules.d/trackpoint.rules:
+    # ACTION=="add", SUBSYSTEM=="input", ATTR{name}=="DEVICE", ATTR{device/sensitivity}="255", ATTR{device/speed}="255"<Paste>
+
+echo "Read this file for reminders and instructions to restore more folders, set up crontab, and configure firefox."

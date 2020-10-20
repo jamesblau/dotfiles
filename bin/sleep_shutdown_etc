@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# TODO: implement switch user / window manager without logout
+
+options="sleep\nsuspend\nshutdown\nreboot\nlogout\nlock"
+
+chosen=$(echo -e "${options}" | rofi  -dmenu -l 6 -p "Select action")
+
+case $chosen in
+  sleep)
+    bin/toggle_sleep_noise
+    xset dpms force off
+    ;;
+  suspend)
+    systemctl suspend
+    ;;
+  shutdown)
+    systemctl poweroff
+    ;;
+  reboot)
+    systemctl reboot
+    ;;
+  logout)
+    i3-msg exit
+    ;;
+  lock)
+    i3lock
+    ;;
+esac

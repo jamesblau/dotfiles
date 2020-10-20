@@ -1,2 +1,3 @@
-export james_in_neovim=1
+# TODO: implement opening in same neovim instance; see bashrc
+# export james_in_neovim=1
 # bash
