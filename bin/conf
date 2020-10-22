@@ -1,6 +1,8 @@
 #!/bin/bash -ex
 
-# [ $# -ne 1 ] && echo One argument... && exit 1
+[ $# -gt 1 ] && echo Accepts at most one argument (screen layout code). && exit 1
+
+~/bin/conf_keyboard
 
 case $1 in
   e) ~/dotfiles/screenlayout/eidolon.conf.sh ;;
@@ -9,17 +11,16 @@ case $1 in
   m) ~/dotfiles/screenlayout/monitor.conf.sh ;;
   b) ~/dotfiles/screenlayout/both.conf.sh ;;
   *) ~/dotfiles/screenlayout/eidolon.conf.sh ;;
-  # *) echo Invalid layout specified... ;;
 esac
 
-laptop=$(sudo dmidecode | grep "Version: ThinkPad" | sed 's/^.* \([^ ]*$\)/\1/')
+laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/')
 
 # UltraNav
 #modprobe -r psmouse
 #modprobe psmouse proto=auto
 
 [ ${laptop} == "T470p" ] && {
-  echo 255 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
+  echo 255 | tee /sys/devices/platform/i8042/serio1/serio2/speed | tee /sys/devices/platform/i8042/serio1/serio2/sensitivity
 
   stick="TPPS/2 IBM TrackPoint"
   xinput list | grep -q "${stick}" && {
@@ -119,7 +120,5 @@ xinput list | grep -q "${pad}" && {
 
   synclient RightButtonAreaLeft=0 RightButtonAreaTop=0
 }
-
-~/bin/conf_keyboard
 
 # TODO: separate CLI-only commands in conf-cli

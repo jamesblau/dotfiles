@@ -26,11 +26,7 @@ exec --no-startup-id udiskie
 exec_always --no-startup-id /usr/bin/xrandr --dpi 150
 exec_always --no-startup-id ~/bin/lid-lock
 exec_always --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg
-# TODO: get password from rofi, not kitty
-# exec_always $kitty sudo ~/bin/conf
-# exec_always SUDO_ASKPASS=~/bin/askpass_rofi sudo -A ~/bin/conf
-# exec_always SUDO_ASKPASS=~/bin/askpass_rofi rofi -show drun -run-command "sudo -A ~/bin/conf"
-# bindsym $mod+d exec --no-startup-id i3-msg -t command exec 'SUDO_ASKPASS=~/bin/askpass_rofi sudo -A ~/bin/conf'
+exec_always --no-startup-id ~/bin/conf
 
 # Go to previous workspace/screen
 bindsym $mod+o workspace back_and_forth
@@ -93,8 +89,6 @@ bindsym $mod+Shift+F6 exec "light -S 100"
 # TODO?: round volume to nearest 5
 
 # Audiovisual and special commands with special keys
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioMute exec $toggle_mute
@@ -103,11 +97,15 @@ bindsym XF86AudioRaiseVolume exec $volume_up
 bindsym XF86AudioMicMute exec $toggle_mic_mute
 bindsym XF86MonBrightnessDown exec $backlight_down
 bindsym XF86MonBrightnessUp exec $backlight_up
-# bindsym XF86Display
 bindsym XF86WLAN exec toggle_wifi
-# bindsym XF86Tools
-# bindsym XF86Bluetooth # Somehow only this works out of the box
 bindsym XF86Favorites kill
+# These work out of the box
+# bindsym XF86AudioPlay
+# bindsym XF86AudioPause
+# bindsym XF86Bluetooth
+# TODO?: use for something
+# bindsym XF86Display
+# bindsym XF86Tools
 
 # Fix wifi
 bindsym $mod+Control+F8 exec toggle_wifi

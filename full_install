@@ -11,9 +11,13 @@ touch .not_a_server
 cd $HOME/dotfiles
 ./install
 
-# backup
+# Allow conf script to access hardware model number and to set mouse sensitivity
+  # sudo chmod a+w /sys/devices/platform/i8042/serio1/serio2/speed /sys/devices/platform/i8042/serio1/serio2/sensitivity
+  # sudo chown $USER /sys/devices/virtual/dmi/id/product_version
+
+# Restore from backup
   # authorize from borgbase
-  # fetch
+  # mount and fetch
     # pbin
     # pdotfiles
     # desired large directories
