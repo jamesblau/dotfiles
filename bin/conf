@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-[ $# -gt 1 ] && echo Accepts at most one argument (screen layout code). && exit 1
+[ $# -gt 1 ] && echo "Accepts at most one argument (screen layout code)." && exit 1
 
 ~/bin/conf_keyboard
 
