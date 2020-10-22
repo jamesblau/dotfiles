@@ -55,11 +55,7 @@ bindsym $mod+Control+Shift+Return exec $kitty -e tmux
 bindsym --release Mod1+g split v; exec xdotool key --clearmodifiers alt+Return
 bindsym --release Mod1+v split h; exec xdotool key --clearmodifiers alt+Return
 
-# Re-run conf
-bindsym $mod+BackSpace exec --no-startup-id $kitty bash -c ~/bin/conf
-
 # Open programs
-# bindsym $mod+u exec $kitty mutt
 bindsym $mod+u exec $kitty nmtui-connect
 bindsym $mod+Shift+u exec $kitty nmtui
 
@@ -111,8 +107,14 @@ bindsym XF86Favorites kill
 bindsym $mod+Control+F8 exec toggle_wifi
 bindsym $mod+Control+Shift+F8 exec toggle_vpn
 
-# Kill focused window easily with keyboards lacking F# keys
-bindsym $mod+Pause kill
+# Kill focused window
+bindsym $mod+Control+Shift+BackSpace kill
+
+# Re-run conf
+bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
+
+# Sleep, suspend, shutdown, reboot, logout, or lock computer
+bindsym $mod+Shift+Delete exec ~/bin/sleep_shutdown_etc; $d
 
 # Start rofi application picker
 bindsym $mod+d exec --no-startup-id i3-msg -t command exec 'PATH=$PATH:/home/$USER/bin:/home/$USER/pbin rofi -case-sensitive -show run'
@@ -229,10 +231,6 @@ mode "quick_open" {
   bindsym x exec toggle_screenkey; $d
   bindsym y exec $kitty_open 'nvim -c Calendar'; $d
   bindsym z exec toggle_zoom; $d
-
-  bindsym $mod+F4 kill; $d
-
-  bindsym Delete exec --no-startup-id ~/bin/sleep_shutdown_etc; $d
 
   bindsym Return $d
   bindsym Escape $d
