@@ -2,18 +2,35 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-exec_always "/usr/bin/xrandr --dpi 150"
-set $mod Mod4
-set $kitty kitty --config ~/.kitty.conf
-set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
-workspace_layout tabbed
-
 # It is conceivable that you might want to change this
 set $user james
 
-# Font
+# Basic i3 configuration
+set $mod Mod4
+set $kitty kitty --config ~/.kitty.conf
+set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
 font pango:DejaVu Sans Mono Bold 7
 new_window 1pixel
+workspace_layout tabbed
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Startup things
+exec --no-startup-id clipster -d
+exec --no-startup-id blueman-applet
+exec --no-startup-id nordvpn
+exec --no-startup-id udiskie
+exec_always --no-startup-id /usr/bin/xrandr --dpi 150
+exec_always --no-startup-id ~/bin/lid-lock
+exec_always --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg
+# TODO: get password from rofi, not kitty
+# exec_always $kitty sudo ~/bin/conf
+# exec_always SUDO_ASKPASS=~/bin/askpass_rofi sudo -A ~/bin/conf
+# exec_always SUDO_ASKPASS=~/bin/askpass_rofi rofi -show drun -run-command "sudo -A ~/bin/conf"
+# bindsym $mod+d exec --no-startup-id i3-msg -t command exec 'SUDO_ASKPASS=~/bin/askpass_rofi sudo -A ~/bin/conf'
 
 # Go to previous workspace/screen
 bindsym $mod+o workspace back_and_forth
@@ -42,50 +59,65 @@ bindsym $mod+Control+Shift+Return exec $kitty -e tmux
 bindsym --release Mod1+g split v; exec xdotool key --clearmodifiers alt+Return
 bindsym --release Mod1+v split h; exec xdotool key --clearmodifiers alt+Return
 
-# Re-run conf; why does 'setxkbmap -option ctrl:nocaps' run more slowly in kitty?
-bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
-# bindsym $mod+BackSpace exec gnome-terminal -e 'bash -c ~/bin/conf'
+# Re-run conf
+bindsym $mod+BackSpace exec --no-startup-id $kitty bash -c ~/bin/conf
 
 # Open programs
 # bindsym $mod+u exec $kitty mutt
 bindsym $mod+u exec $kitty nmtui-connect
 bindsym $mod+Shift+u exec $kitty nmtui
 
-# Thinkpad buttons
-bindsym $mod+F1 exec "amixer -D pulse set Master toggle; killall -USR1 i3status"
-bindsym $mod+F2 exec "~/dotfiles/bin/adjust_volume -5%"
-bindsym $mod+F3 exec "~/dotfiles/bin/adjust_volume +5%"
+# TODO: Fix audio bindings with (bluetooth?) headphones active
+
+# Reused audiovisual commands
+set $toggle_mute "amixer -D pulse set Master toggle; killall -USR1 i3status"
+set $volume_down "~/dotfiles/bin/adjust_volume -5%"
+set $volume_up "~/dotfiles/bin/adjust_volume +5%"
+set $toggle_mic_mute "amixer -D pulse set Capture toggle; killall -USR1 i3status"
+set $backlight_down "light -U 20"
+set $backlight_up "light -A 20"
+
+# Audiovisual commands with Super
+bindsym $mod+F1 exec $toggle_mute
+bindsym $mod+F2 exec $volume_down
+bindsym $mod+F3 exec $volume_up
 bindsym $mod+Control+F2 exec "~/dotfiles/bin/adjust_volume -1%"
 bindsym $mod+Control+F3 exec "~/dotfiles/bin/adjust_volume +1%"
-bindsym $mod+F4 exec "amixer -D pulse set Capture toggle; killall -USR1 i3status"
+bindsym $mod+F4 exec $toggle_mic_mute
 bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
 bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
-bindsym $mod+F5 exec "light -U 20"
-bindsym $mod+F6 exec "light -A 20"
+bindsym $mod+F5 exec $backlight_down
+bindsym $mod+F6 exec $backlight_up
 bindsym $mod+Shift+F5 exec "light -S 0"
 bindsym $mod+Shift+F6 exec "light -S 100"
-# TODO: round volume to nearest 5?
+# TODO?: round volume to nearest 5
 
-# TODO: Some of these?
-# 173 XF86AudioPrev
-# 172 XF86AudioPlay
-# 171 XF86AudioNext
-# 122 XF86AudioLowerVolume
-# 123 XF86AudioRaiseVolume
-# 121 XF86AudioMute
-# 198 XF86AudioMicMute
-# 232 XF86MonBrightnessDown
-# 233 XF86MonBrightnessUp
-# 235 XF86Display
-# 246 XF86WLAN
-# 179 XF86Tools
-# 245 XF86Bluetooth
+# Audiovisual and special commands with special keys
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioMute exec $toggle_mute
+bindsym XF86AudioLowerVolume exec $volume_down
+bindsym XF86AudioRaiseVolume exec $volume_up
+bindsym XF86AudioMicMute exec $toggle_mic_mute
+bindsym XF86MonBrightnessDown exec $backlight_down
+bindsym XF86MonBrightnessUp exec $backlight_up
+# bindsym XF86Display
+bindsym XF86WLAN exec toggle_wifi
+# bindsym XF86Tools
+# bindsym XF86Bluetooth # Somehow only this works out of the box
+bindsym XF86Favorites kill
 
-# Kill focused window
-bindsym $mod+Control+Shift+F4 kill
+# Fix wifi
+bindsym $mod+Control+F8 exec toggle_wifi
+bindsym $mod+Control+Shift+F8 exec toggle_vpn
+
+# Kill focused window easily with keyboards lacking F# keys
+bindsym $mod+Pause kill
 
 # Start rofi application picker
-bindsym $mod+d exec i3-msg -t command exec 'PATH=$PATH:/home/'$user'/bin:/home/'$user'/pbin rofi -case-sensitive -show run'
+bindsym $mod+d exec --no-startup-id i3-msg -t command exec 'PATH=$PATH:/home/$USER/bin:/home/$USER/pbin rofi -case-sensitive -show run'
 
 # Change focus
 bindsym $mod+h focus left
@@ -168,11 +200,6 @@ bindsym $mod+Control+Shift+8 focus parent; move container to workspace 8; worksp
 bindsym $mod+Control+Shift+9 focus parent; move container to workspace 9; workspace 9
 bindsym $mod+Control+Shift+0 focus parent; move container to workspace 10; workspace 10
 
-# Reload the configuration file
-bindsym $mod+Shift+c reload
-# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
 # Modes
 set $d mode "default"
 
@@ -180,7 +207,7 @@ bindsym $mod+n mode "quick_open"
 mode "quick_open" {
   bindsym a exec say $(xsel -o); $d
   bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
-  bindsym c exec $kitty_open 'nvim ~/bin/conf ~/dotfiles/install ~/dotfiles/apt-installs'; $d
+  bindsym c exec $kitty_open 'nvim ~/bin/conf ~/bin/conf_keyboard ~/dotfiles/install ~/dotfiles/full_install'; $d
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
@@ -325,14 +352,6 @@ bar {
   }
 }
 
-# Startup things
-exec_always sudo ~/bin/conf
-exec_always ~/bin/lid-lock
-exec clipster -d
-exec blueman-applet
-exec nordvpn
-exec udiskie
-
 # Strip trailing newline from clipboard
 bindsym $mod+i exec ~/bin/strip_whitespace
 bindsym $mod+Shift+i exec ~/bin/strip_whitespace -l
@@ -342,7 +361,7 @@ bindsym $mod+Mod1+i exec ~/bin/strip_whitespace -s
 # Not sure about this one
 focus_follows_mouse no
 
-# Firefox
+# TODO: Firefox
 # Tridactyl edit in split
 # bindsym --release Control+0 split h; exec xdotool key --clearmodifiers ctrl+i
 # Tridactyl save edit and unsplit
@@ -352,13 +371,8 @@ focus_follows_mouse no
 for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
 
 # Firefox disable Control+Q
+# TODO: use xbindkeys and/or xinput instead
 bindsym Control+q exec ~/bin/noctrlq.sh
-
-# Fix wifi
-# TODO: Somehow obviate need for this
-bindsym $mod+F8 exec $kitty bash -c reset_network_manager_and_vpn
-bindsym $mod+Control+F8 exec $kitty bash -c kill_vpn_and_reset_network_manager
-bindsym $mod+Control+Shift+F8 exec toggle_vpn
 
 # Clipboard management
 bindsym $mod+Control+q exec ~/src/opensource/gilbertw1/roficlip/roficlip
