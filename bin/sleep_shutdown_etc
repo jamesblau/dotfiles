@@ -8,7 +8,7 @@ chosen=$(echo -e "${options}" | rofi  -dmenu -l 6 -p "Select action")
 
 case $chosen in
   sleep)
-    bin/toggle_sleep_noise
+    sleep 1
     xset dpms force off
     ;;
   suspend)

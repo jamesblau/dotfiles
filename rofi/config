@@ -18,7 +18,6 @@
 ! base0E: #dc8cc3
 ! base0F: #000000
 
-! Enable the extended coloring options
 rofi.color-enabled: true
 
 ! Property Name     BG       Border   Separator
@@ -29,8 +28,8 @@ rofi.color-normal:  #404040, #dcdccc, #404040, #1f1f1f, #ffffff
 rofi.color-active:  #404040, #7cb8bb, #404040, #1f1f1f, #7cb8bb
 rofi.color-urgent:  #404040, #dca3a3, #404040, #1f1f1f, #dca3a3
 
-! Set the desired separator style
 rofi.separator-style: solid
 
-! Font
 rofi.font: hack 20
+
+rofi.terminal: /usr/bin/kitty

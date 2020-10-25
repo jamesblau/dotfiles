@@ -1,9 +1,9 @@
 #!/bin/bash -x
 
-echo $1
-running_sink=$(pactl list short | grep RUNNING | head -c 1)
-#TODO: figure out how to not hard-code the default
-first_sink=$(pactl list short | grep output | head -c 1)
-sink=${running_sink:-${first_sink}}
-pactl set-sink-volume ${sink} ${1}
+running_sinks=($(pactl list short sinks | grep RUNNING | cut -f 1))
+idle_sinks=($(pactl list short sinks | grep IDLE | cut -f 1))
+adjusting_sinks=${running_sinks[@]:-${idle_sinks[@]}}
+for sink in ${adjusting_sinks[@]}; do
+  pactl set-sink-volume ${sink} ${1}
+done
 killall -USR1 i3status

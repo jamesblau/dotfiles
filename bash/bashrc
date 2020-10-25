@@ -8,6 +8,7 @@ fi
 
 # Kitty terminal emulator
 alias kitty="kitty --config ${HOME}/.kitty.conf"
+TERMINAL=/usr/bin/kitty
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

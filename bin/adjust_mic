@@ -1,0 +1,9 @@
+#!/bin/bash -x
+
+running_sources=($(pactl list short sources | grep RUNNING | cut -f 1))
+idle_sources=($(pactl list short sources | grep IDLE | cut -f 1))
+adjusting_sources=${running_sources[@]:-${idle_sources[@]}}
+for source in ${adjusting_sources[@]}; do
+  pactl set-source-volume ${source} ${1}
+done
+killall -USR1 i3status

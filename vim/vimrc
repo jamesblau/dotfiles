@@ -908,7 +908,7 @@ nnoremap cw dwi
 
 " Convert markdown to pdf
 autocmd! FileType markdown nnoremap <silent> <buffer> <Leader>m :silent w <Bar>
-  \ silent !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % && chromium-browser --headless --no-margins --print-to-pdf=%:r.pdf %:r.html <CR>
+  \ !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % && chromium-browser --headless --no-margins --print-to-pdf=%:r.pdf %:r.html <CR>
 " TODO: Cleanup.
 
 " Redraw mapping

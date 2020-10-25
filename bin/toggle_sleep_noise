@@ -2,7 +2,7 @@
 
 if [ -e ~/.sleeping ]
 then
-  ps aux | grep mpv.*/Music/noise_ | grep -v grep | awk '{print $2}' | xargs kill
+  pgrep -f mpv.*/Music/noise_ | xargs kill
   rm ~/.sleeping
 else
   nohup mpv --volume=60 --loop ~/Music/noise_blizzard.mka &>/dev/null &
@@ -10,3 +10,4 @@ else
   nohup mpv --volume=100 --loop ~/Music/noise_brown.mka &>/dev/null &
   touch ~/.sleeping
 fi
+killall -USR1 i3status

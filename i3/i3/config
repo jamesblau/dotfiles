@@ -15,7 +15,7 @@ workspace_layout tabbed
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
-# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# Restart i3 in place (preserves layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
 # Startup things
@@ -61,30 +61,30 @@ bindsym $mod+Shift+u exec $kitty nmtui
 
 # TODO: Fix audio bindings with (bluetooth?) headphones active
 
-# Reused audiovisual commands
+# Reused audio and backlight commands
 set $toggle_mute "amixer -D pulse set Master toggle; killall -USR1 i3status"
-set $volume_down "~/dotfiles/bin/adjust_volume -5%"
-set $volume_up "~/dotfiles/bin/adjust_volume +5%"
-set $toggle_mic_mute "amixer -D pulse set Capture toggle; killall -USR1 i3status"
+set $volume_down "~/bin/adjust_volume -5%"
+set $volume_up "~/bin/adjust_volume +5%"
+set $toggle_mic_mute "~/bin/toggle_mic"
 set $backlight_down "light -U 20"
 set $backlight_up "light -A 20"
 
-# Audiovisual commands with Super
+# Audio and backlight commands with Super
 bindsym $mod+F1 exec $toggle_mute
 bindsym $mod+F2 exec $volume_down
 bindsym $mod+F3 exec $volume_up
-bindsym $mod+Control+F2 exec "~/dotfiles/bin/adjust_volume -1%"
-bindsym $mod+Control+F3 exec "~/dotfiles/bin/adjust_volume +1%"
+bindsym $mod+Control+F2 exec "~/bin/adjust_volume -1%"
+bindsym $mod+Control+F3 exec "~/bin/adjust_volume +1%"
 bindsym $mod+F4 exec $toggle_mic_mute
-bindsym $mod+Shift+F2 exec "amixer -D pulse set Capture 5%-; killall -USR1 i3status"
-bindsym $mod+Shift+F3 exec "amixer -D pulse set Capture 5%+; killall -USR1 i3status"
+bindsym $mod+Shift+F2 exec "~/bin/adjust_mic -5%"
+bindsym $mod+Shift+F3 exec "~/bin/adjust_mic +5%"
 bindsym $mod+F5 exec $backlight_down
 bindsym $mod+F6 exec $backlight_up
 bindsym $mod+Shift+F5 exec "light -S 0"
 bindsym $mod+Shift+F6 exec "light -S 100"
 # TODO?: round volume to nearest 5
 
-# Audiovisual and special commands with special keys
+# Audio, backlight, and other commands with special keys
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioMute exec $toggle_mute
@@ -116,8 +116,13 @@ bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
 # Sleep, suspend, shutdown, reboot, logout, or lock computer
 bindsym $mod+Shift+Delete exec ~/bin/sleep_shutdown_etc; $d
 
-# Start rofi application picker
-bindsym $mod+d exec --no-startup-id i3-msg -t command exec 'PATH=$PATH:/home/$USER/bin:/home/$USER/pbin rofi -case-sensitive -show run'
+# Rofi pickers
+# Calculator
+bindsym $mod+c exec --no-startup-id rofi -show calc -modi "calc:qalc +u8"
+# Program
+bindsym $mod+d exec --no-startup-id PATH=$PATH:/home/$USER/bin:/home/$USER/pbin rofi -case-sensitive -show run
+# Window
+bindsym $mod+x exec --no-startup-id rofi -show window
 
 # Change focus
 bindsym $mod+h focus left
@@ -225,7 +230,7 @@ mode "quick_open" {
   #       r
   bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
-  bindsym u exec $kitty_open 'nvim ~/.muttrc'; $d
+  #       u
   bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
   bindsym w exec $kitty_open '~/pbin/worth'; $d
   bindsym x exec toggle_screenkey; $d
