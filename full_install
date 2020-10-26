@@ -45,15 +45,27 @@ cd $HOME/dotfiles
   # find and cd into user directory in ~/.mozilla/firefox/
     # ln -s ~/dotfiles/firefox/userChrome.css chrome/userChrome.css
 
+# Download and install nordvpn
+
+# Install low-latency kernel module
+
 sudo usermod -a -G video $USER
+
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:lutris-team/lutris
+sudo add-apt-repository ppa:lokkju/java-compat
+sudo add-apt-repository ppa:kazam-team/stable-series
 
 sudo apt update
 sudo apt upgrade
 
-# TODO: update
-sudo apt install arandr aria2 autocutsel autorandr axel bd beep blueman chkrootkit chromium-browser clamav clipit cmake curl dmenu exuberant-ctags feh fonts-inconsolata gawk git golang-go google-chrome-stable gpick htop i3 i3lock i3status i3-wm ipython3 kitty libgtk2.0-dev libgtk-3-dev libpango1.0-dev libtool-bin libxmu-dev libxxf86vm-dev mpv neovim octave python2.7 python3-pip python-wxgtk3.0-dev qutebrowser ripgrep rlwrap rofi scala silversearcher-ag stterm sudoku tmux transmission tree udiskie vim vlc vpnc xbacklight xcape xclip xdotool xsel xss-lock xvkbd
+# Might not need all of these
+# TODO: filter unneeded
+# sudo apt install libao-dev libasound2 libasound2 libatk-adaptor libc++1 libdbus-1-dev libenet-dev libfontconfig1-dev libfuse-dev libgail-common libgtk2.0-dev libharfbuzz-dev libjack-jackd2-0 libjack-jackd2-0 libopenal-dev libopengl0 libqt5webenginewidgets5 libreadline-dev libsndio-dev libsndio7.0 libsndio7.0 libsoil-dev libsoundtouch-dev libswresample-dev libvulkan1 libvulkan1 libwebkit2gtk-4.0-37 libwxbase3.0-dev libx11-xcb-dev libxcb-xtest0-dev libxcb-xtest0 libxcomposite1 libxcomposite1 libxcursor-dev libxcursor1 libxcursor1 libxext-dev libxi6 libxi6 libxinerama-dev libxkbcommon-x11-dev libxrandr2 libxrandr2 libxss1 libxss1 libxtst6 libxxf86vm-dev python-gi-dev python-wxgtk3.0-dev rofi-dev tcllib zlib1g-dev zlib1g-dev
 
-sudo apt install --no-install-recommends ca-certificates qtbase5-dev qtbase5-private-dev git cmake make gcc g++ pkg-config libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libxi-dev libxrandr-dev libudev-dev libevdev-dev libsfml-dev libminiupnpc-dev libmbedtls-dev libcurl4-openssl-dev libhidapi-dev libsystemd-dev libbluetooth-dev libasound2-dev libpulse-dev libpugixml-dev libbz2-dev libzstd-dev liblzo2-dev libpng-dev libusb-1.0-0-dev gettext
+sudo apt install appstream arandr aria2 autocutsel autorandr axel bd blueman borgbackup borgbackup-doc chkrootkit chromium-browser clamav clipit cmake curl dict espeak-ng-espeak exuberant-ctags feh fonts-inconsolata fuse gawk gdebi-core gettext git golang-go google-chrome-stable gparted gpick htop hwinfo i3 i3lock i3status i3-wm ipython3 jupyter-nbconvert kakoune kitty light lutris minetest mplayer mpv neovim node-gyp nodejs npm octave openssh-client p7zip-full parallel pavucontrol pavumeter pinta pkg-config playerctl poppler-utils qalc qutebrowser ranger read-edid redshift rename ripgrep rlwrap rofi scala silversearcher-ag steam stterm sudoku taskwarrior tcllib termit tmux translate-shell transmission tree udiskie unzip vim vlc vpnc wget winbind xbacklight xbindkeys xcape xclip xdotool xsel xss-lock xvkbd zoom
+
+sudo apt install --no-install-recommends ca-certificates g++ gcc libasound2-dev libavcodec-dev libavformat-dev libavutil-dev libbluetooth-dev libbz2-dev libcurl4-openssl-dev libevdev-dev libhidapi-dev liblzo2-dev libmbedtls-dev libminiupnpc-dev libpng-dev libpugixml-dev libpulse-dev libsfml-dev libswscale-dev libsystemd-dev libudev-dev libusb-1.0-0-dev libxi-dev libxrandr-dev libzstd-dev make pkg-config qtbase5-dev qtbase5-private-dev
 
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
