@@ -5,8 +5,9 @@
 ~/bin/conf_keyboard
 
 case $1 in
-  e) ~/dotfiles/screenlayout/eidolon.conf.sh ;;
-  v) ~/dotfiles/screenlayout/eidolon_vert.conf.sh ;;
+  *e*) ~/dotfiles/screenlayout/eidolon.conf.sh ;;
+  *v*) ~/dotfiles/screenlayout/eidolon_vert.conf.sh ;;
+  *o*) ~/dotfiles/screenlayout/eidolon_other.conf.sh ;;
 esac
 
 laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/')
@@ -18,9 +19,11 @@ laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/
     xinput set-prop "${stick}" "libinput Accel Profile Enabled" {0, 1}
     xinput set-prop "${stick}" "libinput Accel Speed" 1.0
     case $1 in
-      m) xinput set-prop "${stick}" "Coordinate Transformation Matrix" 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
-      *) xinput set-prop "${stick}" "Coordinate Transformation Matrix" 6.000000, 0.000000, 0.000000, 0.000000, 6.000000, 0.000000, 0.000000, 0.000000, 1.000000
+      *m*) speed_scale="1.000000" ;;
+      *) speed_scale="6.000000" ;;
     esac
+    xinput set-prop "${stick}" "Coordinate Transformation Matrix" \
+      ${speed_scale}, 0.000000, 0.000000, 0.000000, ${speed_scale}, 0.000000, 0.000000, 0.000000, 1.000000
   }
 
   pad="SynPS/2 Synaptics TouchPad"
