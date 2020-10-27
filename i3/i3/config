@@ -104,7 +104,8 @@ bindsym XF86Favorites kill
 # bindsym XF86Tools
 
 # Fix wifi
-bindsym $mod+Control+F8 exec toggle_wifi
+bindsym $mod+F8 exec toggle_wifi
+bindsym $mod+Control+F8 exec toggle_radio
 bindsym $mod+Control+Shift+F8 exec toggle_vpn
 
 # Kill focused window
@@ -227,7 +228,7 @@ mode "quick_open" {
   bindsym o exec $kitty --directory='~/Downloads'; $d
   bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
   #       q
-  #       r
+  bindsym r exec $kitty_open 'htop'; $d
   bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
   #       u

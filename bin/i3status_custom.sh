@@ -21,10 +21,19 @@
 i3status | (read line && echo $line && read line && echo $line && while :
 do
   read line
+
+  IP=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | sed 's/"//g')
+  if [[ -n ${IP} ]]; then
+    echo ${IP} > ~/.myip
+  else
+    rm ~/.myip
+  fi
+
   volume=$(<<< "${line}" sed 's/^.*\({[^{}]*}\)]$/\1/')
   level_status=$(amixer sget Capture | tail -n 1 | cut -d '[' -f 2,4 | sed 's/[][]//g')
   color=$(<<< ${level_status} grep -q off && echo ',"color":"#dfaf8f"')
   mic="{ \"full_text\": \"🎤 ${level_status/ */}\" ${color}}"
+
   echo "${line/$volume/$mic, $volume}" || exit 1
   # TODO: Why doesn't this less weird version work? Some special character?
   # before_volume=$(echo "${line}" | sed 's/^,\[//' | sed 's/^\(.*\),{[^{}]*}]$/\1/')

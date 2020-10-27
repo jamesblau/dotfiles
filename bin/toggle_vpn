@@ -14,3 +14,4 @@ else
   nordvpn connect
   pgrep openvpn > ~/.openvpn_pid
 fi
+killall -USR1 i3status

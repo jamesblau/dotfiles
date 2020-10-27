@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if nmcli device show | grep -A 3 wifi | grep -q unavailable; then
-  rfkill unblock wifi
+  rfkill unblock all
 else
-  rfkill block wifi
+  rfkill block all
 fi
 killall -USR1 i3status
