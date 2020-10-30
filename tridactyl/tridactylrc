@@ -45,12 +45,12 @@ unbind <C-q>
 " unbind <F1>
 
 " Reddit common actions
-bind --mode=normal ;g hint -c [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"],[class*="expand"],[class="togg"],[class="user"],[class="edit-usertext"]
-bind --mode=normal ;G hint -tc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"],[class*="expand"],[class="togg"],[class="user"],[class="edit-usertext"]
-bind --mode=normal gG hint -qbc [data-event-action="full_comments"],[data-event-action="context"],[data-event-action="permalink"],[data-event-action="comment"],[class*="expand"],[class="togg"],[class="user"],[class="edit-usertext"]
+bind --mode=normal ;g hint -c [class="edit-usertext"],[class*="expand"],[class="togg"],[class="user"],[data-event-action="comment"],[data-event-action="comments"],[data-event-action="context"],[data-event-action="full_comments"],[data-event-action="permalink"]
+bind --mode=normal ;G hint -bc [class="edit-usertext"],[class*="expand"],[class="togg"],[class="user"],[data-event-action="comment"],[data-event-action="comments"],[data-event-action="context"],[data-event-action="full_comments"],[data-event-action="permalink"]
+bind --mode=normal gG hint -qbc [class="edit-usertext"],[class*="expand"],[class="togg"],[class="user"],[data-event-action="comment"],[data-event-action="comments"],[data-event-action="context"],[data-event-action="full_comments"],[data-event-action="permalink"]
 " Reddit upvote/downvote
-bind --mode=normal ;u hint -c [class="arrow up login-required access-required"]
-bind --mode=normal ;d hint -c [class="arrow down login-required access-required"]
+bind --mode=normal ;u hint -qc [class="arrow up login-required access-required"]
+bind --mode=normal ;d hint -qc [class="arrow down login-required access-required"]
 " TODO: hint only "X comments" and "context" links
 
 " Gui

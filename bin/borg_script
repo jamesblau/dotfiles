@@ -1,0 +1,54 @@
+#!/bin/bash
+
+shopt -s nocasematch
+
+repo_file=~/.borg_repos
+
+if [[ -e "${repo_file}" ]]; then
+  source "${repo_file}"
+else
+  echo -e "\nNo repo file found at ${repo_file}."
+  exit 1
+fi
+
+date=$(date +%y_%m_%d_%H:%M:%S)
+
+if [[ -z "${remote_repo}" && -z "${local_repo_dir}" ]]; then
+  echo -e "\nNo backup repo specified."
+  exit 1
+fi
+
+echo -e "\nBackup will be named ${date}."
+
+for file_or_dir in ${to_back_up}; do
+  size=$(du -s "${file_or_dir}" | cut -f 1)
+  human_readable_size=$(du -sh "${file_or_dir}" | cut -f 1)
+  if [[ "${size}" -gt "${max_file_size_kilobytes}" ]]; then
+    echo -e "\nSize of ${file_or_dir} is ${human_readable_size}, which is greater than your set max size."
+    echo "Are you sure you want to back this up?"
+    read answer
+    if [[ "${answer}" != "y" && "${answer}" != "yes" ]]; then
+      echo -e "\nPlease change the list of files or directories to back up."
+      exit 1
+    fi
+  fi
+done
+
+echo -e "\nBacking up:"
+du -sh ${to_back_up} | sort -h
+
+if [[ -n "${remote_repo}" ]]; then
+  echo -e "\n\nRemote repo: ${remote_repo}"
+  echo "Attempting remote backup:"
+  borg create "${remote_repo}::${date}" ${to_back_up} \
+    && echo -e "\nBackup to borgbase successful, I think." \
+    || echo -e "\nBackup to borgbase failed."
+fi
+
+if [[ -w "${local_repo_dir}" ]]; then
+  echo -e "\n\nLocal repo: ${local_repo_dir}"
+  echo "Attempting local backup:"
+  borg create "${local_repo_dir}::${date}" ${to_back_up} \
+    && echo -e "\nLocal backup successful, I think." \
+    || echo -e "\nLocal backup failed."
+fi

@@ -13,14 +13,12 @@ esac
 laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/')
 
 [ ${laptop} == "T470p" ] && {
-
   stick="TPPS/2 IBM TrackPoint"
   xinput list | grep -q "${stick}" && {
-    xinput set-prop "${stick}" "libinput Accel Profile Enabled" {0, 1}
-    xinput set-prop "${stick}" "libinput Accel Speed" 1.0
+    xinput set-prop "${stick}" "libinput Accel Speed" 0.3
     case $1 in
       *m*) speed_scale="1.000000" ;;
-      *) speed_scale="6.000000" ;;
+      *) speed_scale="1.200000" ;;
     esac
     xinput set-prop "${stick}" "Coordinate Transformation Matrix" \
       ${speed_scale}, 0.000000, 0.000000, 0.000000, ${speed_scale}, 0.000000, 0.000000, 0.000000, 1.000000

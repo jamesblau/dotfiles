@@ -211,13 +211,13 @@ set $d mode "default"
 
 bindsym $mod+n mode "quick_open"
 mode "quick_open" {
-  bindsym a exec say $(xsel -o); $d
+  bindsym a exec arandr; $d
   bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
   bindsym c exec $kitty_open 'nvim ~/bin/conf ~/bin/conf_keyboard ~/dotfiles/install ~/dotfiles/full_install'; $d
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
-  #       g
+  bindsym g exec say $(xsel -o); $d
   bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
   bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
   bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
