@@ -102,6 +102,7 @@ bindsym XF86Favorites kill
 # TODO?: use for something
 # bindsym XF86Display
 # bindsym XF86Tools
+# bindsym XF86WakeUp
 
 # Fix wifi
 bindsym $mod+F8 exec toggle_wifi

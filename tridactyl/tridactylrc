@@ -103,8 +103,8 @@ bind --mode=normal ,E fillcmdline tabopen search site:reddit.com
 
 bind --mode=normal ,r open reddit.com
 bind --mode=normal ,R tabopen reddit.com
-bind --mode=normal ,u open reddit.com/message/unread
-bind --mode=normal ,U tabopen reddit.com/message/unread
+bind --mode=normal ,u open reddit.com/message/inbox
+bind --mode=normal ,U tabopen reddit.com/message/inbox
 bind --mode=normal ,s open reddit.com/user/me
 bind --mode=normal ,S tabopen reddit.com/user/me
 bind --mode=normal ,m open gmail.com
