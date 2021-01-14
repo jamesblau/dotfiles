@@ -21,6 +21,7 @@ bindsym $mod+Shift+r restart
 # Startup things
 exec --no-startup-id clipster -d
 exec --no-startup-id blueman-applet
+exec --no-startup-id blueman-tray
 exec --no-startup-id nordvpn
 exec --no-startup-id udiskie
 exec_always --no-startup-id /usr/bin/xrandr --dpi 150

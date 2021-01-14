@@ -158,6 +158,29 @@ function loop () { while true; do clear; $@; read; done; }
 # Get IP info
 alias myip='curl ipinfo.io; echo'
 
+# Get ping statistics
+function pings () {
+  for arg in $1 $2; do
+    if [[ $arg =~ ^[0-9]+$ ]]; then
+      local count=$arg
+    elif [[ $arg =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      local ip=$arg
+    fi
+  done
+  if [[ -z $count ]]; then
+    local count=10
+  fi
+  if [[ -z $ip ]]; then
+    local ip=8.8.8.8
+  fi
+  echo -e "Pinging $ip $count times.\n"
+  local output=$(ping -c $count $ip | tee /dev/tty | grep '^64 bytes')
+  <<< "$output" awk -F'[= ]' '\
+    NR==1 {min=$10; max=$10; sum+=$10; next} \
+    {if ($10<min) min=$10; if ($10>max) max=$10; sum+=$10} \
+    END {print "\nmin: "min"\nmax: "max"\navg: "sum/NR}'
+}
+
 # Open tmux for running `git ds` and composing a commit message
 alias gic='tmux new-session \;\
   send-keys "git ds" Enter \;\
@@ -300,9 +323,9 @@ alias qe='quiet evince'
 alias Qe='quieter evince'
 alias qv='quiet vlc'
 alias Qv='quieter vlc'
-alias qm='rifle'
+alias qm='quiet rifle'
 alias Qm='quieter rifle'
-alias qf='feh'
+alias qf='quiet feh'
 alias Qf='quieter feh'
 
 # Generate output tersely and check &&/||
