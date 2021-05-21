@@ -109,7 +109,7 @@ bind --mode=normal ,s open reddit.com/user/me
 bind --mode=normal ,S tabopen reddit.com/user/me
 bind --mode=normal ,m open gmail.com
 bind --mode=normal ,M tabopen gmail.com
-bind --mode=normal ,c composite tabopen -b steeple.church ; tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/comics/ootslatest.html
+bind --mode=normal ,c composite tabopen -b strongfemaleprotagonist.com ; tabopen -b nedroid.com ; tabopen -b penny-arcade.com/comic ; tabopen -b xkcd.com ; tabopen -b smbc-comics.com ; tabopen -b giantitp.com/comics/ootslatest.html ; tabopen -b steeple.church
 
 " Temporary hack for slow completion
 unbind --mode=ex <Space>

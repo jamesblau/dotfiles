@@ -91,6 +91,7 @@ call plug#begin('~/.vim/plugged')
     xmap S <Plug>Sneak_S
     Plug 'justinmk/vim-sneak'
   " }}}
+  Plug 'ciaranm/securemodelines'
 " }}}
 
 if !exists('g:james_minimal_plugins')

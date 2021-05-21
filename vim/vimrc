@@ -827,7 +827,7 @@ function! OctaveScratchTerm()
   stopinsert
 endfunction
 
-function! ScalaScratch()
+function ScalaScratch()
   set ft=scala syn=scala mouse=nv
   call ScratchMaps()
   map <buffer> <F12> <C-L>A<CR><CR><CR>:paste<CR><C-Space>pGA<CR><C-D><C-Space>G:wincmd<SPACE>p<CR>g'q
@@ -875,7 +875,8 @@ endfunction
 
 function! PythonScratchTerm()
   call PythonScratch()
-  vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent --pylab
+  " vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent --pylab
+  vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent
   normal i
   wincmd p
   stopinsert

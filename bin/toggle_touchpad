@@ -1,0 +1,6 @@
+#!/bin/bash -x
+
+pad="SynPS/2 Synaptics TouchPad"
+xinput list-props "${pad}" | grep -q "Device Enabled.*0$" && \
+  xinput set-prop "${pad}" "Device Enabled" 1 || \
+  xinput set-prop "${pad}" "Device Enabled" 0

@@ -121,7 +121,8 @@ bindsym $mod+Shift+Delete exec ~/bin/sleep_shutdown_etc; $d
 
 # Rofi pickers
 # Calculator
-bindsym $mod+c exec --no-startup-id rofi -show calc -modi "calc:qalc +u8"
+# bindsym $mod+c exec --no-startup-id rofi -show calc -modi "calc:qalc +u8" -no-disable-history
+bindsym $mod+c exec --no-startup-id rofi -show calc -modi calc -no-show-match -no-sort
 # Program
 bindsym $mod+d exec --no-startup-id PATH=$PATH:/home/$USER/bin:/home/$USER/pbin rofi -case-sensitive -show run
 # Window
@@ -229,11 +230,11 @@ mode "quick_open" {
   bindsym n exec toggle_sleep_noise; $d
   bindsym o exec $kitty --directory='~/Downloads'; $d
   bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
-  #       q
+  bindsym q exec $kitty_open 'nvim ~/Documents/todo'; $d
   bindsym r exec $kitty_open 'htop'; $d
   bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
-  #       u
+  bindsym u exec toggle_touchpad; $d
   bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
   bindsym w exec $kitty_open '~/pbin/worth'; $d
   bindsym x exec toggle_screenkey; $d
@@ -298,6 +299,7 @@ mode "move" {
 bindsym $mod+Home mode "clipboard_emoji"
 mode "clipboard_emoji" {
   bindsym s exec "echo -n '¯\_(ツ)_/¯' | xclip"; $d
+  bindsym Shift+s exec "echo -n '¯\\\_(ツ)\_/¯' | xclip"; $d
   bindsym b exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"; $d
   bindsym c exec "echo -n 'ಥ_ಥ' | xclip"; $d
   bindsym d exec "echo -n '(✿ ◕‿◕) ᓄ✂╰U╯' | xclip"; $d

@@ -281,7 +281,7 @@ alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons f
 export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
-export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 export LD_LIBRARY_PATH="/usr/local/cuda-9.0/lib64"
 
 # Math stuff
@@ -311,6 +311,9 @@ alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 
 # Mongodb stuff
 alias mongo='rlwrap --always-readline mongo'
+
+# AWS stuff
+alias aws='awscliv2'
 
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }

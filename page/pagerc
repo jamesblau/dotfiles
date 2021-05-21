@@ -15,6 +15,7 @@ setl scrollback=-1
 setl scrolloff=999
 setl signcolumn=no
 setl modified
+setl mouse=nv
 setl nomodifiable
 setl invhlsearch
 setl clipboard+=unnamedplus
