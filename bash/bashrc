@@ -239,6 +239,12 @@ function passwords () { while true; do clear; password $@; read; done; }
 alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet '${HOME}'/.ssh/id_rsa)'
 # TODO: fix or remove
 
+# ssh stuff
+function ssht () {
+  TERM=xterm ssh "${@}" -t tmux new -A -s default
+}
+alias ssh="ssht"
+
 # Ethernet
 alias ethernet='killInternet; \
         sudo ifconfig eth0 up; \
@@ -314,6 +320,7 @@ alias mongo='rlwrap --always-readline mongo'
 
 # AWS stuff
 alias aws='awscliv2'
+alias s3='aws --profile james s3'
 
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }
@@ -359,6 +366,9 @@ export PERL5LIB=~/perl5/lib/perl5/local/
   # TODO: needed?
   # export FZF_DEFAULT_OPTS="--bind ctrl-g:toggle-all"
 }
+
+# Json stuff
+alias ungron="gron --ungron"
 
 # Open output file names in vim
 bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
