@@ -28,8 +28,6 @@ rofi.color-normal:  #404040, #dcdccc, #404040, #1f1f1f, #ffffff
 rofi.color-active:  #404040, #7cb8bb, #404040, #1f1f1f, #7cb8bb
 rofi.color-urgent:  #404040, #dca3a3, #404040, #1f1f1f, #dca3a3
 
-/* rofi.kb-cancel: Control+c */
-
 rofi.separator-style: solid
 
 rofi.font: hack 20
