@@ -283,6 +283,17 @@ mode "resize" {
   bindsym Escape $d
 }
 
+bindsym $mod+F7 mode "screenlayout"
+mode "screenlayout" {
+  bindsym e exec ~/dotfiles/screenlayout/eidolon.conf.sh; $d
+  bindsym o exec ~/dotfiles/screenlayout/eidolon_other.conf.sh; $d
+  bindsym v exec ~/dotfiles/screenlayout/eidolon_vert.conf.sh; $d
+  bindsym s exec ~/dotfiles/screenlayout/eidolon_small.conf.sh; $d
+
+  bindsym Return $d
+  bindsym Escape $d
+}
+
 bindsym $mod+m mode "move"
 mode "move" {
   # Move between monitors
