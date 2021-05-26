@@ -16,14 +16,9 @@ cd ~/.vim
 [ -d syntax   ] || ln -s ~/dotfiles/syntax syntax
 
 mkdir -p ~/.config
-if command -v nvim &>/dev/null; then
-  mkdir -p ~/.config/nvim
-  cd ~/.config/nvim
-  [ -d ftdetect ] || ln -s ~/dotfiles/ftdetect ftdetect
-  [ -d ftplugin ] || ln -s ~/dotfiles/ftplugin ftplugin
-  [ -d syntax   ] || ln -s ~/dotfiles/syntax syntax
-  [ -e init.vim ] || ln -s ~/dotfiles/nvim/nvimrc init.vim
-fi
+ln -s ~/.vim ~/.config/nvim
+cd ~/.config/nvim
+[ -e init.vim ] || ln -s ~/dotfiles/nvim/nvimrc init.vim
 
 cd ~
 [ -L ~/bin ] && rm ~/bin

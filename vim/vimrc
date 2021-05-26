@@ -757,6 +757,8 @@ endfunction
 nnoremap <Leader>dt :call DiffThese()<CR>
 nnoremap <Leader>do :windo diffo<CR>
 nnoremap <Leader>ds :call DiffWithSaved()<CR>
+vnoremap <Leader>do :'<,'>diffget<CR>
+vnoremap <Leader>dp :'<,'>diffput<CR>
 
 " Scalding stuff
 nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>

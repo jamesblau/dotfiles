@@ -319,7 +319,7 @@ alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 alias mongo='rlwrap --always-readline mongo'
 
 # AWS stuff
-alias aws='awscliv2'
+alias aws='aws --profile james'
 alias s3='aws --profile james s3'
 
 # Easy nohup
