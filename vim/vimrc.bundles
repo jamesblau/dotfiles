@@ -482,8 +482,8 @@ if !exists('g:james_minimal_plugins')
       Plug 'bkad/CamelCaseMotion'
     " }}}
     Plug 'kana/vim-textobj-entire'
-    Plug 'michaeljsmith/vim-indent-object'
     Plug 'kana/vim-textobj-user'
+    Plug 'michaeljsmith/vim-indent-object'
     Plug 'vim-scripts/Parameter-Text-Objects'
     " Plug 'tpope/vim-surround' {{{
       " Sneak has S so use ,S

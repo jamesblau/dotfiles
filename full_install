@@ -111,6 +111,7 @@ wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key ad
 sudo snap install discord
 
 go get github.com/prasmussen/gdrive
+go get github.com/jehiah/json2csv
   # in case of credentials problem:
     # make credential for dummy project
       # https://console.developers.google.com/apis/credentials

@@ -219,6 +219,7 @@ alias ipy='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 function fluentpy () {
   python3 -m fluentpy "lib.sys.stdin.readlines()""$@"'.map(_.each.strip("\n")._).map(print)'
 }
+alias jn='jupyter-notebook --browser="google-chrome-stable --new-window %s"'
 
 # R stuff
 alias r=radian
@@ -319,8 +320,9 @@ alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 alias mongo='rlwrap --always-readline mongo'
 
 # AWS stuff
-alias aws='aws --profile james'
-alias s3='aws --profile james s3'
+alias s3='aws s3'
+export AWS_PROFILE=james
+export AWS_CLI_AUTO_PROMPT=on-partial
 
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }
@@ -369,6 +371,7 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 
 # Json stuff
 alias norg="gron --ungron"
+alias jqcsv='jq -r '"'"'(map(keys) | add | unique) as $cols | map(. as $row | $cols | map($row[.])) as $rows | $cols, $rows[] | @csv'"'"''
 
 # Open output file names in vim
 bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
@@ -431,13 +434,13 @@ alias np="${HOME}/.cargo/bin/page -c '~/dotfiles/page/pagerc'"
 alias co="conda activate"
 __conda_setup="$("${HOME}/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+  eval "$__conda_setup"
 else
-    if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="${HOME}/anaconda3/bin:$PATH"
-    fi
+  if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
+    . "${HOME}/anaconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="${HOME}/anaconda3/bin:$PATH"
+  fi
 fi
 unset __conda_setup
 

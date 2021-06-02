@@ -1,9 +1,16 @@
 #!/bin/bash -x
 
-running_sources=($(pactl list short sources | grep RUNNING | cut -f 1))
-idle_sources=($(pactl list short sources | grep IDLE | cut -f 1))
-toggling_sources=${running_sources[@]:-${idle_sources[@]}}
-for source in ${toggling_sources[@]}; do
-  pactl set-source-mute ${source} toggle
-done
-killall -USR1 i3status
+sources=($(pactl list short sources | cut -f 1))
+
+if [ -e ~/.mics_muted ]
+then
+  for source in ${sources[@]}; do
+    pactl set-source-mute ${source} 0
+    rm ~/.mics_muted
+  done
+else
+  for source in ${sources[@]}; do
+    pactl set-source-mute ${source} 1
+    touch ~/.mics_muted
+  done
+fi
