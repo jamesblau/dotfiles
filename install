@@ -15,6 +15,7 @@ cd ~/.vim
 [ -d ftplugin ] || ln -s ~/dotfiles/ftplugin ftplugin
 [ -d syntax   ] || ln -s ~/dotfiles/syntax syntax
 
+mkdir -p ~/.config
 if command -v nvim &>/dev/null; then
   mkdir -p ~/.config/nvim
   cd ~/.config/nvim

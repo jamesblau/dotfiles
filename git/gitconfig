@@ -24,4 +24,4 @@
 [push]
   default = current
 [credential]
-  helper = cache
+  helper = store

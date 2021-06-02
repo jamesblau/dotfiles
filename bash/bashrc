@@ -312,9 +312,6 @@ alias sbt-testConsoleQuick='rlwrap sbt test:consoleQuick -Xnojline'
 # Mongodb stuff
 alias mongo='rlwrap --always-readline mongo'
 
-# AWS stuff
-alias aws='awscliv2'
-
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }
 function quieter () { (nohup "$@" > /dev/null &); exit; }
