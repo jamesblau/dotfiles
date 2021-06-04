@@ -22,6 +22,14 @@ i3status | (read line && echo $line && read line && echo $line && while :
 do
   read line
 
+  # Ensure vpn is actually running
+  if openvpn3 sessions-list | grep "No sessions available" > /dev/null; then
+    rm -f ~/.openvpn_pid
+  else
+    pgrep openvpn > ~/.openvpn_pid
+  fi
+
+  # Update IP address
   IP=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | sed 's/"//g')
   if [[ -n ${IP} ]]; then
     echo ${IP} > ~/.myip
@@ -29,6 +37,7 @@ do
     rm ~/.myip
   fi
 
+  # Audio stuff
   volume=$(<<< "${line}" sed 's/^.*\({[^{}]*}\)]$/\1/')
   level_status=$(amixer sget Capture | tail -n 1 | cut -d '[' -f 2,4 | sed 's/[][]//g')
   color=$(<<< ${level_status} grep -q off && echo ',"color":"#dfaf8f"')
