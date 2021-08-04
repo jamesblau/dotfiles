@@ -1,17 +1,18 @@
 #!/bin/bash
 
-if pgrep openvpn > /dev/null; then
+if openvpn3 sessions-list | grep -v "No sessions available" > /dev/null; then
   if [[ $1 == "on" ]]; then
     exit
   else
-    nordvpn disconnect
+    openvpn3 session-manage --disconnect --config ~/.ovpn/amaryllis_james@nearamericas.openvpn.com.ovpn
     rm -f ~/.openvpn_pid
   fi
 elif [[ $1 == "off" ]]; then
   rm -f ~/.openvpn_pid
   exit
 else
-  nordvpn connect
+  openvpn3 session-start --config ~/.ovpn/amaryllis_james@nearamericas.openvpn.com.ovpn
   pgrep openvpn > ~/.openvpn_pid
 fi
 killall -USR1 i3status
+read

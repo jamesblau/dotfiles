@@ -9,7 +9,7 @@ set $user james
 set $mod Mod4
 set $kitty kitty --config ~/.kitty.conf
 set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
-font pango:DejaVu Sans Mono Bold 7
+font pango:DejaVu Sans Mono Bold 8
 new_window 1pixel
 workspace_layout tabbed
 
@@ -108,7 +108,7 @@ bindsym XF86Favorites kill
 # Fix wifi
 bindsym $mod+F8 exec toggle_wifi
 bindsym $mod+Control+F8 exec toggle_radio
-bindsym $mod+Control+Shift+F8 exec toggle_vpn
+bindsym $mod+Control+Shift+F8 exec $kitty_open toggle_vpn
 
 # Kill focused window
 bindsym $mod+Control+Shift+BackSpace kill
@@ -285,10 +285,10 @@ mode "resize" {
 
 bindsym $mod+F7 mode "screenlayout"
 mode "screenlayout" {
-  bindsym e exec ~/dotfiles/screenlayout/eidolon.conf.sh; $d
-  bindsym o exec ~/dotfiles/screenlayout/eidolon_other.conf.sh; $d
-  bindsym v exec ~/dotfiles/screenlayout/eidolon_vert.conf.sh; $d
-  bindsym s exec ~/dotfiles/screenlayout/eidolon_small.conf.sh; $d
+  bindsym a exec ~/dotfiles/screenlayout/amaryllis.conf.sh; $d
+  bindsym o exec ~/dotfiles/screenlayout/amaryllis_other.conf.sh; $d
+  bindsym v exec ~/dotfiles/screenlayout/amaryllis_vert.conf.sh; $d
+  bindsym s exec ~/dotfiles/screenlayout/amaryllis_small.conf.sh; $d
 
   bindsym Return $d
   bindsym Escape $d
@@ -371,7 +371,7 @@ client.background       #1f1f1f
 
 bar {
   status_command ~/bin/i3status_custom.sh
-  font pango:DejaVu Sans Mono 11
+  font pango:DejaVu Sans Mono 12
   tray_output eDP-1
   tray_output eDP-1-1
   tray_output HDMI-1-1
