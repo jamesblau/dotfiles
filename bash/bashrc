@@ -130,7 +130,9 @@ alias youtube-dl="youtube-dl --restrict-filenames"
 
 # Choose vim
 # TODO: When in neovim terminal, open files in neovim buffer
-if command -v nvim &>/dev/null; then
+if [[ -x ~/pbin/nvim.appimage ]]; then
+  my_vim='~/pbin/nvim.appimage'
+elif command -v nvim &>/dev/null; then
   my_vim='nvim'
 else
   my_vim='vim'
@@ -139,6 +141,7 @@ export GIT_EDITOR="${my_vim}"
 export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
 alias vi="${my_vim}"
+alias nvim="${my_vim}"
 alias nvi="${my_vim} -c 'call NotesGoyo()'"
 # For opening files through i3 (whenever non-interactive?)
 [[ $(which nvim) == ${HOME}/bin/nvim ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime

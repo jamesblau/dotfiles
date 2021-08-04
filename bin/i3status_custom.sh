@@ -23,10 +23,10 @@ do
   read line
 
   # Ensure vpn is actually running
-  if openvpn3 sessions-list | grep "No sessions available" > /dev/null; then
-    rm -f ~/.openvpn_pid
-  else
+  if pgrep openvpn > /dev/null; then
     pgrep openvpn > ~/.openvpn_pid
+  else
+    rm -f ~/.openvpn_pid
   fi
 
   # Update IP address
