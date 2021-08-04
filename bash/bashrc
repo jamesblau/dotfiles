@@ -242,7 +242,7 @@ alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet '${HOME}'/.ss
 
 # ssh stuff
 function ssht () {
-  TERM=xterm ssh "${@}" -t tmux new -A -s default
+  TERM=screen-256color ssh "${1}" -t tmux new -A -s "${2:-default} "${@:3}""
 }
 alias ssh="ssht"
 
@@ -321,8 +321,12 @@ alias mongo='rlwrap --always-readline mongo'
 
 # AWS stuff
 alias s3='aws s3'
+alias s3s='aws s3 ls --summarize --recursive --human-readable'
 export AWS_PROFILE=james
 export AWS_CLI_AUTO_PROMPT=on-partial
+
+# Quicker unmount with fusermount
+alias fumt='fusermount -u'
 
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }
@@ -426,6 +430,8 @@ alias uniq_nosort='awk '\''!x[$0]++'\'''
 alias rgm='rg -M 10000'
 # Ripgrep within filenames
 alias rgf='rg --files | rg'
+# Ripgrep ignoring .gitignore
+alias rgn='rg --no-ignore'
 
 # Page with config
 alias np="${HOME}/.cargo/bin/page -c '~/dotfiles/page/pagerc'"

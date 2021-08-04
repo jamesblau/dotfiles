@@ -23,6 +23,7 @@ cd ~/.config/nvim
 cd ~
 [ -L ~/bin ] && rm ~/bin
 ln -s ~/dotfiles/bin bin
+[ -f ~/.profile ] || ln -s ~/.bashrc .profile
 
 for dir in "${__deploy[@]}"; do
   for path in ~/dotfiles/"${dir}"/*; do

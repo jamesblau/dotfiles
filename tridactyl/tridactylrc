@@ -62,10 +62,10 @@ colors dark
 
 " Misc settings
 set allowautofocus false
+js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "kitty --config ~/.kitty.conf nvim" : "auto"; tri.config.set("editorcmd", editorcmd)})
 " set editorcmd 'termite -e "vi %f"'
-set editorcmd 'kitty --config ~/.kitty.conf nvim %f'
-js tri.config.set("editorcmd", "kitty --config ~/.kitty.conf nvim")
-" js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "st vim" : "auto"; tri.config.set("editorcmd", editorcmd)})
+" set editorcmd 'kitty --config ~/.kitty.conf nvim %f'
+" js tri.config.set("editorcmd", "kitty --config ~/.kitty.conf nvim")
 " js tri.config.set("editorcmd", "auto")
 
 set hintchars hjklasdfgyuiopqwertnmzxcvb

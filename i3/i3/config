@@ -306,6 +306,27 @@ mode "move" {
   bindsym Escape $d
 }
 
+# TODO: Why doesn't this work without --release?
+# bindsym $mod+F12 mode "num_lock"
+# mode "num_lock" {
+  # Simulate number pad
+  # bindsym --release u exec xdotool key 4
+  # bindsym --release i exec xdotool key 5
+  # bindsym --release o exec xdotool key 6
+  # bindsym --release j exec xdotool key 1
+  # bindsym --release k exec xdotool key 2
+  # bindsym --release l exec xdotool key 3
+
+  # bindsym u exec xdotool key 4
+  # bindsym i exec xdotool key 5
+  # bindsym o exec xdotool key 6
+  # bindsym j exec xdotool key 1
+  # bindsym k exec xdotool key 2
+  # bindsym l exec xdotool key 3
+
+  # bindsym $mod+F12 $d
+# }
+
 # This is the clever part
 bindsym $mod+Home mode "clipboard_emoji"
 mode "clipboard_emoji" {

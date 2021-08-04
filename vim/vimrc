@@ -755,7 +755,7 @@ function! DiffThese()
 endfunction
 
 nnoremap <Leader>dt :call DiffThese()<CR>
-nnoremap <Leader>do :windo diffo<CR>
+nnoremap <Leader>dT :windo diffo<CR>
 nnoremap <Leader>ds :call DiffWithSaved()<CR>
 vnoremap <Leader>do :'<,'>diffget<CR>
 vnoremap <Leader>dp :'<,'>diffput<CR>
