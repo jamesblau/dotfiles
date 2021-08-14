@@ -47,3 +47,106 @@
 #webrtcIndicator {
   display: none! important;
 }
+
+/* Makes tabs toolbar items zero-height initially and sets enlarge them to fill up space equal to tab-min-height set on tabs. Optionally use privatemode_indicator_as_menu_button.css to replace main menu icon with private browsing indicator while tabs are hidden. */
+/* From https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/hide_tabs_with_one_tab.css */
+
+/* Dummy variable to support both versions 89-90 */
+:root{ --tab-block-margin: var(--proton-tab-block-margin) }
+
+:root[sizemode="normal"] #nav-bar{ --uc-window-drag-space-width: 20px }
+
+#titlebar{ -moz-appearance: none !important; }
+#TabsToolbar{ min-height: 0px !important }
+
+#tabbrowser-tabs, #tabbrowser-tabs > .tabbrowser-arrowscrollbox, #tabbrowser-arrowscrollbox{ min-height: 0 !important; }
+
+:root:not([customizing]) #tabbrowser-tabs .tabs-newtab-button,
+:root:not([customizing]) #tabs-newtab-button,
+:root:not([customizing]) #TabsToolbar-customization-target > .toolbarbutton-1,
+:root:not([customizing]) #TabsToolbar .titlebar-button{
+  -moz-appearance: none !important;
+  height: 0px;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  -moz-box-align: stretch;
+  margin: 0 !important;
+}
+
+.accessibility-indicator,
+.private-browsing-indicator{ 
+  height: unset !important;
+}
+.accessibility-indicator > hbox{ padding-block: 0 !important }
+
+/* #tabbrowser-tabs .tabbrowser-tab{ height: calc(var(--tab-min-height) + 2 * var(--tab-block-margin,0px)) } */
+
+#tabbrowser-tabs .tabbrowser-tab[first-visible-tab="true"][last-visible-tab="true"]{
+  visibility: collapse !important;
+}
+
+/* Button re-styling */
+/* #tabs-newtab-button:hover, */
+/* #tabbrowser-tabs .tabs-newtab-button:hover{ background-color: var(--toolbarbutton-hover-background) } */
+
+/* #tabs-newtab-button > .toolbarbutton-icon, */
+/* #tabbrowser-tabs .tabs-newtab-button > .toolbarbutton-icon{ */
+  /* padding: 0 !important; */
+  /* transform: scale(0.6); */
+  /* background-color: transparent !important; */
+/* } */
+/* Fix window controls not being clickable */
+:root[tabsintitlebar] #toolbar-menubar[autohide="true"][inactive]{
+  transition: height 0ms steps(1) 80ms;
+}
+:where(#nav-bar){
+  border-inline: var(--uc-window-drag-space-width) solid var(--toolbar-bgcolor);
+}
+
+/* Compact rectangular tabs (from https://gist.github.com/maciejjo/44d3aa949fe1345976e1, partially from http://userstyles.org/styles/99560/square-tab-for-firefox-australis) */
+
+#TabsToolbar .arrowscrollbox-scrollbox {
+  padding: 0 !important;
+}
+#TabsToolbar .tabbrowser-tabs {
+  height:20px !important;
+  /* background: rgba(0,0,0,1) !important; */
+}
+#TabsToolbar .tabbrowser-tab {
+  border-width: 0px !important;
+  /* background: rgba(0,0,0,1) !important; */
+  background-clip: padding-box !important;
+  /* color: #ffffff !important; */
+}
+#TabsToolbar .tabbrowser-tab:not[pinned] {
+  margin: 0 !important;
+}
+#TabsToolbar .tabbrowser-tab[pinned] {
+  height: 26px;
+}
+#TabsToolbar .tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
+  padding-top: 4px !important;
+}
+#TabsToolbar .tabbrowser-tab[selected] {
+  background: #FFFFFF !important;
+  background-clip: padding-box !important;
+}
+#TabsToolbar .tab-background {
+  margin: 0 !important;
+  background: transparent !important;
+}
+#TabsToolbar .tab-background-start,
+#TabsToolbar .tab-background-end {
+  display: none !important;
+}
+#TabsToolbar .tab-background-middle {
+  margin: -4px -2px !important;
+  background: transparent !important;
+}
+#TabsToolbar .tabbrowser-tab:after,
+#TabsToolbar .tabbrowser-tab:before {
+  display: none !important;
+}
+#TabsToolbar .toolbarbutton-1 {
+  display: none !important;
+}

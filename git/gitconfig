@@ -21,6 +21,8 @@
   ds = difftool --staged
   m = mergetool
   s = status
+  st = "!git --no-pager stash"
+  br = "!git --no-pager branch"
 [push]
   default = current
 [credential]

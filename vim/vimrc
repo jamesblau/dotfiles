@@ -189,7 +189,7 @@ if v:version >= 704
       set number relativenumber
     endif
   endfunction
-  if !exists('g:james_minimal_plugins')
+  if !exists('g:james_minimal_plugins') && !exists('g:james_pager')
     set number relativenumber
   endif
 else
@@ -201,6 +201,9 @@ else
     endif
   endfunction
   set number
+  if !exists('g:james_minimal_plugins') && !exists('g:james_pager')
+    set number
+  endif
 endif
 
 function! NfAlphaToggle()

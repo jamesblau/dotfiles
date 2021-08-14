@@ -12,7 +12,7 @@ let g:page_icon_pipe = '|§'
 source ~/.vimrc
 setl shortmess=I
 setl scrollback=-1
-setl scrolloff=999
+" setl scrolloff=999
 setl signcolumn=no
 setl modified
 setl mouse=nv
