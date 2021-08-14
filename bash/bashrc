@@ -437,7 +437,8 @@ alias rgf='rg --files | rg'
 alias rgn='rg --no-ignore'
 
 # Page with config
-alias np="${HOME}/.cargo/bin/page -c '~/dotfiles/page/pagerc'"
+export PAGER="page -q 90000 -c '~/dotfiles/page/pagerc'"
+export MANPAGER="page -c '~/dotfiles/page/pagerc' -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'"
 
 # Conda stuff; activate manually
 alias co="conda activate"
