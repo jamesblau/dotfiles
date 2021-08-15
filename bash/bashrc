@@ -288,7 +288,8 @@ bind -m vi-insert "\C-o":
 # Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/src/ubermedia-tweetup/datascience/utils/emr_scripts"
+export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/src/ubermedia-inc/dpod-treasure-chest/emr_tools"
+
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
@@ -330,6 +331,9 @@ export AWS_CLI_AUTO_PROMPT=on-partial
 
 # Quicker unmount with fusermount
 alias fumt='fusermount -u'
+
+# Ubermedia AWS EMR utils
+alias ue='um-emr'
 
 # Easy nohup
 function quiet () { (nohup "$@" > /dev/null &); }

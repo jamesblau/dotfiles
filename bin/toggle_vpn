@@ -13,6 +13,7 @@ elif [[ $1 == "off" ]]; then
 else
   openvpn3 session-start --config ~/.ovpn/amaryllis_james@nearamericas.openvpn.com.ovpn
   pgrep openvpn > ~/.openvpn_pid
+  sleep 5
 fi
 killall -USR1 i3status
 read
