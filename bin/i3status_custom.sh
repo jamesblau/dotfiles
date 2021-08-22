@@ -23,7 +23,7 @@ do
   read line
 
   # Ensure vpn is actually running
-  if pgrep openvpn > /dev/null; then
+  if openvpn3 sessions-list | grep -q connected; then
     pgrep openvpn > ~/.openvpn_pid
   else
     rm -f ~/.openvpn_pid
