@@ -416,6 +416,9 @@ bindsym Control+q exec ~/bin/noctrlq.sh
 bindsym $mod+Control+q exec ~/src/opensource/gilbertw1/roficlip/roficlip
 bindsym $mod+Control+a exec $kitty_open 'nvim ~/.local/share/clipster/history +"call ClipsterEdit()"'
 
+# Bash history management
+bindsym $mod+Control+h exec $kitty_open 'nvim ~/.my_bash_history'
+
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
 bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
