@@ -440,9 +440,13 @@ alias rgf='rg --files | rg'
 # Ripgrep ignoring .gitignore
 alias rgn='rg --no-ignore'
 
+# OpenMW portmod
+alias pmo="portmod openmw"
+
 # Page with config
-export PAGER="page -q 90000 -c '~/dotfiles/page/pagerc'"
-export MANPAGER="page -c '~/dotfiles/page/pagerc' -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'"
+# export PAGER="pager -q 90000 -c '~/dotfiles/page/pagerc'"
+export PAGER="pager -q 90000"
+export MANPAGER="pager -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'"
 
 # Conda stuff; activate manually
 alias co="conda activate"
