@@ -168,14 +168,14 @@ if v:version > 702
   au! BufLeave * let b:winview = winsaveview()
   au! BufEnter * if(exists('b:winview') && &buftype != 'terminal') | call winrestview(b:winview) | endif
   " JSON
-  nmap <Leader>jp :%!underscore print<CR>:set filetype=json<CR><F5>
-  nmap <Leader>jt :%!python -mjson.tool<CR>:set filetype=json<CR><F5>
-  xmap <Leader>jp :!underscore print<CR>:set filetype=json<CR><F5>
-  xmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
+  nmap <Leader>jp :%!underscore print<CR>:set filetype=json<CR><Leader><C-P>
+  nmap <Leader>jt :%!python -mjson.tool<CR>:set filetype=json<CR><Leader><C-P>
+  xmap <Leader>jp :!underscore print<CR>:set filetype=json<CR><Leader><C-P>
+  xmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><Leader><C-P>
 else
   " JSON
-  nmap <Leader>jt :%!python2.6 -mjson.tool<CR>:set filetype=json<CR><F5>
-  xmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><F5>
+  nmap <Leader>jt :%!python2.6 -mjson.tool<CR>:set filetype=json<CR><Leader><C-P>
+  xmap <Leader>jt :!python -mjson.tool<CR>:set filetype=json<CR><Leader><C-P>
   if !has('nvim')
     " Backspace whatever. hack...
     inoremap  <BS>
@@ -664,8 +664,8 @@ nnoremap <Leader>BF yyo" }}}<C-C>k>>PI" <C-C>A {{{<C-C>j_
 "Remove fold TODO
 
 " Remove whitespace
-nnoremap <silent> <F5> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
-xnoremap <silent> <F5> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
+nnoremap <silent> <Leader><C-P> mm:let _s=@/<Bar>%s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
+xnoremap <silent> <Leader><C-P> mm:<Home>let _s=@/<Bar><End>s/\s\+$//e<Bar>let @/=_s<Bar>nohl<CR>`m
 
 " Emacs stuff!
 cnoremap <C-D> <Delete>
@@ -764,11 +764,12 @@ vnoremap <Leader>do :'<,'>diffget<CR>
 vnoremap <Leader>dp :'<,'>diffput<CR>
 
 " Scalding stuff
-nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><F5>
+nmap <Leader>HC :%s/ *\.incrementCounter(\([^")]*"[^"]*"[^")]*\)*)\n\?//ge<CR><Leader><C-P>
 
 " Python stuff
 autocmd FileType python nnoremap <buffer> <Leader>cf :setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'<CR>
 autocmd FileType python nnoremap <buffer> <Leader>cF :set foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'<CR>
+autocmd FileType python nnoremap <buffer> <Leader>yb :!black %<CR>
 
 " Last buffer more easily
 nmap <A-BS> <C-^>
@@ -870,7 +871,7 @@ function! ScalaScratchTerm()
 endfunction
 
 function! PythonScratch()
-  set ft=python syn=python mouse=nv textwidth=79
+  set ft=python syn=python mouse=nv textwidth=0
   call ScratchMaps()
   map <buffer> <F12> ,F<C-L>A%paste<CR><CR><C-Space>G:wincmd<SPACE>p<CR>g'q
   nmap <buffer> <CR> mqyai<F12>
