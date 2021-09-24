@@ -8,6 +8,7 @@ case $1 in
   *e*) ~/dotfiles/screenlayout/eidolon.conf.sh; i3-msg restart ;;
   *v*) ~/dotfiles/screenlayout/eidolon_vert.conf.sh; i3-msg restart ;;
   *o*) ~/dotfiles/screenlayout/eidolon_other.conf.sh; i3-msg restart ;;
+  *g*) ~/dotfiles/screenlayout/eidolon_g.conf.sh; i3-msg restart ;;
 esac
 
 laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/')
