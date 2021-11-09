@@ -5,9 +5,9 @@
 ~/bin/conf_keyboard
 
 case $1 in
-  *e*) ~/dotfiles/screenlayout/eidolon.conf.sh; i3-msg restart ;;
-  *v*) ~/dotfiles/screenlayout/eidolon_vert.conf.sh; i3-msg restart ;;
-  *o*) ~/dotfiles/screenlayout/eidolon_other.conf.sh; i3-msg restart ;;
+  *a*) ~/dotfiles/screenlayout/amaryllis.conf.sh; i3-msg restart ;;
+  *v*) ~/dotfiles/screenlayout/amaryllis_vert.conf.sh; i3-msg restart ;;
+  *o*) ~/dotfiles/screenlayout/amaryllis_other.conf.sh; i3-msg restart ;;
 esac
 
 # laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/')
