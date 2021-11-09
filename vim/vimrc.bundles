@@ -141,9 +141,9 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>si :IndentGuidesToggle<CR>
       Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
     " }}}
-    " Plug 'luochen1990/rainbow' {{{
+    " Plug 'frazrepo/vim-rainbow' {{{
       let g:rainbow_active = 1
-      Plug 'luochen1990/rainbow'
+      Plug 'frazrepo/vim-rainbow'
     " }}}
     " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } {{{
       " let g:goyo_width=80
@@ -381,6 +381,12 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
       Plug 'airblade/vim-gitgutter'
     " }}}
+    " Plug 'jpalardy/vim-slime' {{{
+      let g:slime_target = "neovim"
+      let g:slime_python_ipython = 1
+      let g:slime_preserve_curpos = 0
+      Plug 'jpalardy/vim-slime'
+    " }}}
     " Plug 'christoomey/vim-tmux-navigator' {{{
       let g:tmux_navigator_no_mappings = 1
       "nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<CR>
@@ -404,7 +410,7 @@ if !exists('g:james_minimal_plugins')
       nnoremap <silent> <Leader>gm :Gdiff master<CR>
       nnoremap <silent> <Leader>gc :Gcommit<CR>
       nnoremap <silent> <Leader>gb :Gblame<CR>
-      nnoremap <silent> <Leader>gl :Glog<CR>
+      nnoremap <silent> <Leader>gl :Gclog<CR>
       nnoremap <silent> <Leader>gp :Git push<CR>
       nnoremap <silent> <Leader>ge :Gedit<CR>
       Plug 'tpope/vim-fugitive'
@@ -552,6 +558,7 @@ if !exists('g:james_minimal_plugins')
     Plug 't9md/vim-chef'
     Plug 'tpope/vim-ragtag'
     Plug 'tpope/vim-dadbod', { 'for': 'sql' }
+    Plug 'Vimjas/vim-python-pep8-indent'
     " Plug 'nvie/vim-flake8', { 'for': 'python' }
   " }}}
 

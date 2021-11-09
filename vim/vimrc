@@ -874,7 +874,7 @@ function! PythonScratch()
   set ft=python syn=python mouse=nv textwidth=0
   call ScratchMaps()
   map <buffer> <F12> ,F<C-L>A%paste<CR><CR><C-Space>G:wincmd<SPACE>p<CR>g'q
-  nmap <buffer> <CR> mqyai<F12>
+  nmap <buffer> <CR> mqyip<F12>
   " comment
   nmap <buffer> <A-BS> vai<C-_>
   " run test block
@@ -886,6 +886,27 @@ function! PythonScratchTerm()
   " vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent --pylab
   vsplit term://ipython3 --TerminalInteractiveShell.editing_mode=vi --no-autoindent
   wincmd p
+  stopinsert
+endfunction
+
+function! RunScriptScratch()
+  nmap <buffer> <CR> <C-L>i<Esc>k<CR><C-Space>G:wincmd<Space>p<CR>
+endfunction
+
+function! PtipythonScratchTerm()
+  map <CR> <C-C><C-C>
+  vsplit  | term PAGER=less ptipython
+  wincmd p
+  stopinsert
+endfunction
+
+function! PysparkScratchTerm()
+  set mouse=nv
+  map <CR> mm<C-C><C-C>`m
+  vsplit | term PAGER=less pyspark
+  let t:term_id = b:terminal_job_id
+  wincmd p
+  execute 'let b:slime_config = {"jobid": "'.t:term_id . '"}'
   stopinsert
 endfunction
 
@@ -912,6 +933,8 @@ nmap <Leader>tS :call ScalaScratch()<CR>
 nmap <Leader>tT :call ScalaScratchTerm()<CR>
 nmap <Leader>tp :call PythonScratch()<CR>
 nmap <Leader>tP :call PythonScratchTerm()<CR>
+nmap <Leader>ti :call PtipythonScratchTerm()<CR>
+nmap <Leader>tI :call PysparkScratchTerm()<CR>
 nmap <Leader>tr :call RunScriptScratch()<CR>
 nmap <Leader>tR :call RunScriptScratchTerm()<CR>
 nmap <Leader>tE :abo new \| setl bt=nowrite \| call ScalaScratch()<CR>
