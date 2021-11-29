@@ -23,6 +23,7 @@
   s = status
   st = "!git --no-pager stash"
   br = "!git --no-pager branch"
+  ns = "!git --no-pager diff --name-status"
 [push]
   default = current
 [credential]
