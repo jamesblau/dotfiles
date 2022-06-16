@@ -141,9 +141,9 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>si :IndentGuidesToggle<CR>
       Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
     " }}}
-    " Plug 'frazrepo/vim-rainbow' {{{
+    " Plug 'luochen1990/rainbow' {{{
       let g:rainbow_active = 1
-      Plug 'frazrepo/vim-rainbow'
+      Plug 'luochen1990/rainbow'
     " }}}
     " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } {{{
       " let g:goyo_width=80
@@ -272,6 +272,14 @@ if !exists('g:james_minimal_plugins')
       nnoremap gm :History<CR>
       nnoremap gb :Buffers<CR>
       nnoremap <C-P> :Files<CR>
+      function! FzfSpellSink(word)
+        exe 'normal! "_ciw'.a:word
+      endfunction
+      function! FzfSpell()
+        let suggestions = spellsuggest(expand("<cword>"))
+        return fzf#run({'source': suggestions, 'sink': function("FzfSpellSink"), 'down': 10 })
+      endfunction
+      nnoremap z= :call FzfSpell()<CR>
     " }}}
     Plug 'junegunn/fzf.vim'
     " Plug 'majutsushi/tagbar' if 704 {{{
@@ -342,7 +350,8 @@ if !exists('g:james_minimal_plugins')
       let g:NERDSpaceDelims=1
       let g:NERDCustomDelimiters = {
         \ 'scala': { 'left': '//', 'nested': 1, 'leftAlt': '/**', 'rightAlt': '*/', 'nestedAlt': 0 },
-        \ 'python': { 'left': '#', 'right': '' }
+        \ 'python': { 'left': '#', 'right': '' },
+        \ 'notes': { 'left': '#', 'right': '' }
       \ }
       " This is used with <C-/> in practice
       map <C-_> <Plug>NERDCommenterToggle

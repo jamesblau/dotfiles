@@ -3,5 +3,6 @@ source ~/dotfiles/nvim/nvimrc
 
 " TODO: Get this actually working
 set nofixeol
+set noeol
 
 nmap ZZ yae,FZQ

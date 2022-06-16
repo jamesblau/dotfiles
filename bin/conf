@@ -5,15 +5,36 @@
 ~/bin/conf_keyboard
 
 case $1 in
-  *e*) ~/dotfiles/screenlayout/eidolon.conf.sh; i3-msg restart ;;
-  *v*) ~/dotfiles/screenlayout/eidolon_vert.conf.sh; i3-msg restart ;;
-  *o*) ~/dotfiles/screenlayout/eidolon_other.conf.sh; i3-msg restart ;;
-  *g*) ~/dotfiles/screenlayout/eidolon_g.conf.sh; i3-msg restart ;;
+  *z*) ~/dotfiles/screenlayout/zaphod.conf.sh; i3-msg restart ;;
+  *v*) ~/dotfiles/screenlayout/zaphod_vert.conf.sh; i3-msg restart ;;
+  *s*) ~/dotfiles/screenlayout/zaphod_small.conf.sh; i3-msg restart ;;
+  *o*) ~/dotfiles/screenlayout/zaphod_other.conf.sh; i3-msg restart ;;
 esac
 
-laptop=$(< /sys/devices/virtual/dmi/id/product_version sed 's/^.* \([^ ]*$\)/\1/')
+laptop=$(cat /sys/devices/virtual/dmi/id/product_version)
 
-[ ${laptop} == "T470p" ] && {
+[ "${laptop}" == "ThinkPad P1 Gen 4i" ] && {
+  # stick="TPPS/2 IBM TrackPoint"
+  # xinput list | grep -q "${stick}" && {
+    # xinput set-prop "${stick}" "libinput Accel Speed" 0.3
+    # case $1 in
+      # *m*) speed_scale="1.2" ;;
+      # *) speed_scale="1." ;;
+    # esac
+    # xinput set-prop "${stick}" "Coordinate Transformation Matrix" \
+      # "${speed_scale}", 0 0 0 "${speed_scale}", 0 0 0 1.
+  # }
+
+  pad="ELAN067A:00 04F3:3197 Touchpad"
+  xinput list | grep -q "${pad}" && {
+    xinput set-prop "${pad}" "libinput Click Method Enabled" 0, 0
+    xinput set-prop "${pad}" "libinput Accel Speed" 0.8
+    xinput set-prop "${pad}" "libinput Natural Scrolling Enabled" 0
+    xinput set-button-map "${pad}" 0 0 0 4 5 0 0 0 0 0 0 0
+  }
+}
+
+[ "${laptop}" == "T470p" ] && {
   stick="TPPS/2 IBM TrackPoint"
   xinput list | grep -q "${stick}" && {
     xinput set-prop "${stick}" "libinput Accel Speed" 0.3

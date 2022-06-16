@@ -9,7 +9,7 @@ set $user james
 set $mod Mod4
 set $kitty kitty --config ~/.kitty.conf
 set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
-font pango:DejaVu Sans Mono Bold 7
+font pango:DejaVu Sans Mono Bold 10
 new_window 1pixel
 workspace_layout tabbed
 
@@ -371,7 +371,7 @@ client.background       #1f1f1f
 
 bar {
   status_command ~/bin/i3status_custom.sh
-  font pango:DejaVu Sans Mono 11
+  font pango:DejaVu Sans Mono 13
   tray_output eDP-1
   tray_output eDP-1-1
   tray_output HDMI-1-1
@@ -421,7 +421,7 @@ bindsym $mod+Control+h exec $kitty_open 'nvim ~/.my_bash_history'
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
-bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
+bindsym $mod+Control+Shift+g exec "~/bin/chrome $(xclip -o)"
 bindsym $mod+Control+Shift+q exec "qutebrowser $(xclip -o)"
 
 # Screenshots

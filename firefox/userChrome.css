@@ -41,6 +41,7 @@
 /* Needed for for FF 75 megabar */
 #urlbar {
     --urlbar-toolbar-height: 32px !important;
+    font-size: 12pt !important;
 }
 
 /* Thank you for the help but I know when I am on a video conference */
@@ -60,6 +61,9 @@
 #TabsToolbar{ min-height: 0px !important }
 
 #tabbrowser-tabs, #tabbrowser-tabs > .tabbrowser-arrowscrollbox, #tabbrowser-arrowscrollbox{ min-height: 0 !important; }
+#tabbrowser-tabs .tab-text{
+ font-size:11pt !important;
+}
 
 :root:not([customizing]) #tabbrowser-tabs .tabs-newtab-button,
 :root:not([customizing]) #tabs-newtab-button,
@@ -74,7 +78,7 @@
 }
 
 .accessibility-indicator,
-.private-browsing-indicator{ 
+.private-browsing-indicator{
   height: unset !important;
 }
 .accessibility-indicator > hbox{ padding-block: 0 !important }

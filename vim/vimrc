@@ -55,6 +55,7 @@ set wildmode=longest,list,full
 set wildmenu
 set winminheight=0              " Windows can be 0 lines high
 set iminsert=1
+" set dictionary=/usr/share/dict/words
 
 let loaded_matchparen = 1
 
