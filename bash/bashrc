@@ -455,7 +455,8 @@ alias pmo="portmod openmw"
 # Page with config
 # export PAGER="pager -q 90000 -c '~/dotfiles/page/pagerc'"
 export PAGER="~/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G' -q 90000"
-# export MANPAGER="~/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G' -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'"
+# Why doesn't q work?
+export MANPAGER="/home/james/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E '"'set ft=man | nmap q :q!<CR>'"'"
 
 # Conda stuff; activate manually
 alias co="conda activate"

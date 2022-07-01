@@ -27,6 +27,6 @@ nmap a <Nop>
 nmap A <Nop>
 nmap o <Nop>
 nmap O <Nop>
-nmap q :q<CR>
-nmap <C-C> :q<CR>
+nmap q :q!<CR>
+nmap <C-C> :q!<CR>
 " au TermEnter * exec normal G
