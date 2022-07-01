@@ -92,6 +92,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'justinmk/vim-sneak'
   " }}}
   Plug 'ciaranm/securemodelines'
+  Plug 'vim-scripts/LargeFile'
 " }}}
 
 if !exists('g:james_minimal_plugins')
@@ -394,6 +395,10 @@ if !exists('g:james_minimal_plugins')
       let g:slime_target = "neovim"
       let g:slime_python_ipython = 1
       let g:slime_preserve_curpos = 0
+      let g:slime_no_mappings = 1
+      xmap <Leader><CR> <Plug>SlimeRegionSend
+      nmap <Leader><CR> <Plug>SlimeParagraphSend
+      nmap <Leader><C-V>     <Plug>SlimeConfig
       Plug 'jpalardy/vim-slime'
     " }}}
     " Plug 'christoomey/vim-tmux-navigator' {{{
@@ -414,7 +419,7 @@ if !exists('g:james_minimal_plugins')
       endif
     " }}}
     " Plug 'tpope/vim-fugitive' {{{
-      nnoremap <silent> <Leader>gs :Gstatus<CR>
+      nnoremap <silent> <Leader>gs :Git<CR>
       nnoremap <silent> <Leader>gd :Gdiff<CR>
       nnoremap <silent> <Leader>gm :Gdiff master<CR>
       nnoremap <silent> <Leader>gc :Gcommit<CR>
@@ -555,9 +560,10 @@ if !exists('g:james_minimal_plugins')
       au! BufEnter *.scala call SetScalaOptions()
       Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
     " }}}
-    " Plug 'elzr/vim-json', { 'for': 'json' } {{{
+    " Plug 'elzr/vim-json', { 'on': 'SynJson' } {{{
+      " command! SynJson setl fdm=syntax foldlevel=20 \| Plug 'elzr/vim-json'
       au! BufNewFile,BufRead *.json setl fdm=syntax foldlevel=20
-      Plug 'elzr/vim-json', { 'for': 'json' }
+      Plug 'elzr/vim-json', { 'on': 'SynJson' }
     " }}}
     " Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' } {{{
       au! BufNewFile,BufRead Drakefile* setl ft=drake

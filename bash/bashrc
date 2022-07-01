@@ -217,16 +217,19 @@ function live () {
 export PYTHONSTARTUP=~/.pythonrc.py
 export PYSPARK_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON="ptipython3"
+# export PYSPARK_DRIVER_PYTHON="PAGER=less ptipython3"
 export PYSPARK_DRIVER_PYTHON_OPTS="--vi --dark-bg"
 export PTPYTHON_CONFIG_HOME=~/.ptpython
 alias python=python3
 alias pip=pip3
-alias ipy='ptipython3 --vi'
+alias ipy='PAGER=less ptipython3 --vi'
 # TODO: expand?
 function fluentpy () {
   python3 -m fluentpy "lib.sys.stdin.readlines()""$@"'.map(_.each.strip("\n")._).map(print)'
 }
-alias jn='jupyter-notebook --browser="google-chrome-stable --new-window %s"'
+function jn () {
+  nohup jupyter-notebook --browser="google-chrome-stable --new-window %s" "${@}" > /dev/null &
+}
 
 # R stuff
 alias r=radian
@@ -252,7 +255,7 @@ alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet '${HOME}'/.ss
 
 # ssh stuff
 function ssht () {
-  TERM=screen-256color ssh "${1}" -t tmux new -A -s "${2:-default} "${@:3}""
+  TERM=screen-256color ssh "${1}" -t tmux new -A -s "${2:-default}" "${@:3}"
 }
 alias ssh="ssht"
 

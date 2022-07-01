@@ -407,6 +407,8 @@ nnoremap <Leader>sw :if &linebreak \| setl nowrap nolinebreak \| else \| setl wr
 nnoremap <Leader>sW :windo if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
 nnoremap <silent> <Leader>/ :setl invhlsearch<CR>
 nnoremap <Leader>sz :setl foldmethod=manual<CR>
+nnoremap <Leader>sp :setl paste!<CR>
+nnoremap <Leader>sP :windo setl paste!<CR>
 
 " Break-lines stuff
 let g:james_showbreak="↳↳"
