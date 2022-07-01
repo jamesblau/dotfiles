@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+# Todo: if any RUNNING, adjust only RUNNING
+# running_sources=($(pactl list short sources | grep RUNNING | cut -f 1))
 sources=($(pactl list short sources | cut -f 1))
 for source in ${sources[@]}; do
   pactl set-source-volume ${source} ${1}
