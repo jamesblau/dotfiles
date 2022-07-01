@@ -112,6 +112,7 @@ bindsym $mod+Control+Shift+F8 exec $kitty_open toggle_vpn
 
 # Kill focused window
 bindsym $mod+Control+Shift+BackSpace kill
+bindsym $mod+Control+Shift+Delete kill
 
 # Re-run conf
 bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
@@ -244,6 +245,11 @@ mode "quick_open" {
   bindsym Return $d
   bindsym Escape $d
 }
+
+bindsym $mod+F12 exec $kitty
+bindsym --release $mod+Insert exec xdotool key --clearmodifiers Return
+bindsym --release $mod+Delete exec xdotool key --clearmodifiers BackSpace
+bindsym --release $mod+bracketright exec xdotool key --clearmodifiers bar
 
 bindsym $mod+r mode "resize"
 mode "resize" {

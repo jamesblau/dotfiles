@@ -463,17 +463,33 @@ export PAGER="~/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G' -q 900
 export MANPAGER="/home/james/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E '"'set ft=man | nmap q :q!<CR>'"'"
 
 # Conda stuff; activate manually
-alias co="conda activate"
-__conda_setup="$("${HOME}/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
-    . "${HOME}/anaconda3/etc/profile.d/conda.sh"
-  else
-    export PATH="${HOME}/anaconda3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
+# alias co="conda activate"
+# __conda_setup="$("${HOME}/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+  # eval "$__conda_setup"
+# else
+  # if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
+# # . "${HOME}/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
+  # else
+# # export PATH="${HOME}/anaconda3/bin:$PATH"  # commented out by conda initialize
+  # fi
+# fi
+# unset __conda_setup
 
 # TODO: speed up by extracting as much as possible, in particular anything evaluated when sourced
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/james/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/james/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/james/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/james/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
