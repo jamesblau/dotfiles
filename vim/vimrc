@@ -55,6 +55,7 @@ set wildmode=longest,list,full
 set wildmenu
 set winminheight=0              " Windows can be 0 lines high
 set iminsert=1
+" set dictionary=/usr/share/dict/words
 
 let loaded_matchparen = 1
 
@@ -406,6 +407,8 @@ nnoremap <Leader>sw :if &linebreak \| setl nowrap nolinebreak \| else \| setl wr
 nnoremap <Leader>sW :windo if &linebreak \| setl nowrap nolinebreak \| else \| setl wrap linebreak \| endif<CR>
 nnoremap <silent> <Leader>/ :setl invhlsearch<CR>
 nnoremap <Leader>sz :setl foldmethod=manual<CR>
+nnoremap <Leader>sp :setl paste!<CR>
+nnoremap <Leader>sP :windo setl paste!<CR>
 
 " Break-lines stuff
 let g:james_showbreak="↳↳"

@@ -217,16 +217,19 @@ function live () {
 export PYTHONSTARTUP=~/.pythonrc.py
 export PYSPARK_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON="ptipython3"
+# export PYSPARK_DRIVER_PYTHON="PAGER=less ptipython3"
 export PYSPARK_DRIVER_PYTHON_OPTS="--vi --dark-bg"
 export PTPYTHON_CONFIG_HOME=~/.ptpython
 alias python=python3
 alias pip=pip3
-alias ipy='ptipython3 --vi'
+alias ipy='PAGER=less ptipython3 --vi'
 # TODO: expand?
 function fluentpy () {
   python3 -m fluentpy "lib.sys.stdin.readlines()""$@"'.map(_.each.strip("\n")._).map(print)'
 }
-alias jn='jupyter-notebook --browser="google-chrome-stable --new-window %s"'
+function jn () {
+  nohup jupyter-notebook --browser="google-chrome-stable --new-window %s" "${@}" > /dev/null &
+}
 
 # R stuff
 alias r=radian
@@ -252,7 +255,7 @@ alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet '${HOME}'/.ss
 
 # ssh stuff
 function ssht () {
-  TERM=screen-256color ssh "${1}" -t tmux new -A -s "${2:-default} "${@:3}""
+  TERM=screen-256color ssh "${1}" -t tmux new -A -s "${2:-default}" "${@:3}"
 }
 alias ssh="ssht"
 
@@ -295,7 +298,7 @@ bind -m vi-insert "\C-o":
 # Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/src/ubermedia-inc/dpod-treasure-chest/emr_tools"
+export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/src/ubermedia-inc/dpod-treasure-chest/emr_tools"
 
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
@@ -455,8 +458,8 @@ alias pmo="portmod openmw"
 
 # Page with config
 # export PAGER="pager -q 90000 -c '~/dotfiles/page/pagerc'"
-export PAGER="pager -q 90000"
-export MANPAGER="pager -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'"
+export PAGER="~/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G' -q 90000"
+# export MANPAGER="~/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G' -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'"
 
 # Conda stuff; activate manually
 alias co="conda activate"

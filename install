@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 
 __deploy=( bash editrc git inputrc python ruby tmux vim conda )
 

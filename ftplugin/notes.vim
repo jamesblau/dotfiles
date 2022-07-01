@@ -27,7 +27,7 @@ noremap g0 0
 " Maybe fix entire list?
 " How to identify separate lists? New lines? Starting with "1)"?
 
-setl linebreak showbreak= wrap sw=4 ts=4 sts=4 expandtab
+setl linebreak showbreak= wrap sw=4 ts=4 sts=4 expandtab foldmethod=syntax
 setl iskeyword=@,48-57,_,192-255
 
 " TODO: Would be nice to include some symbols in words:

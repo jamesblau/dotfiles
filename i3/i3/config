@@ -421,7 +421,7 @@ bindsym $mod+Control+h exec $kitty_open 'nvim ~/.my_bash_history'
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
-bindsym $mod+Control+Shift+g exec "google-chrome-stable $(xclip -o)"
+bindsym $mod+Control+Shift+g exec "~/bin/chrome $(xclip -o)"
 bindsym $mod+Control+Shift+q exec "qutebrowser $(xclip -o)"
 
 # Screenshots
