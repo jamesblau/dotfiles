@@ -27,6 +27,7 @@ nmap a <Nop>
 nmap A <Nop>
 nmap o <Nop>
 nmap O <Nop>
-nmap q :q!<CR>
 nmap <C-C> :q!<CR>
+" TODO: Why doesn't this one work?
+nmap q :q!<CR>
 " au TermEnter * exec normal G

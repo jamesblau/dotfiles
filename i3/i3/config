@@ -7,8 +7,8 @@ set $user james
 
 # Basic i3 configuration
 set $mod Mod4
-set $kitty kitty --config ~/.kitty.conf
-set $kitty_open kitty --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
+set $kitty ~/.local/kitty.app/bin/kitty -1 --config ~/.kitty.conf
+set $kitty_open ~/.local/kitty.app/bin/kitty -1 --config ~/.kitty.conf bash --rcfile ~/.bashrc -c
 font pango:DejaVu Sans Mono Bold 10
 new_window 1pixel
 workspace_layout tabbed
@@ -81,7 +81,8 @@ bindsym $mod+Shift+F2 exec "~/bin/adjust_mic -5%"
 bindsym $mod+Shift+F3 exec "~/bin/adjust_mic +5%"
 bindsym $mod+F5 exec $backlight_down
 bindsym $mod+F6 exec $backlight_up
-bindsym $mod+Shift+F5 exec "light -S 0"
+# TODO: Why doesn't "light -S 0" work anymore?
+bindsym $mod+Shift+F5 exec backlight_off
 bindsym $mod+Shift+F6 exec "light -S 100"
 # TODO?: round volume to nearest 5
 
@@ -127,6 +128,10 @@ bindsym $mod+c exec --no-startup-id rofi -show calc -modi calc -no-show-match -n
 bindsym $mod+d exec --no-startup-id PATH=$PATH:/home/$USER/bin:/home/$USER/pbin rofi -case-sensitive -show run
 # Window
 bindsym $mod+x exec --no-startup-id rofi -show window
+
+# Dunst
+bindsym Control+grave exec --no-startup-id dunstctl history-pop
+bindsym Control+space exec --no-startup-id dunstctl close
 
 # Change focus
 bindsym $mod+h focus left
@@ -215,31 +220,34 @@ set $d mode "default"
 bindsym $mod+n mode "quick_open"
 mode "quick_open" {
   bindsym a exec arandr; $d
-  bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
-  bindsym c exec $kitty_open 'nvim ~/bin/conf ~/bin/conf_keyboard ~/dotfiles/install ~/dotfiles/full_install'; $d
-  bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
-  bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
-  bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
+  bindsym b exec $kitty_open '~/pbin/nvim.appimage ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
+  bindsym c exec $kitty_open '~/pbin/nvim.appimage ~/bin/conf ~/bin/conf_keyboard ~/dotfiles/install ~/dotfiles/full_install'; $d
+  bindsym d exec $kitty_open '~/pbin/nvim.appimage ~/Documents/quick_open/digraphs'; $d
+  bindsym e exec $kitty_open 'xclip -o | ~/pbin/nvim.appimage -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
+  bindsym f exec $kitty_open '~/pbin/nvim.appimage ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
   bindsym g exec say $(xsel -o); $d
-  bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
-  bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
-  bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
-  bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf ~/dotfiles/rofi/config'; $d
+  bindsym h exec $kitty_open '~/pbin/nvim.appimage $(xclip -o)'; $d
+  bindsym i exec $kitty_open '~/pbin/nvim.appimage ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
+  bindsym j exec $kitty_open '~/pbin/nvim.appimage ~/Documents/quick_open/judo'; $d
+  bindsym k exec $kitty_open '~/pbin/nvim.appimage ~/dotfiles/kitty/kitty.conf ~/dotfiles/rofi/config'; $d
   bindsym l exec $kitty_open 'ranger'; $d
   bindsym m exec pavucontrol; $d
   bindsym n exec toggle_sleep_noise; $d
   bindsym o exec $kitty --directory='~/Downloads'; $d
-  bindsym p exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
-  bindsym q exec $kitty_open 'nvim ~/Documents/todo'; $d
+  bindsym p exec $kitty_open '~/pbin/nvim.appimage ~/Documents/quick_open/nato'; $d
+  bindsym q exec $kitty_open '~/pbin/nvim.appimage ~/Documents/todo'; $d
   bindsym r exec $kitty_open 'htop'; $d
   bindsym s exec feh ~/current.png; $d
-  bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
+  bindsym t exec $kitty_open '~/pbin/nvim.appimage ~/dotfiles/tmux/tmux.conf'; $d
   bindsym u exec toggle_touchpad; $d
-  bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
-  bindsym w exec $kitty_open '~/pbin/worth'; $d
+  bindsym v exec $kitty_open '~/pbin/nvim.appimage ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
+  # bindsym w exec $kitty_open '~/pbin/worth'; $d
   bindsym x exec toggle_screenkey; $d
-  bindsym y exec $kitty_open 'nvim -c Calendar'; $d
+  bindsym y exec $kitty_open '~/pbin/nvim.appimage -c Calendar'; $d
   bindsym z exec toggle_zoom; $d
+
+  # TODO: figure out how to kill windows harder
+  # bindsym $mod+Control+Shift+BackSpace kill -9
 
   bindsym Return $d
   bindsym Escape $d
@@ -331,7 +339,7 @@ mode "move" {
 bindsym $mod+Home mode "clipboard_emoji"
 mode "clipboard_emoji" {
   bindsym s exec "echo -n '¯\_(ツ)_/¯' | xclip"; $d
-  bindsym Shift+s exec "echo -n '¯\\\_(ツ)\_/¯' | xclip"; $d
+  bindsym Shift+s exec "echo -n '¯\\\\\\\\\_(ツ)\_/¯' | xclip"; $d
   bindsym b exec "echo -n '¯\_(⊙︿⊙)_/¯' | xclip"; $d
   bindsym c exec "echo -n 'ಥ_ಥ' | xclip"; $d
   bindsym d exec "echo -n '(✿ ◕‿◕) ᓄ✂╰U╯' | xclip"; $d
@@ -414,10 +422,10 @@ bindsym Control+q exec ~/bin/noctrlq.sh
 
 # Clipboard management
 bindsym $mod+Control+q exec ~/src/opensource/gilbertw1/roficlip/roficlip
-bindsym $mod+Control+a exec $kitty_open 'nvim ~/.local/share/clipster/history +"call ClipsterEdit()"'
+bindsym $mod+Control+a exec $kitty_open '~/pbin/nvim.appimage ~/.local/share/clipster/history +"call ClipsterEdit()"'
 
 # Bash history management
-bindsym $mod+Control+h exec $kitty_open 'nvim ~/.my_bash_history'
+bindsym $mod+Control+h exec $kitty_open '~/pbin/nvim.appimage ~/.my_bash_history'
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"

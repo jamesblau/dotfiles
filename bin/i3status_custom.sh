@@ -23,10 +23,10 @@ do
   read line
 
   # Ensure vpn is actually running
-  if pgrep openvpn > /dev/null; then
-    pgrep openvpn > ~/.openvpn_pid
+  if nordvpn status | grep -q Connected; then
+    touch ~/.nordvpn_running
   else
-    rm -f ~/.openvpn_pid
+    rm -f ~/.nordvpn_running
   fi
 
   # Update IP address

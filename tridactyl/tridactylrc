@@ -62,10 +62,10 @@ colors dark
 
 " Misc settings
 set allowautofocus false
-js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "kitty --config ~/.kitty.conf nvim" : "auto"; tri.config.set("editorcmd", editorcmd)})
+js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "kitty -1 --config ~/.kitty.conf ~/pbin/nvim.appimage" : "auto"; tri.config.set("editorcmd", editorcmd)})
 " set editorcmd 'termite -e "vi %f"'
-" set editorcmd 'kitty --config ~/.kitty.conf nvim %f'
-" js tri.config.set("editorcmd", "kitty --config ~/.kitty.conf nvim")
+" set editorcmd 'kitty -1 --config ~/.kitty.conf ~/pbin/nvim.appimage %f'
+" js tri.config.set("editorcmd", "kitty -1 --config ~/.kitty.conf ~/pbin/nvim.appimage")
 " js tri.config.set("editorcmd", "auto")
 
 set hintchars hjklasdfgyuiopqwertnmzxcvb
@@ -87,19 +87,25 @@ quickmark t https://github.com/cmcaine/tridactyl/issues?utf8=%E2%9C%93&q=sort%3A
 " Blacklist
 blacklistadd mail.google.com/
 blacklistadd nytimes.com/crosswords/
+blacklistremove http://ec2-3-22-70-45.us-east-2.compute.amazonaws.com:30000/game
+blacklistremove http://ec2-3-22-70-45.us-east-2.compute.amazonaws.com:30000/
+blacklistremove http://ec2-3-22-70-45.us-east-2.compute.amazonaws.com
 
 " URL redirects
 " autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 
+set searchurls.poewiki https://www.poewiki.net/index.php?search=
+
+bind --mode=normal ,p fillcmdline open poewiki
+bind --mode=normal ,P fillcmdline tabopen poewiki
 bind --mode=normal ,d fillcmdline open duckduckgo
 bind --mode=normal ,D fillcmdline tabopen duckduckgo
 bind --mode=normal ,w fillcmdline open wikipedia
 bind --mode=normal ,W fillcmdline tabopen wikipedia
 bind --mode=normal ,e fillcmdline open search site:reddit.com
 bind --mode=normal ,E fillcmdline tabopen search site:reddit.com
-
-" TODO: Why can't I get rid of the defaults?
-" set searchurls {"!g":"https://www.google.com/search?q=","!scholar":"https://scholar.google.com/scholar?q=","!googleuk":"https://www.google.co.uk/search?q=","!bing":"https://www.bing.com/search?q=","!d":"https://duckduckgo.com/?q=","!yahoo":"https://search.yahoo.com/search?p=","!twitter":"https://twitter.com/search?q=","!w":"https://en.wikipedia.org/wiki/Special:Search/","!y":"https://www.youtube.com/results?search_query=","!a":"https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=","!amazonuk":"https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=","!startpage":"https://startpage.com/do/search?language=english&cat=web&query=","!github":"https://github.com/search?utf8=✓&q=","!searx":"https://searx.me/?category_general=on&q=","!cnrtl":"http://www.cnrtl.fr/lexicographie/","!osm":"https://www.openstreetmap.org/search?query=","!mdn":"https://developer.mozilla.org/en-US/search?q=","!gentoo_wiki":"https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=","!qwant":"https://www.qwant.com/?q="}
+bind --mode=normal ,e fillcmdline open search site:reddit.com
+bind --mode=normal ,E fillcmdline tabopen search site:reddit.com
 
 bind --mode=normal ,r open reddit.com
 bind --mode=normal ,R tabopen reddit.com

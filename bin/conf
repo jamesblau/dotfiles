@@ -2,7 +2,7 @@
 
 [ $# -gt 1 ] && echo "Accepts at most one argument (screen layout code)." && exit 1
 
-~/bin/conf_keyboard
+# ~/bin/conf_keyboard
 
 case $1 in
   *z*) ~/dotfiles/screenlayout/zaphod.conf.sh; i3-msg restart ;;
@@ -14,16 +14,16 @@ esac
 laptop=$(cat /sys/devices/virtual/dmi/id/product_version)
 
 [ "${laptop}" == "ThinkPad P1 Gen 4i" ] && {
-  # stick="TPPS/2 IBM TrackPoint"
-  # xinput list | grep -q "${stick}" && {
-    # xinput set-prop "${stick}" "libinput Accel Speed" 0.3
-    # case $1 in
-      # *m*) speed_scale="1.2" ;;
-      # *) speed_scale="1." ;;
-    # esac
-    # xinput set-prop "${stick}" "Coordinate Transformation Matrix" \
-      # "${speed_scale}", 0 0 0 "${speed_scale}", 0 0 0 1.
-  # }
+  stick="TPPS/2 Elan TrackPoint"
+  xinput list | grep -q "${stick}" && {
+    xinput set-prop "${stick}" "libinput Accel Speed" 0.3
+    case $1 in
+      *m*) speed_scale="1.2" ;;
+      *) speed_scale="1." ;;
+    esac
+    xinput set-prop "${stick}" "Coordinate Transformation Matrix" \
+      "${speed_scale}", 0 0 0 "${speed_scale}", 0 0 0 1.
+  }
 
   pad="ELAN067A:00 04F3:3197 Touchpad"
   xinput list | grep -q "${pad}" && {
@@ -57,8 +57,11 @@ laptop=$(cat /sys/devices/virtual/dmi/id/product_version)
 # Tex Yoda
 stick="SONiX USB Device"
 xinput list | grep -q "${stick}" && {
-  xinput set-prop "${stick}" "libinput Accel Speed" 1
-  xinput set-prop "${stick}" "libinput Accel Profile Enabled" 2, 0
+  # xinput set-prop "${stick}" "libinput Accel Speed" 2.0
+  xinput set-prop "${stick}" "libinput Accel Profile Enabled" 1, 0
+  speed_scale="2.5"
+  xinput set-prop "${stick}" "Coordinate Transformation Matrix" \
+    "${speed_scale}", 0 0 0 "${speed_scale}", 0 0 0 1.
 }
 
 # Any mouse

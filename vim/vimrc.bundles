@@ -346,6 +346,7 @@ if !exists('g:james_minimal_plugins')
       nnoremap <Leader>u :UndotreeToggle<CR>
       Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     " }}}
+    " Plug 'neovim/nvim-lspconfig'
     " Plug 'scrooloose/nerdcommenter' {{{
       let g:NERDCompactSexyComs=1
       let g:NERDSpaceDelims=1
@@ -355,7 +356,7 @@ if !exists('g:james_minimal_plugins')
         \ 'notes': { 'left': '#', 'right': '' }
       \ }
       " This is used with <C-/> in practice
-      map <C-_> <Plug>NERDCommenterToggle
+      map <C-/> <Plug>NERDCommenterToggle
       Plug 'scrooloose/nerdcommenter'
     " }}}
     " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } {{{
@@ -455,7 +456,7 @@ if !exists('g:james_minimal_plugins')
 
   " Terminal {{{
     "Plug 'brettanomyces/nvim-terminus'
-    Plug 'Shougo/deol.nvim'
+    " Plug 'Shougo/deol.nvim'
   " }}}
 
   " Text objects {{{
@@ -569,6 +570,7 @@ if !exists('g:james_minimal_plugins')
       au! BufNewFile,BufRead Drakefile* setl ft=drake
       Plug('https://bitbucket.org/larsyencken/vim-drake-syntax.git'), { 'for': 'drake' }
     " }}}
+    Plug 'pangloss/vim-javascript'
     Plug 'plasticboy/vim-markdown'
     Plug 't9md/vim-chef'
     Plug 'tpope/vim-ragtag'

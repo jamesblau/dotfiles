@@ -7,8 +7,8 @@ if [[ "${TERM}" == xterm-termite ]]; then
 fi
 
 # Kitty terminal emulator
-alias kitty="kitty --config ${HOME}/.kitty.conf"
-TERMINAL=/usr/bin/kitty
+alias kitty="~/.local/kitty.app/bin/kitty -1 --config ${HOME}/.kitty.conf"
+TERMINAL='~/.local/kitty.app/bin/kitty -1'
 
 # Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -221,6 +221,7 @@ export PYSPARK_DRIVER_PYTHON="ptipython3"
 export PYSPARK_DRIVER_PYTHON_OPTS="--vi --dark-bg"
 export PTPYTHON_CONFIG_HOME=~/.ptpython
 alias python=python3
+# alias python2=python2.0
 alias pip=pip3
 alias ipy='PAGER=less ptipython3 --vi'
 # TODO: expand?
@@ -310,7 +311,9 @@ alias oc='octave --no-gui --silent --eval "format long g" --persist'
 alias math='rlwrap math -rawterm'
 
 # Brief translations
-alias trab='trans -b -no-autocorrect'
+alias trab='trans -b -bidi -no-autocorrect'
+alias trans='trans -bidi -no-autocorrect'
+alias traa='trans -bidi'
 # TODO: fix round-trip translation, for testing translation accuracy
 # function tround () {
   # trans -b -no-autocorrect "$1": "$(trans -b -no-autocorrect :"'"'"$1"'"'" "'"'"$*:2"'"'")"
@@ -406,7 +409,7 @@ bind -m vi-command '"\C-o": "Ireadlink -f \eA | xsel\e"'
 alias bd=". bd -si"
 
 # open new terminal with kitty in same directory
-function ncd () { (nohup kitty --config ~/.kitty.conf -d $PWD &>/dev/null &); }
+function ncd () { (nohup ~/.local/kitty.app/bin/kitty -1 --config ~/.kitty.conf -d $PWD &>/dev/null &); }
 
 # clock functions
 function seconds_comparison () {

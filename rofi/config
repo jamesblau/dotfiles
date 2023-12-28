@@ -32,4 +32,4 @@ rofi.separator-style: solid
 
 rofi.font: hack 30
 
-rofi.terminal: /usr/bin/kitty
+rofi.terminal: ~/.local/kitty.app/bin/kitty -1

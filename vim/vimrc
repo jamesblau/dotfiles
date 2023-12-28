@@ -8,6 +8,7 @@ nnoremap \ ,
 nnoremap <Leader><C-S> :source ~/dotfiles/vim/vimrc \| e<CR>
 
 set sw=2 ts=2 sts=2
+" set autochdir
 set background=dark
 set cedit=                    " Key to open command-line window
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
@@ -92,6 +93,7 @@ set scrolloff=3
 
 " Tags stuff
 let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+set tags=tags
 if findfile(".tags", ".;") =~ "tags"
   set tags=./.tags;/
 elseif gitroot != ''
@@ -121,6 +123,7 @@ command! -bang Qa qa<bang>
 
 " Change Working Directory to that of the current file
 nnoremap <silent> <Leader>wd :lcd %:p:h<CR>
+" nnoremap <silent> <Leader>wd :lcd %:p:h | !cd %:p:h<CR>
 
 " Visual stuff!
 "     Visual shifting does not exit Visual mode
@@ -928,6 +931,7 @@ endfunction
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
+nmap <Leader>ts :set ft=javascript syn=javascript<CR>
 nmap <Leader>tg :call ScratchMaps()<CR>
 nmap <Leader>to :call OctaveScratchTerm()<CR>
 nmap <Leader>tB :call ScalaSbt()<CR>
@@ -1083,6 +1087,9 @@ function! ClipsterEdit()
   nnoremap ZZ :silent! %s/,\n^   ]/\r   ]<CR>:w<CR>:!killall clipster<CR>:!clipster -d > /dev/null &<CR>:q<CR>
   normal G
 endfunction
+
+" Config files
+autocmd! BufNewFile,BufRead *.conf set ft=conf syn=conf
 
 " voice input
 " inoremap dot-dot-dot <Esc>

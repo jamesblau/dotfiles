@@ -124,4 +124,6 @@ go get github.com/jehiah/json2csv
   # add to /etc/udev/rules.d/trackpoint.rules:
     # ACTION=="add", SUBSYSTEM=="input", ATTR{name}=="DEVICE", ATTR{device/sensitivity}="255", ATTR{device/speed}="255"<Paste>
 
+# In /etc/gtk-3.0/settings.ini, add gtk-enable-animations = false
+
 echo "Read this file for reminders and instructions to restore more folders, set up crontab, and configure firefox."

@@ -1,17 +1,18 @@
 #!/bin/bash
 
-if pgrep openvpn > /dev/null; then
+if nordvpn status | grep -q Connected; then
   if [[ $1 == "on" ]]; then
     exit
+    touch ~/.nordvpn_running
   else
     nordvpn disconnect
-    rm -f ~/.openvpn_pid
+    rm -f ~/.nordvpn_running
   fi
 elif [[ $1 == "off" ]]; then
-  rm -f ~/.openvpn_pid
+  rm -f ~/.nordvpn_running
   exit
 else
   nordvpn connect
-  pgrep openvpn > ~/.openvpn_pid
+  touch ~/.nordvpn_running
 fi
 killall -USR1 i3status
