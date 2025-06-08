@@ -130,13 +130,14 @@ alias youtube-dl="youtube-dl --restrict-filenames"
 
 # Choose vim
 # TODO: When in neovim terminal, open files in neovim buffer
-if [[ -x ~/pbin/nvim.appimage ]]; then
-  my_vim='~/pbin/nvim.appimage'
-elif command -v nvim &>/dev/null; then
-  my_vim='nvim'
-else
-  my_vim='vim'
-fi
+# if [[ -x ~/pbin/nvim.appimage ]]; then
+  # my_vim='~/pbin/nvim.appimage'
+# elif command -v nvim &>/dev/null; then
+  # my_vim='nvim'
+# else
+  # my_vim='vim'
+# fi
+my_vim='vim'
 export GIT_EDITOR="${my_vim}"
 export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
@@ -454,6 +455,9 @@ alias rgn='rg --no-ignore'
 
 # OpenMW portmod
 alias pmo="portmod openmw"
+
+# mpv stuff
+alias mps="mpv --force-seekable=yes --loop"
 
 # Page with config
 # export PAGER="pager -q 90000 -c '~/dotfiles/page/pagerc'"

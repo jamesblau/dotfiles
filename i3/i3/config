@@ -233,8 +233,11 @@ mode "quick_open" {
   bindsym l exec $kitty_open 'ranger'; $d
   bindsym m exec pavucontrol; $d
   bindsym n exec toggle_sleep_noise; $d
+  bindsym Shift+N exec $kitty_open '~/pbin/nvim.appimage ~/Documents/quick_open/nato'; $d
   bindsym o exec $kitty --directory='~/Downloads'; $d
-  bindsym p exec $kitty_open '~/pbin/nvim.appimage ~/Documents/quick_open/nato'; $d
+  # Pause and unpause programs
+  bindsym p exec kill -STOP "$(xdotool getactivewindow getwindowpid)"; $d
+  bindsym Shift+P exec kill -CONT "$(xdotool getactivewindow getwindowpid)"; $d
   bindsym q exec $kitty_open '~/pbin/nvim.appimage ~/Documents/todo'; $d
   bindsym r exec $kitty_open 'htop'; $d
   bindsym s exec feh ~/current.png; $d
