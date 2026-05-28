@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# usage: did-i-win TAG <replay.slp>
+slippc -i "$2" -a - | \
+  jq -e --arg TAG "$1" \
+     '(.players[] | select(.tag_player==$TAG).port) == .winner_port' \
+  >/dev/null
+status=$?
+exit "$status"

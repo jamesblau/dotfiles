@@ -96,6 +96,7 @@ blacklistremove http://ec2-3-22-70-45.us-east-2.compute.amazonaws.com
 
 set searchurls.poewiki https://www.poewiki.net/index.php?search=
 set searchurls.bg3wiki https://bg3.wiki/w/index.php?search=
+set searchurls.wikipedia https://en.wikipedia.org/w/index.php?search=%s
 
 bind --mode=normal ,p fillcmdline open poewiki
 bind --mode=normal ,P fillcmdline tabopen poewiki

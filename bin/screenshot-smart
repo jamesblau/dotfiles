@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mode="${1:-window}"   # window | interactive
+dir="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
+mkdir -p "$dir"
+
+need_cmd() { command -v "$1" >/dev/null 2>&1; }
+
+slugify() {
+  # lower, spaces->underscore, drop non [a-z0-9_], collapse underscores, trim
+  printf '%s' "$1" \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed -E 's/[[:space:]]+/_/g; s/[^a-z0-9_]+/_/g; s/_+/_/g; s/^_+|_+$//g'
+}
+
+app="unknown"
+title="screenshot"
+
+if need_cmd xdotool; then
+  wid="$(xdotool getactivewindow 2>/dev/null || true)"
+  if [[ -n "${wid:-}" ]] && need_cmd xprop; then
+    # WM_CLASS usually looks like: ("Navigator", "firefox")
+    app_raw="$(xprop -id "$wid" WM_CLASS 2>/dev/null | awk -F'"' '{print $(NF-1)}' || true)"
+    title_raw="$(xdotool getwindowname "$wid" 2>/dev/null || true)"
+    [[ -n "${app_raw:-}" ]] && app="$(slugify "$app_raw")"
+    [[ -n "${title_raw:-}" ]] && title="$(slugify "$title_raw")"
+  fi
+fi
+
+# Keep names reasonable length
+base="Screenshot_${app}_${title}"
+base="${base:0:80}"
+
+# Find next available counter
+n=1
+while :; do
+  printf -v num "%03d" "$n"
+  file="${dir}/${base}_${num}.png"
+  [[ -e "$file" ]] || break
+  ((n++))
+done
+
+# If user cancels interactive capture, don't leave a stray filename around
+cleanup_on_fail() { [[ -e "$file" ]] && rm -f "$file"; }
+trap cleanup_on_fail ERR INT TERM
+
+case "$mode" in
+  window)
+    gnome-screenshot -wB -f "$file"
+    ;;
+  interactive)
+    gnome-screenshot -i -f "$file"
+    ;;
+  *)
+    echo "Usage: $0 [window|interactive]" >&2
+    exit 2
+    ;;
+esac
+
+# Optional desktop notification if available
+if need_cmd notify-send; then
+  notify-send "Screenshot saved" "$file"
+fi
+
+echo "$file"

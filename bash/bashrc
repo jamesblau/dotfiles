@@ -194,7 +194,7 @@ alias gic='tmux new-session \;\
 
 # Git clone into github user's directory
 function gclone () {
-  if [[ $@ =~ ^https://github.com/([^/ ]*)/([^/ .]*).git$ ]]; then
+  if [[ $@ =~ ^https://github.com/([^/ ]*)/(.*).git$ ]]; then
     mkdir -p ${BASH_REMATCH[1]}
     cd ${BASH_REMATCH[1]}
     git clone $1
@@ -259,7 +259,7 @@ alias kch='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet '${HOME}'/.ss
 function ssht () {
   TERM=screen-256color ssh "${1}" -t tmux new -A -s "${2:-default}" "${@:3}"
 }
-alias ssh="ssht"
+# alias ssh="ssht"
 
 # Ethernet
 alias ethernet='killInternet; \
@@ -300,10 +300,10 @@ bind -m vi-insert "\C-o":
 # Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin:/home/james/.local/share/coursier/bin"
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export JAVA_HOME="/usr/lib/jvm/default-java"
 export LD_LIBRARY_PATH="/usr/local/cuda-9.0/lib64"
 
 # Math stuff
@@ -386,6 +386,7 @@ export PERL5LIB=~/perl5/lib/perl5/local/
 # export PERL5LIB=~/.cpan/build/Math-Round-0.07-vJd8__/blib/lib/
 
 # Fzf stuff
+# export FZF_COMPLETION_TRIGGER=''
 [ -f ~/.fzf.bash ] && {
   source ~/.fzf.bash
   # TODO: needed?
@@ -401,7 +402,14 @@ alias jqcsv='PAGER= jq -r '"'"'(map(keys) | add | unique) as $cols | map(. as $r
 bind -m vi-command '"\C-v": "Ivi $(\eA)\e"'
 
 # Relative path to full path to clipboard
-bind -m vi-command '"\C-o": "Ireadlink -f \eA | xsel\e"'
+xl () {
+  # Copy absolute path(s) to the X11 clipboard (Ctrl-V), one per line.
+  # Usage: xl file1 [file2 ...]
+  local f
+  for f in "$@"; do
+    readlink -f -- "$f" || return 1
+  done | xsel -b
+}
 
 # z jump around
 [ -f ~/src/opensource/rupa/z/z.sh ] && source ~/src/opensource/rupa/z/z.sh
@@ -450,6 +458,8 @@ alias uniq_nosort='awk '\''!x[$0]++'\'''
 alias rgm='rg -M 10000'
 # Ripgrep within filenames
 alias rgf='rg --files | rg'
+# Ripgrep within filenames including hidden
+alias rgfh='rg --files --hidden | rg'
 # Ripgrep ignoring .gitignore
 alias rgn='rg --no-ignore'
 

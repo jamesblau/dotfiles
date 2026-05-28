@@ -1,29 +1,112 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -f
+# Read clipboard (prefer CLIPBOARD selection)
+read_clip() { xsel -o; }
 
-input=$(xsel -o)
-noleadtrailing=$(echo "$(echo "$(echo "${input}")" | tac)" | tac | sed 's/^\s*//' | sed 's/\s*$//')
-noempty=$(echo "${noleadtrailing}" | sed '/^$/d')
-oneline=$(echo -n ${noempty})
+# Write clipboard
+write_clip() { xsel; }
 
-if true; then
-  echo -ne "\ninput: ${input}"
-  echo -ne "\noleadtrailing: ${noleadtrailing}"
-  echo -ne "\nnoempty: ${noempty}"
-  echo -ne "\noneline: ${oneline}"
-fi
+# Trim leading+trailing whitespace per line
+trim_line_edges() {
+  sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//'
+}
 
-if [ -z "$@" ]; then
-  echo -n "${noempty}" | xsel
-else
-  if [ "$@" == "-a" ]; then
-    echo -n "${oneline}" | xsel
-  elif [ "$@" == "-l" ]; then
-    echo "${noempty}" | xsel
-  elif [ "$@" == "-s" ]; then
-    echo -n "${noleadtrailing}" | xsel
-  else
-    echo "Invalid argument: use -l, -a, or -s"
-  fi
-fi
+# Delete empty lines (anywhere)
+drop_empty_lines() {
+  sed -E '/^[[:space:]]*$/d'
+}
+
+# Collapse to one line with single spaces between tokens
+to_one_line() {
+  # shellcheck disable=SC2001
+  sed -E 's/[[:space:]]+/ /g; s/^ //; s/ $//'
+}
+
+# Remove your "modeline" line if it matches:
+#   [0] 17:11:53 james@zaphod ~
+drop_modeline_if_present() {
+  awk '
+    BEGIN { dropped=0 }
+    {
+      if (!dropped && $0 ~ /^\[[0-9]+\][[:space:]]+[0-9]{2}:[0-9]{2}:[0-9]{2}[[:space:]]+[^[:space:]]+@[^[:space:]]+[[:space:]]+/) {
+        dropped=1
+        next
+      }
+      print
+    }
+  '
+}
+
+wrap_triple_backticks() {
+  printf "```\n"
+  cat
+  printf "\n```\n"
+}
+
+usage() {
+  cat <<'EOF'
+strip_whitespace [ -l | -a | -s | -t ]
+  (no args) : trim line edges + drop empty lines
+  -s        : trim line edges only (keep empty lines)
+  -l        : like default but ensure trailing newline (line-oriented paste)
+  -a        : like default then collapse to one line
+  -t        : "prepare terminal output": trim, drop modeline, wrap in ``` fenced block
+EOF
+}
+
+arg="${1:-}"
+
+input="$(read_clip | sed 's/\r$//')"  # normalize CRLF pastes
+
+# Common transforms you already had, but made POSIX-ish and stable:
+noleadtrailing="$(printf '%s' "$input" | trim_line_edges)"
+noempty="$(printf '%s\n' "$noleadtrailing" | drop_empty_lines)"
+oneline="$(printf '%s\n' "$noempty" | to_one_line)"
+
+# Uncomment if you want debug on demand:
+# [[ "${DEBUG:-0}" == "1" ]] && {
+#   printf '\ninput: %s' "$input"
+#   printf '\nnoleadtrailing: %s' "$noleadtrailing"
+#   printf '\nnoempty: %s' "$noempty"
+#   printf '\noneline: %s\n' "$oneline"
+# }
+
+case "$arg" in
+  "")
+    # Default: trim line edges + remove empty lines
+    printf '%s' "$noempty" | write_clip
+    ;;
+  -s)
+    # Strip only line-edge whitespace, keep empties
+    printf '%s' "$noleadtrailing" | write_clip
+    ;;
+  -l)
+    # Like default, but ensure a trailing newline
+    printf '%s\n' "$noempty" | write_clip
+    ;;
+  -a)
+    # One-liner
+    printf '%s' "$oneline" | write_clip
+    ;;
+  -t)
+    # Terminal output prep:
+    # - trim line edges
+    # - drop empty lines
+    # - remove the modeline line if present
+    # - wrap in triple-backtick fence
+    printf '%s\n' "$noleadtrailing" \
+      | drop_empty_lines \
+      | drop_modeline_if_present \
+      | wrap_triple_backticks \
+      | write_clip
+    ;;
+  -h|--help)
+    usage
+    ;;
+  *)
+    printf 'Invalid argument: %s\n\n' "$arg" >&2
+    usage >&2
+    exit 2
+    ;;
+esac

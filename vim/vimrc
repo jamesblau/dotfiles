@@ -682,6 +682,8 @@ cnoremap <A-f> <S-Right>
 cnoremap <C-A> <Home>
 " Backspace one character, ignoring tab settings, not breaking undo sequence
 inoremap <C-H> <Esc>cl
+inoremap <C-B> <Left>
+inoremap <C-F> <Right>
 
 " No accidental Ex-mode
 nnoremap Q <Nop>
@@ -958,10 +960,108 @@ nnoremap cw dwi
 " TODO: Remove <Leader>s options that duplicate unimpaired functionality? I do prefer mine...
 " TODO: Fix position of space when pasting -- conditional on register matching pattern, toggle off?
 
-" Convert markdown to pdf
-autocmd! FileType markdown nnoremap <silent> <buffer> <Leader>m :silent w <Bar>
-  \ !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % && chromium-browser --headless --no-margins --print-to-pdf=%:r.pdf %:r.html <CR>
-" TODO: Cleanup.
+" Markdown -> HTML (Pandoc + style.css) -> PDF (WeasyPrint)
+autocmd FileType markdown nnoremap <silent> <buffer> <Leader>mm :silent w <Bar>
+  \ !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % <Bar>
+  \ weasyprint %:r.html %:r.pdf <CR>
+
+" Open existing PDF (no rebuild)
+autocmd FileType markdown nnoremap <silent> <buffer> <Leader>mp :silent w <Bar>
+  \ silent !evince %:r.pdf >/dev/null 2>&1 & <CR>
+
+" Rebuild then open
+autocmd FileType markdown nnoremap <silent> <buffer> <Leader>mP :silent w <Bar>
+  \ !pandoc --standalone -c style.css -f markdown -t html -o %:r.html % <Bar>
+  \ weasyprint %:r.html %:r.pdf <Bar>
+  \ silent !evince %:r.pdf >/dev/null 2>&1 & <CR>
+
+" Vim-letter mappings for *_vim_letter.md
+
+if exists('g:loaded_vim_letter')
+  finish
+endif
+let g:loaded_vim_letter = 1
+
+" Use your real builder path
+let g:vim_letter_builder = expand('~/bin/vim_letter_builder.py')
+
+" Use evince (per your setup)
+let g:vim_letter_opener = 'evince'
+
+augroup VimLetter
+  autocmd!
+  autocmd BufRead,BufNewFile *_vim_letter.md call s:vim_letter_setup()
+augroup END
+
+function! s:vim_letter_paths() abort
+  let l:md = expand('%:p')
+  if empty(l:md)
+    echoerr "VimLetter: buffer has no file path (save it first)."
+    return {}
+  endif
+  if l:md !~# '_vim_letter\.md$'
+    echoerr "VimLetter: not a *_vim_letter.md file: " . l:md
+    return {}
+  endif
+  let l:base = substitute(l:md, '_vim_letter\.md$', '', '')
+  return {
+        \ 'md': l:md,
+        \ 'base': l:base,
+        \ 'html': l:base . '.html',
+        \ 'pdf': l:base . '.pdf',
+        \ 'dir': fnamemodify(l:md, ':h')
+        \ }
+endfunction
+
+function! s:vim_letter_css_path(dir) abort
+  " Prefer style.css next to the letter; fall back to 'style.css' (resolved after cd).
+  let l:css = findfile('style.css', a:dir . ';')
+  return empty(l:css) ? 'style.css' : l:css
+endfunction
+
+function! s:vim_letter_build() abort
+  let l:p = s:vim_letter_paths()
+  if empty(l:p)
+    return
+  endif
+
+  let l:dir = l:p.dir
+  let l:css = s:vim_letter_css_path(l:dir)
+  let l:builder = expand(g:vim_letter_builder)
+
+  let l:cmd = 'cd ' . shellescape(l:dir)
+        \ . ' && python3 ' . shellescape(l:builder)
+        \ . ' --css ' . shellescape(l:css)
+        \ . ' ' . shellescape(l:p.md)
+
+  let l:out = system(l:cmd)
+  if v:shell_error != 0
+    echoerr "VimLetter build failed:\n" . l:out
+  else
+    echom "VimLetter built: " . l:p.pdf
+  endif
+endfunction
+
+function! s:vim_letter_open() abort
+  let l:p = s:vim_letter_paths()
+  if empty(l:p)
+    return
+  endif
+
+  if !filereadable(l:p.pdf)
+    echoerr "VimLetter: PDF not found (build first): " . l:p.pdf
+    return
+  endif
+
+  " Don't shellescape the command name; only escape the filename.
+  execute 'silent !' . g:vim_letter_opener . ' ' . shellescape(l:p.pdf) . ' >/dev/null 2>&1 &'
+endfunction
+
+function! s:vim_letter_setup() abort
+  nnoremap <silent> <buffer> <Leader>mv :silent write <Bar> call <SID>vim_letter_build() <CR>
+  nnoremap <silent> <buffer> <Leader>mo :silent write <Bar> call <SID>vim_letter_open() <CR>
+  nnoremap <silent> <buffer> <Leader>mO :silent write <Bar> call <SID>vim_letter_build() <Bar> call <SID>vim_letter_open() <CR>
+endfunction
 
 " Redraw mapping
 nnoremap <Leader><C-R> :redraw<CR>
