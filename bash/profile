@@ -1,0 +1,6 @@
+# ~/.profile: executed by login shells.
+
+# If this is bash, let .bashrc own interactive shell setup and PATH policy.
+if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+fi
