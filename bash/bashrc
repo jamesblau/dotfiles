@@ -137,15 +137,18 @@ alias youtube-dl="youtube-dl --restrict-filenames"
 # else
   # my_vim='vim'
 # fi
-my_vim='vim'
+if command -v nvim >/dev/null 2>&1; then
+  my_vim='nvim'
+else
+  my_vim='vim'
+fi
+
 export GIT_EDITOR="${my_vim}"
 export VISUAL="${my_vim}"
 export EDITOR="${my_vim}"
+
 alias vi="${my_vim}"
-alias nvim="${my_vim}"
 alias nvi="${my_vim} -c 'call NotesGoyo()'"
-# For opening files through i3 (whenever non-interactive?)
-[[ $(which nvim) == ${HOME}/bin/nvim ]] && export VIMRUNTIME=~/src/opensource/neovim/neovim/runtime
 
 # Avoid typing . for bin scripts that change directory
 alias cdg=". ${HOME}/bin/cdg"
@@ -300,7 +303,24 @@ bind -m vi-insert "\C-o":
 # Get rid of Gnome desktop bullshit
 alias killGnome='gsettings set org.gnome.desktop.background show-desktop-icons false'
 
-export PATH="$PATH:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/bin:$HOME/pbin:$HOME/.local/bin:$HOME/.cargo/bin:/home/james/.local/share/coursier/bin"
+export PATH="$HOME/bin:$HOME/pbin:$HOME/neovim/bin:$HOME/share/bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/go/bin:$HOME/scala/scala-2.12.6/bin:/usr/local/cuda-9.0/bin:/usr/local/cuda-11.0/bin:$HOME/.local/bin:$HOME/.cargo/bin:/home/james/.local/share/coursier/bin:$PATH"
+dedupe_path() {
+  local oldpath="$PATH"
+  local newpath=""
+  local dir
+
+  while IFS= read -r dir; do
+    [ -z "$dir" ] && continue
+    case ":$newpath:" in
+      *":$dir:"*) ;;
+      *) newpath="${newpath:+$newpath:}$dir" ;;
+    esac
+  done < <(printf '%s\n' "$oldpath" | tr ':' '\n')
+
+  export PATH="$newpath"
+}
+dedupe_path
+
 export PKG_CONFIG_PATH=$HOME/share/lib/pkgconfig
 export PREFIX=$HOME/share
 export JAVA_HOME="/usr/lib/jvm/default-java"
@@ -474,19 +494,5 @@ alias mps="mpv --force-seekable=yes --loop"
 export PAGER="~/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E 'normal G' -q 90000"
 # Why doesn't q work?
 export MANPAGER="/home/james/.cargo/bin/page -c '~/dotfiles/page/pagerc' -E '"'set ft=man | nmap q :q!<CR>'"'"
-
-# Conda stuff; activate manually
-alias co="conda activate"
-__conda_setup="$("${HOME}/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
-    . "${HOME}/anaconda3/etc/profile.d/conda.sh"
-  else
-    export PATH="${HOME}/anaconda3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
 
 # TODO: speed up by extracting as much as possible, in particular anything evaluated when sourced

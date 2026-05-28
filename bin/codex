@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$HOME/bin/ai-clean-env" /usr/local/bin/codex "$@"

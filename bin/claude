@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$HOME/bin/ai-clean-env" "$HOME/.local/bin/claude" "$@"
