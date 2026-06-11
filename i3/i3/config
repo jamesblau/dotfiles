@@ -27,7 +27,7 @@ exec --no-startup-id udiskie
 exec_always --no-startup-id /usr/bin/xrandr --dpi 150
 exec_always --no-startup-id ~/bin/lid-lock
 exec_always --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg
-exec_always --no-startup-id ~/bin/conf
+exec --no-startup-id ~/bin/conf a
 
 # Go to previous workspace/screen
 bindsym $mod+o workspace back_and_forth

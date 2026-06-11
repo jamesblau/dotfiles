@@ -5,6 +5,14 @@
 # ~/bin/conf_keyboard
 
 case $1 in
+  # 'a' = auto: vertical if an external monitor is attached, else laptop-only.
+  *a*)
+    if xrandr | grep ' connected' | grep -qv '^eDP'; then
+      ~/dotfiles/screenlayout/zaphod_vert.conf.sh
+    else
+      ~/dotfiles/screenlayout/zaphod.conf.sh
+    fi
+    i3-msg restart ;;
   *z*) ~/dotfiles/screenlayout/zaphod.conf.sh; i3-msg restart ;;
   *v*) ~/dotfiles/screenlayout/zaphod_vert.conf.sh; i3-msg restart ;;
   *s*) ~/dotfiles/screenlayout/zaphod_small.conf.sh; i3-msg restart ;;
