@@ -3,7 +3,7 @@
 __deploy=( bash editrc git inputrc python ruby tmux vim conda )
 
 if [ -e ~/.not_a_server ]; then
-  __deploy+=( ag i3 tridactyl kitty Xresources )
+  __deploy+=( ag i3 tridactyl kitty Xresources xsessionrc )
   __dot_config_deploy=( rofi clipster )
 else
   echo "Only installing for a server; otherwise, please touch .not_a_server in your home directory."

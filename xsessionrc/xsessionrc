@@ -1,0 +1,23 @@
+export XCOMPOSEFILE="$HOME/.XCompose"
+
+path_prepend() {
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) PATH="$1:$PATH" ;;
+  esac
+}
+
+path_prepend "$HOME/.local/share/coursier/bin"
+path_prepend "$HOME/.cargo/bin"
+path_prepend "$HOME/.local/bin"
+path_prepend "/usr/local/cuda-11.0/bin"
+path_prepend "/usr/local/cuda-9.0/bin"
+path_prepend "$HOME/scala/scala-2.12.6/bin"
+path_prepend "$HOME/go/bin"
+path_prepend "$HOME/.gem/ruby/2.3.0/bin"
+path_prepend "$HOME/share/bin"
+path_prepend "$HOME/neovim/bin"
+path_prepend "$HOME/pbin"
+path_prepend "$HOME/bin"
+
+export PATH
