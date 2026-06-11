@@ -14,7 +14,7 @@ set cedit=                    " Key to open command-line window
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 set complete=.,w,b,u            " No tags...nor included files, whatever they are...
 set expandtab                   " Tabs are spaces, not tabs
-set filetype=on
+filetype on
 set foldenable                  " Auto fold code
 set foldtext=MyFoldText()
 " set formatoptions-=l
@@ -44,7 +44,7 @@ set smartcase                   " Case sensitive when uc present
 set splitbelow                  " Puts new split windows to the bottom of the current
 set splitright                  " Puts new vsplit windows to the right of the current
 set switchbuf=useopen
-set syn=on
+syntax on
 set t_Co=256
 set textwidth=0
 set title
@@ -260,12 +260,6 @@ function! DiffWToggle()
   echom &diffopt &diffexpr
 endfunction
 
-function! DiffWToggleRegex()
-  set diffopt+=iwhite
-  set diffexpr=DiffW()
-  echom &diffopt &diffexpr
-endfunction
-
 function! ShowBreakToggle()
   if(&showbreak == g:james_showbreak)
     set showbreak=
@@ -393,7 +387,6 @@ nnoremap <Leader>sf :call NfAlphaToggle()<CR>
 nnoremap <Leader>sh :call HeightToggle()<CR>
 nnoremap <Leader>sS :call ShcfToggle()<CR>
 nnoremap <Leader>sd :call DiffWToggle()<CR>
-nmap     <Leader>sD :call DiffWToggleRegex("")<C-B><C-B>
 nnoremap <Leader>sb :call ShowBreakToggle()<CR>
 nnoremap <Leader>sB :call LineBreakToggle()<CR>
 nnoremap <Leader>sC :call ClipboardToggle()<CR>
@@ -401,7 +394,6 @@ nnoremap <Leader>sm :call MiddleToggle()<CR>
 nnoremap <Leader>sa :call LeximaToggle()<CR>
 nnoremap <Leader>sM :call MouseToggle()<CR>
 nnoremap <Leader>sN :set nu!<CR>
-nnoremap <Leader>sv <Plug>VLToggle
 nnoremap <Leader>sc :setl spell!<CR>
 nnoremap <Leader>sl :setl cursorline!<CR>
 nnoremap <Leader>sL :setl cursorline! \| set cursorcolumn!<CR>
@@ -760,7 +752,6 @@ endfunction
 function! DiffThese()
   silent! nunmap <buffer> [c
   silent! nunmap <buffer> ]c
-  Plug 'airblade/vim-gitgutter'
   windo diffo
   windo difft
 endfunction
@@ -897,10 +888,6 @@ function! PythonScratchTerm()
   stopinsert
 endfunction
 
-function! RunScriptScratch()
-  nmap <buffer> <CR> <C-L>i<Esc>k<CR><C-Space>G:wincmd<Space>p<CR>
-endfunction
-
 function! PtipythonScratchTerm()
   map <CR> <C-C><C-C>
   vsplit  | term PAGER=less ptipython
@@ -933,7 +920,7 @@ endfunction
 " Set syntax
 nmap <Leader>tc :set ft=csv syn=csv \| call plug#load('csv.vim')<CR>
 nmap <Leader>ts :set ft=scala syn=scala<CR>
-nmap <Leader>ts :set ft=javascript syn=javascript<CR>
+nmap <Leader>tj :set ft=javascript syn=javascript<CR>
 nmap <Leader>tg :call ScratchMaps()<CR>
 nmap <Leader>to :call OctaveScratchTerm()<CR>
 nmap <Leader>tB :call ScalaSbt()<CR>
