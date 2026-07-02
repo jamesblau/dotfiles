@@ -483,6 +483,8 @@ alias rgfh='rg --files --hidden | rg'
 # Ripgrep ignoring .gitignore
 alias rgn='rg --no-ignore'
 
+alias fd='fdfind'
+
 # OpenMW portmod
 alias pmo="portmod openmw"
 

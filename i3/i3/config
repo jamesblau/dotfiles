@@ -429,6 +429,12 @@ focus_follows_mouse no
 # Firefox popups
 for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
 
+# Dolphin windows
+## Game windows start titled exactly "Dolphin" → external monitor.
+for_window [class="dolphin-emu" title="^Dolphin$"] move container to output DP-1-0
+## NetPlay lobby → laptop screen, and make it tiled instead of floating.
+for_window [class="dolphin-emu" title="^NetPlay$"] floating disable, move container to output eDP-1
+
 # Firefox disable Control+Q
 # TODO: use xbindkeys and/or xinput instead
 bindsym Control+q exec ~/bin/noctrlq.sh
