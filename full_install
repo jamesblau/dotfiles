@@ -11,6 +11,17 @@ touch .not_a_server
 cd $HOME/dotfiles
 ./install
 
+keyd_source="$HOME/dotfiles/keyd/default.conf"
+keyd_destination=/etc/keyd/default.conf
+
+if [[ -f "$keyd_source" ]]; then
+    sudo rm -f "$keyd_destination"
+    sudo ln -s "$keyd_source" "$keyd_destination"
+    sudo keyd reload
+else
+    printf 'Missing keyd config: %s\n' "$keyd_source" >&2
+fi
+
 # Allow conf script to access hardware model number and to set mouse sensitivity
 # TODO: check if necessary
   # sudo chown $USER /sys/devices/virtual/dmi/id/product_version

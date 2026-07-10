@@ -6,8 +6,8 @@ if [ -e ~/.mics_muted ]
 then
   for source in ${sources[@]}; do
     pactl set-source-mute ${source} 0
-    rm ~/.mics_muted
   done
+  rm ~/.mics_muted
 else
   for source in ${sources[@]}; do
     pactl set-source-mute ${source} 1

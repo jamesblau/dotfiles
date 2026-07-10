@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -f "${XDG_RUNTIME_DIR:-/tmp}/smash-mode-$UID/wifi_blocked_by_smash"
+
 if nmcli device show | grep -A 3 wifi | grep -q unavailable; then
   rfkill unblock wifi
 else

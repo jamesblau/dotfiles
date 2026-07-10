@@ -1,0 +1,18 @@
+#!/bin/sh
+
+win=$(xdotool getactivewindow) || exit 1
+pid=$(xdotool getwindowpid "$win") || exit 1
+[ -n "$pid" ] || exit 1
+
+comm=$(ps -p "$pid" -o comm= | awk '{print $1}')
+class=$(xprop -id "$win" WM_CLASS 2>/dev/null)
+
+case "$comm:$class" in
+  *kitty*|*Alacritty*|*alacritty*|*gnome-terminal*|*xterm*)
+    notify-send "Refusing SIGKILL" "Focused window appears to be a terminal: PID $pid ($comm)"
+    exit 1
+    ;;
+esac
+
+notify-send "SIGKILL $pid" "$(ps -p "$pid" -o comm=,args= | head -c 300)"
+kill -9 "$pid"

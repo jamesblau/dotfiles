@@ -25,9 +25,9 @@ exec --no-startup-id blueman-tray
 exec --no-startup-id nordvpn
 exec --no-startup-id udiskie
 exec_always --no-startup-id /usr/bin/xrandr --dpi 150
-exec_always --no-startup-id ~/bin/lid-lock
+exec_always --no-startup-id lid-lock
 exec_always --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg
-exec --no-startup-id ~/bin/conf a
+exec --no-startup-id conf a
 
 # Go to previous workspace/screen
 bindsym $mod+o workspace back_and_forth
@@ -64,9 +64,9 @@ bindsym $mod+Shift+u exec $kitty nmtui
 
 # Reused audio and backlight commands
 set $toggle_mute "amixer -D pulse set Master toggle; killall -USR1 i3status"
-set $volume_down "~/bin/adjust_volume -5%"
-set $volume_up "~/bin/adjust_volume +5%"
-set $toggle_mic_mute "~/bin/toggle_mic"
+set $volume_down "adjust-volume -5%"
+set $volume_up "adjust-volume +5%"
+set $toggle_mic_mute "toggle-mic"
 set $backlight_down "light -U 20"
 set $backlight_up "light -A 20"
 
@@ -74,15 +74,15 @@ set $backlight_up "light -A 20"
 bindsym $mod+F1 exec $toggle_mute
 bindsym $mod+F2 exec $volume_down
 bindsym $mod+F3 exec $volume_up
-bindsym $mod+Control+F2 exec "~/bin/adjust_volume -1%"
-bindsym $mod+Control+F3 exec "~/bin/adjust_volume +1%"
+bindsym $mod+Control+F2 exec "~/bin/adjust-volume -1%"
+bindsym $mod+Control+F3 exec "~/bin/adjust-volume +1%"
 bindsym $mod+F4 exec $toggle_mic_mute
-bindsym $mod+Shift+F2 exec "~/bin/adjust_mic -5%"
-bindsym $mod+Shift+F3 exec "~/bin/adjust_mic +5%"
+bindsym $mod+Shift+F2 exec "~/bin/adjust-mic -5%"
+bindsym $mod+Shift+F3 exec "~/bin/adjust-mic +5%"
 bindsym $mod+F5 exec $backlight_down
 bindsym $mod+F6 exec $backlight_up
 # TODO: Why doesn't "light -S 0" work anymore?
-bindsym $mod+Shift+F5 exec backlight_off
+bindsym $mod+Shift+F5 exec backlight-off
 bindsym $mod+Shift+F6 exec "light -S 100"
 # TODO?: round volume to nearest 5
 
@@ -95,7 +95,7 @@ bindsym XF86AudioRaiseVolume exec $volume_up
 bindsym XF86AudioMicMute exec $toggle_mic_mute
 bindsym XF86MonBrightnessDown exec $backlight_down
 bindsym XF86MonBrightnessUp exec $backlight_up
-bindsym XF86WLAN exec toggle_wifi
+bindsym XF86WLAN exec toggle-wifi
 bindsym XF86Favorites kill
 # These work out of the box
 # bindsym XF86AudioPlay
@@ -107,18 +107,21 @@ bindsym XF86Favorites kill
 # bindsym XF86WakeUp
 
 # Fix wifi
-bindsym $mod+F8 exec toggle_wifi
-bindsym $mod+Control+F8 exec toggle_radio
-bindsym $mod+Control+Shift+F8 exec toggle_vpn
+bindsym $mod+F8 exec toggle-wifi
+bindsym $mod+Control+F8 exec toggle-radio
+bindsym $mod+Control+Shift+F8 exec toggle-vpn
 
 # Kill focused window
 bindsym $mod+Control+Shift+BackSpace kill
+bindsym $mod+Control+Shift+Delete exec --no-startup-id /home/james/src/me/dotfiles/bin/i3-kill-active-window-9
+
+# Kill screen timeout
 
 # Re-run conf
 bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
 
 # Sleep, suspend, shutdown, reboot, logout, or lock computer
-bindsym $mod+Shift+Delete exec ~/bin/sleep_shutdown_etc; $d
+bindsym $mod+Shift+Delete exec ~/bin/sleep-shutdown-etc; $d
 
 # Rofi pickers
 # Calculator
@@ -221,18 +224,18 @@ bindsym $mod+n mode "quick_open"
 mode "quick_open" {
   bindsym a exec arandr; $d
   bindsym b exec $kitty_open 'nvim ~/dotfiles/bash/bashrc ~/dotfiles/bash/bashrc_neovim'; $d
-  bindsym c exec $kitty_open 'nvim ~/bin/conf ~/bin/conf_keyboard ~/dotfiles/install ~/dotfiles/full_install'; $d
+  bindsym c exec $kitty_open 'nvim ~/bin/conf ~/bin/conf-keyboard ~/dotfiles/install ~/dotfiles/full-install ~/dotfiles/keyd/default.conf'; $d
   bindsym d exec $kitty_open 'nvim ~/Documents/quick_open/digraphs'; $d
   bindsym e exec $kitty_open 'xclip -o | nvim -u ~/dotfiles/nvim/nvimrc_clipboard'; $d
   bindsym f exec $kitty_open 'nvim ~/dotfiles/tridactyl/tridactylrc ~/dotfiles/firefox/userChrome.css'; $d
   bindsym g exec say $(xsel -o); $d
   bindsym h exec $kitty_open 'nvim $(xclip -o)'; $d
-  bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status_custom.sh'; $d
+  bindsym i exec $kitty_open 'nvim ~/dotfiles/i3/i3/config ~/dotfiles/i3/i3status.conf ~/dotfiles/bin/i3status-custom.sh'; $d
   bindsym j exec $kitty_open 'nvim ~/Documents/quick_open/judo'; $d
   bindsym k exec $kitty_open 'nvim ~/dotfiles/kitty/kitty.conf ~/dotfiles/rofi/config'; $d
   bindsym l exec $kitty_open 'ranger'; $d
   bindsym m exec pavucontrol; $d
-  bindsym n exec toggle_sleep_noise; $d
+  bindsym n exec toggle-sleep-noise; $d
   bindsym Shift+N exec $kitty_open 'nvim ~/Documents/quick_open/nato'; $d
   bindsym o exec $kitty --directory='~/Downloads'; $d
   # Pause and unpause programs
@@ -242,12 +245,12 @@ mode "quick_open" {
   bindsym r exec $kitty_open 'htop'; $d
   bindsym s exec feh ~/current.png; $d
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
-  bindsym u exec toggle_touchpad; $d
+  bindsym u exec toggle-touchpad; $d
   bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
   bindsym w exec --no-startup-id ~/bin/chrome-tabs-ws10; $d
-  bindsym x exec toggle_screenkey; $d
+  bindsym x exec toggle-screenkey; $d
   bindsym y exec $kitty_open 'nvim -c Calendar'; $d
-  bindsym z exec toggle_zoom; $d
+  bindsym z exec toggle-zoom; $d
 
   # TODO: figure out how to kill windows harder
   # bindsym $mod+Control+Shift+BackSpace kill -9
@@ -287,8 +290,7 @@ mode "resize" {
 
   # notes resize
   # TODO: this cannot be the best way to avoid large shrink being ignored
-  bindsym n resize shrink right 15 px or 15 ppt; resize shrink right 14 px or 14 ppt; resize shrink right 13 px or 13 ppt; resize shrink right 12 px or 12 ppt; resize shrink right 11 px or 11 ppt; resize shrink right 10 px or 10 ppt; resize shrink right 9 px or 9 ppt; resize shrink right 8 px or 8 ppt; resize shrink right 7 px or 7 ppt; resize shrink right 6 px or 6 ppt; resize shrink right 5 px or 5 ppt; resize shrink right 4 px or 4 ppt; resize shrink right 3 px or 3 ppt; resize shrink right 2 px or 2 ppt; resize shrink right 1 px or 1 ppt; \
-    resize grow right 31 px or 31 ppt; $d
+  bindsym n resize shrink right 15 px or 15 ppt; resize shrink right 14 px or 14 ppt; resize shrink right 13 px or 13 ppt; resize shrink right 12 px or 12 ppt; resize shrink right 11 px or 11 ppt; resize shrink right 10 px or 10 ppt; resize shrink right 9 px or 9 ppt; resize shrink right 8 px or 8 ppt; resize shrink right 7 px or 7 ppt; resize shrink right 6 px or 6 ppt; resize shrink right 5 px or 5 ppt; resize shrink right 4 px or 4 ppt; resize shrink right 3 px or 3 ppt; resize shrink right 2 px or 2 ppt; resize shrink right 1 px or 1 ppt; resize grow right 31 px or 31 ppt; $d
 
   bindsym Return $d
   bindsym Escape $d
@@ -381,7 +383,7 @@ client.placeholder      #000000 #0c0c0c #1f1f1f #000000   #0c0c0c
 client.background       #1f1f1f
 
 bar {
-  status_command ~/bin/i3status_custom.sh
+  status_command ~/bin/i3status-custom.sh
   font pango:DejaVu Sans Mono 13
   tray_output eDP-1
   tray_output eDP-1-1
@@ -405,11 +407,11 @@ bar {
 bindsym $mod+i mode "clip: strip_whitespace"
 
 mode "clip: strip_whitespace" {
-    bindsym i exec --no-startup-id ~/bin/strip_whitespace; $d
-    bindsym l exec --no-startup-id ~/bin/strip_whitespace -l; $d
-    bindsym a exec --no-startup-id ~/bin/strip_whitespace -a; $d
-    bindsym s exec --no-startup-id ~/bin/strip_whitespace -s; $d
-    bindsym t exec --no-startup-id ~/bin/strip_whitespace -t; $d
+    bindsym i exec --no-startup-id ~/bin/strip-whitespace; $d
+    bindsym l exec --no-startup-id ~/bin/strip-whitespace -l; $d
+    bindsym a exec --no-startup-id ~/bin/strip-whitespace -a; $d
+    bindsym s exec --no-startup-id ~/bin/strip-whitespace -s; $d
+    bindsym t exec --no-startup-id ~/bin/strip-whitespace -t; $d
 
     # exits
     bindsym Escape mode "default"
@@ -420,14 +422,10 @@ mode "clip: strip_whitespace" {
 # Not sure about this one
 focus_follows_mouse no
 
-# TODO: Firefox
 # Tridactyl edit in split
 # bindsym --release Control+0 split h; exec xdotool key --clearmodifiers ctrl+i
 # Tridactyl save edit and unsplit
-# bindsym --release Control+9 exec ~/bin/tridactyl_save_and_close_split
-
-# Firefox popups
-for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
+# bindsym --release Control+9 exec ~/bin/tridactyl-save-and-close-split
 
 # Dolphin windows
 ## Game windows start titled exactly "Dolphin" → external monitor.
@@ -435,16 +433,28 @@ for_window [class="dolphin-emu" title="^Dolphin$"] move container to output DP-1
 ## NetPlay lobby → laptop screen, and make it tiled instead of floating.
 for_window [class="dolphin-emu" title="^NetPlay$"] floating disable, move container to output eDP-1
 
-# Firefox disable Control+Q
-# TODO: use xbindkeys and/or xinput instead
-bindsym Control+q exec ~/bin/noctrlq.sh
-
 # Clipboard management
 bindsym $mod+Control+q exec ~/src/opensource/gilbertw1/roficlip/roficlip
 bindsym $mod+Control+a exec $kitty_open 'nvim ~/.local/share/clipster/history +"call ClipsterEdit()"'
 
 # Bash history management
 bindsym $mod+Control+h exec $kitty_open 'nvim ~/.my_bash_history'
+
+# Browsers
+bindsym $mod+semicolon exec --no-startup-id firefox
+bindsym $mod+apostrophe exec --no-startup-id chrome
+bindsym $mod+Control+apostrophe exec --no-startup-id chrome-profile1
+bindsym $mod+Control+Shift+apostrophe exec --no-startup-id chatgpt
+
+# i3 tries poorly to guess which desktop was used last
+for_window [class="(?i)^(google-chrome|google-chrome-stable|chromium|chromium-browser|chrome|firefox)$"] move container to workspace current
+
+# Firefox popups
+for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute center,move workspace current
+
+# Firefox disable Control+Q
+# TODO: use xbindkeys and/or xinput instead
+bindsym Control+q exec ~/bin/noctrlq.sh
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"

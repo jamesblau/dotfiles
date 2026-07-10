@@ -2,7 +2,7 @@
 
 [ $# -gt 1 ] && echo "Accepts at most one argument (screen layout code)." && exit 1
 
-# ~/bin/conf_keyboard
+# ~/bin/conf-keyboard
 
 case $1 in
   # 'a' = auto: vertical if an external monitor is attached, else laptop-only.
@@ -17,6 +17,7 @@ case $1 in
   *v*) ~/dotfiles/screenlayout/zaphod_vert.conf.sh; i3-msg restart ;;
   *s*) ~/dotfiles/screenlayout/zaphod_small.conf.sh; i3-msg restart ;;
   *o*) ~/dotfiles/screenlayout/zaphod_other.conf.sh; i3-msg restart ;;
+  *l*) ~/dotfiles/screenlayout/zaphod_lr.conf.sh; i3-msg restart ;;
 esac
 
 laptop=$(cat /sys/devices/virtual/dmi/id/product_version)

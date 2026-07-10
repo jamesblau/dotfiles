@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+set -u
+
+bin="$HOME/bin"
+
+runtime_root=${XDG_RUNTIME_DIR:-/tmp}
+state_dir="$runtime_root/smash_mode_$UID"
+wifi_marker="$state_dir/wifi_blocked_by_smash"
+
+mkdir -p "$state_dir"
+
+ethernet_connected() {
+    LC_ALL=C nmcli -t -f TYPE,STATE device status 2>/dev/null |
+        grep -qx 'ethernet:connected'
+}
+
+wifi_has_unblocked_device() {
+    LC_ALL=C rfkill list wifi 2>/dev/null |
+        grep -q 'Soft blocked: no'
+}
+
+turn_on() {
+    "$bin/kill-browsers" all &
+    browser_pid=$!
+
+    "$bin/kill-smash"
+    "$bin/screen-awake" on || return 1
+
+    if ethernet_connected && wifi_has_unblocked_device; then
+        if rfkill block wifi; then
+            : >"$wifi_marker"
+        else
+            notify-send -u critical \
+                "Smash mode" \
+                "Ethernet is connected, but Wi-Fi could not be blocked."
+        fi
+    fi
+
+    wait "$browser_pid" || true
+
+    notify-send \
+        "Smash mode" \
+        "Ready: stale game processes and browsers closed."
+}
+
+turn_off() {
+    "$bin/kill-smash"
+    "$bin/screen-awake" off
+
+    # Restore Wi-Fi only if Smash mode disabled it.
+    if [[ -e "$wifi_marker" ]]; then
+        if rfkill unblock wifi; then
+            rm -f "$wifi_marker"
+        else
+            notify-send -u critical \
+                "Smash mode" \
+                "Could not restore Wi-Fi."
+        fi
+    fi
+}
+
+case "${1:-on}" in
+    on)
+        turn_on
+        ;;
+
+    off)
+        turn_off
+        ;;
+
+    *)
+        printf 'Usage: %s {on|off}\n' "$0" >&2
+        exit 2
+        ;;
+esac

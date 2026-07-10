@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+killall -q -KILL project-plus-dolphin AppRun.wrapped 2>/dev/null || true

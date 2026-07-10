@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+set -u
+
+# Minimum process age before we allow Firefox/Chrome to receive SIGTERM.
+# Firefox can already have a visible window while still completing startup.
+minimum_age=20
+
+oldest_pid() {
+    pgrep -o -u "$UID" -x "$1" 2>/dev/null
+}
+
+wait_until_mature() {
+    local name=$1
+    local pid age
+
+    pid=$(oldest_pid "$name") || return 0
+
+    while kill -0 "$pid" 2>/dev/null; do
+        age=$(ps -o etimes= -p "$pid" 2>/dev/null) || return 0
+        age=${age//[[:space:]]/}
+
+        [[ "$age" =~ ^[0-9]+$ ]] || return 1
+        (( age >= minimum_age )) && return 0
+
+        sleep 0.25
+    done
+}
+
+wait_until_dead() {
+    local timeout=$1
+    shift
+
+    local deadline=$((SECONDS + timeout))
+    local name
+
+    while :; do
+        local found=0
+
+        for name in "$@"; do
+            if pgrep -u "$UID" -x "$name" >/dev/null; then
+                found=1
+                break
+            fi
+        done
+
+        (( found == 0 )) && return 0
+        (( SECONDS >= deadline )) && return 1
+
+        sleep 0.25
+    done
+}
+
+stop_firefox() {
+    pgrep -u "$UID" -x firefox >/dev/null || return 0
+
+    wait_until_mature firefox
+
+    # Default killall signal is SIGTERM: process-wide graceful termination,
+    # not individual window closure.
+    killall -q -TERM firefox 2>/dev/null || true
+
+    if ! wait_until_dead 20 firefox; then
+        notify-send -u critical \
+            "Firefox did not exit" \
+            "It was left running rather than force-killed."
+        return 1
+    fi
+}
+
+stop_chrome() {
+    local names=(chrome chrome-profile1)
+    local name
+
+    for name in "${names[@]}"; do
+        wait_until_mature "$name"
+    done
+
+    killall -q -TERM "${names[@]}" 2>/dev/null || true
+
+    if ! wait_until_dead 20 "${names[@]}"; then
+        notify-send -u critical \
+            "Chrome did not exit" \
+            "Some Chrome processes remain."
+        return 1
+    fi
+}
+
+case "${1:-all}" in
+    firefox)
+        stop_firefox
+        ;;
+    chrome)
+        stop_chrome
+        ;;
+    all)
+        stop_firefox
+        stop_chrome
+        ;;
+    *)
+        printf 'Usage: %s {firefox|chrome|all}\n' "$0" >&2
+        exit 2
+        ;;
+esac

@@ -1,6 +1,6 @@
 #!/bin/bash
 # reset intratubes
-toggle_vpn off
+toggle-vpn off
 sudo service network-manager stop
 sleep 1
 sudo service network-manager start

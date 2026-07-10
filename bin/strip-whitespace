@@ -46,7 +46,7 @@ wrap_triple_backticks() {
 
 usage() {
   cat <<'EOF'
-strip_whitespace [ -l | -a | -s | -t ]
+strip-whitespace [ -l | -a | -s | -t ]
   (no args) : trim line edges + drop empty lines
   -s        : trim line edges only (keep empty lines)
   -l        : like default but ensure trailing newline (line-oriented paste)

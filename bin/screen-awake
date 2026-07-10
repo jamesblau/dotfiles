@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+set -u
+
+runtime_root=${XDG_RUNTIME_DIR:-/tmp}
+state_dir="$runtime_root/screen-awake-$UID"
+restore_script="$state_dir/restore-xset"
+unit=screen-awake.service
+
+mkdir -p "$state_dir"
+
+active() {
+    systemctl --user is-active --quiet "$unit"
+}
+
+snapshot_xset() {
+    local q timeout cycle blank expose dpms_times dpms_state
+
+    q=$(xset q) || return 1
+
+    read -r timeout cycle < <(
+        awk '/timeout:/{print $2, $4; exit}' <<<"$q"
+    )
+
+    blank=$(awk '/prefer blanking:/{print $3; exit}' <<<"$q")
+    expose=$(awk '/prefer blanking:/{print $6; exit}' <<<"$q")
+    dpms_times=$(awk '/Standby:/{print $2, $4, $6; exit}' <<<"$q")
+
+    if grep -q 'DPMS is Enabled' <<<"$q"; then
+        dpms_state=enabled
+    else
+        dpms_state=disabled
+    fi
+
+    {
+        printf '#!/usr/bin/env bash\n'
+        printf 'xset s %s %s\n' "$timeout" "$cycle"
+
+        case "$blank" in
+            yes) printf 'xset s blank\n' ;;
+            no)  printf 'xset s noblank\n' ;;
+        esac
+
+        case "$expose" in
+            yes) printf 'xset s expose\n' ;;
+            no)  printf 'xset s noexpose\n' ;;
+        esac
+
+        if [[ -n "$dpms_times" ]]; then
+            printf 'xset dpms %s\n' "$dpms_times"
+
+            if [[ "$dpms_state" == enabled ]]; then
+                printf 'xset +dpms\n'
+            else
+                printf 'xset -dpms\n'
+            fi
+        fi
+    } >"$restore_script"
+
+    chmod 700 "$restore_script"
+}
+
+turn_on() {
+    if active; then
+        notify-send "Screen awake" "Already enabled."
+        return 0
+    fi
+
+    # Preserve a stale restore file if the inhibitor previously crashed:
+    # it still contains the pre-game settings.
+    if [[ ! -x "$restore_script" ]]; then
+        snapshot_xset || {
+            notify-send -u critical \
+                "Screen awake failed" \
+                "Could not read the current xset state."
+            return 1
+        }
+    fi
+
+    systemd-run \
+        --user \
+        --quiet \
+        --collect \
+        --unit="$unit" \
+        --setenv="DISPLAY=${DISPLAY:?DISPLAY is not set}" \
+        --setenv="XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}" \
+        /usr/bin/systemd-inhibit \
+            --what=idle:sleep \
+            --mode=block \
+            --who="$USER" \
+            --why="Game mode" \
+            /bin/bash -c '
+                while :; do
+                    /usr/bin/xset s off
+                    /usr/bin/xset -dpms
+                    /usr/bin/xset s noblank
+                    /usr/bin/sleep 10
+                done
+            '
+
+    sleep 0.2
+
+    if ! active; then
+        "$restore_script" 2>/dev/null || true
+        rm -f "$restore_script"
+
+        notify-send -u critical \
+            "Screen awake failed" \
+            "The inhibitor service did not start."
+        return 1
+    fi
+
+    notify-send \
+        "Screen awake" \
+        "Blanking, DPMS, idle locking, and automatic sleep inhibited."
+}
+
+turn_off() {
+    if active; then
+        systemctl --user stop "$unit"
+    fi
+
+    if [[ -x "$restore_script" ]]; then
+        "$restore_script"
+        rm -f "$restore_script"
+
+        notify-send \
+            "Screen awake" \
+            "Original X screen settings restored."
+    else
+        notify-send \
+            "Screen awake" \
+            "Already disabled; no saved settings to restore."
+    fi
+}
+
+case "${1:-toggle}" in
+    on)
+        turn_on
+        ;;
+
+    off)
+        turn_off
+        ;;
+
+    toggle)
+        if active; then
+            turn_off
+        else
+            turn_on
+        fi
+        ;;
+
+    status)
+        if active; then
+            echo on
+        else
+            echo off
+        fi
+        ;;
+
+    *)
+        printf 'Usage: %s {on|off|toggle|status}\n' "$0" >&2
+        exit 2
+        ;;
+esac
