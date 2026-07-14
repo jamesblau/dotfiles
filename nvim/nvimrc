@@ -1,6 +1,11 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 
-let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
+if filereadable(expand('~/src/opensource/neovim/neovim/runtime/filetype.lua'))
+  let $VIMRUNTIME='~/src/opensource/neovim/neovim/runtime'
+endif
+" Experimental: manage plugins with lazy.nvim instead of vim-plug (nvim only).
+" Uncomment to try it, then restart nvim and run :Lazy. Re-comment to revert.
+let g:james_use_lazy = 1
 source ~/.vimrc
 tnoremap <C-Space> <C-\><C-N>
 function! JamesSetupTerminal()

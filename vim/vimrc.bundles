@@ -1,12 +1,24 @@
 " vim: sw=2 ts=2 sts=2 expandtab ft=vim
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
-endif
+" Plugin manager: vim-plug by default, or lazy.nvim under nvim when
+" g:james_use_lazy is set (toggled in nvim/nvimrc). The lazy path reuses every
+" Plug line below through a small shim, so plugin config stays unchanged.
+let s:use_lazy = has('nvim') && get(g:, 'james_use_lazy', 0)
 
-call plug#begin('~/.vim/plugged')
+if s:use_lazy
+  let g:dotfiles_lazy_specs = []
+  function! DotfilesPlug(repo, ...) abort
+    call add(g:dotfiles_lazy_specs, {'repo': a:repo, 'opts': (a:0 ? a:1 : {})})
+  endfunction
+  command! -nargs=+ -bar Plug call DotfilesPlug(<args>)
+else
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+  endif
+  call plug#begin('~/.vim/plugged')
+endif
 
 " To evaluate later {{{
  " Plug 'tpope/vim-scriptease'
@@ -581,7 +593,11 @@ if !exists('g:james_minimal_plugins')
 
 endif
 
-call plug#end()
+if s:use_lazy
+  execute 'luafile ' . expand('~/dotfiles/nvim/lazy_bundles.lua')
+else
+  call plug#end()
+endif
 " vim: set foldmethod=marker :
 " TODO: vim exchange? M-t word swap too?
 " TODO: sneak with number hints, to not interfere with most common normal-mode commands?
