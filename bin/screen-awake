@@ -90,10 +90,17 @@ turn_on() {
             --why="Game mode" \
             /bin/bash -c '
                 while :; do
+                    /usr/bin/xset s reset
+                    /usr/bin/xdg-screensaver reset >/dev/null 2>&1 || true
+
                     /usr/bin/xset s off
-                    /usr/bin/xset -dpms
                     /usr/bin/xset s noblank
-                    /usr/bin/sleep 10
+
+                    /usr/bin/xset +dpms
+                    /usr/bin/xset dpms 0 0 0
+                    /usr/bin/xset dpms force on
+
+                    /usr/bin/sleep 5
                 done
             '
 

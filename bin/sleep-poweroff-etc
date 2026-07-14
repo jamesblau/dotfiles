@@ -2,7 +2,7 @@
 
 # TODO: implement switch user / window manager without logout
 
-options="sleep\nsuspend\nshutdown\nreboot\nlogout\nlock"
+options="sleep\nsuspend\npoweroff\nreboot\nlogout\nlock"
 
 chosen=$(echo -e "${options}" | rofi  -dmenu -l 6 -p "Select action")
 
@@ -14,7 +14,7 @@ case $chosen in
   suspend)
     systemctl suspend
     ;;
-  shutdown)
+  poweroff)
     systemctl poweroff
     ;;
   reboot)

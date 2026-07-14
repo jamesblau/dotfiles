@@ -1,16 +1,99 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
+set -u
+export LC_ALL=C
 
-sources=($(pactl list short sources | cut -f 1))
+# Toggle every non-monitor PipeWire/PulseAudio source together.
+# For a connected Yeti X, also toggle its USB hardware capture switch.
 
-if [ -e ~/.mics_muted ]
-then
-  for source in ${sources[@]}; do
-    pactl set-source-mute ${source} 0
-  done
-  rm ~/.mics_muted
-else
-  for source in ${sources[@]}; do
-    pactl set-source-mute ${source} 1
-    touch ~/.mics_muted
-  done
+mapfile -t sources < <(
+    pactl list short sources 2>/dev/null |
+        awk '$2 !~ /\.monitor$/ { print $2 }'
+)
+
+yeti_card=
+yeti_mute_numid=
+
+# Find the Yeti by device identity rather than assuming it is always card 1.
+for usbmixer in /proc/asound/card*/usbmixer; do
+    [[ -r "$usbmixer" ]] || continue
+    grep -Fq 'Card: Blue Microphones Yeti X ' "$usbmixer" || continue
+
+    yeti_card=${usbmixer#/proc/asound/card}
+    yeti_card=${yeti_card%/usbmixer}
+
+    # Find the control dynamically rather than assuming it remains numid 5.
+    yeti_mute_numid=$(
+        amixer -c "$yeti_card" controls 2>/dev/null |
+            sed -n \
+                "s/^numid=\([0-9][0-9]*\),.*name='Mic Capture Switch'$/\1/p" |
+            head -n 1
+    )
+
+    break
+done
+
+have_target=0
+all_muted=1
+
+# Treat the system as muted only if every software source is muted.
+for source in "${sources[@]}"; do
+    have_target=1
+
+    if ! pactl get-source-mute "$source" 2>/dev/null |
+            grep -qE 'Mute:[[:space:]]+yes$'; then
+        all_muted=0
+    fi
+done
+
+# The Yeti hardware switch must also be off for the system to count as muted.
+if [[ -n "$yeti_card" && -n "$yeti_mute_numid" ]]; then
+    have_target=1
+
+    if ! amixer -c "$yeti_card" \
+            cget "numid=$yeti_mute_numid" 2>/dev/null |
+            grep -qE 'values=off([[:space:]]|$)'; then
+        all_muted=0
+    fi
 fi
+
+if (( ! have_target )); then
+    notify-send -u critical \
+        'Microphone toggle failed' \
+        'No microphone sources were found.'
+    exit 1
+fi
+
+status=0
+
+if (( all_muted )); then
+    # Unmute software first. Open the hardware path last, avoiding a brief
+    # period where raw ALSA capture is live while applications remain muted.
+    for source in "${sources[@]}"; do
+        pactl set-source-mute "$source" 0 || status=1
+    done
+
+    if [[ -n "$yeti_card" && -n "$yeti_mute_numid" ]]; then
+        amixer -q -c "$yeti_card" \
+            cset "numid=$yeti_mute_numid" on ||
+            status=1
+    fi
+else
+    # Close the hardware path first, then mute every software source.
+    if [[ -n "$yeti_card" && -n "$yeti_mute_numid" ]]; then
+        amixer -q -c "$yeti_card" \
+            cset "numid=$yeti_mute_numid" off ||
+            status=1
+    fi
+
+    for source in "${sources[@]}"; do
+        pactl set-source-mute "$source" 1 || status=1
+    done
+fi
+
+if (( status != 0 )); then
+    notify-send -u critical \
+        'Microphone toggle incomplete' \
+        'At least one hardware or software mute operation failed.'
+fi
+
+exit "$status"

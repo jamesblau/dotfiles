@@ -74,11 +74,11 @@ set $backlight_up "light -A 20"
 bindsym $mod+F1 exec $toggle_mute
 bindsym $mod+F2 exec $volume_down
 bindsym $mod+F3 exec $volume_up
-bindsym $mod+Control+F2 exec "~/bin/adjust-volume -1%"
-bindsym $mod+Control+F3 exec "~/bin/adjust-volume +1%"
+bindsym $mod+Control+F2 exec "adjust-volume -1%"
+bindsym $mod+Control+F3 exec "adjust-volume +1%"
 bindsym $mod+F4 exec $toggle_mic_mute
-bindsym $mod+Shift+F2 exec "~/bin/adjust-mic -5%"
-bindsym $mod+Shift+F3 exec "~/bin/adjust-mic +5%"
+bindsym $mod+Shift+F2 exec "adjust-mic -5%"
+bindsym $mod+Shift+F3 exec "adjust-mic +5%"
 bindsym $mod+F5 exec $backlight_down
 bindsym $mod+F6 exec $backlight_up
 # TODO: Why doesn't "light -S 0" work anymore?
@@ -113,15 +113,15 @@ bindsym $mod+Control+Shift+F8 exec toggle-vpn
 
 # Kill focused window
 bindsym $mod+Control+Shift+BackSpace kill
-bindsym $mod+Control+Shift+Delete exec --no-startup-id /home/james/src/me/dotfiles/bin/i3-kill-active-window-9
+bindsym $mod+Control+Shift+Delete exec --no-startup-id i3-kill-active-window-9
 
 # Kill screen timeout
 
 # Re-run conf
-bindsym $mod+BackSpace exec $kitty bash -c ~/bin/conf
+bindsym $mod+BackSpace exec $kitty bash -c conf
 
-# Sleep, suspend, shutdown, reboot, logout, or lock computer
-bindsym $mod+Shift+Delete exec ~/bin/sleep-shutdown-etc; $d
+# Sleep, suspend, poweroff, reboot, logout, or lock computer
+bindsym $mod+Shift+Delete exec sleep-poweroff-etc
 
 # Rofi pickers
 # Calculator
@@ -247,7 +247,7 @@ mode "quick_open" {
   bindsym t exec $kitty_open 'nvim ~/dotfiles/tmux/tmux.conf'; $d
   bindsym u exec toggle-touchpad; $d
   bindsym v exec $kitty_open 'nvim ~/dotfiles/vim/vimrc ~/dotfiles/vim/vimrc.bundles ~/dotfiles/nvim/nvimrc ~/dotfiles/page/pagerc ~/dotfiles/nvim/nvimrc_terminal ~/dotfiles/nvim/nvimrc_clipboard ~/dotfiles/ftplugin/notes.vim ~/dotfiles/syntax/notes.vim ~/dotfiles/ftdetect/notes.vim ~/pdotfiles/pvimrc ~/pdotfiles/pvimrc_todo ~/dotfiles/nvim/nvimrc_static'; $d
-  bindsym w exec --no-startup-id ~/bin/chrome-tabs-ws10; $d
+  bindsym w exec --no-startup-id chrome-tabs-ws10; $d
   bindsym x exec toggle-screenkey; $d
   bindsym y exec $kitty_open 'nvim -c Calendar'; $d
   bindsym z exec toggle-zoom; $d
@@ -383,7 +383,7 @@ client.placeholder      #000000 #0c0c0c #1f1f1f #000000   #0c0c0c
 client.background       #1f1f1f
 
 bar {
-  status_command ~/bin/i3status-custom.sh
+  status_command i3status-custom.sh
   font pango:DejaVu Sans Mono 13
   tray_output eDP-1
   tray_output eDP-1-1
@@ -407,16 +407,39 @@ bar {
 bindsym $mod+i mode "clip: strip_whitespace"
 
 mode "clip: strip_whitespace" {
-    bindsym i exec --no-startup-id ~/bin/strip-whitespace; $d
-    bindsym l exec --no-startup-id ~/bin/strip-whitespace -l; $d
-    bindsym a exec --no-startup-id ~/bin/strip-whitespace -a; $d
-    bindsym s exec --no-startup-id ~/bin/strip-whitespace -s; $d
-    bindsym t exec --no-startup-id ~/bin/strip-whitespace -t; $d
+    bindsym i exec --no-startup-id strip-whitespace; $d
+    bindsym l exec --no-startup-id strip-whitespace -l; $d
+    bindsym a exec --no-startup-id strip-whitespace -a; $d
+    bindsym s exec --no-startup-id strip-whitespace -s; $d
+    bindsym t exec --no-startup-id strip-whitespace -t; $d
 
     # exits
     bindsym Escape mode "default"
     bindsym Return mode "default"
     bindsym $mod+i mode "default"   # press mod+i again to cancel
+}
+
+# Kill / game controls
+set $mode_kill kill/game: [f]irefox [c]hrome [b]oth [a]wake [k]ill-smash [s]mash-on [Shift+s]mash-off [w]ifi
+
+bindsym $mod+Delete mode "$mode_kill"
+
+mode "$mode_kill" {
+    bindsym f       exec --no-startup-id kill-browsers firefox; $d
+    bindsym c       exec --no-startup-id kill-browsers chrome; $d
+    bindsym b       exec --no-startup-id kill-browsers all; $d
+
+    bindsym a       exec --no-startup-id screen-awake toggle; $d
+
+    bindsym k       exec --no-startup-id kill-smash; $d
+    bindsym s       exec --no-startup-id smash-mode on; $d
+    bindsym Shift+s exec --no-startup-id smash-mode off; $d
+
+    bindsym w       exec --no-startup-id toggle-wifi; $d
+
+    bindsym $mod+Delete $d
+    bindsym Return      $d
+    bindsym Escape      $d
 }
 
 # Not sure about this one
@@ -425,7 +448,7 @@ focus_follows_mouse no
 # Tridactyl edit in split
 # bindsym --release Control+0 split h; exec xdotool key --clearmodifiers ctrl+i
 # Tridactyl save edit and unsplit
-# bindsym --release Control+9 exec ~/bin/tridactyl-save-and-close-split
+# bindsym --release Control+9 exec tridactyl-save-and-close-split
 
 # Dolphin windows
 ## Game windows start titled exactly "Dolphin" → external monitor.
@@ -454,16 +477,16 @@ for_window [title="Alarm - Mozilla Firefox"] floating enable,move absolute cente
 
 # Firefox disable Control+Q
 # TODO: use xbindkeys and/or xinput instead
-bindsym Control+q exec ~/bin/noctrlq.sh
+bindsym Control+q exec --not-startup-id noctrlq.sh
 
 # Firefox failed
 # bindsym $mod+Control+Shift+g exec "chromium-browser $(xclip -o)"
-bindsym $mod+Control+Shift+g exec "~/bin/chrome $(xclip -o)"
+bindsym $mod+Control+Shift+g exec "chrome $(xclip -o)"
 bindsym $mod+Control+Shift+q exec "qutebrowser $(xclip -o)"
 
 # Screenshots
-bindsym $mod+Shift+F11 exec --no-startup-id "~/bin/screenshot-smart window"
-bindsym $mod+F11       exec --no-startup-id "~/bin/screenshot-smart interactive"
+bindsym $mod+Shift+F11 exec --no-startup-id "screenshot-smart window"
+bindsym $mod+F11       exec --no-startup-id "screenshot-smart interactive"
 
 # TODO: For git d: if there is only one monitor, open a split, otherwise open a scratchpad on the other monitor
 

@@ -1,62 +1,99 @@
 #!/usr/bin/env bash
 set -u
 
-bin="$HOME/bin"
-
 runtime_root=${XDG_RUNTIME_DIR:-/tmp}
-state_dir="$runtime_root/smash_mode_$UID"
-wifi_marker="$state_dir/wifi_blocked_by_smash"
+state_dir="$runtime_root/smash-mode-$UID"
+
+enabled_marker="$state_dir/enabled"
+wifi_marker="$state_dir/wifi-blocked-by-smash"
 
 mkdir -p "$state_dir"
+
+refresh_bar() {
+    pkill -USR1 -x i3status 2>/dev/null || true
+}
 
 ethernet_connected() {
     LC_ALL=C nmcli -t -f TYPE,STATE device status 2>/dev/null |
         grep -qx 'ethernet:connected'
 }
 
-wifi_has_unblocked_device() {
+wifi_is_unblocked() {
     LC_ALL=C rfkill list wifi 2>/dev/null |
         grep -q 'Soft blocked: no'
 }
 
 turn_on() {
-    "$bin/kill-browsers" all &
+    local browser_pid
+    local status=0
+
+    # Browser shutdown can proceed while the other setup happens.
+    kill-browsers all &
     browser_pid=$!
 
-    "$bin/kill-smash"
-    "$bin/screen-awake" on || return 1
+    kill-smash
 
-    if ethernet_connected && wifi_has_unblocked_device; then
+    if ! screen-awake on; then
+        wait "$browser_pid" || true
+        notify-send -u critical \
+            'Smash mode failed' \
+            'Could not enable screen-awake mode.'
+        return 1
+    fi
+
+    # Disable Wi-Fi only if Ethernet is currently connected and Wi-Fi
+    # is currently unblocked.
+    if ethernet_connected && wifi_is_unblocked; then
         if rfkill block wifi; then
             : >"$wifi_marker"
         else
             notify-send -u critical \
-                "Smash mode" \
-                "Ethernet is connected, but Wi-Fi could not be blocked."
+                'Smash mode warning' \
+                'Ethernet is connected, but Wi-Fi could not be blocked.'
+            status=1
         fi
     fi
 
-    wait "$browser_pid" || true
+    # The bar marker represents Smash mode, not merely a running game.
+    : >"$enabled_marker"
+    refresh_bar
 
-    notify-send \
-        "Smash mode" \
-        "Ready: stale game processes and browsers closed."
+    if ! wait "$browser_pid"; then
+        status=1
+    fi
+
+    if (( status == 0 )); then
+        notify-send 'Smash mode' 'Enabled.'
+    else
+        notify-send -u critical \
+            'Smash mode' \
+            'Enabled, but at least one setup action failed.'
+    fi
+
+    return "$status"
 }
 
 turn_off() {
-    "$bin/kill-smash"
-    "$bin/screen-awake" off
+    local status=0
 
-    # Restore Wi-Fi only if Smash mode disabled it.
-    if [[ -e "$wifi_marker" ]]; then
-        if rfkill unblock wifi; then
-            rm -f "$wifi_marker"
-        else
-            notify-send -u critical \
-                "Smash mode" \
-                "Could not restore Wi-Fi."
-        fi
+    kill-smash
+
+    if ! screen-awake off; then
+        status=1
     fi
+
+    if (( status == 0 )); then
+        rm -f "$enabled_marker"
+        refresh_bar
+        notify-send 'Smash mode' 'Disabled.'
+    else
+        # Retain the indicator because cleanup was incomplete.
+        notify-send -u critical \
+            'Smash mode' \
+            'Could not completely disable Smash mode.'
+    fi
+
+    return "$status"
 }
 
 case "${1:-on}" in
@@ -68,8 +105,16 @@ case "${1:-on}" in
         turn_off
         ;;
 
+    status)
+        if [[ -e "$enabled_marker" ]]; then
+            echo on
+        else
+            echo off
+        fi
+        ;;
+
     *)
-        printf 'Usage: %s {on|off}\n' "$0" >&2
+        printf 'Usage: %s {on|off|status}\n' "$0" >&2
         exit 2
         ;;
 esac
