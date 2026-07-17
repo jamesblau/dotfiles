@@ -15,6 +15,7 @@ case $1 in
     i3-msg restart ;;
   *z*) ~/dotfiles/screenlayout/zaphod.conf.sh; i3-msg restart ;;
   *v*) ~/dotfiles/screenlayout/zaphod_vert.conf.sh; i3-msg restart ;;
+  *t*) ~/dotfiles/screenlayout/zaphod_vert_test.conf.sh; i3-msg restart ;;
   *s*) ~/dotfiles/screenlayout/zaphod_small.conf.sh; i3-msg restart ;;
   *o*) ~/dotfiles/screenlayout/zaphod_other.conf.sh; i3-msg restart ;;
   *l*) ~/dotfiles/screenlayout/zaphod_lr.conf.sh; i3-msg restart ;;

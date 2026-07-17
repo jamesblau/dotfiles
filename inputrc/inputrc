@@ -1,2 +1,3 @@
 set editing-mode vi
 set keyseq-timeout 50
+set mark-symlinked-directories on

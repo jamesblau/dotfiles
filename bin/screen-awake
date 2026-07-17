@@ -76,29 +76,39 @@ turn_on() {
         }
     fi
 
+    local -a env_args=(
+        --setenv=DISPLAY
+        --setenv=DBUS_SESSION_BUS_ADDRESS
+    )
+
+    # Copy the real value only when the current graphical session has one.
+    [[ -n ${XAUTHORITY:-} ]] &&
+        env_args+=(--setenv=XAUTHORITY)
+
     systemd-run \
         --user \
         --quiet \
         --collect \
         --unit="$unit" \
-        --setenv="DISPLAY=${DISPLAY:?DISPLAY is not set}" \
-        --setenv="XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}" \
+        --property=Type=exec \
+        "${env_args[@]}" \
         /usr/bin/systemd-inhibit \
             --what=idle:sleep \
             --mode=block \
             --who="$USER" \
             --why="Game mode" \
-            /bin/bash -c '
+            /bin/bash -euc '
                 while :; do
                     /usr/bin/xset s reset
-                    /usr/bin/xdg-screensaver reset >/dev/null 2>&1 || true
-
                     /usr/bin/xset s off
                     /usr/bin/xset s noblank
 
                     /usr/bin/xset +dpms
                     /usr/bin/xset dpms 0 0 0
                     /usr/bin/xset dpms force on
+
+                    /usr/bin/xdg-screensaver reset \
+                        >/dev/null 2>&1 || true
 
                     /usr/bin/sleep 5
                 done

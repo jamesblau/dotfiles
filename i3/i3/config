@@ -24,6 +24,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id blueman-tray
 exec --no-startup-id nordvpn
 exec --no-startup-id udiskie
+exec_always --no-startup-id powermiser-performance
 exec_always --no-startup-id /usr/bin/xrandr --dpi 150
 exec_always --no-startup-id lid-lock
 exec_always --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/deepdream.jpg
@@ -452,7 +453,7 @@ focus_follows_mouse no
 
 # Dolphin windows
 ## Game windows start titled exactly "Dolphin" → external monitor.
-for_window [class="dolphin-emu" title="^Dolphin$"] move container to output DP-1-0
+for_window [title="^Dolphin$"] move container to output DP-1-2
 ## NetPlay lobby → laptop screen, and make it tiled instead of floating.
 for_window [class="dolphin-emu" title="^NetPlay$"] floating disable, move container to output eDP-1
 
